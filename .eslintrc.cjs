@@ -34,5 +34,11 @@ module.exports = {
         json: 'never',
       },
     ],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'react/function-component-definition': [
+      2,
+      { namedComponents: ['arrow-function', 'function-declaration'] },
+    ],
+    'react/prop-types': 'off',
   },
 };
