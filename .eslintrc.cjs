@@ -34,5 +34,6 @@ module.exports = {
         json: 'never',
       },
     ],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
 };
