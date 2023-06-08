@@ -1,26 +1,20 @@
 import React from 'react';
 
-interface RankingProfileProps {
-  rank: number | string;
+export interface MyRankingProfileProps {
   username: string;
-  score: string;
+  studyTime: string;
   profileImg: string;
 }
 
-const RankingProfile: React.FC<RankingProfileProps> = ({
-  rank,
+const MyRankingProfile: React.FC<MyRankingProfileProps> = ({
   username,
-  score,
+  studyTime,
   profileImg,
 }) => {
-  let rankData = rank;
-  if (typeof rank === 'number') {
-    rankData = `${rank}위`;
-  }
   return (
     <div className="stats">
       <div className="stat">
-        <div className="stat-title text-secondary">{rankData}</div>
+        <div className="stat-title text-secondary">Me</div>
         <div className="stat-figure">
           <div className="avatar">
             <div className="w-16 rounded-full">
@@ -30,11 +24,10 @@ const RankingProfile: React.FC<RankingProfileProps> = ({
         </div>
         <div>
           <div className="stat-title text-sm">{username}</div>
-          <div className="stat-desc text-xs">{score}</div>
+          <div className="stat-desc text-xs">{studyTime}</div>
         </div>
       </div>
     </div>
   );
 };
-
-export default RankingProfile;
+export default MyRankingProfile;
