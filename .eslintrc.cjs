@@ -18,9 +18,8 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['import', 'react-refresh', '@typescript-eslint', 'prettier'],
+  plugins: ['import', '@typescript-eslint', 'prettier'],
   rules: {
-    'react-refresh/only-export-components': 'warn',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'react/react-in-jsx-scope': 'off',
     'import/extensions': [
@@ -35,5 +34,6 @@ module.exports = {
       },
     ],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'no-console': 'off',
   },
 };

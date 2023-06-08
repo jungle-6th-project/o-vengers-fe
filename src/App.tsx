@@ -1,15 +1,12 @@
 // import React from 'react';
 
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import Modal from './components/ModalMain';
+import { getUsers } from './utils/fetcher';
 
 export async function loader() {
-  const res = await axios.get('https://jsonplaceholder.typicode.com/users');
-  const data = await res.data;
-  await console.log(data);
-
-  return data;
+  const users = await getUsers();
+  return users;
 }
 
 function App() {
