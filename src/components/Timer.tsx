@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-const SEC_IN_MILLISEC = 1000;
-const MIN_IN_SEC = 60;
+import { SEC_IN_MILLISEC, MIN_IN_SEC } from '../constants';
 
 const TimerDisplay: React.FC<{ remainingTime: number }> = ({
   remainingTime,
@@ -108,3 +106,4 @@ const Timer: React.FC<TimerProps> = ({ reservedTime }) => {
 };
 
 export default Timer;
+export { TimerDisplay };
