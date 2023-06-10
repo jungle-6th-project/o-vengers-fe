@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SEC_IN_MILLISEC, MIN_IN_SEC } from '../constants';
 
 interface TimerDisplayProps {
