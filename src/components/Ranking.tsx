@@ -14,9 +14,12 @@ const fetchRanking = async () => {
 };
 
 const Ranking = () => {
-  const { isLoading, isError, data } = useQuery(['rankings'], fetchRanking);
+  const { isLoading, isError, isFetching, data } = useQuery(
+    ['rankings'],
+    fetchRanking
+  );
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <span className="loading loading-dots loading-sm" />;
   }
 
