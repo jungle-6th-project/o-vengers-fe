@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface RankingProfileProps {
+export interface RankingProfileProps {
   username: string;
   studyTime: string;
   profileImg: string;
@@ -23,20 +23,6 @@ const RankingProfile: React.FC<RankingProfileProps & { title: string }> = ({
   return (
     <div className={`stat ${bgColor}`}>
       <div className={`stat-title ${textColor}`}>{title}</div>
-      <div>
-        <div
-          className="stat-title text-sm w-28"
-          style={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            maxWidth: '100%',
-          }}
-        >
-          {username}
-        </div>
-        <div className="stat-desc text-xs">{studyTime}</div>
-      </div>
       <div className="stat-figure">
         <div className="avatar">
           <div className="w-16 mask mask-squircle">
@@ -44,11 +30,28 @@ const RankingProfile: React.FC<RankingProfileProps & { title: string }> = ({
           </div>
         </div>
       </div>
+      <div
+        style={{
+          gridColumnStart: 3,
+        }}
+      >
+        <div
+          className="stat-title text-sm w-28"
+          style={{
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: '70%',
+          }}
+        >
+          {username}
+        </div>
+        <div className="stat-desc text-xs">{studyTime}</div>
+      </div>
     </div>
   );
 };
 
-// TODO: sticky 속성 추가
 const MyRankingProfile: React.FC<
   Omit<RankingProfileProps, 'bgColor' | 'textColor'>
 > = ({ username, studyTime, profileImg }) => {
@@ -57,7 +60,7 @@ const MyRankingProfile: React.FC<
       username={username}
       studyTime={studyTime}
       profileImg={profileImg}
-      title="Me"
+      title="MY"
       bgColor="bg-primary"
       textColor="text-secondary"
     />
