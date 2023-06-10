@@ -18,8 +18,9 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['import', '@typescript-eslint', 'prettier'],
+  plugins: ['import', 'react-refresh', '@typescript-eslint', 'prettier'],
   rules: {
+    'react-refresh/only-export-components': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'react/react-in-jsx-scope': 'off',
     'import/extensions': [
@@ -34,6 +35,12 @@ module.exports = {
       },
     ],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'react/function-component-definition': [
+      2,
+      { namedComponents: ['arrow-function', 'function-declaration'] },
+    ],
+    'react/prop-types': 'off',
     'no-console': 'off',
+    'jsx-a11y/media-has-caption': 'off',
   },
 };

@@ -1,5 +1,3 @@
-// import React from 'react';
-
 import { Link } from 'react-router-dom';
 import Modal from './components/ModalMain';
 import { getUsers } from './utils/fetcher';
