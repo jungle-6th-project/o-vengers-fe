@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { SEC_IN_MILLISEC, MIN_IN_SEC } from '../constants';
 
-const TimerDisplay: React.FC<{ remainingTime: number }> = ({
-  remainingTime,
-}) => {
-  // 숫자를 두 자리 문자열로 반환
+interface TimerDisplayProps {
+  remainingTime: number;
+}
+
+// 숫자를 두 자리 문자열로 반환
+const TimerDisplay = ({ remainingTime }: TimerDisplayProps) => {
   const formatTime = (timeToformat: number) => {
     if (timeToformat <= 0) {
       return `00`;
@@ -33,10 +35,7 @@ interface EntryButtonProps {
   handleEnterRoom: () => void;
 }
 
-const EntryButton: React.FC<EntryButtonProps> = ({
-  onIdle,
-  handleEnterRoom,
-}) => (
+const EntryButton = ({ onIdle, handleEnterRoom }: EntryButtonProps) => (
   <button
     type="button"
     className="btn btn-primary"
@@ -51,7 +50,7 @@ interface RoomEnterMessageProps {
   onIdle: boolean;
 }
 
-const RoomEnterMessage: React.FC<RoomEnterMessageProps> = ({ onIdle }) => {
+const RoomEnterMessage = ({ onIdle }: RoomEnterMessageProps) => {
   if (onIdle) {
     return <div>예약한 방이 없어요!</div>;
   }
@@ -62,7 +61,7 @@ interface TimerProps {
   reservedTime: string; // YYYY-MM-DDTHH:mm:ssZ
 }
 
-const Timer: React.FC<TimerProps> = ({ reservedTime }) => {
+const Timer = ({ reservedTime }: TimerProps) => {
   const [remainingTime, setRemainingTime] = useState(
     Math.floor((Date.parse(reservedTime) - Date.now()) / SEC_IN_MILLISEC)
   ); // in sec
