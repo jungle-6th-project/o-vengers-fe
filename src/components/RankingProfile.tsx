@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface RankingProfileProps {
   username: string;
-  studyTime: string;
+  studyTime: number[];
   profileImg: string;
   bgColor: string;
   textColor: string;
@@ -22,7 +22,9 @@ const RankingProfile: React.FC<RankingProfileProps & { title: string }> = ({
 }) => {
   return (
     <div className={`stat ${bgColor}`}>
+      {/* 순위 */}
       <div className={`stat-title ${textColor}`}>{title}</div>
+      {/* 프로필사진 */}
       <div className="stat-figure">
         <div className="avatar">
           <div className="w-16 mask mask-squircle">
@@ -30,28 +32,26 @@ const RankingProfile: React.FC<RankingProfileProps & { title: string }> = ({
           </div>
         </div>
       </div>
-      <div
-        style={{
-          gridColumnStart: 3,
-        }}
-      >
+      {/* 닉네임, 공부시간 */}
+      <div style={{ gridColumnStart: 3 }}>
         <div
-          className="stat-title text-sm w-28"
+          className="stat-title text-sm w-16"
           style={{
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            maxWidth: '70%',
+            maxWidth: '100%',
           }}
         >
           {username}
         </div>
-        <div className="stat-desc text-xs">{studyTime}</div>
+        <div className="stat-desc text-xs">{`${studyTime[0]}H ${studyTime[1]}m`}</div>
       </div>
     </div>
   );
 };
 
+// TODO: CSS 조정(MyRankingProfile, OtherRankingProfile 둘 다)
 const MyRankingProfile: React.FC<
   Omit<RankingProfileProps, 'bgColor' | 'textColor'>
 > = ({ username, studyTime, profileImg }) => {
