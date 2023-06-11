@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SEC_IN_MILLISEC, MIN_IN_SEC } from '../constants';
 
 interface TimerDisplayProps {
@@ -57,11 +58,7 @@ const RoomEnterMessage = ({ onIdle }: RoomEnterMessageProps) => {
   return <div>방 입장까지 남은 시간</div>;
 };
 
-interface TimerProps {
-  reservedTime: string; // YYYY-MM-DDTHH:mm:ssZ
-}
-
-const Timer = ({ reservedTime }: TimerProps) => {
+const useCountdown = (reservedTime: string) => {
   const [remainingTime, setRemainingTime] = useState(
     Math.floor((Date.parse(reservedTime) - Date.now()) / SEC_IN_MILLISEC)
   ); // in sec
@@ -80,6 +77,16 @@ const Timer = ({ reservedTime }: TimerProps) => {
       clearInterval(intervalId);
     };
   }, [reservedTime]);
+
+  return remainingTime;
+};
+
+export interface TimerProps {
+  reservedTime: string; // YYYY-MM-DDTHH:mm:ssZ
+}
+
+const Timer = ({ reservedTime }: TimerProps) => {
+  const remainingTime = useCountdown(reservedTime);
 
   const [onIdle, setOnIdle] = useState(
     remainingTime <= -50 * MIN_IN_SEC || remainingTime > 10 * MIN_IN_SEC
@@ -104,5 +111,57 @@ const Timer = ({ reservedTime }: TimerProps) => {
   );
 };
 
+declare global {
+  interface Window {
+    room_exit_modal: HTMLDialogElement;
+  }
+}
+
+const RoomExitModal = () => {
+  return (
+    <dialog id="room_exit_modal" className="modal">
+      <form method="dialog" className="modal-box">
+        <h3 className="font-bold text-lg">
+          50분 동안 집중하셨어요! 수고하셨습니다 :)
+        </h3>
+        <p className="py-4">10초 후 자동으로 나가집니다.</p>
+      </form>
+    </dialog>
+  );
+};
+
+const RoomTimer = ({ reservedTime }: TimerProps) => {
+  const remainingTime = useCountdown(reservedTime);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (remainingTime <= 0 && !showModal) {
+      window.room_exit_modal.removeAttribute('open');
+      window.room_exit_modal.showModal();
+      setShowModal(true);
+    }
+  }, [remainingTime, showModal]);
+
+  useEffect(() => {
+    if (showModal) {
+      const timerId = setTimeout(() => {
+        navigate('/');
+      }, 10000);
+
+      return () => clearTimeout(timerId);
+    }
+
+    return () => {};
+  }, [showModal, navigate]);
+
+  return (
+    <div>
+      <TimerDisplay remainingTime={remainingTime} />
+      <RoomExitModal />
+    </div>
+  );
+};
+
 export default Timer;
-export { TimerDisplay };
+export { RoomTimer };
