@@ -6,10 +6,15 @@ import {
   RankingProfileProps,
 } from './RankingProfile';
 
-const fetchRanking = async () => {
-  // TODO: 백엔드 서버 배포되면 실제 주소로 변경
-  const data = await axios.get('http://localhost:4000/rankingdata');
-  return data;
+// FIXME: 백엔드 서버 배포되면 실제 주소로 변경
+const fetchUserRanking = async () => {
+  const res = await axios.get(`http://localhost:4000/userRank`);
+  return res.data.body.data;
+};
+
+const fetchAllRankings = async (groupId: number) => {
+  const res = await axios.get(`http://localhost:4000/allRanks${groupId}`);
+  return res.data.body.data;
 };
 
 // format: "PT30H35M" => [30, 35]
@@ -36,38 +41,67 @@ const sortByStudyTime = (
   return 0;
 };
 
-const Ranking = () => {
+const UserRanking = () => {
+  const { isLoading, isError, isFetching, data } = useQuery(
+    ['userRanking'],
+    () => fetchUserRanking(),
+    {
+      refetchInterval: 60000,
+      staleTime: 60000,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    }
+  );
+
+  // FIXME: 로컬 스토리지에 저장된 별명/프로필사진 데이터 사용하기(로그인 기능 머지 후)
+  if (isLoading || isFetching || isError) {
+    return (
+      <div className="sticky top-0 z-10">
+        <MyRankingProfile
+          nickname="로딩중..."
+          studyTime={[0, 0]}
+          profileImg="http://tastyethnics.com/wp-content/uploads/bb-plugin/cache/default-profile-square.png"
+        />
+      </div>
+    );
+  }
+  // FIXME: 로컬 스토리지에 저장된 별명/프로필사진 데이터 사용하기(로그인 기능 머지 후)
+  return (
+    <div className="sticky top-0 z-10">
+      {data && (
+        <MyRankingProfile
+          nickname={data[0].nickname}
+          studyTime={parseStudyTime(data[0].totalDuration)}
+          profileImg={data[0].profile}
+        />
+      )}
+    </div>
+  );
+};
+
+const AllRankings = ({ groupId }: { groupId: number }) => {
   // 마운트될 때마다 + 해당 윈도우를 포커스할 때마다 + 1분마다 다시 fetch
   // TODO: 서버에 너무 무리가 되는 건 아닌지 확인
   const { isLoading, isError, isFetching, data } = useQuery(
     ['rankings'],
-    fetchRanking,
+    () => fetchAllRankings(groupId),
     {
       refetchInterval: 60000,
     }
   );
 
   if (isLoading || isFetching || isError) {
-    return (
-      <div className="stats stats-vertical shadow w-60 h-96">
-        <div className="sticky top-0 z-10">
-          <MyRankingProfile
-            username="로딩중..."
-            studyTime={[0, 0]}
-            profileImg="http://tastyethnics.com/wp-content/uploads/bb-plugin/cache/default-profile-square.png"
-          />
-        </div>
-        <span className="stat stat-title loading loading-dots loading-sm" />
-      </div>
-    );
+    return <span className="stat stat-title loading loading-dots loading-sm" />;
   }
 
   let sortedData;
-  if (data && data.data) {
-    sortedData = [...data.data]
+  if (data) {
+    sortedData = [...data]
       .map(datum => ({
         ...datum,
-        studyTime: parseStudyTime(datum.studyTime),
+        memberId: datum.memberId,
+        profileImg: datum.profile,
+        studyTime: parseStudyTime(datum.totalDuration),
       }))
       .sort((a, b) => sortByStudyTime(a.studyTime, b.studyTime));
   } else {
@@ -75,26 +109,32 @@ const Ranking = () => {
   }
 
   return (
+    <>
+      {sortedData.map(
+        (datum: RankingProfileProps & { memberId: number }, index: number) => {
+          return (
+            <OtherRankingProfile
+              key={datum.memberId}
+              rank={index + 1}
+              nickname={datum.nickname}
+              studyTime={datum.studyTime}
+              profileImg={datum.profileImg}
+            />
+          );
+        }
+      )}
+    </>
+  );
+};
+
+// TODO: 현재 그룹 아이디는 프론트에서 알아서 상태 관리
+const Ranking = () => {
+  const groupId = 0;
+
+  return (
     <div className="stats stats-vertical shadow w-60 h-96">
-      <div className="sticky top-0 z-10">
-        {/* TODO: 본인 데이터 받아오는 걸로 변경 */}
-        <MyRankingProfile
-          username="본인아이디"
-          studyTime={[0, 0]}
-          profileImg="https://daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.jpg"
-        />
-      </div>
-      {sortedData.map((datum: RankingProfileProps, index: number) => {
-        return (
-          <OtherRankingProfile
-            key={datum.username}
-            rank={index + 1}
-            username={datum.username}
-            studyTime={datum.studyTime}
-            profileImg={datum.profileImg}
-          />
-        );
-      })}
+      <UserRanking />
+      <AllRankings groupId={groupId} />
     </div>
   );
 };
