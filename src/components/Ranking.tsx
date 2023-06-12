@@ -1,20 +1,42 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import {
-  MyRankingProfile,
-  OtherRankingProfile,
-  OtherRankingProfileProps,
+  UserRankingProfile,
+  GroupRankingProfile,
+  GroupRankingProfileProps,
 } from './RankingProfile';
 
-// FIXME: 백엔드 서버 배포되면 실제 주소로 변경
-const fetchUserRanking = async () => {
-  const res = await axios.get(`http://localhost:4000/userRank`);
-  return res.data.body.data;
+const fetchUserRanking = async (accessToken: string) => {
+  const res = await axios.get(`https://www.sangyeop.shop/api/v1/members`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!res.data || !res.data.data || !res.data.data.duration) {
+    throw new Error('User data is not available');
+  }
+
+  return res.data.data;
 };
 
-const fetchAllRankings = async (groupId: number) => {
-  const res = await axios.get(`http://localhost:4000/allRanks${groupId}`);
-  return res.data.body.data;
+const fetchAllRankings = async (accessToken: string, groupId: number) => {
+  const res = await axios.get(
+    `https://www.sangyeop.shop/api/v1/ranks/${groupId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (!res.data || !res.data.data || !res.data.data[0]) {
+    console.log('why');
+    throw new Error('Ranking data is not available');
+  }
+
+  return res.data.data;
 };
 
 // format: "PT30H35M" => [30, 35]
@@ -42,38 +64,40 @@ const sortByStudyTime = (
 };
 
 const UserRanking = () => {
+  const [{ accessToken }, ,] = useCookies(['accessToken']);
+
   const { isLoading, isError, data } = useQuery(
     ['userRanking'],
-    () => fetchUserRanking(),
+    () => fetchUserRanking(accessToken),
     {
       refetchInterval: 60000,
       staleTime: Infinity,
     }
   );
 
-  // FIXME: 로컬 스토리지에 저장된 별명/프로필사진 데이터 사용하기(로그인 기능 머지 후)
   if (isLoading || isError) {
     return (
       <div className="sticky top-0 z-10">
-        <MyRankingProfile studyTime={[0, 0]} />
+        <UserRankingProfile studyTime={[0, 0]} />
       </div>
     );
   }
 
-  // FIXME: 로컬 스토리지에 저장된 별명/프로필사진 데이터 사용하기(로그인 기능 머지 후)
   return (
     <div className="sticky top-0 z-10">
-      {data && (
-        <MyRankingProfile studyTime={parseStudyTime(data[0].totalDuration)} />
+      {data.duration && (
+        <UserRankingProfile studyTime={parseStudyTime(data.duration)} />
       )}
     </div>
   );
 };
 
 const AllRankings = ({ groupId }: { groupId: number }) => {
+  const [{ accessToken }, ,] = useCookies(['accessToken']);
+
   const { isLoading, isError, data } = useQuery(
     ['rankings'],
-    () => fetchAllRankings(groupId),
+    () => fetchAllRankings(accessToken, groupId),
     {
       refetchInterval: 60000,
       staleTime: 5000,
@@ -102,11 +126,11 @@ const AllRankings = ({ groupId }: { groupId: number }) => {
     <>
       {sortedData.map(
         (
-          datum: OtherRankingProfileProps & { memberId: number },
+          datum: GroupRankingProfileProps & { memberId: number },
           index: number
         ) => {
           return (
-            <OtherRankingProfile
+            <GroupRankingProfile
               key={datum.memberId}
               rank={index + 1}
               nickname={datum.nickname}
@@ -120,7 +144,7 @@ const AllRankings = ({ groupId }: { groupId: number }) => {
   );
 };
 
-// TODO: 현재 그룹 아이디는 프론트에서 알아서 상태 관리
+// TODO: 현재 그룹 아이디는 프론트에서 상태 관리
 const Ranking = () => {
   const groupId = 0;
 

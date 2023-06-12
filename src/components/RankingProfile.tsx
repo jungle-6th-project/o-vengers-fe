@@ -1,8 +1,10 @@
-interface MyRankingProfileProps {
+import { useUser } from '../store';
+
+interface UserRankingProfileProps {
   studyTime: number[];
 }
 
-interface ExtendedRankingProfileProps extends MyRankingProfileProps {
+interface ExtendedRankingProfileProps extends UserRankingProfileProps {
   nickname: string;
   profileImg: string;
 }
@@ -13,7 +15,7 @@ interface RankingProfileProps extends ExtendedRankingProfileProps {
   textColor: string;
 }
 
-export interface OtherRankingProfileProps extends ExtendedRankingProfileProps {
+export interface GroupRankingProfileProps extends ExtendedRankingProfileProps {
   rank: number;
 }
 
@@ -58,13 +60,14 @@ const RankingProfile = ({
   );
 };
 
-const MyRankingProfile = ({ studyTime }: MyRankingProfileProps) => {
+const UserRankingProfile = ({ studyTime }: UserRankingProfileProps) => {
+  const user = useUser();
+
   return (
-    // FIXME: 로컬 스토리지 데이터 사용하기
     <RankingProfile
-      nickname="익명123123123"
+      nickname={user.name}
       studyTime={studyTime}
-      profileImg="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg"
+      profileImg={user.profile}
       title="MY"
       bgColor="bg-black"
       textColor="text-white"
@@ -72,12 +75,12 @@ const MyRankingProfile = ({ studyTime }: MyRankingProfileProps) => {
   );
 };
 
-const OtherRankingProfile = ({
+const GroupRankingProfile = ({
   rank,
   nickname,
   studyTime,
   profileImg,
-}: OtherRankingProfileProps) => {
+}: GroupRankingProfileProps) => {
   return (
     <RankingProfile
       nickname={nickname}
@@ -90,4 +93,4 @@ const OtherRankingProfile = ({
   );
 };
 
-export { MyRankingProfile, OtherRankingProfile };
+export { UserRankingProfile, GroupRankingProfile };
