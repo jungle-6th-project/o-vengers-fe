@@ -7,7 +7,6 @@ import App, { loader as AppLoader } from './App';
 import './index.css';
 import Login from './routes/Login';
 import KakaoCallback from './routes/KaKaoCallback';
-import Study from './routes/Study';
 
 const router = createBrowserRouter([
   {
@@ -22,10 +21,6 @@ const router = createBrowserRouter([
   {
     path: '/kakao_redirect',
     element: <KakaoCallback />,
-  },
-  {
-    path: '/study/:id',
-    element: <Study />,
   },
 ]);
 
