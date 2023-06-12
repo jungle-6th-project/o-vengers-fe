@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 import Modal from './components/ModalMain';
 import { getUsers } from './utils/fetcher';
 import { useUser, useIsLoggedIn, useUserActions } from './store';
+import Ranking from './components/Ranking';
 
 export async function loader() {
   const users = await getUsers();
@@ -44,6 +45,8 @@ function App() {
         </Link>
       )}
       <Modal />
+      <br />
+      <Ranking />
     </div>
   );
 }

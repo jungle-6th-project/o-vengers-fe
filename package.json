@@ -16,6 +16,7 @@
   "dependencies": {
     "@tanstack/react-query": "^4.29.12",
     "axios": "^1.4.0",
+    "dotenv": "^16.1.4",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
