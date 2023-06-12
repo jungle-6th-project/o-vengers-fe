@@ -1,37 +1,45 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { useEffect } from 'react';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
+import { useUserActions } from '../store';
 
 function KakaoCallback() {
-  useEffect(() => {
-    const params = new URL(document.location.toString()).searchParams;
-    const code = params.get('code');
-    const grantType = 'authorization_code';
-    const REST_API_KEY = `${import.meta.env.VITE_REST_API_KEY}`;
-    const REDIRECT_URI = `${import.meta.env.VITE_REDIRECT_URL}`;
+  const { setUser, setIsLoggedIn } = useUserActions();
+  const [, setAccessToken] = useCookies(['accessToken']);
+  const [, setRefreshToken] = useCookies(['refreshToken']);
+  const navigate = useNavigate();
 
-    axios
-      .post(
-        `https://kauth.kakao.com/oauth/token?grant_type=${grantType}&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${code}`,
-        {},
-        {
-          headers: {
-            'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-          },
-        }
-      )
-      .then((res: AxiosResponse) => {
-        return res.data?.access_token;
-      })
-      .then(token => {
-        const userInfo = axios.get('https://kapi.kakao.com/v2/user/me', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        return userInfo;
-      })
-      .then(userInfo => console.log(userInfo))
-      .catch((error: AxiosError) => console.log(error));
-  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
+
+      try {
+        const response = await axios.post(
+          `https://www.sangyeop.shop/api/v1/members/tokens`,
+          {
+            authCode: code,
+          }
+        );
+        const { accessToken, refreshToken } = response.data.data;
+
+        setAccessToken('accessToken', accessToken, { path: '/' });
+        setRefreshToken('refreshToken', refreshToken, { path: '/' });
+
+        setUser(accessToken);
+        setIsLoggedIn(true);
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [setAccessToken, setRefreshToken, navigate, setUser, setIsLoggedIn]);
+
   return <></>;
 }
+
 export default KakaoCallback;
