@@ -20,7 +20,7 @@ module.exports = {
   },
   plugins: ['import', 'react-refresh', '@typescript-eslint', 'prettier'],
   rules: {
-    'react-refresh/only-export-components': 'warn',
+    'react-refresh/only-export-components': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'react/react-in-jsx-scope': 'off',
     'import/extensions': [
@@ -34,18 +34,13 @@ module.exports = {
         json: 'never',
       },
     ],
-    'import/no-extraneous-dependencies': [
-      'error',
-      {
-        devDependencies: false,
-        optionalDependencies: false,
-        peerDependencies: false,
-      },
-    ],
+    'import/no-extraneous-dependencies': 'off',
     'react/function-component-definition': [
       2,
       { namedComponents: ['arrow-function', 'function-declaration'] },
     ],
     'react/prop-types': 'off',
+    'no-console': 'off',
+    'jsx-a11y/media-has-caption': 'off',
   },
 };
