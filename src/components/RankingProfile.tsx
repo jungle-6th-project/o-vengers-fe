@@ -1,31 +1,48 @@
-import React from 'react';
+import { useUser } from '../store';
 
-interface RankingProfileProps {
-  username: string;
-  studyTime: string;
+interface UserRankingProfileProps {
+  studyTime: number[];
+}
+
+interface ExtendedRankingProfileProps extends UserRankingProfileProps {
+  nickname: string;
   profileImg: string;
+}
+
+interface RankingProfileProps extends ExtendedRankingProfileProps {
+  title: string;
   bgColor: string;
   textColor: string;
 }
 
-interface OtherRankingProfileProps extends RankingProfileProps {
+export interface GroupRankingProfileProps extends ExtendedRankingProfileProps {
   rank: number;
 }
 
-const RankingProfile: React.FC<RankingProfileProps & { title: string }> = ({
+const RankingProfile = ({
   title,
-  username,
+  nickname,
   studyTime,
   profileImg,
   bgColor,
   textColor,
-}) => {
+}: RankingProfileProps) => {
   return (
     <div className={`stat ${bgColor}`}>
+      {/* 순위 */}
       <div className={`stat-title ${textColor}`}>{title}</div>
-      <div>
+      {/* 프로필사진 */}
+      <div className="stat-figure">
+        <div className="avatar">
+          <div className="w-16 mask mask-squircle">
+            <img src={profileImg} alt={nickname} />
+          </div>
+        </div>
+      </div>
+      {/* 닉네임, 공부시간 */}
+      <div style={{ gridColumnStart: 3 }}>
         <div
-          className="stat-title text-sm w-28"
+          className={`stat-title text-sm w-16 ${textColor}`}
           style={{
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -33,50 +50,47 @@ const RankingProfile: React.FC<RankingProfileProps & { title: string }> = ({
             maxWidth: '100%',
           }}
         >
-          {username}
+          {nickname}
         </div>
-        <div className="stat-desc text-xs">{studyTime}</div>
-      </div>
-      <div className="stat-figure">
-        <div className="avatar">
-          <div className="w-16 mask mask-squircle">
-            <img src={profileImg} alt={username} />
-          </div>
-        </div>
+        <div
+          className={`stat-desc text-xs ${textColor}`}
+        >{`${studyTime[0]}H ${studyTime[1]}m`}</div>
       </div>
     </div>
   );
 };
 
-// TODO: sticky 속성 추가
-const MyRankingProfile: React.FC<
-  Omit<RankingProfileProps, 'bgColor' | 'textColor'>
-> = ({ username, studyTime, profileImg }) => {
+const UserRankingProfile = ({ studyTime }: UserRankingProfileProps) => {
+  const user = useUser();
+
   return (
     <RankingProfile
-      username={username}
+      nickname={user.name}
       studyTime={studyTime}
-      profileImg={profileImg}
-      title="Me"
-      bgColor="bg-primary"
-      textColor="text-secondary"
+      profileImg={user.profile}
+      title="MY"
+      bgColor="bg-black"
+      textColor="text-white"
     />
   );
 };
 
-const OtherRankingProfile: React.FC<
-  Omit<OtherRankingProfileProps, 'bgColor' | 'textColor'>
-> = ({ rank, username, studyTime, profileImg }) => {
+const GroupRankingProfile = ({
+  rank,
+  nickname,
+  studyTime,
+  profileImg,
+}: GroupRankingProfileProps) => {
   return (
     <RankingProfile
-      username={username}
+      nickname={nickname}
       studyTime={studyTime}
       profileImg={profileImg}
       title={`${rank}위`}
-      bgColor=""
-      textColor="text-primary"
+      bgColor="bg-white"
+      textColor="text-black"
     />
   );
 };
 
-export { MyRankingProfile, OtherRankingProfile };
+export { UserRankingProfile, GroupRankingProfile };
