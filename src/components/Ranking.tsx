@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   MyRankingProfile,
   OtherRankingProfile,
-  RankingProfileProps,
+  OtherRankingProfileProps,
 } from './RankingProfile';
 
 // FIXME: 백엔드 서버 배포되면 실제 주소로 변경
@@ -42,55 +42,45 @@ const sortByStudyTime = (
 };
 
 const UserRanking = () => {
-  const { isLoading, isError, isFetching, data } = useQuery(
+  const { isLoading, isError, data } = useQuery(
     ['userRanking'],
     () => fetchUserRanking(),
     {
       refetchInterval: 60000,
-      staleTime: 60000,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
+      staleTime: Infinity,
     }
   );
 
   // FIXME: 로컬 스토리지에 저장된 별명/프로필사진 데이터 사용하기(로그인 기능 머지 후)
-  if (isLoading || isFetching || isError) {
+  if (isLoading || isError) {
     return (
       <div className="sticky top-0 z-10">
-        <MyRankingProfile
-          nickname="로딩중..."
-          studyTime={[0, 0]}
-          profileImg="http://tastyethnics.com/wp-content/uploads/bb-plugin/cache/default-profile-square.png"
-        />
+        <MyRankingProfile studyTime={[0, 0]} />
       </div>
     );
   }
+
   // FIXME: 로컬 스토리지에 저장된 별명/프로필사진 데이터 사용하기(로그인 기능 머지 후)
   return (
     <div className="sticky top-0 z-10">
       {data && (
-        <MyRankingProfile
-          nickname={data[0].nickname}
-          studyTime={parseStudyTime(data[0].totalDuration)}
-          profileImg={data[0].profile}
-        />
+        <MyRankingProfile studyTime={parseStudyTime(data[0].totalDuration)} />
       )}
     </div>
   );
 };
 
 const AllRankings = ({ groupId }: { groupId: number }) => {
-  // 마운트될 때마다 + 해당 윈도우를 포커스할 때마다 + 1분마다 다시 fetch
-  // TODO: 서버에 너무 무리가 되는 건 아닌지 확인
-  const { isLoading, isError, isFetching, data } = useQuery(
+  const { isLoading, isError, data } = useQuery(
     ['rankings'],
     () => fetchAllRankings(groupId),
     {
       refetchInterval: 60000,
+      staleTime: 5000,
     }
   );
 
-  if (isLoading || isFetching || isError) {
+  if (isLoading || isError) {
     return <span className="stat stat-title loading loading-dots loading-sm" />;
   }
 
@@ -111,7 +101,10 @@ const AllRankings = ({ groupId }: { groupId: number }) => {
   return (
     <>
       {sortedData.map(
-        (datum: RankingProfileProps & { memberId: number }, index: number) => {
+        (
+          datum: OtherRankingProfileProps & { memberId: number },
+          index: number
+        ) => {
           return (
             <OtherRankingProfile
               key={datum.memberId}

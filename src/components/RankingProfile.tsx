@@ -1,25 +1,30 @@
-import React from 'react';
-
-export interface RankingProfileProps {
-  nickname: string;
+interface MyRankingProfileProps {
   studyTime: number[];
+}
+
+interface ExtendedRankingProfileProps extends MyRankingProfileProps {
+  nickname: string;
   profileImg: string;
+}
+
+interface RankingProfileProps extends ExtendedRankingProfileProps {
+  title: string;
   bgColor: string;
   textColor: string;
 }
 
-interface OtherRankingProfileProps extends RankingProfileProps {
+export interface OtherRankingProfileProps extends ExtendedRankingProfileProps {
   rank: number;
 }
 
-const RankingProfile: React.FC<RankingProfileProps & { title: string }> = ({
+const RankingProfile = ({
   title,
   nickname,
   studyTime,
   profileImg,
   bgColor,
   textColor,
-}) => {
+}: RankingProfileProps) => {
   return (
     <div className={`stat ${bgColor}`}>
       {/* 순위 */}
@@ -35,7 +40,7 @@ const RankingProfile: React.FC<RankingProfileProps & { title: string }> = ({
       {/* 닉네임, 공부시간 */}
       <div style={{ gridColumnStart: 3 }}>
         <div
-          className="stat-title text-sm w-16"
+          className={`stat-title text-sm w-16 ${textColor}`}
           style={{
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -45,40 +50,42 @@ const RankingProfile: React.FC<RankingProfileProps & { title: string }> = ({
         >
           {nickname}
         </div>
-        <div className="stat-desc text-xs">{`${studyTime[0]}H ${studyTime[1]}m`}</div>
+        <div
+          className={`stat-desc text-xs ${textColor}`}
+        >{`${studyTime[0]}H ${studyTime[1]}m`}</div>
       </div>
     </div>
   );
 };
 
-// TODO: CSS 조정
-const MyRankingProfile: React.FC<
-  Omit<RankingProfileProps, 'bgColor' | 'textColor'>
-> = ({ nickname, studyTime, profileImg }) => {
+const MyRankingProfile = ({ studyTime }: MyRankingProfileProps) => {
   return (
+    // FIXME: 로컬 스토리지 데이터 사용하기
     <RankingProfile
-      nickname={nickname}
+      nickname="익명123123123"
       studyTime={studyTime}
-      profileImg={profileImg}
+      profileImg="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg"
       title="MY"
-      bgColor="bg-primary"
-      textColor="text-secondary"
+      bgColor="bg-black"
+      textColor="text-white"
     />
   );
 };
 
-// TODO: CSS 조정
-const OtherRankingProfile: React.FC<
-  Omit<OtherRankingProfileProps, 'bgColor' | 'textColor'>
-> = ({ rank, nickname, studyTime, profileImg }) => {
+const OtherRankingProfile = ({
+  rank,
+  nickname,
+  studyTime,
+  profileImg,
+}: OtherRankingProfileProps) => {
   return (
     <RankingProfile
       nickname={nickname}
       studyTime={studyTime}
       profileImg={profileImg}
       title={`${rank}위`}
-      bgColor=""
-      textColor="text-primary"
+      bgColor="bg-white"
+      textColor="text-black"
     />
   );
 };
