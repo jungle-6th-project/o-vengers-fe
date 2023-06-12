@@ -21,7 +21,7 @@ const fetchUserRanking = async (accessToken: string) => {
   return res.data.data;
 };
 
-const fetchAllRankings = async (accessToken: string, groupId: number) => {
+const fetchGroupRankings = async (accessToken: string, groupId: number) => {
   const res = await axios.get(
     `https://www.sangyeop.shop/api/v1/ranks/${groupId}`,
     {
@@ -32,7 +32,6 @@ const fetchAllRankings = async (accessToken: string, groupId: number) => {
   );
 
   if (!res.data || !res.data.data || !res.data.data[0]) {
-    console.log('why');
     throw new Error('Ranking data is not available');
   }
 
@@ -92,12 +91,12 @@ const UserRanking = () => {
   );
 };
 
-const AllRankings = ({ groupId }: { groupId: number }) => {
+const GroupRankings = ({ groupId }: { groupId: number }) => {
   const [{ accessToken }, ,] = useCookies(['accessToken']);
 
   const { isLoading, isError, data } = useQuery(
-    ['rankings'],
-    () => fetchAllRankings(accessToken, groupId),
+    ['groupRankings'],
+    () => fetchGroupRankings(accessToken, groupId),
     {
       refetchInterval: 60000,
       staleTime: 5000,
@@ -151,7 +150,7 @@ const Ranking = () => {
   return (
     <div className="stats stats-vertical shadow w-60 h-96">
       <UserRanking />
-      <AllRankings groupId={groupId} />
+      <GroupRankings groupId={groupId} />
     </div>
   );
 };
