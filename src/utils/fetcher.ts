@@ -6,10 +6,12 @@ export async function getUsers() {
   return data;
 }
 
-export async function getUser(id: number) {
-  const res = await axios.get(
-    `https://jsonplaceholder.typicode.com/user/${id}`
-  );
+export async function getUser(accessToken: string) {
+  const res = await axios.get('https://www.sangyeop.shop/api/v1/members', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   const data = await res.data;
   return data;
 }
