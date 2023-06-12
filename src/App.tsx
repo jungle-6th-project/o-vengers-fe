@@ -4,6 +4,7 @@ import Modal from './components/ModalMain';
 import { getUsers } from './utils/fetcher';
 import { useUser, useIsLoggedIn, useUserActions } from './store';
 import Ranking from './components/Ranking';
+import Timer from './components/Timer';
 
 export async function loader() {
   const users = await getUsers();
@@ -47,6 +48,8 @@ function App() {
       <Modal />
       <br />
       <Ranking />
+      {/* TODO: 서버에서 예약 시간 받아와서 쓰기 */}
+      <Timer reservedTime={new Date(Date.now() + 605000).toISOString()} />
     </div>
   );
 }

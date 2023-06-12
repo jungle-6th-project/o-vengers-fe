@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { SEC_IN_MILLISEC, MIN_IN_SEC } from '../constants';
+
+const SEC_IN_MILLISEC = 1000;
+const MIN_IN_SEC = 60;
+
+const roomEnterExpireMin = 10;
+const roomExpireMin = 25;
+const roomEnterExpireSec = roomEnterExpireMin * MIN_IN_SEC;
+const roomExpireSec = roomExpireMin * MIN_IN_SEC;
 
 interface TimerDisplayProps {
   remainingTime: number;
@@ -15,14 +22,6 @@ const TimerDisplay = ({ remainingTime }: TimerDisplayProps) => {
   };
 
   return (
-    // <div>
-    //   <span className="countdown font-mono text-4xl">
-    //     <span
-    //       style={{ '--value': formatTime(Math.floor(remainingTime / 60)) }}
-    //     />
-    //     :<span style={{ '--value': formatTime(remainingTime % 60) }}></span>
-    //   </span>
-    // </div>
     <p className="font-mono text-4xl">
       {formatTime(Math.floor(remainingTime / 60))}:
       {formatTime(remainingTime % 60)}
@@ -38,7 +37,7 @@ interface EntryButtonProps {
 const EntryButton = ({ onIdle, handleEnterRoom }: EntryButtonProps) => (
   <button
     type="button"
-    className="btn btn-primary"
+    className={`btn btn-outline ${onIdle ? '' : 'btn-success'}`}
     disabled={onIdle}
     onClick={handleEnterRoom}
   >
@@ -72,7 +71,7 @@ const Timer = ({ reservedTime }: TimerProps) => {
         (Date.parse(reservedTime) - Date.now()) / SEC_IN_MILLISEC
       );
       setRemainingTime(newRemainingTime);
-      if (newRemainingTime <= -50 * MIN_IN_SEC) {
+      if (newRemainingTime <= -roomExpireSec) {
         clearInterval(intervalId);
       }
     }, SEC_IN_MILLISEC);
@@ -82,12 +81,12 @@ const Timer = ({ reservedTime }: TimerProps) => {
   }, [reservedTime]);
 
   const [onIdle, setOnIdle] = useState(
-    remainingTime <= -50 * MIN_IN_SEC || remainingTime > 10 * MIN_IN_SEC
+    remainingTime <= -roomExpireSec || remainingTime > roomEnterExpireSec
   );
 
   useEffect(() => {
     setOnIdle(
-      remainingTime <= -50 * MIN_IN_SEC || remainingTime > 10 * MIN_IN_SEC
+      remainingTime <= -roomExpireSec || remainingTime > roomEnterExpireSec
     );
   }, [remainingTime]);
 
@@ -96,10 +95,10 @@ const Timer = ({ reservedTime }: TimerProps) => {
   };
 
   return (
-    <div>
+    <div className="bg-black">
+      <EntryButton onIdle={onIdle} handleEnterRoom={handleEnterRoom} />
       <RoomEnterMessage onIdle={onIdle} />
       <TimerDisplay remainingTime={remainingTime} />
-      <EntryButton onIdle={onIdle} handleEnterRoom={handleEnterRoom} />
     </div>
   );
 };
