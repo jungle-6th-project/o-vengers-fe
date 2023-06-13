@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useCookies } from 'react-cookie';
-import { getAllGroups } from '../utils/fetcher';
+import { getAllGroups, joinGroup } from '../utils/api';
 import { lockIcon, searchIcon } from '../utils/icons';
 
 declare global {
@@ -9,18 +9,6 @@ declare global {
     groupSearchModal: HTMLDialogElement;
   }
 }
-
-const GroupSearchModalOpenButton = () => {
-  const handleOpen = () => {
-    window.groupSearchModal.showModal();
-  };
-
-  return (
-    <button type="button" className="btn btn-square" onClick={handleOpen}>
-      {searchIcon}
-    </button>
-  );
-};
 
 interface SelectedGroup {
   groupId: number;
@@ -100,7 +88,15 @@ const GroupsList = ({
 
 const GroupSearchModal = () => {
   const { accessToken } = useCookies(['accessToken'])[0];
-  const { data } = useQuery(['allGroupData'], () => getAllGroups(accessToken));
+
+  const queryInfo = useQuery(
+    ['allGroupData'],
+    () => getAllGroups(accessToken),
+    {
+      enabled: false,
+    }
+  );
+  const { data } = queryInfo;
 
   const [searchInputs, setSearchInputs] = useState('');
   const [selectedGroup, setSelectedGroup] = useState<SelectedGroup | null>(
@@ -109,7 +105,6 @@ const GroupSearchModal = () => {
 
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  // FIXME: 이미 가입한 건 안 보이게
   const filteredData = data?.filter((group: GroupData) =>
     group.groupName.toLowerCase().includes(searchInputs.toLowerCase())
   );
@@ -118,10 +113,16 @@ const GroupSearchModal = () => {
     setSearchInputs(e.currentTarget.value);
   };
 
+  const handleOpen = () => {
+    queryInfo.refetch();
+    window.groupSearchModal.showModal();
+  };
+
   const onClose = () => {
     setSearchInputs('');
     setSelectedGroup(null);
     window.groupSearchModal.close();
+    queryInfo.refetch();
   };
 
   const onGroupSelect = (group: SelectedGroup | null) => {
@@ -145,13 +146,35 @@ const GroupSearchModal = () => {
     }
   }, [searchInputs, selectedGroup, filteredData]);
 
-  // const onJoin = () => {
-  //   selectedGroup;
-  // }
+  const joinGroupMutation = useMutation(
+    (values: { accessToken: string; groupId: number; password: string }) =>
+      joinGroup(values),
+    {
+      onSuccess: res => {
+        if (res !== null) onClose();
+      },
+    }
+  );
+
+  const onJoin = () => {
+    if (!selectedGroup) {
+      return;
+    }
+
+    joinGroupMutation.mutate({
+      // eslint-disable-next-line object-shorthand
+      accessToken: accessToken,
+      groupId: selectedGroup.groupId,
+      password: passwordRef.current?.value || '',
+    });
+    // TODO: 에러 처리, 모달 닫고 해당 그룹으로 이동
+  };
 
   return (
     <>
-      <GroupSearchModalOpenButton />
+      <button type="button" className="btn btn-square" onClick={handleOpen}>
+        {searchIcon}
+      </button>
       <dialog id="groupSearchModal" className="modal">
         <form method="dialog" className="modal-box">
           <h1 className="font-semibold text-3xl">그룹 검색</h1>
@@ -184,7 +207,7 @@ const GroupSearchModal = () => {
               type="reset"
               className="btn btn-info btn-block col-auto mt-10 mb-2"
               value="그룹 참여하기"
-              onClick={() => console.log('clicked!')}
+              onClick={onJoin}
               disabled={!selectedGroup}
             />
             <input

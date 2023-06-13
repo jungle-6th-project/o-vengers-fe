@@ -1,7 +1,7 @@
 import { Link, redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Modal from './components/ModalMain';
-import { getUsers } from './utils/fetcher';
+import { getUsers } from './utils/api';
 import { useUser, useIsLoggedIn, useUserActions } from './store';
 import Ranking from './components/Ranking';
 import GroupSearchModal from './components/GroupSearchModal';
