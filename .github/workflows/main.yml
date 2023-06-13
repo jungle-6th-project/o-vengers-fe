@@ -38,4 +38,8 @@ jobs:
             dist s3://o-vengers-fe
 
       - name: Invalidate aws cloudFront cache
-        run: aws cloudfront create-invalidation --profile=o-vengers-fe --distribution-id E1BOS3OR902T3D --paths /*
+        run: |
+          aws cloudfront create-invalidation \
+            --profile o-vengers-fe \
+            --distribution-id E1BOS3OR902T3D \
+            --paths "/*"
