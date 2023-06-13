@@ -1,9 +1,10 @@
 import { Link, redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Modal from './components/ModalMain';
-import { getUsers } from './utils/fetcher';
+import { getUsers } from './utils/api';
 import { useUser, useIsLoggedIn, useUserActions } from './store';
 import Ranking from './components/Ranking';
+import GroupSearchModal from './components/GroupSearchModal';
 
 export async function loader() {
   const users = await getUsers();
@@ -12,7 +13,7 @@ export async function loader() {
 
 function App() {
   const user = useUser();
-  console.log('🚀 ~ file: App.tsx:14 ~ App ~ user:', user);
+  console.log('🚀 ~ file: App.tsx:16 ~ App ~ user:', user);
   const isLoggedIn = useIsLoggedIn();
   const { setIsLoggedIn, reset } = useUserActions();
   const [, , removeAccessTokenCookies] = useCookies(['accessToken']);
@@ -45,6 +46,7 @@ function App() {
         </Link>
       )}
       <Modal />
+      <GroupSearchModal />
       <br />
       <Ranking />
     </div>
