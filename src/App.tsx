@@ -4,6 +4,7 @@ import Modal from './components/ModalMain';
 import { getUsers } from './utils/fetcher';
 import { useUser, useIsLoggedIn, useUserActions } from './store';
 import Ranking from './components/Ranking';
+import GroupSearchModal from './components/GroupSearch';
 
 export async function loader() {
   const users = await getUsers();
@@ -45,6 +46,7 @@ function App() {
         </Link>
       )}
       <Modal />
+      <GroupSearchModal />
       <br />
       <Ranking />
     </div>
