@@ -1,19 +1,14 @@
 import { Link, redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Modal from './components/ModalMain';
-import { getUsers } from './utils/fetcher';
-import { useUser, useIsLoggedIn, useUserActions } from './store';
+import { useUser, useIsLoggedIn, useUserActions } from './store/useStore';
+import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
 import Timer from './components/Timer';
-
-export async function loader() {
-  const users = await getUsers();
-  return users;
-}
+import GroupSearchModal from './components/GroupSearchModal';
 
 function App() {
   const user = useUser();
-  console.log('🚀 ~ file: App.tsx:14 ~ App ~ user:', user);
   const isLoggedIn = useIsLoggedIn();
   const { setIsLoggedIn, reset } = useUserActions();
   const [, , removeAccessTokenCookies] = useCookies(['accessToken']);
@@ -46,10 +41,11 @@ function App() {
         </Link>
       )}
       <Modal />
+      <GroupSearchModal />
       <br />
       <Ranking />
-      {/* TODO: 서버에서 예약 시간 받아와서 쓰기 */}
       <Timer reservedTime={new Date(Date.now() + 605000).toISOString()} />
+      <Calendar />
     </div>
   );
 }

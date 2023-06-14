@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import { useUserActions } from '../store';
+import { useUserActions } from '../store/useStore';
 
 function KakaoCallback() {
   const { setUser, setIsLoggedIn } = useUserActions();

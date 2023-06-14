@@ -22,7 +22,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", ".eslintrc.cjs"],
+  "include": ["src", ".eslintrc.cjs", "tailwind.config.js", "vite.config.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"
