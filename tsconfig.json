@@ -3,10 +3,16 @@
     "target": "ES2020",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     },
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
@@ -22,7 +28,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", ".eslintrc.cjs"],
+  "include": [
+    "src",
+    ".eslintrc.cjs",
+    "tailwind.config.js",
+    "vite.config.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
