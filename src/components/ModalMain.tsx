@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { plusIcon } from '../utils/icons';
 
 declare global {
   interface Window {
@@ -35,10 +36,10 @@ function ModalMain() {
     <>
       <button
         type="button"
-        className="btn"
+        className="btn btn-square"
         onClick={() => window.my_modal_1.showModal()}
       >
-        그룹 생성
+        {plusIcon}
       </button>
       <dialog id="my_modal_1" className="modal">
         <form action="..." method="POST" className="modal-box">
