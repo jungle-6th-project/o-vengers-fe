@@ -3,6 +3,9 @@ import { useCookies } from 'react-cookie';
 import Modal from './components/ModalMain';
 import { useUser, useIsLoggedIn, useUserActions } from './store/useStore';
 import Calendar from './components/Calendar/Calendar';
+import Ranking from './components/Ranking';
+import Timer from './components/Timer';
+import GroupSearchModal from './components/GroupSearchModal';
 
 function App() {
   const user = useUser();
@@ -38,6 +41,10 @@ function App() {
         </Link>
       )}
       <Modal />
+      <GroupSearchModal />
+      <br />
+      <Ranking />
+      <Timer reservedTime={new Date(Date.now() + 605000).toISOString()} />
       <Calendar />
     </div>
   );
