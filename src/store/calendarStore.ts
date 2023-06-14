@@ -37,7 +37,7 @@ while (currentTime.isSameOrBefore(endTime)) {
   currentTime = currentTime.add(30, 'minute');
 }
 
-const useCalendarStore = create<CalendarStore>(set => ({
+const useCalendarStore = create<CalendarStore>(() => ({
   weeks,
   timeSlots,
 }));

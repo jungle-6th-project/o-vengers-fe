@@ -1,4 +1,4 @@
-import { useUser } from '../store';
+import { useUser } from '../store/useStore';
 
 interface UserRankingProfileProps {
   studyTime: number[];
