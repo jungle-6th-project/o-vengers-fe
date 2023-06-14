@@ -1,14 +1,8 @@
 import { Link, redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Modal from './components/ModalMain';
-import { getUsers } from './utils/fetcher';
 import { useUser, useIsLoggedIn, useUserActions } from './store/useStore';
 import Calendar from './components/Calendar/Calendar';
-
-export async function loader() {
-  const users = await getUsers();
-  return users;
-}
 
 function App() {
   const user = useUser();
