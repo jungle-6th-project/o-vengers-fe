@@ -148,7 +148,7 @@ const Ranking = () => {
   const groupId = 0;
 
   return (
-    <div className="stats stats-vertical shadow w-60 h-96">
+    <div className="shadow stats stats-vertical w-60 h-96">
       <UserRanking />
       <GroupRankings groupId={groupId} />
     </div>

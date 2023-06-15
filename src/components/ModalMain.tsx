@@ -43,23 +43,23 @@ function ModalMain() {
       </button>
       <dialog id="my_modal_1" className="modal">
         <form action="..." method="POST" className="modal-box">
-          <div className="form-control w-full mb-5">
-            <label className="label flex-col items-start" htmlFor="groupName">
-              <span className="label-text text-lg mb-2">그룹 이름</span>
+          <div className="w-full mb-5 form-control">
+            <label className="flex-col items-start label" htmlFor="groupName">
+              <span className="mb-2 text-lg label-text">그룹 이름</span>
               <input
                 id="groupName"
                 type="text"
                 placeholder="그룹 이름을 입력하세요"
-                className="input input-bordered w-full"
+                className="w-full input input-bordered"
                 name="groupName"
                 onChange={onChange}
               />
             </label>
           </div>
           <div className="form-control w-ful ">
-            <label className="label flex-col items-stretch" htmlFor="password">
-              <div className="flex justify-between items-center">
-                <span className="label-text text-lg mb-2">비밀번호 설정</span>
+            <label className="flex-col items-stretch label" htmlFor="password">
+              <div className="flex items-center justify-between">
+                <span className="mb-2 text-lg label-text">비밀번호 설정</span>
                 <input
                   type="checkbox"
                   className="toggle"
@@ -71,14 +71,14 @@ function ModalMain() {
                 id="password"
                 type="text"
                 placeholder="비밀번호를 입력하세요"
-                className="input input-bordered w-full "
+                className="w-full input input-bordered "
                 name="groupPassword"
                 onChange={onChange}
                 checked={isPassword}
               />
             </label>
           </div>
-          <div className="modal-action flex">
+          <div className="flex modal-action">
             <button
               type="button"
               className="btn"
