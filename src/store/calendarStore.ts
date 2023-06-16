@@ -32,8 +32,6 @@ while (currentTime.isSameOrBefore(endTime)) {
   currentTime = currentTime.add(30, 'minute');
 }
 
-type ReservationStatus = Map<string, Reservation>;
-
 // 한 칸마다 해당 날짜/시간, 유저가 예약한건지 아닌지, 방이 있다면 그 방 번호와 참여자가 저장됨
 // 그룹이 바뀌면 쓸모없어짐
 type Reservation = {
@@ -47,7 +45,7 @@ type Reservation = {
 type CalendarStore = {
   weeks: Week[];
   timeSlots: string[];
-  reservationStatus: ReservationStatus;
+  reservationStatus: { [key: string]: Reservation };
 
   updateReservation: (
     day: string,
@@ -74,7 +72,7 @@ type CalendarStore = {
   };
 };
 
-const initialReservationStatus: ReservationStatus = new Map();
+const initialReservationStatus: { [key: string]: Reservation } = {};
 
 const updateReservation = (
   state: CalendarStore,
@@ -83,24 +81,25 @@ const updateReservation = (
   update: (reservation: Reservation) => Reservation
 ) => {
   const key = `${day}T${timeSlot}:00`;
-  const currentReservation = state.reservationStatus.get(key);
+  const currentReservation = state.reservationStatus[key];
+  let newReservation;
 
   if (currentReservation) {
-    const newReservation = update(currentReservation); // update the reservation
-    state.reservationStatus.set(key, newReservation);
+    newReservation = update(currentReservation); // update the reservation
   } else {
-    const newReservation: Reservation = {
+    const defaultReservation: Reservation = {
       day,
       timeSlot,
       userReserved: false,
       roomId: -1,
       participants: [],
     };
-    const updatedReservation = update(newReservation); // create a new reservation
-    state.reservationStatus.set(key, updatedReservation);
+    newReservation = update(defaultReservation); // create a new reservation
   }
 
-  return { reservationStatus: state.reservationStatus };
+  return {
+    reservationStatus: { ...state.reservationStatus, [key]: newReservation },
+  };
 };
 
 const useCalendarStore = create<CalendarStore>(set => ({
@@ -154,8 +153,8 @@ const useCalendarStore = create<CalendarStore>(set => ({
 
 export const useWeeks = () => useCalendarStore(state => state.weeks);
 export const useTimeSlots = () => useCalendarStore(state => state.timeSlots);
-export const useReservation = () =>
-  useCalendarStore(state => state.reservationStatus);
+export const useReservation = (key: string) =>
+  useCalendarStore(state => state.reservationStatus[key]);
 export const useCalendarActions = () =>
   useCalendarStore(state => state.actions);
 

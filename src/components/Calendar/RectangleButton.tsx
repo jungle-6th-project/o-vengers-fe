@@ -26,7 +26,7 @@ const RectangleButton = ({ day, time, actions }: RectangleProps) => {
   const [startTime, endTime] = parseTime(day, time);
 
   const key = `${day}T${time}:00`;
-  const reservation = useReservation().get(key);
+  const reservation = useReservation(key);
 
   const doReserveButton = () => {
     const handleClick = () => {

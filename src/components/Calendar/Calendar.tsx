@@ -9,7 +9,11 @@ import { getUserReservation } from '../../utils/api';
 import CalendarHeader from './CalendarHeader';
 import TimeSlots from './TimeSlots';
 import Day from './Day';
-import { useCalendarActions, useTimeSlots, useWeeks } from '../../store/calendarStore';
+import {
+  useCalendarActions,
+  useTimeSlots,
+  useWeeks,
+} from '../../store/calendarStore';
 
 const parseISOTime = (timeString: string) => {
   // const time = dayjs(timeString, 'YYYY-MM-DDTHH:mm:ss');
