@@ -1,4 +1,4 @@
-import React from 'react';
+import React햣  from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
@@ -23,8 +23,8 @@ const router = createBrowserRouter([
     element: <KakaoCallback />,
   },
   {
-    path: '/study/:roomID',
-    element: <RightBar />,
+    path: '/study/:roomId',
+    element: <Study />,
   },
 ]);
 

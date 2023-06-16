@@ -65,3 +65,12 @@ sketch
 .env
 .idea
 src/test.json
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+.env.production
+=======
+.env.production
+>>>>>>> Stashed changes
+=======
+.env.production
+>>>>>>> Stashed changes
