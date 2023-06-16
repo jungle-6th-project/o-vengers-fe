@@ -1,4 +1,4 @@
-import React햣  from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
@@ -7,7 +7,7 @@ import './index.css';
 import App from './App';
 import Login from './routes/Login';
 import KakaoCallback from './routes/KaKaoCallback';
-import RightBar from './components/RightBar/RightBar';
+import Study from './routes/Study';
 
 const router = createBrowserRouter([
   {
