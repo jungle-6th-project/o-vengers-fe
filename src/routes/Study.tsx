@@ -2,7 +2,7 @@ import '@livekit/components-styles';
 import { PreJoin, LocalUserChoices } from '@livekit/components-react';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useUser } from '@/store/useStore';
+import { useUser } from '@/store/userStore';
 import ActiveRoom from '@/Video/ActiveRoom';
 
 function App() {

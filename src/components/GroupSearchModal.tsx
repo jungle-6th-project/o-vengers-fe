@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useCookies } from 'react-cookie';
-import { getAllGroups, joinGroup } from '../utils/api';
+import { getAllGroups, joinGroup } from '@/utils/api';
 import { lockIcon, searchIcon } from '@/utils/icons';
 
 declare global {
