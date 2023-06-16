@@ -81,9 +81,9 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
   }, [isEditing]);
 
   return (
-    <div className="TodoItem flex">
+    <div className="flex TodoItem">
       <div
-        className="bg-gray-100 rounded-lg p-2 m-2 h-20 flex items-center w-full"
+        className="flex items-center w-full h-20 p-2 m-2 bg-gray-100 rounded-lg"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -99,7 +99,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
               onKeyPress={onKeyPress}
             />
             <button
-              className="btn btn-link m-3 self-end"
+              className="self-end m-3 btn btn-link"
               onClick={onClickSave}
               type="button"
             >
@@ -132,7 +132,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
                   <AiFillEdit />
                 </button>
                 <button
-                  className="btn btn-link justify-end"
+                  className="justify-end btn btn-link"
                   onClick={onClickDelete}
                   type="button"
                 >

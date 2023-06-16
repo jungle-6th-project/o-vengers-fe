@@ -104,12 +104,12 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
   }, [showInput]);
 
   return (
-    <div className="bg-white border border-gray-300 shadow-md rounded-md p-2 m-3">
-      <div className="flex justify-between items-center p-2 m-2">
+    <div className="p-2 m-3 bg-white border border-gray-300 rounded-md shadow-md">
+      <div className="flex items-center justify-between p-2 m-2">
         <h3 className="text-2xl font-bold">{groupData.groupName}</h3>
         <button
           type="button"
-          className="text-gray-600 py-2 px-4"
+          className="px-4 py-2 text-gray-600"
           onClick={handleButtonClick}
         >
           <AiOutlinePlus size={24} />
