@@ -49,5 +49,12 @@ module.exports = {
     'react/prop-types': 'off',
     'no-console': 'off',
     'jsx-a11y/media-has-caption': 'off',
+    'import/extensions': [
+      'ignorePackages',
+      {
+        ignorePackages: true,
+        pattern: 'ignorePackages',
+      },
+    ],
   },
 };

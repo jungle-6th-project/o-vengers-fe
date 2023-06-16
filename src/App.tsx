@@ -29,13 +29,13 @@ function App() {
       {isLoggedIn ? (
         <>
           <div>{user.name}</div>
-          <button type="button" className="btn text-center" onClick={logOut}>
+          <button type="button" className="text-center btn" onClick={logOut}>
             로그아웃
           </button>
         </>
       ) : (
         <Link to="/login">
-          <button type="button" className="btn text-center">
+          <button type="button" className="text-center btn">
             로그인
           </button>
         </Link>
@@ -46,6 +46,11 @@ function App() {
       <Ranking />
       <Timer reservedTime={new Date(Date.now() + 605000).toISOString()} />
       <Calendar />
+      <Link to="/study/naklsdnlk">
+        <button type="button" className="btn">
+          입장하기 테스트 버튼
+        </button>
+      </Link>
     </div>
   );
 }
