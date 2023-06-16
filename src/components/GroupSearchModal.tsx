@@ -37,7 +37,7 @@ const GroupRadio = ({
   return (
     <>
       <div className="form-control">
-        <label className="label cursor-pointer" htmlFor={`${groupId}`}>
+        <label className="cursor-pointer label" htmlFor={`${groupId}`}>
           {/* 라디오 버튼 */}
           <input
             type="radio"
@@ -71,7 +71,7 @@ const GroupsList = ({
   selectedGroup,
 }: GroupsListProps) => {
   return (
-    <div className="overflow-y-scroll max-h-64 mt-8">
+    <div className="mt-8 overflow-y-scroll max-h-64">
       {filteredData?.map((group: GroupData) => (
         <GroupRadio
           key={group.groupId}
@@ -177,12 +177,12 @@ const GroupSearchModal = () => {
       </button>
       <dialog id="groupSearchModal" className="modal">
         <form method="dialog" className="modal-box">
-          <h1 className="font-semibold text-3xl">그룹 검색</h1>
+          <h1 className="text-3xl font-semibold">그룹 검색</h1>
           <p className="py-4 text-lg">그룹을 검색하고 참여할 수 있습니다.</p>
           <input
             type="text"
             placeholder="그룹 이름을 입력하세요"
-            className="input input-bordered w-full"
+            className="w-full input input-bordered"
             id="groupName"
             name="groupName"
             value={searchInputs}
@@ -196,7 +196,7 @@ const GroupSearchModal = () => {
           {selectedGroup?.secret && (
             <input
               placeholder="비밀번호를 입력하세요"
-              className="input input-bordered w-full mt-8"
+              className="w-full mt-8 input input-bordered"
               id="groupPassword"
               name="groupPassword"
               ref={passwordRef}
@@ -205,14 +205,14 @@ const GroupSearchModal = () => {
           <div className="flex flex-col">
             <input
               type="reset"
-              className="btn btn-info btn-block col-auto mt-10 mb-2"
+              className="col-auto mt-10 mb-2 btn btn-info btn-block"
               value="그룹 참여하기"
               onClick={onJoin}
               disabled={!selectedGroup}
             />
             <input
               type="reset"
-              className="btn btn-block col-auto"
+              className="col-auto btn btn-block"
               value="취소"
               onClick={onClose}
             />

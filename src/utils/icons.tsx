@@ -1,7 +1,7 @@
 export const searchIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5"
+    className="w-5 h-5"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -44,7 +44,7 @@ export const plusIcon = (
 export const errorIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="stroke-current shrink-0 h-6 w-6"
+    className="w-6 h-6 stroke-current shrink-0"
     fill="none"
     viewBox="0 0 24 24"
   >

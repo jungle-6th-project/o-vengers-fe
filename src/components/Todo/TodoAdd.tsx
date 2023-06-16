@@ -14,9 +14,9 @@ const TodoAdd = ({
   onKeyPress,
 }: GroupTodoInputProps) => {
   return (
-    <div className="bg-gray-100 rounded-lg p-2 m-2">
+    <div className="p-2 m-2 bg-gray-100 rounded-lg">
       <input
-        className="input bg-inherit border-hidden w-full input-sm m-2"
+        className="w-full m-2 input bg-inherit border-hidden input-sm"
         ref={inputRef}
         id="myInput"
         type="text"

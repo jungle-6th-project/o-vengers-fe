@@ -113,27 +113,27 @@ const GroupMakeModal = () => {
       <dialog id="my_modal_1" className="modal">
         {showCreateForm ? (
           <form className="modal-box" onSubmit={e => e.preventDefault()}>
-            <div className="form-control w-full mb-5">
-              <label className="label flex-col items-start" htmlFor="groupName">
-                <span className="label-text text-lg mb-2">그룹 이름</span>
+            <div className="w-full mb-5 form-control">
+              <label className="flex-col items-start label" htmlFor="groupName">
+                <span className="mb-2 text-lg label-text">그룹 이름</span>
                 <input
                   id="groupName"
                   type="text"
                   placeholder="그룹 이름을 입력하세요"
-                  className="input input-bordered w-full"
+                  className="w-full input input-bordered"
                   name="groupName"
                   onChange={onChange}
                   value={inputs.groupName}
                 />
               </label>
             </div>
-            <div className="form-control w-full">
+            <div className="w-full form-control">
               <label
-                className="label flex-col items-stretch"
+                className="flex-col items-stretch label"
                 htmlFor="password"
               >
-                <div className="flex justify-between items-center">
-                  <span className="label-text text-lg mb-2">비밀번호 설정</span>
+                <div className="flex items-center justify-between">
+                  <span className="mb-2 text-lg label-text">비밀번호 설정</span>
                   <input
                     type="checkbox"
                     className="toggle"
@@ -146,7 +146,7 @@ const GroupMakeModal = () => {
                   id="password"
                   type="text"
                   placeholder="비밀번호를 입력하세요"
-                  className="input input-bordered w-full"
+                  className="w-full input input-bordered"
                   name="password"
                   onChange={onChange}
                   value={inputs.password}
@@ -154,7 +154,7 @@ const GroupMakeModal = () => {
                 />
               </label>
             </div>
-            <div className="modal-action flex">
+            <div className="flex modal-action">
               <button type="button" className="btn" onClick={handleModalClose}>
                 취소
               </button>
@@ -169,10 +169,10 @@ const GroupMakeModal = () => {
           </form>
         ) : (
           <div className="modal-box">
-            <div className="text-lg m-5">
+            <div className="m-5 text-lg">
               함께하고 싶은 사람들에게 <strong>링크</strong>를 보내보세요!
             </div>
-            <div className="text-lg m-5">바로 참여할 수 있습니다.</div>
+            <div className="m-5 text-lg">바로 참여할 수 있습니다.</div>
             <div className="form-control">
               <div className="input-group">
                 <span>
@@ -193,7 +193,7 @@ const GroupMakeModal = () => {
             </div>
             <button
               type="button"
-              className="btn m-3"
+              className="m-3 btn"
               onClick={handleModalClose}
             >
               닫기
