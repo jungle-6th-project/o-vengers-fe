@@ -7,6 +7,7 @@ import './index.css';
 import App from './App';
 import Login from './routes/Login';
 import KakaoCallback from './routes/KaKaoCallback';
+import RightBar from './components/RightBar/RightBar';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: '/kakao_redirect',
     element: <KakaoCallback />,
+  },
+  {
+    path: '/study/:roomID',
+    element: <RightBar />,
   },
 ]);
 
