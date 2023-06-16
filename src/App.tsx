@@ -1,6 +1,6 @@
 import { Link, redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import Modal from './components/ModalMain';
+import GroupMakeModal from './components/GroupMakeModal';
 import { useUser, useIsLoggedIn, useUserActions } from './store/useStore';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
@@ -41,7 +41,7 @@ function App() {
           </button>
         </Link>
       )}
-      <Modal />
+      <GroupMakeModal />
       <GroupSearchModal />
       <br />
       <Ranking />
