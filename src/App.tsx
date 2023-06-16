@@ -1,7 +1,7 @@
 import { Link, redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import GroupMakeModal from './components/GroupMakeModal';
-import { useUser, useIsLoggedIn, useUserActions } from './store/useStore';
+import { useUser, useIsLoggedIn, useUserActions } from './store/userStore';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
 import Timer from './components/Timer';
