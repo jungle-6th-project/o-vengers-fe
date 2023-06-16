@@ -23,25 +23,8 @@ module.exports = {
     'react-refresh/only-export-components': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'react/react-in-jsx-scope': 'off',
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-        json: 'never',
-      },
-    ],
-    'import/no-extraneous-dependencies': [
-      'error',
-      {
-        devDependencies: false,
-        optionalDependencies: false,
-        peerDependencies: false,
-      },
-    ],
+    'import/extensions': 'off',
+    'import/no-extraneous-dependencies': 'off',
     'react/function-component-definition': [
       2,
       { namedComponents: ['arrow-function', 'function-declaration'] },
@@ -49,5 +32,6 @@ module.exports = {
     'react/prop-types': 'off',
     'no-console': 'off',
     'jsx-a11y/media-has-caption': 'off',
+    'import/no-unresolved': 'off',
   },
 };
