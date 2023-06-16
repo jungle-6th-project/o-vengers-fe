@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { useCopyToClipboard } from 'usehooks-ts';
 import { useCookies } from 'react-cookie';
+import { AiOutlineCopy, AiOutlineCheck } from 'react-icons/ai';
 import { plusIcon } from '../utils/icons';
 import { makeGroup } from '../utils/api';
 
@@ -11,6 +13,7 @@ declare global {
 }
 
 const GroupMakeModal = () => {
+  const [showCreateForm, setShowCreateForm] = useState(false);
   const initialInputs = {
     groupName: '',
     password: '',
@@ -19,6 +22,8 @@ const GroupMakeModal = () => {
 
   const [inputs, setInputs] = useState(initialInputs);
   const [isPassword, setIsPassword] = useState(false);
+  const [randomRoomId, setRandomRoomId] = useState('');
+  const [groupURL, copy] = useCopyToClipboard();
 
   const postMakeGroupMutation = useMutation(
     (values: {
@@ -51,6 +56,7 @@ const GroupMakeModal = () => {
   const handleModalOpen = () => {
     setInputs(initialInputs);
     setIsPassword(false);
+    setShowCreateForm(true);
     window.my_modal_1.showModal();
   };
 
@@ -58,6 +64,9 @@ const GroupMakeModal = () => {
     window.my_modal_1.close();
     setInputs(initialInputs);
     setIsPassword(false);
+    setShowCreateForm(false);
+    setRandomRoomId('');
+    copy('');
   };
 
   const generateRandomString = () => {
@@ -65,7 +74,7 @@ const GroupMakeModal = () => {
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let randomString = '';
 
-    for (let i = 0; i < 15; i += 1) {
+    for (let i = 0; i < 10; i += 1) {
       const randomIndex = Math.floor(Math.random() * characters.length);
       randomString += characters.charAt(randomIndex);
     }
@@ -74,13 +83,22 @@ const GroupMakeModal = () => {
   };
 
   const onClick = () => {
-    postMakeGroupMutation.mutate({
-      accessToken,
-      groupName: inputs.groupName,
-      password: inputs.password,
-      path: generateRandomString(),
-      secret: isPassword,
-    });
+    const randomString = generateRandomString();
+    setRandomRoomId(randomString);
+    console.log(randomString);
+
+    if (showCreateForm) {
+      postMakeGroupMutation.mutate({
+        accessToken,
+        groupName: inputs.groupName,
+        password: inputs.password,
+        path: randomString,
+        secret: isPassword,
+      });
+      setShowCreateForm(false);
+    } else {
+      setShowCreateForm(prevState => !prevState);
+    }
   };
 
   return (
@@ -93,54 +111,95 @@ const GroupMakeModal = () => {
         {plusIcon}
       </button>
       <dialog id="my_modal_1" className="modal">
-        <form action="..." className="modal-box">
-          <div className="form-control w-full mb-5">
-            <label className="label flex-col items-start" htmlFor="groupName">
-              <span className="label-text text-lg mb-2">그룹 이름</span>
-              <input
-                id="groupName"
-                type="text"
-                placeholder="그룹 이름을 입력하세요"
-                className="input input-bordered w-full"
-                name="groupName"
-                onChange={onChange}
-                value={inputs.groupName}
-              />
-            </label>
-          </div>
-          <div className="form-control w-full">
-            <label className="label flex-col items-stretch" htmlFor="password">
-              <div className="flex justify-between items-center">
-                <span className="label-text text-lg mb-2">비밀번호 설정</span>
+        {showCreateForm ? (
+          <form className="modal-box" onSubmit={e => e.preventDefault()}>
+            <div className="form-control w-full mb-5">
+              <label className="label flex-col items-start" htmlFor="groupName">
+                <span className="label-text text-lg mb-2">그룹 이름</span>
                 <input
-                  type="checkbox"
-                  className="toggle"
-                  onChange={onChangeToggle}
-                  name="passwordToggle"
-                  checked={isPassword}
+                  id="groupName"
+                  type="text"
+                  placeholder="그룹 이름을 입력하세요"
+                  className="input input-bordered w-full"
+                  name="groupName"
+                  onChange={onChange}
+                  value={inputs.groupName}
                 />
+              </label>
+            </div>
+            <div className="form-control w-full">
+              <label
+                className="label flex-col items-stretch"
+                htmlFor="password"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="label-text text-lg mb-2">비밀번호 설정</span>
+                  <input
+                    type="checkbox"
+                    className="toggle"
+                    onChange={onChangeToggle}
+                    name="passwordToggle"
+                    checked={isPassword}
+                  />
+                </div>
+                <input
+                  id="password"
+                  type="text"
+                  placeholder="비밀번호를 입력하세요"
+                  className="input input-bordered w-full"
+                  name="password"
+                  onChange={onChange}
+                  value={inputs.password}
+                  disabled={!isPassword}
+                />
+              </label>
+            </div>
+            <div className="modal-action flex">
+              <button type="button" className="btn" onClick={handleModalClose}>
+                취소
+              </button>
+              <button
+                type="button"
+                className="btn btn-neutral"
+                onClick={onClick}
+              >
+                방 만들기
+              </button>
+            </div>
+          </form>
+        ) : (
+          <div className="modal-box">
+            <div className="text-lg m-5">
+              함께하고 싶은 사람들에게 <strong>링크</strong>를 보내보세요!
+            </div>
+            <div className="text-lg m-5">바로 참여할 수 있습니다.</div>
+            <div className="form-control">
+              <div className="input-group">
+                <span>
+                  https://d23wakgp76ydiy.cloudfront.net/{randomRoomId}
+                </span>
+                <button
+                  type="button"
+                  className="link"
+                  onClick={() =>
+                    copy(
+                      `https://d23wakgp76ydiy.cloudfront.net/${randomRoomId}`
+                    )
+                  }
+                >
+                  {groupURL ? <AiOutlineCheck /> : <AiOutlineCopy />}
+                </button>
               </div>
-              <input
-                id="password"
-                type="text"
-                placeholder="비밀번호를 입력하세요"
-                className="input input-bordered w-full"
-                name="password"
-                onChange={onChange}
-                value={inputs.password}
-                disabled={!isPassword}
-              />
-            </label>
-          </div>
-          <div className="modal-action flex">
-            <button type="button" className="btn" onClick={handleModalClose}>
-              취소
-            </button>
-            <button type="submit" className="btn btn-neutral" onClick={onClick}>
-              방 만들기
+            </div>
+            <button
+              type="button"
+              className="btn m-3"
+              onClick={handleModalClose}
+            >
+              닫기
             </button>
           </div>
-        </form>
+        )}
       </dialog>
     </>
   );
