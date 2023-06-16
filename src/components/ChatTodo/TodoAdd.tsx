@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef } from 'react';
+import React, { ChangeEvent } from 'react';
 
 interface GroupTodoInputProps {
   inputValue: string;
