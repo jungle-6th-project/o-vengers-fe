@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useCookies } from 'react-cookie';
 import { plusIcon } from '../utils/icons';
+import { makeGroup } from '../utils/api';
 
 declare global {
   interface Window {
@@ -7,29 +10,77 @@ declare global {
   }
 }
 
-function GroupMakeModal() {
-  const [inputs, setInputs] = useState({
+const GroupMakeModal = () => {
+  const initialInputs = {
     groupName: '',
     password: '',
-  });
-  const [isPassword, setIsPassword] = useState(true);
+  };
+  const [{ accessToken }] = useCookies(['accessToken']);
+
+  const [inputs, setInputs] = useState(initialInputs);
+  const [isPassword, setIsPassword] = useState(false);
+
+  const postMakeGroupMutation = useMutation(
+    (values: {
+      accessToken: string;
+      groupName: string;
+      password: string;
+      path: string;
+      secret: boolean;
+    }) => makeGroup(values)
+  );
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
     setInputs({
-      ...inputs, // 기존의 input 객체를 복사한 뒤
-      [name]: value, // name 키를 가진 값을 value 로 설정
+      ...inputs,
+      [name]: value,
     });
   };
 
-  const onChangeToggle = (e: React.FormEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    if (value === 'on') {
-      e.currentTarget.value = 'off';
-    } else if (value === 'off') {
-      e.currentTarget.value = 'on';
-    }
+  const onChangeToggle = () => {
     setIsPassword(prev => !prev);
+    if (!isPassword) {
+      setInputs(prevInputs => ({
+        ...prevInputs,
+        password: '',
+      }));
+    }
+  };
+
+  const handleModalOpen = () => {
+    setInputs(initialInputs);
+    setIsPassword(false);
+    window.my_modal_1.showModal();
+  };
+
+  const handleModalClose = () => {
+    window.my_modal_1.close();
+    setInputs(initialInputs);
+    setIsPassword(false);
+  };
+
+  const generateRandomString = () => {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let randomString = '';
+
+    for (let i = 0; i < 15; i += 1) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters.charAt(randomIndex);
+    }
+
+    return randomString;
+  };
+
+  const onClick = () => {
+    postMakeGroupMutation.mutate({
+      accessToken,
+      groupName: inputs.groupName,
+      password: inputs.password,
+      path: generateRandomString(),
+      secret: isPassword,
+    });
   };
 
   return (
@@ -37,12 +88,12 @@ function GroupMakeModal() {
       <button
         type="button"
         className="btn btn-square"
-        onClick={() => window.my_modal_1.showModal()}
+        onClick={handleModalOpen}
       >
         {plusIcon}
       </button>
       <dialog id="my_modal_1" className="modal">
-        <form action="..." method="POST" className="modal-box">
+        <form action="..." className="modal-box">
           <div className="form-control w-full mb-5">
             <label className="label flex-col items-start" htmlFor="groupName">
               <span className="label-text text-lg mb-2">그룹 이름</span>
@@ -53,10 +104,11 @@ function GroupMakeModal() {
                 className="input input-bordered w-full"
                 name="groupName"
                 onChange={onChange}
+                value={inputs.groupName}
               />
             </label>
           </div>
-          <div className="form-control w-ful ">
+          <div className="form-control w-full">
             <label className="label flex-col items-stretch" htmlFor="password">
               <div className="flex justify-between items-center">
                 <span className="label-text text-lg mb-2">비밀번호 설정</span>
@@ -65,28 +117,26 @@ function GroupMakeModal() {
                   className="toggle"
                   onChange={onChangeToggle}
                   name="passwordToggle"
+                  checked={isPassword}
                 />
               </div>
               <input
                 id="password"
                 type="text"
                 placeholder="비밀번호를 입력하세요"
-                className="input input-bordered w-full "
-                name="groupPassword"
+                className="input input-bordered w-full"
+                name="password"
                 onChange={onChange}
-                checked={isPassword}
+                value={inputs.password}
+                disabled={!isPassword}
               />
             </label>
           </div>
           <div className="modal-action flex">
-            <button
-              type="button"
-              className="btn"
-              onClick={() => window.my_modal_1.close()}
-            >
+            <button type="button" className="btn" onClick={handleModalClose}>
               취소
             </button>
-            <button type="submit" className="btn btn-neutral">
+            <button type="submit" className="btn btn-neutral" onClick={onClick}>
               방 만들기
             </button>
           </div>
@@ -94,6 +144,6 @@ function GroupMakeModal() {
       </dialog>
     </>
   );
-}
+};
 
 export default GroupMakeModal;
