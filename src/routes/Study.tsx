@@ -24,15 +24,13 @@ function App() {
         />
       ) : (
         <PreJoin
-          onError={(err: any) =>
-            console.log('error while setting up prejoin', err)
-          }
+          onError={err => console.log('error while setting up prejoin', err)}
           defaults={{
             username: user.name,
             videoEnabled: true,
             audioEnabled: true,
           }}
-          onSubmit={(values: any) => {
+          onSubmit={values => {
             console.log('Joining with: ', values);
             setPreJoinChoices(values);
           }}
