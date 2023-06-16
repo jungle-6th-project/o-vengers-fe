@@ -6,6 +6,7 @@ import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
 import Timer from './components/Timer';
 import GroupSearchModal from './components/GroupSearchModal';
+import TodoList from './components/ChatTodo/TodoList';
 
 function App() {
   const user = useUser();
@@ -44,6 +45,7 @@ function App() {
       <GroupSearchModal />
       <br />
       <Ranking />
+      <TodoList />
       <Timer reservedTime={new Date(Date.now() + 605000).toISOString()} />
       <Calendar />
       <Link to="/study/naklsdnlk">
