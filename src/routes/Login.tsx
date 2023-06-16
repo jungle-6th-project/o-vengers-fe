@@ -7,7 +7,7 @@ function Login() {
 
     window.location.href = kakaoUrl;
   };
-
+  console.log(import.meta.env.VITE_REDIRECT_URL);
   return (
     <div className="min-h-screen hero bg-base-200">
       <button type="button" onClick={KakaoLogin} className="btn">

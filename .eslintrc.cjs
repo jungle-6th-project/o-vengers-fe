@@ -23,17 +23,7 @@ module.exports = {
     'react-refresh/only-export-components': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'react/react-in-jsx-scope': 'off',
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-        json: 'never',
-      },
-    ],
+    'import/extensions': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       {
@@ -49,5 +39,6 @@ module.exports = {
     'react/prop-types': 'off',
     'no-console': 'off',
     'jsx-a11y/media-has-caption': 'off',
+    'import/no-unresolved': 'off',
   },
 };

@@ -1,7 +1,7 @@
 import { Link, redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Modal from './components/ModalMain';
-import { useUser, useIsLoggedIn, useUserActions } from './store/useStore';
+import { useUser, useIsLoggedIn, useUserActions } from '@/store/userStore';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
 import Timer from './components/Timer';
@@ -48,6 +48,11 @@ function App() {
       <TodoList />
       <Timer reservedTime={new Date(Date.now() + 605000).toISOString()} />
       <Calendar />
+      <Link to="/study/naklsdnlk">
+        <button type="button" className="btn">
+          입장하기 테스트 버튼
+        </button>
+      </Link>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import CalendarHeader from './CalendarHeader';
 import TimeSlots from './TimeSlots';
 import Day from './Day';
-import { useTimeSlots, useWeeks } from '../../store/calendarStore';
+import { useTimeSlots, useWeeks } from '@/store/calendarStore';
 
 const WeeklyViewCalendar: React.FC = () => {
   const timeSlots = useTimeSlots();

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { plusIcon } from '../utils/icons';
+import { plusIcon } from '@/utils/icons';
 
 declare global {
   interface Window {
@@ -32,6 +32,11 @@ function ModalMain() {
     setIsPassword(prev => !prev);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(inputs);
+  };
+
   return (
     <>
       <button
@@ -42,7 +47,7 @@ function ModalMain() {
         {plusIcon}
       </button>
       <dialog id="my_modal_1" className="modal">
-        <form action="..." method="POST" className="modal-box">
+        <form method="POST" className="modal-box" onSubmit={handleSubmit}>
           <div className="w-full mb-5 form-control">
             <label className="flex-col items-start label" htmlFor="groupName">
               <span className="mb-2 text-lg label-text">그룹 이름</span>
