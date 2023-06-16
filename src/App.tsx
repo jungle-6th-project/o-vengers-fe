@@ -7,6 +7,8 @@ import Ranking from './components/Ranking';
 import Timer from './components/Timer';
 import GroupSearchModal from './components/GroupSearchModal';
 
+const groupId = 62;
+
 function App() {
   const user = useUser();
   const isLoggedIn = useIsLoggedIn();
@@ -29,13 +31,13 @@ function App() {
       {isLoggedIn ? (
         <>
           <div>{user.name}</div>
-          <button type="button" className="btn text-center" onClick={logOut}>
+          <button type="button" className="text-center btn" onClick={logOut}>
             로그아웃
           </button>
         </>
       ) : (
         <Link to="/login">
-          <button type="button" className="btn text-center">
+          <button type="button" className="text-center btn">
             로그인
           </button>
         </Link>
@@ -44,8 +46,8 @@ function App() {
       <GroupSearchModal />
       <br />
       <Ranking />
-      <Timer reservedTime={new Date(Date.now() + 605000).toISOString()} />
-      <Calendar />
+      <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+      <Calendar groupId={groupId} />
     </div>
   );
 }

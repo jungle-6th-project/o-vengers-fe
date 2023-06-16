@@ -1,10 +1,11 @@
+import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 
 const SEC_IN_MILLISEC = 1000;
 const MIN_IN_SEC = 60;
 
-const roomEnterExpireMin = 10;
-const roomExpireMin = 25;
+const roomEnterExpireMin = 5;
+export const roomExpireMin = 25;
 const roomEnterExpireSec = roomEnterExpireMin * MIN_IN_SEC;
 const roomExpireSec = roomExpireMin * MIN_IN_SEC;
 
@@ -63,7 +64,10 @@ interface TimerProps {
 const Timer = ({ reservedTime }: TimerProps) => {
   const [remainingTime, setRemainingTime] = useState(
     Math.floor((Date.parse(reservedTime) - Date.now()) / SEC_IN_MILLISEC)
-  ); // in sec
+    // TODO: dayjs로 변경
+    // Math.floor((Date.parse(reservedTime) - dayjs()) / SEC_IN_MILLISEC)
+    // const reservedTimeDayJS = dayjs(reservedTime, "YYYY-MM-DDTHH:mm:ss"); // in sec
+  );
 
   useEffect(() => {
     const intervalId = setInterval(() => {

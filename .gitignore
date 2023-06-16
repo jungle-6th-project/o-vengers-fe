@@ -65,3 +65,4 @@ sketch
 .env
 .idea
 src/test.json
+.env.production

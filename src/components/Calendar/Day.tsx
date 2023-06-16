@@ -1,18 +1,24 @@
 import RectangleButton from './RectangleButton';
 
 interface DayProps {
-  text: string;
   day: string;
   timeSlots: string[];
+  actions: {
+    createReservation: (startTime: string, endTime: string) => void;
+    cancelReservation: (roomId: number) => void;
+  };
 }
 
 const Day = ({ text, day, timeSlots }: DayProps) => {
   return (
     <div className="text-black w-[208px]">
       {timeSlots.map(timeSlot => (
-        <div key={timeSlot} className="text-center">
-          <RectangleButton text={text} day={day} time={timeSlot} />
-        </div>
+        <RectangleButton
+          key={`${day}T${timeSlot}`}
+          day={day}
+          time={timeSlot}
+          actions={actions}
+        />
       ))}
     </div>
   );
