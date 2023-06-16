@@ -1,12 +1,12 @@
 import { Link, redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import Modal from './components/ModalMain';
-import { useUser, useIsLoggedIn, useUserActions } from '@/store/userStore';
+import GroupMakeModal from './components/GroupMakeModal';
+import { useUser, useIsLoggedIn, useUserActions } from './store/useStore';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
 import Timer from './components/Timer';
 import GroupSearchModal from './components/GroupSearchModal';
-import TodoList from './components/ChatTodo/TodoList';
+import TodoList from './components/Todo/TodoList';
 
 function App() {
   const user = useUser();
@@ -41,7 +41,7 @@ function App() {
           </button>
         </Link>
       )}
-      <Modal />
+      <GroupMakeModal />
       <GroupSearchModal />
       <br />
       <Ranking />

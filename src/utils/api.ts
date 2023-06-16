@@ -156,3 +156,40 @@ export async function deleteTodo({
   console.log('deleteTodo', data);
   return data;
 }
+
+export async function makeGroup({
+  accessToken,
+  groupName,
+  password,
+  path,
+  secret,
+}: {
+  accessToken: string;
+  groupName: string;
+  password: string;
+  path: string;
+  secret: boolean;
+}) {
+  const res = await axios.post(
+    `https://www.sangyeop.shop/api/v1/groups`,
+    {
+      // eslint-disable-next-line object-shorthand
+      groupName: groupName,
+      // eslint-disable-next-line object-shorthand
+      password: password,
+      // eslint-disable-next-line object-shorthand
+      path: path,
+      // eslint-disable-next-line object-shorthand
+      secret: secret,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  const { data } = res.data;
+  console.log('makeGroup', data);
+  return data;
+}
