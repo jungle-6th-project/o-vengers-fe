@@ -145,10 +145,10 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
 
 // TODO: 현재 그룹 아이디는 프론트에서 상태 관리
 const Ranking = () => {
-  const groupId = 0;
+  const groupId = 62;
 
   return (
-    <div className="stats stats-vertical shadow w-60 h-96">
+    <div className="shadow stats stats-vertical w-60 h-96">
       <UserRanking />
       <GroupRankings groupId={groupId} />
     </div>
