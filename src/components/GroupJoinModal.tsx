@@ -11,6 +11,11 @@ interface GroupJoinModalProps {
 const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   const joinModalRef = useRef<HTMLDialogElement>(null);
   const [{ accessToken }] = useCookies(['accessToken']);
+  const navigate = useNavigate();
+
+  const { data: groupName } = useQuery(['getGroupName'], () =>
+    getGroupNameByPath({ accessToken, path: joinPath })
+  );
 
   const postPathJoinGroupMutation = useMutation(
     (values: { accessToken: string; path: string }) => pathJoinGroup(values)
@@ -32,7 +37,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
     <dialog ref={joinModalRef} id="groupJoinModal" className="modal">
       <form method="dialog" className="w-11/12 max-w-5xl modal-box">
         <h3 className="text-lg font-bold">그룹 참여 요청</h3>
-        <p className="py-4"> 그룹에 초대되었습니다!</p>
+        <p className="py-4">{groupName} 그룹에 초대되었습니다!</p>
         <div className="modal-action">
           <button
             type="button"

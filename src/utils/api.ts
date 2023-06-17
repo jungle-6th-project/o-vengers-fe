@@ -216,3 +216,21 @@ export async function pathJoinGroup({
   console.log('joinGroup', data);
   return data;
 }
+
+export async function getGroupNameByPath({
+  accessToken,
+  path,
+}: {
+  accessToken: string;
+  path: string;
+}) {
+  const res = await axios.get('https://www.sangyeop.shop/api/v1/groups/path', {
+    // eslint-disable-next-line object-shorthand
+    params: { path: path },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const { data } = res.data;
+  return data;
+}
