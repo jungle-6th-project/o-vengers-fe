@@ -26,6 +26,10 @@ const router = createBrowserRouter([
     path: '/study/:groupId',
     element: <RightBar />,
   },
+  {
+    path: '/:joinPath',
+    element: <App />,
+  },
 ]);
 
 const queryClient = new QueryClient();
