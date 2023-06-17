@@ -5,7 +5,8 @@ interface DayProps {
   timeSlots: string[];
   actions: {
     createReservation: (startTime: string, endTime: string) => void;
-    cancelReservation: (roomId: number) => void;
+    joinReservation: (startTime: string, roomId: number) => void;
+    cancelReservation: (startTime: string, roomId: number) => void;
   };
 }
 

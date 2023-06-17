@@ -61,7 +61,7 @@ type CalendarStore = {
   };
 };
 
-const updateReservation = (
+const updateReservationValue = (
   state: CalendarStore,
   key: string,
   update: (reservation: Reservation) => Reservation
@@ -96,33 +96,47 @@ const useCalendarStore = create<CalendarStore>(set => ({
     key: string,
     update: (reservation: Reservation) => Reservation
   ) => {
-    set(state => updateReservation(state, key, update));
+    set(state => updateReservationValue(state, key, update));
   },
 
   actions: {
     setReservationUserReservedStatus: (key: string, userReserved: boolean) => {
       set(state =>
-        updateReservation(state, key, reservation => ({
+        updateReservationValue(state, key, reservation => ({
           ...reservation,
           userReserved,
         }))
       );
     },
     setReservationRoomId: (key: string, roomId: number) => {
-      set(state =>
-        updateReservation(state, key, reservation => ({
-          ...reservation,
-          roomId,
-        }))
-      );
+      if (roomId === null) {
+        set(state => {
+          const { [key]: _, ...newReservationStatus } = state.reservationStatus;
+          return { reservationStatus: newReservationStatus };
+        });
+      } else {
+        set(state =>
+          updateReservationValue(state, key, reservation => ({
+            ...reservation,
+            roomId,
+          }))
+        );
+      }
     },
     setReservationParticipants: (key: string, participants: string[]) => {
-      set(state =>
-        updateReservation(state, key, reservation => ({
-          ...reservation,
-          participants,
-        }))
-      );
+      if (participants === null) {
+        set(state => {
+          const { [key]: _, ...newReservationStatus } = state.reservationStatus;
+          return { reservationStatus: newReservationStatus };
+        });
+      } else {
+        set(state =>
+          updateReservationValue(state, key, reservation => ({
+            ...reservation,
+            participants,
+          }))
+        );
+      }
     },
   },
 }));

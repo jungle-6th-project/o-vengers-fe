@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 const SEC_IN_MILLISEC = 1000;
 const MIN_IN_SEC = 60;
 
-const roomEnterExpireMin = 5;
+export const roomTimeMin = 30;
 export const roomExpireMin = 25;
-const roomEnterExpireSec = roomEnterExpireMin * MIN_IN_SEC;
+const roomEnterExpireMin = roomTimeMin - roomExpireMin;
+
 const roomExpireSec = roomExpireMin * MIN_IN_SEC;
+const roomEnterExpireSec = roomEnterExpireMin * MIN_IN_SEC;
 
 interface TimerDisplayProps {
   remainingTime: number;

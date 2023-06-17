@@ -123,11 +123,9 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
           console.log(`Received: ${message.body}`);
           const data = JSON.parse(message.body);
 
-          console.log(data);
           // 한 칸마다 해당 날짜/시간, 유저가 예약한건지 아닌지, 방이 있다면 그 방 번호와 참여자가 저장됨
           // 날짜/시간 파싱해서 해당 날짜/시간에 방 번호와 참여자 저장. -> 유저 예약인지 아닌지는 useState로 토글식 상태 관리? 아니면 프로필 배열에서 찾아오기?
           const { roomId, profiles } = data;
-          console.log('received', data, roomId, profiles);
           setReservationRoomId(data.startTime, roomId);
           setReservationParticipants(data.startTime, profiles);
         }
@@ -185,7 +183,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     }
   };
 
-  const cancelReservation = (roomId: number) => {
+  const joinReservation = (startTime: string, roomId: number) => {
     if (client && client.connected) {
       client.publish({
         destination: '/app/join',
@@ -196,6 +194,22 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
           groupId: groupId,
         }),
       });
+      setReservationUserReservedStatus(startTime, true);
+    }
+  };
+
+  const cancelReservation = (startTime: string, roomId: number) => {
+    if (client && client.connected) {
+      client.publish({
+        destination: '/app/join',
+        body: JSON.stringify({
+          // eslint-disable-next-line object-shorthand
+          roomId: roomId,
+          // eslint-disable-next-line object-shorthand
+          groupId: groupId,
+        }),
+      });
+      setReservationUserReservedStatus(startTime, false);
     }
   };
 
@@ -204,11 +218,11 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
 
   return (
     <div className="grid grid-rows-calendar grid-cols-calendar bg-[#F6F6F6] w-[1556px] h-[41.5625rem] rounded-[1.25rem] overflow-auto">
-      <span className="col-start-1 bg-[#F6F6F6] sticky top-0 z-10" />
-      <div className="sticky top-0 z-10 col-span-6 col-start-2">
+      <span className="col-start-1 bg-[#F6F6F6] sticky top-0 left-0 z-50" />
+      <div className="sticky top-0 z-40 col-span-6 col-start-2">
         <CalendarHeader weeks={weeks} />
       </div>
-      <div className="sticky left-0 items-start col-span-1 col-start-1 bg-[#F6F6F6]">
+      <div className="sticky left-0 z-40 items-start col-span-1 col-start-1 bg-[#F6F6F6]">
         <TimeSlots timeSlots={timeSlots} />
       </div>
       {weeks.map((week, index) => (
@@ -216,7 +230,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
           <Day
             day={week.date}
             timeSlots={timeSlots}
-            actions={{ createReservation, cancelReservation }}
+            actions={{ createReservation, joinReservation, cancelReservation }}
           />
         </div>
       ))}
