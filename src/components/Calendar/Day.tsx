@@ -9,7 +9,7 @@ interface DayProps {
   };
 }
 
-const Day = ({ text, day, timeSlots }: DayProps) => {
+const Day = ({ day, timeSlots, actions }: DayProps) => {
   return (
     <div className="text-black w-[208px]">
       {timeSlots.map(timeSlot => (

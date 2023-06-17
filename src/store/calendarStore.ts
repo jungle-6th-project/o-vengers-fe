@@ -1,6 +1,7 @@
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { create } from 'zustand';
 import dayjs, { Dayjs } from 'dayjs';
+import { shallow } from 'zustand/shallow';
 
 dayjs.extend(isSameOrBefore);
 type Week = {
@@ -35,8 +36,6 @@ while (currentTime.isSameOrBefore(endTime)) {
 // 한 칸마다 해당 날짜/시간, 유저가 예약한건지 아닌지, 방이 있다면 그 방 번호와 참여자가 저장됨
 // 그룹이 바뀌면 쓸모없어짐
 type Reservation = {
-  day: string; // YYYY-MM-DD
-  timeSlot: string; // HH:mm
   userReserved: boolean;
   roomId: number;
   participants: string[];
@@ -48,39 +47,25 @@ type CalendarStore = {
   reservationStatus: { [key: string]: Reservation };
 
   updateReservation: (
-    day: string,
-    timeSlot: string,
+    key: string,
     update: (reservation: Reservation) => Reservation
   ) => void;
 
   actions: {
     setReservationUserReservedStatus: (
-      day: string,
-      timeSlot: string,
+      key: string,
       userReserved: boolean
     ) => void;
-    setReservationRoomId: (
-      day: string,
-      timeSlot: string,
-      roomId: number
-    ) => void;
-    setReservationParticipants: (
-      day: string,
-      timeSlot: string,
-      participants: string[]
-    ) => void;
+    setReservationRoomId: (key: string, roomId: number) => void;
+    setReservationParticipants: (key: string, participants: string[]) => void;
   };
 };
 
-const initialReservationStatus: { [key: string]: Reservation } = {};
-
 const updateReservation = (
   state: CalendarStore,
-  day: string,
-  timeSlot: string,
+  key: string,
   update: (reservation: Reservation) => Reservation
 ) => {
-  const key = `${day}T${timeSlot}:00`;
   const currentReservation = state.reservationStatus[key];
   let newReservation;
 
@@ -88,8 +73,6 @@ const updateReservation = (
     newReservation = update(currentReservation); // update the reservation
   } else {
     const defaultReservation: Reservation = {
-      day,
-      timeSlot,
       userReserved: false,
       roomId: -1,
       participants: [],
@@ -102,47 +85,40 @@ const updateReservation = (
   };
 };
 
+const initialReservationStatus: { [key: string]: Reservation } = {};
+
 const useCalendarStore = create<CalendarStore>(set => ({
   weeks,
   timeSlots,
   reservationStatus: initialReservationStatus,
 
   updateReservation: (
-    day: string,
-    timeSlot: string,
+    key: string,
     update: (reservation: Reservation) => Reservation
   ) => {
-    set(state => updateReservation(state, day, timeSlot, update));
+    set(state => updateReservation(state, key, update));
   },
 
   actions: {
-    setReservationUserReservedStatus: (
-      day: string,
-      timeSlot: string,
-      userReserved: boolean
-    ) => {
+    setReservationUserReservedStatus: (key: string, userReserved: boolean) => {
       set(state =>
-        updateReservation(state, day, timeSlot, reservation => ({
+        updateReservation(state, key, reservation => ({
           ...reservation,
           userReserved,
         }))
       );
     },
-    setReservationRoomId: (day: string, timeSlot: string, roomId: number) => {
+    setReservationRoomId: (key: string, roomId: number) => {
       set(state =>
-        updateReservation(state, day, timeSlot, reservation => ({
+        updateReservation(state, key, reservation => ({
           ...reservation,
           roomId,
         }))
       );
     },
-    setReservationParticipants: (
-      day: string,
-      timeSlot: string,
-      participants: string[]
-    ) => {
+    setReservationParticipants: (key: string, participants: string[]) => {
       set(state =>
-        updateReservation(state, day, timeSlot, reservation => ({
+        updateReservation(state, key, reservation => ({
           ...reservation,
           participants,
         }))
@@ -156,6 +132,4 @@ export const useTimeSlots = () => useCalendarStore(state => state.timeSlots);
 export const useReservation = (key: string) =>
   useCalendarStore(state => state.reservationStatus[key]);
 export const useCalendarActions = () =>
-  useCalendarStore(state => state.actions);
-
-// export const useWeeksActions =+
+  useCalendarStore(state => state.actions, shallow);

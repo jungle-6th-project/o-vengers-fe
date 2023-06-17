@@ -75,7 +75,6 @@ export const getGroupMembers = async (accessToken: string, groupId: number) => {
       },
     }
   );
-  console.log(res);
 
   if (!res.data || !res.data.data) {
     throw new Error('Group member data is not available');

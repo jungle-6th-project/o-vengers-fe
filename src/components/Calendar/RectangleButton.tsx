@@ -32,7 +32,13 @@ const RectangleButton = ({ day, time, actions }: RectangleProps) => {
     const handleClick = () => {
       actions.createReservation(startTime, endTime);
     };
-const RectangleButton = ({ text, day, time }: RectangleProps) => {
+    if (reservation?.userReserved === true) {
+      return (
+        <button type="button" className="btn">
+          예약됨
+        </button>
+      );
+    }
     if (reservation) {
       return (
         <div className="-space-x-6 avatar-group">
@@ -52,7 +58,7 @@ const RectangleButton = ({ text, day, time }: RectangleProps) => {
         className=" bg-reservation w-[11.875rem] h-[4.75rem] rounded-[0.9375rem] opacity-0 hover:opacity-100"
         onClick={handleClick}
       >
-        <span className="text-black">예약하기{reservation?.roomId}</span>
+        <span className="text-black">예약하기</span>
       </button>
     );
   };
