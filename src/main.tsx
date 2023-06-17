@@ -7,7 +7,6 @@ import './index.css';
 import App from './App';
 import Login from './routes/Login';
 import KakaoCallback from './routes/KaKaoCallback';
-import RightBar from './components/RightBar';
 import Study from './routes/Study';
 
 const router = createBrowserRouter([
