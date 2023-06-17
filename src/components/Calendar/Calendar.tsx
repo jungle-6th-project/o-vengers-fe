@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
-import { getUserReservation } from '../../utils/api';
+import { getGroupReservation, getUserReservation } from '../../utils/api';
 
 import CalendarHeader from './CalendarHeader';
 import TimeSlots from './TimeSlots';
@@ -31,7 +31,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
   // TODO: 이렇게 지정해도 groupID 바뀔 때마다 topic 기준인 useEffect 다시 동작하는지 확인
   const topic = `/topic/${groupId}`;
 
-  // TODO: 먼저 api로 데이터 받아와서 store 업데이트하기
+  // api로 유저 예약 데이터 받아와서 store 업데이트하기
   const {
     setReservationUserReservedStatus,
     setReservationRoomId,
@@ -40,7 +40,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
 
   const startSearchTime = dayjs();
   const endSearchTime = startSearchTime.add(3, 'week');
-  const { data: userReservationData } = useQuery(
+  const { data: userReservationData, isSuccess: userQuerySuccess } = useQuery(
     ['userReservations'],
     () =>
       getUserReservation(
@@ -67,6 +67,37 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     userReservationData,
     groupId,
     setReservationUserReservedStatus,
+    setReservationRoomId,
+    setReservationParticipants,
+  ]);
+
+  // api로 그룹원 예약 데이터 받아와서 store 업데이트하기
+  const { data: groupReservationData } = useQuery(
+    ['groupReservations'],
+    () =>
+      getGroupReservation(
+        accessToken,
+        groupId,
+        startSearchTime.format('YYYY-MM-DDTHH:mm:ss'),
+        endSearchTime.format('YYYY-MM-DDTHH:mm:ss')
+      ),
+    {
+      staleTime: Infinity,
+      cacheTime: 0,
+      enabled: userQuerySuccess,
+    }
+  );
+
+  useEffect(() => {
+    if (groupReservationData) {
+      groupReservationData.forEach((datum: ReservationData) => {
+        setReservationRoomId(datum.startTime, datum.roomId);
+        setReservationParticipants(datum.startTime, datum.profiles);
+      });
+    }
+  }, [
+    groupReservationData,
+    groupId,
     setReservationRoomId,
     setReservationParticipants,
   ]);

@@ -106,3 +106,26 @@ export const getUserReservation = async (
   const { data } = res.data;
   return data;
 };
+
+export const getGroupReservation = async (
+  accessToken: string,
+  groupId: number,
+  from: string,
+  to: string
+) => {
+  const res = await axios.get(
+    `https://www.sangyeop.shop/api/v1/rooms?groupId=${groupId}&from=${from}&to=${to}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (!res.data || !res.data.data) {
+    throw new Error('Group reservation data is not available');
+  }
+
+  const { data } = res.data;
+  return data;
+};
