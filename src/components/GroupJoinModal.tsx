@@ -27,6 +27,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
       accessToken,
       path: joinPath,
     });
+    navigate('/');
   };
 
   useEffect(() => {
