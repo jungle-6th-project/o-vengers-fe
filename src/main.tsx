@@ -8,6 +8,7 @@ import App from './App';
 import Login from './routes/Login';
 import KakaoCallback from './routes/KaKaoCallback';
 import RightBar from './components/RightBar';
+import Study from './routes/Study';
 
 const router = createBrowserRouter([
   {
@@ -23,8 +24,8 @@ const router = createBrowserRouter([
     element: <KakaoCallback />,
   },
   {
-    path: '/study/:groupId',
-    element: <RightBar />,
+    path: '/study/:roomId',
+    element: <Study />,
   },
 ]);
 

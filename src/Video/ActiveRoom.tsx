@@ -28,7 +28,6 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
     }
   );
   const liveKitUrl = useServerUrl(undefined);
-
   const roomOptions = useMemo((): RoomOptions => {
     return {
       videoCaptureDefaults: {
@@ -45,7 +44,6 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       dynacast: true,
     };
   }, [userChoices]);
-
   return (
     <div>
       {liveKitUrl && (
