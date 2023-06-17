@@ -8,7 +8,7 @@ import { makeGroup } from '../utils/api';
 
 declare global {
   interface Window {
-    my_modal_1: HTMLDialogElement;
+    groupMakeModal: HTMLDialogElement;
   }
 }
 
@@ -57,11 +57,11 @@ const GroupMakeModal = () => {
     setInputs(initialInputs);
     setIsPassword(false);
     setShowCreateForm(true);
-    window.my_modal_1.showModal();
+    window.groupMakeModal.showModal();
   };
 
   const handleModalClose = () => {
-    window.my_modal_1.close();
+    window.groupMakeModal.close();
     setInputs(initialInputs);
     setIsPassword(false);
     setShowCreateForm(false);
