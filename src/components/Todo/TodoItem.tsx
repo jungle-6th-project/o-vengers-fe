@@ -5,7 +5,7 @@ import { ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { useMutation } from '@tanstack/react-query';
 import { useCookies } from 'react-cookie';
 import { Todo } from './TodoTypes';
-import { eidtOrDoneTodo, deleteTodo } from '../../utils/api';
+import { editOrDoneTodo, deleteTodo } from '../../utils/api';
 
 interface TodoItemProps {
   todoData: Todo;
@@ -21,7 +21,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
   const [isHovering, setIsHovering] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { mutate: eidtOrDoneTodoMutation } = useMutation(eidtOrDoneTodo);
+  const { mutate: editOrDoneTodoMutation } = useMutation(editOrDoneTodo);
   const { mutate: deleteTodoMutation } = useMutation(deleteTodo);
 
   const handleInputChange = (
@@ -34,7 +34,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     const updatedDoneStatus = !isChecked;
     setIsChecked(updatedDoneStatus);
 
-    eidtOrDoneTodoMutation({
+    editOrDoneTodoMutation({
       accessToken: `${accessToken}`,
       content: todoData.content,
       done: updatedDoneStatus,
@@ -43,7 +43,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
   };
 
   const onClickSave = () => {
-    eidtOrDoneTodoMutation({
+    editOrDoneTodoMutation({
       accessToken: `${accessToken}`,
       content: editedContent,
       done: isChecked,
