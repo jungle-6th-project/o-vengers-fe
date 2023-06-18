@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import { useReservation } from '../../store/calendarStore';
 import { roomExpireMin } from '../Timer';
 
-// TODO: dayjs 사용, Calendar.tsx에 있는 거랑 합치기
 const parseTime = (day: string, time: string): string[] => {
   // '2023-06-14T10:00:00'
   const startTime = `${day}T${time}:00`;

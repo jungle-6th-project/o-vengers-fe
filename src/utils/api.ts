@@ -167,7 +167,6 @@ export async function postTodo({
     }
   );
   const { data } = res.data;
-  console.log('postTodo', data);
   return data;
 }
 
@@ -199,7 +198,6 @@ export async function editOrDoneTodo({
     }
   );
   const { data } = res.data;
-  console.log('editOrDoneTodo', data);
   return data;
 }
 
@@ -221,7 +219,6 @@ export async function deleteTodo({
   });
 
   const { data } = res.data;
-  console.log('deleteTodo', data);
   return data;
 }
 
@@ -258,7 +255,6 @@ export async function makeGroup({
   );
 
   const { data } = res.data;
-  console.log('makeGroup', data);
   return data;
 }
 
@@ -281,7 +277,6 @@ export async function pathJoinGroup({
   );
 
   const { data } = res.data;
-  console.log('joinGroup', data);
   return data;
 }
 
