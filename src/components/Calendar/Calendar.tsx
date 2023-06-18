@@ -26,6 +26,7 @@ interface WeeklyViewCalendarProp {
   groupId: number;
 }
 
+// TODO: groupID 추가
 const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
   const [{ accessToken }, ,] = useCookies(['accessToken']);
   // TODO: 이렇게 지정해도 groupID 바뀔 때마다 topic 기준인 useEffect 다시 동작하는지 확인
@@ -179,6 +180,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
           endTime: endTime,
         }),
       });
+      // TODO: 잘 올라갔는지 확인 가능?
       setReservationUserReservedStatus(startTime, true);
     }
   };
@@ -194,6 +196,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
           groupId: groupId,
         }),
       });
+      // TODO: 잘 올라갔는지 확인 가능?
       setReservationUserReservedStatus(startTime, true);
     }
   };
@@ -209,6 +212,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
           groupId: groupId,
         }),
       });
+      // TODO: 잘 올라갔는지 확인 가능?
       setReservationUserReservedStatus(startTime, false);
     }
   };

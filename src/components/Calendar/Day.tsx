@@ -1,4 +1,4 @@
-import RectangleButton from './RectangleButton';
+import CalendarUnit from './CalendarUnit';
 
 interface DayProps {
   day: string;
@@ -14,7 +14,7 @@ const Day = ({ day, timeSlots, actions }: DayProps) => {
   return (
     <div className="text-black w-[208px]">
       {timeSlots.map(timeSlot => (
-        <RectangleButton
+        <CalendarUnit
           key={`${day}T${timeSlot}`}
           day={day}
           time={timeSlot}

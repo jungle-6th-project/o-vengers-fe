@@ -9,7 +9,8 @@ import { getGroupMembers, getUser } from '../utils/api';
 
 // format: "PT30H35M" => [30, 35]
 const parseStudyTime = (studyTimeString: string): number[] => {
-  // TODO: 문자열 규칙 바뀜: 수정
+  // TODO: 문자열 규칙 바뀜(PT0S): 수정
+  // console.log(studyTimeString);
   // const hours = parseInt(studyTimeString.split('T')[1].split('H')[0], 10);
   // const minutes = parseInt(studyTimeString.split('H')[1].split('M')[0], 10);
 
@@ -115,8 +116,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
 };
 
 // TODO: 현재 그룹 아이디는 프론트에서 상태 관리
-const Ranking = () => {
-  const groupId = 62;
+const Ranking = ({ groupId }: { groupId: number }) => {
   // TODO: 2명 이하 인원수 css 조정
   return (
     <div className="shadow stats stats-vertical w-60 h-96">

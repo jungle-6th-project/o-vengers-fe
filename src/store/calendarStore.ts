@@ -36,9 +36,10 @@ while (currentTime.isSameOrBefore(endTime)) {
 // 한 칸마다 해당 날짜/시간, 유저가 예약한건지 아닌지, 방이 있다면 그 방 번호와 참여자가 저장됨
 // 그룹이 바뀌면 쓸모없어짐
 type Reservation = {
-  userReserved: boolean;
   roomId: number;
   participants: string[];
+  userReserved: boolean;
+  groupId: number;
 };
 
 type CalendarStore = {
@@ -58,6 +59,7 @@ type CalendarStore = {
     ) => void;
     setReservationRoomId: (key: string, roomId: number) => void;
     setReservationParticipants: (key: string, participants: string[]) => void;
+    setReservationGroupId: (startTime: string, groupId: number) => void;
   };
 };
 
@@ -73,9 +75,10 @@ const updateReservationValue = (
     newReservation = update(currentReservation); // update the reservation
   } else {
     const defaultReservation: Reservation = {
-      userReserved: false,
       roomId: -1,
       participants: [],
+      userReserved: false,
+      groupId: -1,
     };
     newReservation = update(defaultReservation); // create a new reservation
   }
@@ -100,18 +103,11 @@ const useCalendarStore = create<CalendarStore>(set => ({
   },
 
   actions: {
-    setReservationUserReservedStatus: (key: string, userReserved: boolean) => {
-      set(state =>
-        updateReservationValue(state, key, reservation => ({
-          ...reservation,
-          userReserved,
-        }))
-      );
-    },
     setReservationRoomId: (key: string, roomId: number) => {
       if (roomId === null) {
         set(state => {
-          const { [key]: _, ...newReservationStatus } = state.reservationStatus;
+          const { [key]: ignoredKey, ...newReservationStatus } =
+            state.reservationStatus;
           return { reservationStatus: newReservationStatus };
         });
       } else {
@@ -126,7 +122,8 @@ const useCalendarStore = create<CalendarStore>(set => ({
     setReservationParticipants: (key: string, participants: string[]) => {
       if (participants === null) {
         set(state => {
-          const { [key]: _, ...newReservationStatus } = state.reservationStatus;
+          const { [key]: ignoredKey, ...newReservationStatus } =
+            state.reservationStatus;
           return { reservationStatus: newReservationStatus };
         });
       } else {
@@ -134,6 +131,30 @@ const useCalendarStore = create<CalendarStore>(set => ({
           updateReservationValue(state, key, reservation => ({
             ...reservation,
             participants,
+          }))
+        );
+      }
+    },
+    setReservationUserReservedStatus: (key: string, userReserved: boolean) => {
+      set(state =>
+        updateReservationValue(state, key, reservation => ({
+          ...reservation,
+          userReserved,
+        }))
+      );
+    },
+    setReservationGroupId: (key: string, groupId: number) => {
+      if (groupId === null) {
+        set(state => {
+          const { [key]: ignoredKey, ...newReservationStatus } =
+            state.reservationStatus;
+          return { reservationStatus: newReservationStatus };
+        });
+      } else {
+        set(state =>
+          updateReservationValue(state, key, reservation => ({
+            ...reservation,
+            groupId,
           }))
         );
       }

@@ -7,7 +7,7 @@ import Ranking from './components/Ranking';
 import Timer from './components/Timer';
 import GroupSearchModal from './components/GroupSearchModal';
 
-const groupId = 62;
+const groupId = 77;
 
 function App() {
   const user = useUser();
@@ -45,7 +45,7 @@ function App() {
       <Modal />
       <GroupSearchModal />
       <br />
-      <Ranking />
+      <Ranking groupId={groupId} />
       <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
       <Calendar groupId={groupId} />
     </div>
