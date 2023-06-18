@@ -110,7 +110,7 @@ const GroupMakeModal = () => {
       >
         {plusIcon}
       </button>
-      <dialog id="my_modal_1" className="modal">
+      <dialog id="groupMakeModal" className="modal">
         {showCreateForm ? (
           <form className="modal-box" onSubmit={e => e.preventDefault()}>
             <div className="w-full mb-5 form-control">
