@@ -20,6 +20,9 @@ interface TimerDisplayProps {
 
 const TimerDisplay = ({ remainingTime }: TimerDisplayProps) => {
   const formatTime = (timeInSeconds: number) => {
+    if (timeInSeconds <= 0) {
+      return '00:00';
+    }
     const durationTime = dayjs.duration(timeInSeconds, 'seconds');
     const formattedTime = durationTime.format('mm:ss');
     return formattedTime;
