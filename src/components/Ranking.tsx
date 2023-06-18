@@ -9,8 +9,10 @@ import { getGroupMembers, getUser } from '../utils/api';
 
 // format: "PT30H35M" => [30, 35]
 const parseStudyTime = (studyTimeString: string): number[] => {
-  // TODO: 문자열 규칙 바뀜(PT0S): 수정
-  // console.log(studyTimeString);
+  // TODO: parseTimeDuration 함수 사용
+  if (studyTimeString) {
+    console.log(studyTimeString);
+  }
   // const hours = parseInt(studyTimeString.split('T')[1].split('H')[0], 10);
   // const minutes = parseInt(studyTimeString.split('H')[1].split('M')[0], 10);
 
@@ -56,7 +58,7 @@ const UserRanking = () => {
 
   return (
     <div className="sticky top-0 z-10">
-      {data.duration && (
+      {data.duration && ( // undefined or null
         <UserRankingProfile studyTime={parseStudyTime(data.duration)} />
       )}
     </div>
@@ -115,7 +117,6 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
   );
 };
 
-// TODO: 현재 그룹 아이디는 프론트에서 상태 관리
 const Ranking = ({ groupId }: { groupId: number }) => {
   // TODO: 2명 이하 인원수 css 조정
   return (

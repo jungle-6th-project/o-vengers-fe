@@ -17,7 +17,7 @@ export async function getUser(accessToken: string) {
     throw new Error('User data is not available');
   }
 
-  const data = await res.data;
+  const { data } = await res.data;
   return data;
 }
 
