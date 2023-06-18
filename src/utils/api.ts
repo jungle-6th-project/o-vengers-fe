@@ -171,7 +171,7 @@ export async function postTodo({
   return data;
 }
 
-export async function eidtOrDoneTodo({
+export async function editOrDoneTodo({
   accessToken,
   content,
   done,
@@ -199,7 +199,7 @@ export async function eidtOrDoneTodo({
     }
   );
   const { data } = res.data;
-  console.log('eidtOrDoneTodo', data);
+  console.log('editOrDoneTodo', data);
   return data;
 }
 

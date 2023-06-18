@@ -29,7 +29,6 @@ interface WeeklyViewCalendarProp {
 // TODO: groupID 추가
 const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
   const [{ accessToken }, ,] = useCookies(['accessToken']);
-  // TODO: 이렇게 지정해도 groupID 바뀔 때마다 topic 기준인 useEffect 다시 동작하는지 확인
   const topic = `/topic/${groupId}`;
 
   // api로 유저 예약 데이터 받아와서 store 업데이트하기
@@ -153,7 +152,13 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
       // TODO: 중간에 client 몇 번 바뀌었어도 잘 닫히는지 확인
       newClient.deactivate();
     };
-  }, [accessToken, topic, setReservationParticipants, setReservationRoomId]);
+  }, [
+    accessToken,
+    groupId,
+    topic,
+    setReservationParticipants,
+    setReservationRoomId,
+  ]);
 
   useEffect(() => {
     if (client && client.connected && subscriptionRef.current) {
@@ -165,7 +170,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
         }
       });
     }
-  }, [client, topic]);
+  }, [client, groupId, topic]);
 
   const createReservation = (startTime: string, endTime: string) => {
     if (client && client.connected) {
