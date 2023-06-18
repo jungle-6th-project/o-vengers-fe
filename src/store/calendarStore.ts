@@ -10,7 +10,6 @@ type Week = {
 };
 
 const today: Dayjs = dayjs();
-// const startOfWeek: number = today.startOf('week').valueOf();
 
 const weeks: { date: string; dayOfWeek: string }[] = Array.from(
   { length: 21 },
@@ -72,7 +71,7 @@ const updateReservationValue = (
   let newReservation;
 
   if (currentReservation) {
-    newReservation = update(currentReservation); // update the reservation
+    newReservation = update(currentReservation);
   } else {
     const defaultReservation: Reservation = {
       roomId: -1,
@@ -80,7 +79,7 @@ const updateReservationValue = (
       userReserved: false,
       groupId: -1,
     };
-    newReservation = update(defaultReservation); // create a new reservation
+    newReservation = update(defaultReservation);
   }
 
   return {

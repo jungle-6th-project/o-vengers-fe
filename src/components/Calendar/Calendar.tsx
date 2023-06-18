@@ -122,10 +122,8 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
         if (message.body) {
           console.log(`Received: ${message.body}`);
           const data = JSON.parse(message.body);
-
-          // 한 칸마다 해당 날짜/시간, 유저가 예약한건지 아닌지, 방이 있다면 그 방 번호와 참여자가 저장됨
-          // 날짜/시간 파싱해서 해당 날짜/시간에 방 번호와 참여자 저장. -> 유저 예약인지 아닌지는 useState로 토글식 상태 관리? 아니면 프로필 배열에서 찾아오기?
           const { roomId, profiles } = data;
+
           setReservationRoomId(data.startTime, roomId);
           setReservationParticipants(data.startTime, profiles);
         }

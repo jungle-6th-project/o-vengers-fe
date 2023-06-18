@@ -7,7 +7,6 @@ import {
 } from './RankingProfile';
 import { getGroupMembers, getUser } from '../utils/api';
 
-// format: "PT30H35M" => [30, 35]
 const parseStudyTime = (studyTimeString: string): number[] => {
   // TODO: parseTimeDuration 함수 사용
   if (studyTimeString) {

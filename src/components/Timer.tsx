@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration'; // don't forget to import the plugin
+import duration from 'dayjs/plugin/duration';
 import { useState, useEffect } from 'react';
 
 dayjs.extend(duration);
