@@ -13,7 +13,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   const [{ accessToken }] = useCookies(['accessToken']);
   const navigate = useNavigate();
 
-  const { data: groupName } = useQuery(['getGroupName'], () =>
+  const { data } = useQuery(['getGroupName'], () =>
     getGroupNameByPath({ accessToken, path: joinPath })
   );
 
@@ -23,22 +23,21 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
 
   const handleModalClose = () => {
     joinModalRef.current?.close();
-    postPathJoinGroupMutation.mutate({
-      accessToken,
-      path: joinPath,
-    });
+    postPathJoinGroupMutation.mutate({ accessToken, path: joinPath });
     navigate('/');
   };
 
   useEffect(() => {
-    joinModalRef.current?.showModal();
+    if (joinModalRef.current) {
+      joinModalRef.current.open = true;
+    }
   }, []);
 
   return (
     <dialog ref={joinModalRef} id="groupJoinModal" className="modal">
       <form method="dialog" className="w-11/12 max-w-5xl modal-box">
         <h3 className="text-lg font-bold">그룹 참여 요청</h3>
-        <p className="py-4">{groupName} 그룹에 초대되었습니다!</p>
+        <p className="py-4">{data?.groupName} 그룹에 초대되었습니다!</p>
         <div className="modal-action">
           <button
             type="button"
