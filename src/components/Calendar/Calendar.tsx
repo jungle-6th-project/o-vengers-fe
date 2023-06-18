@@ -112,7 +112,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
       connectHeaders: {
         Authorization: `Bearer ${accessToken}`,
       },
-      reconnectDelay: 2000,
+      reconnectDelay: 5000,
     });
 
     setClient(newClient);
