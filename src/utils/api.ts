@@ -193,3 +193,44 @@ export async function makeGroup({
   console.log('makeGroup', data);
   return data;
 }
+
+export async function pathJoinGroup({
+  accessToken,
+  path,
+}: {
+  accessToken: string;
+  path: string;
+}) {
+  const res = await axios.post(
+    `https://www.sangyeop.shop/api/v1/groups/path`,
+    // eslint-disable-next-line object-shorthand
+    { path: path },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  const { data } = res.data;
+  console.log('joinGroup', data);
+  return data;
+}
+
+export async function getGroupNameByPath({
+  accessToken,
+  path,
+}: {
+  accessToken: string;
+  path: string;
+}) {
+  const res = await axios.get('https://www.sangyeop.shop/api/v1/groups/path', {
+    // eslint-disable-next-line object-shorthand
+    params: { path: path },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const { data } = res.data;
+  return data;
+}

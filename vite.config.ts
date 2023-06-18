@@ -7,6 +7,12 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   server: {
     proxy: {
+      '/socket.io/': {
+        target: 'ws://localhost:5000',
+        ws: true,
+        changeOrigin: true,
+        secure: false,
+      },
       '/video/getToken': 'http://localhost:5000',
       '/video/api/url': 'http://localhost:5000',
     },

@@ -1,4 +1,4 @@
-import { Link, redirect } from 'react-router-dom';
+import { Link, redirect, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import GroupMakeModal from './components/GroupMakeModal';
 import { useUser, useIsLoggedIn, useUserActions } from './store/userStore';
@@ -7,6 +7,7 @@ import Ranking from './components/Ranking';
 import Timer from './components/Timer';
 import GroupSearchModal from './components/GroupSearchModal';
 import TodoList from './components/Todo/TodoList';
+import GroupJoinModal from './components/GroupJoinModal';
 
 function App() {
   const user = useUser();
@@ -14,6 +15,9 @@ function App() {
   const { setIsLoggedIn, reset } = useUserActions();
   const [, , removeAccessTokenCookies] = useCookies(['accessToken']);
   const [, , removeRefreshTokenCookies] = useCookies(['refreshToken']);
+  const location = useLocation().pathname.split('/').filter(Boolean);
+
+  const isGroupPath = !(location.length < 1);
 
   const logOut = async () => {
     await removeAccessTokenCookies('accessToken');
@@ -41,6 +45,8 @@ function App() {
           </button>
         </Link>
       )}
+
+      {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
       <GroupMakeModal />
       <GroupSearchModal />
       <br />

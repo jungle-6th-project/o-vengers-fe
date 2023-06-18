@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
 import { useCookies } from 'react-cookie';
 import { AiOutlineCopy, AiOutlineCheck } from 'react-icons/ai';
@@ -8,7 +8,7 @@ import { makeGroup } from '../utils/api';
 
 declare global {
   interface Window {
-    my_modal_1: HTMLDialogElement;
+    groupMakeModal: HTMLDialogElement;
   }
 }
 
@@ -24,6 +24,7 @@ const GroupMakeModal = () => {
   const [isPassword, setIsPassword] = useState(false);
   const [randomRoomId, setRandomRoomId] = useState('');
   const [groupURL, copy] = useCopyToClipboard();
+  const queryClient = useQueryClient();
 
   const postMakeGroupMutation = useMutation(
     (values: {
@@ -32,15 +33,20 @@ const GroupMakeModal = () => {
       password: string;
       path: string;
       secret: boolean;
-    }) => makeGroup(values)
+    }) => makeGroup(values),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['MyGroupData']);
+      },
+    }
   );
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
-    setInputs({
-      ...inputs,
+    setInputs(prevInputs => ({
+      ...prevInputs,
       [name]: value,
-    });
+    }));
   };
 
   const onChangeToggle = () => {
@@ -57,16 +63,32 @@ const GroupMakeModal = () => {
     setInputs(initialInputs);
     setIsPassword(false);
     setShowCreateForm(true);
-    window.my_modal_1.showModal();
+    window.groupMakeModal.showModal();
+  };
+
+  const handleModalCloseCancel = () => {
+    window.groupMakeModal.close();
+    setInputs(initialInputs);
+    setIsPassword(false);
+    setRandomRoomId('');
+    copy('');
+    setShowCreateForm(true);
   };
 
   const handleModalClose = () => {
-    window.my_modal_1.close();
+    window.groupMakeModal.close();
     setInputs(initialInputs);
     setIsPassword(false);
-    setShowCreateForm(false);
     setRandomRoomId('');
     copy('');
+    setShowCreateForm(true);
+    postMakeGroupMutation.mutate({
+      accessToken,
+      groupName: inputs.groupName,
+      password: inputs.password,
+      path: randomRoomId,
+      secret: isPassword,
+    });
   };
 
   const generateRandomString = () => {
@@ -82,23 +104,12 @@ const GroupMakeModal = () => {
     return randomString;
   };
 
-  const onClick = () => {
+  const onClickMakeGroup = () => {
     const randomString = generateRandomString();
     setRandomRoomId(randomString);
     console.log(randomString);
 
-    if (showCreateForm) {
-      postMakeGroupMutation.mutate({
-        accessToken,
-        groupName: inputs.groupName,
-        password: inputs.password,
-        path: randomString,
-        secret: isPassword,
-      });
-      setShowCreateForm(false);
-    } else {
-      setShowCreateForm(prevState => !prevState);
-    }
+    setShowCreateForm(prevState => !prevState);
   };
 
   return (
@@ -110,7 +121,7 @@ const GroupMakeModal = () => {
       >
         {plusIcon}
       </button>
-      <dialog id="my_modal_1" className="modal">
+      <dialog id="groupMakeModal" className="modal">
         {showCreateForm ? (
           <form className="modal-box" onSubmit={e => e.preventDefault()}>
             <div className="w-full mb-5 form-control">
@@ -155,13 +166,17 @@ const GroupMakeModal = () => {
               </label>
             </div>
             <div className="flex modal-action">
-              <button type="button" className="btn" onClick={handleModalClose}>
+              <button
+                type="button"
+                className="btn"
+                onClick={handleModalCloseCancel}
+              >
                 취소
               </button>
               <button
                 type="button"
                 className="btn btn-neutral"
-                onClick={onClick}
+                onClick={onClickMakeGroup}
               >
                 방 만들기
               </button>

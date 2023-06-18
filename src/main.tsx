@@ -26,6 +26,10 @@ const router = createBrowserRouter([
     path: '/study/:roomId',
     element: <Study />,
   },
+  {
+    path: '/:joinPath',
+    element: <App />,
+  },
 ]);
 
 const queryClient = new QueryClient();
