@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
 import { useCookies } from 'react-cookie';
 import { AiOutlineCopy, AiOutlineCheck } from 'react-icons/ai';
 import { plusIcon } from '../utils/icons';
-import { makeGroup, getMyGroups } from '../utils/api';
+import { makeGroup } from '../utils/api';
 
 declare global {
   interface Window {
@@ -24,7 +24,6 @@ const GroupMakeModal = () => {
   const [isPassword, setIsPassword] = useState(false);
   const [randomRoomId, setRandomRoomId] = useState('');
   const [groupURL, copy] = useCopyToClipboard();
-  const { data } = useQuery(['MyGroupData'], () => getMyGroups(accessToken));
   const queryClient = useQueryClient();
 
   const postMakeGroupMutation = useMutation(
@@ -44,10 +43,10 @@ const GroupMakeModal = () => {
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
-    setInputs({
-      ...inputs,
+    setInputs(prevInputs => ({
+      ...prevInputs,
       [name]: value,
-    });
+    }));
   };
 
   const onChangeToggle = () => {
@@ -110,11 +109,7 @@ const GroupMakeModal = () => {
     setRandomRoomId(randomString);
     console.log(randomString);
 
-    if (showCreateForm) {
-      setShowCreateForm(false);
-    } else {
-      setShowCreateForm(prevState => !prevState);
-    }
+    setShowCreateForm(prevState => !prevState);
   };
 
   return (
