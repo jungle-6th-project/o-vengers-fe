@@ -1,18 +1,25 @@
-import RectangleButton from './RectangleButton';
+import CalendarUnit from './CalendarUnit';
 
 interface DayProps {
-  text: string;
   day: string;
   timeSlots: string[];
+  actions: {
+    createReservation: (startTime: string, endTime: string) => void;
+    joinReservation: (startTime: string, roomId: number) => void;
+    cancelReservation: (startTime: string, roomId: number) => void;
+  };
 }
 
-const Day = ({ text, day, timeSlots }: DayProps) => {
+const Day = ({ day, timeSlots, actions }: DayProps) => {
   return (
     <div className="text-black w-[208px]">
       {timeSlots.map(timeSlot => (
-        <div key={timeSlot} className="text-center">
-          <RectangleButton text={text} day={day} time={timeSlot} />
-        </div>
+        <CalendarUnit
+          key={`${day}T${timeSlot}`}
+          day={day}
+          time={timeSlot}
+          actions={actions}
+        />
       ))}
     </div>
   );

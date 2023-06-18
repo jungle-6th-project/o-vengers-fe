@@ -1,32 +1,31 @@
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration'; // don't forget to import the plugin
 import { useState, useEffect } from 'react';
+
+dayjs.extend(duration);
 
 const SEC_IN_MILLISEC = 1000;
 const MIN_IN_SEC = 60;
 
-const roomEnterExpireMin = 10;
-const roomExpireMin = 25;
-const roomEnterExpireSec = roomEnterExpireMin * MIN_IN_SEC;
+export const roomTimeMin = 30;
+export const roomExpireMin = 25;
+const roomEnterExpireMin = roomTimeMin - roomExpireMin;
+
 const roomExpireSec = roomExpireMin * MIN_IN_SEC;
+const roomEnterExpireSec = roomEnterExpireMin * MIN_IN_SEC;
 
 interface TimerDisplayProps {
   remainingTime: number;
 }
 
-// 숫자를 두 자리 문자열로 반환
 const TimerDisplay = ({ remainingTime }: TimerDisplayProps) => {
-  const formatTime = (timeToformat: number) => {
-    if (timeToformat <= 0) {
-      return `00`;
-    }
-    return timeToformat < 10 ? `0${timeToformat}` : `${timeToformat}`;
+  const formatTime = (timeInSeconds: number) => {
+    const durationTime = dayjs.duration(timeInSeconds, 'seconds');
+    const formattedTime = durationTime.format('mm:ss');
+    return formattedTime;
   };
 
-  return (
-    <p className="font-mono text-4xl">
-      {formatTime(Math.floor(remainingTime / 60))}:
-      {formatTime(remainingTime % 60)}
-    </p>
-  );
+  return <p className="font-mono text-4xl">{formatTime(remainingTime)}</p>;
 };
 
 interface EntryButtonProps {
@@ -62,13 +61,14 @@ interface TimerProps {
 
 const Timer = ({ reservedTime }: TimerProps) => {
   const [remainingTime, setRemainingTime] = useState(
-    Math.floor((Date.parse(reservedTime) - Date.now()) / SEC_IN_MILLISEC)
-  ); // in sec
+    dayjs(reservedTime, 'YYYY-MM-DDTHH:mm:ss').diff(dayjs(), 'second')
+  );
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const newRemainingTime = Math.floor(
-        (Date.parse(reservedTime) - Date.now()) / SEC_IN_MILLISEC
+      const newRemainingTime = dayjs(reservedTime, 'YYYY-MM-DDTHH:mm:ss').diff(
+        dayjs(),
+        'second'
       );
       setRemainingTime(newRemainingTime);
       if (newRemainingTime <= -roomExpireSec) {

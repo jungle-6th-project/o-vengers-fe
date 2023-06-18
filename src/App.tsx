@@ -9,6 +9,8 @@ import GroupSearchModal from './components/GroupSearchModal';
 import TodoList from './components/Todo/TodoList';
 import GroupJoinModal from './components/GroupJoinModal';
 
+const groupId = 77;
+
 function App() {
   const user = useUser();
   const isLoggedIn = useIsLoggedIn();
@@ -50,10 +52,10 @@ function App() {
       <GroupMakeModal />
       <GroupSearchModal />
       <br />
-      <Ranking />
+      <Ranking groupId={groupId} />
       <TodoList />
-      <Timer reservedTime={new Date(Date.now() + 605000).toISOString()} />
-      <Calendar />
+      <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+      <Calendar groupId={groupId} />
     </div>
   );
 }

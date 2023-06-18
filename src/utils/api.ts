@@ -12,7 +12,12 @@ export async function getUser(accessToken: string) {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  const data = await res.data;
+
+  if (!res.data || !res.data.data) {
+    throw new Error('User data is not available');
+  }
+
+  const { data } = await res.data;
   return data;
 }
 
@@ -58,9 +63,72 @@ export async function joinGroup({
     }
   );
   const { data } = res.data;
-  console.log('joinGroup', data);
   return data;
 }
+
+export const getGroupMembers = async (accessToken: string, groupId: number) => {
+  const res = await axios.get(
+    `https://www.sangyeop.shop/api/v1/ranks?groupId=${groupId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (!res.data || !res.data.data) {
+    throw new Error('Group member data is not available');
+  }
+
+  const { data } = res.data;
+  return data;
+};
+
+export const getUserReservation = async (
+  accessToken: string,
+  groupId: number,
+  from: string,
+  to: string
+) => {
+  const res = await axios.get(
+    `https://www.sangyeop.shop/api/v1/rooms/reservation?groupId=${groupId}&from=${from}&to=${to}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (!res.data || !res.data.data) {
+    throw new Error('User reservation data is not available');
+  }
+
+  const { data } = res.data;
+  return data;
+};
+
+export const getGroupReservation = async (
+  accessToken: string,
+  groupId: number,
+  from: string,
+  to: string
+) => {
+  const res = await axios.get(
+    `https://www.sangyeop.shop/api/v1/rooms?groupId=${groupId}&from=${from}&to=${to}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (!res.data || !res.data.data) {
+    throw new Error('Group reservation data is not available');
+  }
+
+  const { data } = res.data;
+  return data;
+};
 
 export async function getTodoDatas(accessToken: string, groupId: number) {
   const res = await axios.get(
