@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '@/store/userStore';
 import ActiveRoom from '@/Video/ActiveRoom';
-import RightBar from '@/components/RightBar';
 
 function App() {
   const { roomId } = useParams();
@@ -16,7 +15,6 @@ function App() {
   >(undefined);
   return (
     <div data-lk-theme="default">
-      <RightBar />
       {roomId && !Array.isArray(roomId) && preJoinChoices ? (
         <ActiveRoom
           roomName={roomId}
