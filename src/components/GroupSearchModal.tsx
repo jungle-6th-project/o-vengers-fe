@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 import { getAllGroups, joinGroup } from '../utils/api';
 import { lockIcon, searchIcon } from '../utils/icons';
 
@@ -90,7 +90,7 @@ const GroupsList = ({
 };
 
 const GroupSearchModal = () => {
-  const { accessToken } = useCookies(['accessToken'])[0];
+  const navigate = useNavigate();
 
   const queryInfo = useQuery(['allGroupData'], () => getAllGroups(), {
     enabled: false,
@@ -146,8 +146,7 @@ const GroupSearchModal = () => {
   }, [searchInputs, selectedGroup, filteredData]);
 
   const joinGroupMutation = useMutation(
-    (values: { accessToken: string; groupId: number; password: string }) =>
-      joinGroup(values),
+    (values: { groupId: number; password: string }) => joinGroup(values),
     {
       onSuccess: res => {
         if (res !== null) onClose();
@@ -161,12 +160,11 @@ const GroupSearchModal = () => {
     }
 
     joinGroupMutation.mutate({
-      // eslint-disable-next-line object-shorthand
-      accessToken: accessToken,
       groupId: selectedGroup.groupId,
       password: passwordRef.current?.value || '',
     });
     // TODO: 에러 처리, 모달 닫고 해당 그룹으로 이동
+    navigate('/');
   };
 
   return (
@@ -204,7 +202,7 @@ const GroupSearchModal = () => {
           <div className="flex flex-col">
             <input
               type="reset"
-              className="mt-10 mb-2 col-auto btn btn-info btn-block"
+              className="col-auto mt-10 mb-2 btn btn-info btn-block"
               value="그룹 참여하기"
               onClick={onJoin}
               disabled={!selectedGroup}

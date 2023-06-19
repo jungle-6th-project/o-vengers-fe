@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
-import { useCookies } from 'react-cookie';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Todo, GroupData } from './TodoTypes';
@@ -12,15 +11,13 @@ interface GroupDataProps {
 }
 
 const useKeyPress = (
-  accessToken: string,
   groupData: GroupData,
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>,
   setInputValue: React.Dispatch<React.SetStateAction<string>>,
   setShowInput: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const postTodoMutation = useMutation(
-    (values: { accessToken: string; content: string; groupId: number }) =>
-      postTodo(values)
+    (values: { content: string; groupId: number }) => postTodo(values)
   );
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -35,7 +32,6 @@ const useKeyPress = (
           done: false,
         };
         postTodoMutation.mutate({
-          accessToken,
           content: inputValue,
           groupId: groupData.groupId,
         });
@@ -50,8 +46,6 @@ const useKeyPress = (
 };
 
 const GroupTodo = ({ groupData }: GroupDataProps) => {
-  const [{ accessToken }] = useCookies(['accessToken']);
-
   const [todos, setTodos] = useState<Todo[]>([]);
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -85,7 +79,6 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
   };
 
   const onKeyPress = useKeyPress(
-    accessToken,
     groupData,
     setTodos,
     setInputValue,
