@@ -1,10 +1,11 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FocusEvent } from 'react';
 
 interface GroupTodoInputProps {
   inputValue: string;
   inputRef: React.RefObject<HTMLInputElement>;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onKeyPress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onBlur: (event: FocusEvent<HTMLInputElement>) => void;
 }
 
 const TodoAdd = ({
@@ -12,19 +13,23 @@ const TodoAdd = ({
   inputRef,
   handleInputChange,
   onKeyPress,
+  onBlur,
 }: GroupTodoInputProps) => {
   return (
-    <div className="p-2 m-2 bg-gray-100 rounded-lg">
-      <input
-        className="w-full m-2 input bg-inherit border-hidden input-sm"
-        ref={inputRef}
-        id="myInput"
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        onKeyPress={onKeyPress}
-        placeholder="할 일을 입력하세요."
-      />
+    <div className="flex w-full">
+      <div className="flex w-full p-2 mx-2 mb-2 bg-gray-100 rounded-lg">
+        <input
+          className="w-full input bg-inherit border-hidden input-sm"
+          ref={inputRef}
+          id="myInput"
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyPress={onKeyPress}
+          onBlur={onBlur}
+          placeholder="할 일을 입력하세요."
+        />
+      </div>
     </div>
   );
 };

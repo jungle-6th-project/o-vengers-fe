@@ -37,7 +37,10 @@ const GroupRadio = ({
   return (
     <>
       <div className="form-control">
-        <label className="cursor-pointer label" htmlFor={`${groupId}`}>
+        <label
+          className="cursor-pointer label h-[3.2rem]"
+          htmlFor={`${groupId}`}
+        >
           {/* 라디오 버튼 */}
           <input
             type="radio"
@@ -48,13 +51,13 @@ const GroupRadio = ({
             checked={selectedGroup?.groupId === groupId}
           />
           {/* 그룹 이름 */}
-          <span className="label-text">{groupName}</span>
+          <span>{groupName}</span>
           {/* 자물쇠 그림 */}
           {secret ? lockIcon : <span className="w-5 h-5" />}
         </label>
       </div>
       {/* 가로선 */}
-      <div className="divider" style={{ margin: 0 }} />
+      <div className="divider h-0.5 m-0 p-0" />
     </>
   );
 };
