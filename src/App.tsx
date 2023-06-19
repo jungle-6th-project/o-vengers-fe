@@ -1,6 +1,7 @@
 import { Link, redirect, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import { useSelectedGroupId } from './store/groupStore';
 import GroupMakeModal from './components/GroupMakeModal';
 import { useIsLoggedIn, useUserActions } from './store/userStore';
 import Calendar from './components/Calendar/Calendar';
@@ -11,9 +12,9 @@ import GroupList from './components/Groups/GrouptList';
 import TodoList from './components/Todo/TodoList';
 import GroupJoinModal from './components/GroupJoinModal';
 
-const groupId = 77;
-
 function App() {
+  const groupId = useSelectedGroupId();
+  console.log('🚀 ~ file: App.tsx:17 ~ App ~ groupId:', groupId);
   const isLoggedIn = useIsLoggedIn();
   const { setIsLoggedIn, reset } = useUserActions();
   const [token, , removeAccessTokenCookies] = useCookies(['accessToken']);

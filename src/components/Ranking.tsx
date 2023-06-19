@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import {
   UserRankingProfile,
   GroupRankingProfile,
@@ -8,6 +9,7 @@ import { getGroupMembers } from '../utils/api';
 import { useUser } from '../store/userStore';
 
 const parseStudyTime = (studyTimeString: string): number[] => {
+  console.log('studytime: ', studyTimeString);
   if (!studyTimeString || typeof studyTimeString !== 'string') {
     throw new Error('studyTimeString is not provided or is not a string');
   }
@@ -51,7 +53,7 @@ type DatumType = {
 const GroupRankings = ({ groupId }: { groupId: number }) => {
   const user = useUser();
 
-  const { isLoading, isError, data } = useQuery(
+  const { isLoading, isError, data, refetch } = useQuery(
     ['groupRankings'],
     () => getGroupMembers(groupId),
     {
@@ -59,6 +61,10 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
       staleTime: 60000,
     }
   );
+
+  useEffect(() => {
+    refetch();
+  }, [refetch, groupId]);
 
   if (isLoading || isError) {
     return (
@@ -91,7 +97,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
       <div className="sticky top-0 z-10">
         {userData && (
           <UserRankingProfile
-            studyTime={parseStudyTime(userData[0].duration)}
+            studyTime={parseStudyTime(userData[0]?.duration)}
           />
         )}
       </div>
