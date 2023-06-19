@@ -140,6 +140,11 @@ const GroupMakeModal = () => {
               >
                 <div className="flex items-center justify-between">
                   <span className="mb-2 text-lg label-text">비밀번호 설정</span>
+                  {isPassword && inputs.password === '' && (
+                    <p className="text-red-500">
+                      비밀번호는 한자리 이상이여야 합니다
+                    </p>
+                  )}
                   <input
                     type="checkbox"
                     className="toggle"
@@ -172,6 +177,7 @@ const GroupMakeModal = () => {
                 type="button"
                 className="btn btn-neutral"
                 onClick={onClickMakeGroup}
+                disabled={isPassword && inputs.password.length < 1}
               >
                 방 만들기
               </button>
