@@ -35,7 +35,6 @@ const ChatContainer: React.FC<{
         content: chatData.content,
         id: chatData.id,
       };
-      console.log(newChatData.id);
 
       setDatas(prevDatas => [...prevDatas, newChatData]);
     });

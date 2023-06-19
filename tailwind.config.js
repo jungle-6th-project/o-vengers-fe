@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false,
   theme: {
     daisyui: {
       themes: ['light', 'dark'],
@@ -9,6 +8,9 @@ module.exports = {
     extend: {
       colors: {
         reservation: '#E3E3E3',
+        bbodog_blue: '#0725E3',
+        bbodog_green: '#D2ED4A',
+        bbodog_orange: '#FF784E',
       },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',

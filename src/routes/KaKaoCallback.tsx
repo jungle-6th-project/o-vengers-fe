@@ -27,12 +27,11 @@ function KakaoCallback() {
 
         setAccessToken('accessToken', accessToken, { path: '/' });
         setRefreshToken('refreshToken', refreshToken, { path: '/' });
-
         setUser(accessToken);
         setIsLoggedIn(true);
         navigate('/');
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 

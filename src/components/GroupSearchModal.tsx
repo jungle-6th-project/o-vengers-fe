@@ -89,13 +89,9 @@ const GroupsList = ({
 const GroupSearchModal = () => {
   const { accessToken } = useCookies(['accessToken'])[0];
 
-  const queryInfo = useQuery(
-    ['allGroupData'],
-    () => getAllGroups(accessToken),
-    {
-      enabled: false,
-    }
-  );
+  const queryInfo = useQuery(['allGroupData'], () => getAllGroups(), {
+    enabled: false,
+  });
   const { data } = queryInfo;
 
   const [searchInputs, setSearchInputs] = useState('');
