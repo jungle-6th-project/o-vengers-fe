@@ -3,7 +3,7 @@ import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 import { useMutation } from '@tanstack/react-query';
 import { Todo } from './TodoTypes';
-import { editOrDoneTodo, deleteTodo } from '../../utils/api';
+import { editOrDoneTodo, deleteTodo } from '@/utils/api';
 
 interface TodoItemProps {
   todoData: Todo;

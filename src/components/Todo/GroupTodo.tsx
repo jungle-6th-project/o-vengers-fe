@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Todo, GroupData } from './TodoTypes';
-import { getTodoDatas, postTodo } from '../../utils/api';
+import { getTodoDatas, postTodo } from '@/utils/api';
 import TodoItem from './TodoItem';
 import TodoAdd from './TodoAdd';
 

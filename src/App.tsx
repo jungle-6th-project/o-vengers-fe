@@ -14,7 +14,6 @@ import GroupJoinModal from './components/GroupJoinModal';
 
 function App() {
   const groupId = useSelectedGroupId();
-  console.log('🚀 ~ file: App.tsx:17 ~ App ~ groupId:', groupId);
   const isLoggedIn = useIsLoggedIn();
   const { setIsLoggedIn, reset } = useUserActions();
   const [token, , removeAccessTokenCookies] = useCookies(['accessToken']);

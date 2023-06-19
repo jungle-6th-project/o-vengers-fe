@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getGroupNameByPath, pathJoinGroup } from '../utils/api';
+import { getGroupNameByPath, pathJoinGroup } from '@/utils/api';
 
 interface GroupJoinModalProps {
   joinPath: string;
