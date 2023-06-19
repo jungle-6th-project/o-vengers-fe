@@ -25,6 +25,29 @@ interface GroupsItem {
   path: string;
 }
 
+export const MemberProfiles = ({ profiles }: { profiles: string[] }) => {
+  return (
+    <div className="-space-x-6 avatar-group">
+      {profiles.slice(0, 3).map((profile: string) => {
+        return (
+          <div key={profile} className="w-10 h-10 avatar">
+            <div className="w-12">
+              <img alt="profile" src={profile} />
+            </div>
+          </div>
+        );
+      })}
+      {profiles.length > 3 && (
+        <div className="w-10 h-10 avatar placeholder">
+          <div className="text-black bg-gray-300 ">
+            <span>+{profiles.length - 3}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const { setGroupId } = useSelectedGroupIdActions();
   const [isToastVisible, setIsToastVisible] = useState(false);
@@ -99,24 +122,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     >
       <div className="justify-between card-body">
         <div className="items-start justify-between card-actions">
-          <div className="-space-x-6 avatar-group">
-            {profiles.slice(0, 3).map((profile: string) => {
-              return (
-                <div key={profile} className="w-10 h-10 avatar">
-                  <div className="w-12">
-                    <img alt="profile" src={profile} />
-                  </div>
-                </div>
-              );
-            })}
-            {profiles.length > 3 && (
-              <div className="w-10 h-10 avatar placeholder">
-                <div className="text-black bg-gray-300 ">
-                  <span>+{profiles.length - 3}</span>
-                </div>
-              </div>
-            )}
-          </div>
+          <MemberProfiles profiles={profiles} />
           <div className="dropdown">
             <button
               type="button"
@@ -138,7 +144,6 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
               <li>
                 <details open className="flex">
                   <summary>그룹 색상 변경</summary>
-
                   <form className="justify-around p-2 join">
                     <input
                       type="radio"
