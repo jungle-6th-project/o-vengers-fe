@@ -188,7 +188,15 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
         </div>
 
         <div className="flex items-center justify-between">
-          <h2 className="text-black card-title">{groupName}</h2>
+          <h2
+            className={`${
+              selectedColor === 'bg-bbodog_blue' || selectedColor === 'bg-black'
+                ? 'text-white'
+                : 'text-black'
+            } card-title`}
+          >
+            {groupName}
+          </h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (
