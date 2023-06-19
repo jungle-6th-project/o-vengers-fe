@@ -164,17 +164,20 @@ const ReservationProfile = ({ participants }: { participants: string[] }) => {
   );
 };
 
-interface RectangleProps {
+export interface BasicCalendarProps {
   day: string;
-  time: string;
   actions: {
     createReservation: (startTime: string, endTime: string) => void;
-    joinReservation: (startTime: string, roomId: number) => void;
+    joinReservation: (roomId: number) => void;
     cancelReservation: (startTime: string, roomId: number) => void;
   };
 }
 
-const CalendarUnit = ({ day, time, actions }: RectangleProps) => {
+interface CalendarUnitProps extends BasicCalendarProps {
+  time: string;
+}
+
+const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
   const { createReservation, joinReservation, cancelReservation } = actions;
 
   const [startTime, endTime] = parseTime(day, time);
