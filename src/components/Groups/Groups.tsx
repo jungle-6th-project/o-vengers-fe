@@ -3,6 +3,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
 import { FaLock } from 'react-icons/fa';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
 import {
   changeGroupColor,
   deleteGroup,
@@ -25,6 +26,7 @@ interface GroupsItem {
 }
 
 const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
+  const { setGroupId } = useSelectedGroupIdActions();
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
     color === null ? 'bg-white' : color
@@ -66,9 +68,6 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     changeGroupColor(groupId, selectedValue);
   };
 
-  console.log('value: ', selectedColor);
-  const handleSubmit = () => {};
-
   // 그룹의 그룹원 프로필 가져오기
   const {
     data: profiles,
@@ -93,7 +92,10 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
 
   return (
     <div
-      className={`shadow card w-[15.0625rem] h-[13.625rem] ${selectedColor}`}
+      role="presentation"
+      className={`shadow card w-[15.0625rem] h-[13.625rem] ${selectedColor} cursor-pointer`}
+      onClick={() => setGroupId(groupId)}
+      onKeyDown={() => setGroupId(groupId)}
     >
       <div className="justify-between card-body">
         <div className="items-start justify-between card-actions">
@@ -137,11 +139,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
                 <details open className="flex">
                   <summary>그룹 색상 변경</summary>
 
-                  <form
-                    action=""
-                    onSubmit={handleSubmit}
-                    className="justify-around p-2 join"
-                  >
+                  <form className="justify-around p-2 join">
                     <input
                       type="radio"
                       name="radio-10"
@@ -190,7 +188,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
         </div>
 
         <div className="flex items-center justify-between">
-          <h2 className="card-title">{groupName}</h2>
+          <h2 className="text-black card-title">{groupName}</h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (
