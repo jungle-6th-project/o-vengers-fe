@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
-import { getGroupReservation, getUserReservation } from '../../utils/api';
+import { getGroupReservation, getUserReservation } from '@/utils/api';
 
 import CalendarHeader from './CalendarHeader';
 import TimeSlots from './TimeSlots';
