@@ -2,12 +2,8 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://www.sangyeop.shop';
 
-export async function getUser(accessToken: string) {
-  const res = await axios.get('https://www.sangyeop.shop/api/v1/members', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+export async function getUser() {
+  const res = await axios.get('/api/v1/members');
 
   if (!res.data || !res.data.data) {
     throw new Error('User data is not available');
@@ -54,18 +50,12 @@ export async function getJoinedGroupMemebers(groupId: number) {
 
 export async function getTodoDatas(groupId: number) {
   const res = await axios.get(`/api/v1/todos?groupId=${groupId}`);
+  const { data } = res.data;
   return data;
 }
 
-export const getGroupMembers = async (accessToken: string, groupId: number) => {
-  const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/ranks?groupId=${groupId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+export const getGroupMembers = async (groupId: number) => {
+  const res = await axios.get(`/api/v1/ranks?groupId=${groupId}`);
 
   if (!res.data || !res.data.data) {
     throw new Error('Group member data is not available');
@@ -76,18 +66,12 @@ export const getGroupMembers = async (accessToken: string, groupId: number) => {
 };
 
 export const getUserReservation = async (
-  accessToken: string,
   groupId: number,
   from: string,
   to: string
 ) => {
   const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/rooms/reservation?groupId=${groupId}&from=${from}&to=${to}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
+    `/api/v1/rooms/reservation?groupId=${groupId}&from=${from}&to=${to}`
   );
 
   if (!res.data || !res.data.data) {
@@ -99,18 +83,12 @@ export const getUserReservation = async (
 };
 
 export const getGroupReservation = async (
-  accessToken: string,
   groupId: number,
   from: string,
   to: string
 ) => {
   const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/rooms?groupId=${groupId}&from=${from}&to=${to}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
+    `/api/v1/rooms?groupId=${groupId}&from=${from}&to=${to}`
   );
 
   if (!res.data || !res.data.data) {
@@ -120,19 +98,6 @@ export const getGroupReservation = async (
   const { data } = res.data;
   return data;
 };
-
-export async function getTodoDatas(accessToken: string, groupId: number) {
-  const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/todos?groupId=${groupId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-  const { data } = res.data;
-  return data;
-}
 
 export async function postTodo({
   content,
@@ -152,7 +117,7 @@ export async function postTodo({
   return data;
 }
 
-export async function eidtOrDoneTodo({
+export async function editOrDoneTodo({
   content,
   done,
   todoId,
@@ -211,41 +176,21 @@ export async function makeGroup({
   return data;
 }
 
-export async function pathJoinGroup({
-  accessToken,
-  path,
-}: {
-  accessToken: string;
-  path: string;
-}) {
+export async function pathJoinGroup({ path }: { path: string }) {
   const res = await axios.post(
-    `https://www.sangyeop.shop/api/v1/groups/path`,
+    `/api/v1/groups/path`,
     // eslint-disable-next-line object-shorthand
-    { path: path },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
+    { path: path }
   );
 
   const { data } = res.data;
   return data;
 }
 
-export async function getGroupNameByPath({
-  accessToken,
-  path,
-}: {
-  accessToken: string;
-  path: string;
-}) {
-  const res = await axios.get('https://www.sangyeop.shop/api/v1/groups/path', {
+export async function getGroupNameByPath({ path }: { path: string }) {
+  const res = await axios.get('/api/v1/groups/path', {
     // eslint-disable-next-line object-shorthand
     params: { path: path },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   });
   const { data } = res.data;
   return data;

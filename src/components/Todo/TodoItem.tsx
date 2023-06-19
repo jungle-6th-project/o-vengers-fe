@@ -3,7 +3,6 @@ import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 import { ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { useMutation } from '@tanstack/react-query';
-import { useCookies } from 'react-cookie';
 import { Todo } from './TodoTypes';
 import { editOrDoneTodo, deleteTodo } from '../../utils/api';
 
@@ -13,8 +12,6 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
-  const [{ accessToken }] = useCookies(['accessToken']);
-
   const [editedContent, setEditedContent] = useState(todoData.content);
   const [isEditing, setIsEditing] = useState(false);
   const [isChecked, setIsChecked] = useState(todoData.done);
@@ -35,7 +32,6 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     setIsChecked(updatedDoneStatus);
 
     editOrDoneTodoMutation({
-      accessToken: `${accessToken}`,
       content: todoData.content,
       done: updatedDoneStatus,
       todoId: todoData.todoId,
@@ -44,7 +40,6 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
 
   const onClickSave = () => {
     editOrDoneTodoMutation({
-      accessToken: `${accessToken}`,
       content: editedContent,
       done: isChecked,
       todoId: todoData.todoId,
@@ -54,7 +49,6 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
 
   const onClickDelete = () => {
     deleteTodoMutation({
-      accessToken: `${accessToken}`,
       todoId: todoData.todoId,
     });
     onDelete();

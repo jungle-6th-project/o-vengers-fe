@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { useCookies } from 'react-cookie';
 import {
   UserRankingProfile,
   GroupRankingProfile,
@@ -36,11 +35,9 @@ const sortByStudyTime = (
 };
 
 const UserRanking = () => {
-  const [{ accessToken }, ,] = useCookies(['accessToken']);
-
   const { isLoading, isError, data } = useQuery(
     ['userRanking'],
-    () => getUser(accessToken),
+    () => getUser(),
     {
       refetchInterval: 60000,
       staleTime: Infinity,
@@ -65,11 +62,9 @@ const UserRanking = () => {
 };
 
 const GroupRankings = ({ groupId }: { groupId: number }) => {
-  const [{ accessToken }, ,] = useCookies(['accessToken']);
-
   const { isLoading, isError, data } = useQuery(
     ['groupRankings'],
-    () => getGroupMembers(accessToken, groupId),
+    () => getGroupMembers(groupId),
     {
       refetchInterval: 60000,
       staleTime: 60000,

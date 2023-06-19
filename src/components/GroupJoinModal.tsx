@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useCookies } from 'react-cookie';
 import { getGroupNameByPath, pathJoinGroup } from '../utils/api';
 
 interface GroupJoinModalProps {
@@ -10,7 +9,6 @@ interface GroupJoinModalProps {
 
 const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   const joinModalRef = useRef<HTMLDialogElement>(null);
-  const [{ accessToken }] = useCookies(['accessToken']);
   const [isAlreadyJoined, setAlreadyJoined] = useState(false);
   const [isNotValidPath, setIsNotValidPath] = useState(false);
   const navigate = useNavigate();
@@ -18,7 +16,6 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   const { data } = useQuery(['groupName'], async () => {
     try {
       const groupData = await getGroupNameByPath({
-        accessToken,
         path: joinPath,
       });
       return groupData;
@@ -38,8 +35,8 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
     }
   });
 
-  const postPathJoinGroupMutation = useMutation(
-    (values: { accessToken: string; path: string }) => pathJoinGroup(values)
+  const postPathJoinGroupMutation = useMutation((values: { path: string }) =>
+    pathJoinGroup(values)
   );
 
   useEffect(() => {
@@ -54,7 +51,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   };
 
   const handleAcceptInvite = () => {
-    postPathJoinGroupMutation.mutate({ accessToken, path: joinPath });
+    postPathJoinGroupMutation.mutate({ path: joinPath });
     joinModalRef.current?.close();
     navigate('/');
     window.location.reload();

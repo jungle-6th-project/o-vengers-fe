@@ -4,11 +4,7 @@ import { GroupData } from './TodoTypes';
 import { getMyGroups } from '../../utils/api';
 
 const TodoList = () => {
-  const [{ accessToken }, ,] = useCookies(['accessToken']);
-
-  const { data: myGroupList } = useQuery(['MyGroupData'], () =>
-    getMyGroups(accessToken)
-  );
+  const { data: myGroupList } = useQuery(['MyGroupData'], () => getMyGroups());
 
   return myGroupList?.map((group: GroupData) => (
     <GroupTodo key={group.groupId} groupData={group} />

@@ -80,7 +80,6 @@ const GroupMakeModal = () => {
     copy('');
     setShowCreateForm(true);
     postMakeGroupMutation.mutate({
-      accessToken,
       groupName: inputs.groupName,
       password: inputs.password,
       path: randomRoomId,
