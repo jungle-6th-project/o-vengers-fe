@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
-import { ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { useMutation } from '@tanstack/react-query';
 import { Todo } from './TodoTypes';
 import { editOrDoneTodo, deleteTodo } from '../../utils/api';
@@ -21,21 +20,17 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
   const { mutate: editOrDoneTodoMutation } = useMutation(editOrDoneTodo);
   const { mutate: deleteTodoMutation } = useMutation(deleteTodo);
 
+  const onClickEdit = () => {
+    setIsChecked(!isChecked);
+    if (!todoData.done && !isEditing) {
+      setIsEditing(true);
+    }
+  };
+
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     setEditedContent(event.target.value);
-  };
-
-  const handleCheck = () => {
-    const updatedDoneStatus = !isChecked;
-    setIsChecked(updatedDoneStatus);
-
-    editOrDoneTodoMutation({
-      content: todoData.content,
-      done: updatedDoneStatus,
-      todoId: todoData.todoId,
-    });
   };
 
   const onClickSave = () => {
@@ -54,11 +49,29 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     onDelete();
   };
 
-  const onKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       onClickSave();
     }
   };
+
+  const handleCheck = () => {
+    // eslint-disable-next-line no-param-reassign
+    todoData.done = !isChecked;
+    editOrDoneTodoMutation({
+      content: todoData.content,
+      done: !isChecked,
+      todoId: todoData.todoId,
+    });
+    setIsChecked(!isChecked);
+  };
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
 
   const handleMouseEnter = () => {
     setIsHovering(true);
@@ -68,32 +81,39 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     setIsHovering(false);
   };
 
-  useEffect(() => {
-    if (isEditing && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isEditing]);
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
 
   return (
-    <div className="flex TodoItem">
-      <div
-        className="flex items-center w-full h-20 p-2 m-2 bg-gray-100 rounded-lg"
+    <div className="flex w-full TodoItem">
+      <label
+        className={`cursor-pointer label flex items-center w-full p-2 mx-2 mb-2 ${
+          isChecked ? 'bg-gray-100' : 'bg-[#D2ED4A]'
+        } rounded-lg`}
+        htmlFor={`${todoData.todoId}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
+        <input
+          className="hidden"
+          id={`${todoData.todoId}`}
+          onClick={handleCheck}
+          defaultChecked={isChecked}
+        />
         {isEditing ? (
           <>
             <input
               type="text"
               value={editedContent}
-              maxLength={10}
+              className="w-full h-full pl-1 pr-0 bg-transparent border-transparent rounded-sm input input-ghost"
               onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+              onBlur={handleBlur}
               ref={inputRef}
-              className="input bg-inherit border-hidden w-36 input-sm"
-              onKeyPress={onKeyPress}
             />
             <button
-              className="self-end m-3 btn btn-link"
+              className={`px-1 m-0 ${isHovering ? 'opacity-100' : 'opacity-0'}`}
               onClick={onClickSave}
               type="button"
             >
@@ -102,41 +122,39 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
           </>
         ) : (
           <>
-            <button type="button" onClick={handleCheck}>
-              {isChecked ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
-            </button>
             <span
-              className="Content"
+              className={`Content ml-2 flex-grow ${
+                todoData.done ? 'text-gray-400' : 'text-[#434827]'
+              }`}
               style={{
                 textDecoration: todoData.done ? 'line-through' : 'none',
               }}
             >
               {editedContent}
             </span>
-            {isHovering && (
-              <div className="flex items-end">
-                <button
-                  className={`btn btn-link justify-end ${
-                    todoData.done ? 'hidden' : ''
-                  }`}
-                  onClick={() => setIsEditing(true)}
-                  type="button"
-                  disabled={todoData.done}
-                >
-                  <AiFillEdit />
-                </button>
-                <button
-                  className="justify-end btn btn-link"
-                  onClick={onClickDelete}
-                  type="button"
-                >
-                  <AiFillDelete />
-                </button>
-              </div>
-            )}
+            <button
+              className={`px-1 m-0 ${
+                todoData.done ? 'opacity-0' : 'text-[#434827]'
+              }  ${isHovering && !todoData.done ? 'opacity-100' : 'opacity-0'}`}
+              style={{ minHeight: 1 }}
+              onClick={onClickEdit}
+              type="button"
+              disabled={todoData.done}
+            >
+              <AiFillEdit />
+            </button>
+            <button
+              className={`px-1 m-0 ${
+                todoData.done ? 'text-gray-400' : 'text-[#434827]'
+              } ${isHovering ? 'opacity-100' : 'opacity-0'}`}
+              onClick={onClickDelete}
+              type="button"
+            >
+              <AiFillDelete />
+            </button>
           </>
         )}
-      </div>
+      </label>
     </div>
   );
 };

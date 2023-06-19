@@ -75,6 +75,11 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
     setShowInput(true);
   };
 
+  const handleBlur = (): void => {
+    setShowInput(false);
+    setInputValue('');
+  };
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setInputValue(event.target.value);
   };
@@ -104,15 +109,15 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
   }, [showInput]);
 
   return (
-    <div className="p-2 m-3 bg-white border border-gray-300 shadow-md rounded-md">
-      <div className="flex items-center justify-between p-2 m-2">
-        <h3 className="text-2xl font-bold">{groupData.groupName}</h3>
+    <div className="card bg-white border border-[#D9D9D9] rounded-md">
+      <div className="flex justify-between p-2">
+        <h3 className="text-xl font-semibold pl-0.5">{groupData.groupName}</h3>
         <button
           type="button"
-          className="px-4 py-2 text-gray-600"
+          className="text-gray-600 mr-0.5 mt-[0.2rem] align-top max-h-5"
           onClick={handleButtonClick}
         >
-          <AiOutlinePlus size={24} />
+          <AiOutlinePlus size={20} />
         </button>
       </div>
       {showInput && (
@@ -121,17 +126,16 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
           inputRef={inputRef}
           handleInputChange={handleInputChange}
           onKeyPress={onKeyPress}
+          onBlur={handleBlur}
         />
       )}
-      <div className="bg-white rounded-lg">
-        {todos.map((todo: Todo) => (
-          <TodoItem
-            key={todo.todoId}
-            todoData={todo}
-            onDelete={() => handleDelete(todo.todoId)}
-          />
-        ))}
-      </div>
+      {todos.map((todo: Todo) => (
+        <TodoItem
+          key={todo.todoId}
+          todoData={todo}
+          onDelete={() => handleDelete(todo.todoId)}
+        />
+      ))}
     </div>
   );
 };

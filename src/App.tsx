@@ -2,7 +2,7 @@ import { Link, redirect, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import GroupMakeModal from './components/GroupMakeModal';
-import { useUser, useIsLoggedIn, useUserActions } from './store/userStore';
+import { useIsLoggedIn, useUserActions } from './store/userStore';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
 import Timer from './components/Timer';
@@ -14,7 +14,6 @@ import GroupJoinModal from './components/GroupJoinModal';
 const groupId = 77;
 
 function App() {
-  const user = useUser();
   const isLoggedIn = useIsLoggedIn();
   const { setIsLoggedIn, reset } = useUserActions();
   const [token, , removeAccessTokenCookies] = useCookies(['accessToken']);
@@ -35,14 +34,10 @@ function App() {
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <div>
-      <h1 className="text-center">메인 페이지</h1>
       {isLoggedIn ? (
-        <>
-          <div>{user.name}</div>
-          <button type="button" className="text-center btn" onClick={logOut}>
-            로그아웃
-          </button>
-        </>
+        <button type="button" className="text-center btn" onClick={logOut}>
+          로그아웃
+        </button>
       ) : (
         <Link to="/login">
           <button type="button" className="text-center btn">

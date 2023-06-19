@@ -28,13 +28,16 @@ const RankingProfile = ({
   textColor,
 }: RankingProfileProps) => {
   return (
-    <div className={`stat ${bgColor}`}>
+    <div
+      className={`stat ${bgColor}`}
+      style={{ gridTemplateColumns: '40px 64px 1fr' }}
+    >
       {/* 순위 */}
       <div className={`stat-title ${textColor}`}>{title}</div>
       {/* 프로필사진 */}
       <div className="stat-figure">
         <div className="avatar">
-          <div className="w-16 mask mask-squircle">
+          <div className="w-14 mask mask-squircle">
             <img src={profileImg} alt={nickname} />
           </div>
         </div>
