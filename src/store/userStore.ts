@@ -10,7 +10,7 @@ interface User {
 }
 
 interface UserActions {
-  setUser: (accessToken: string) => Promise<void>;
+  setUser: () => Promise<void>;
   setIsLoggedIn: (isLogged: boolean) => void;
   reset: () => void;
 }
@@ -33,15 +33,10 @@ const useUserStore = create<UserState>()(
         },
         isLoggedIn: false,
         actions: {
-          setUser: async (accessToken: string) => {
+          setUser: async () => {
             try {
               const response: AxiosResponse = await axios.get(
-                'https://www.sangyeop.shop/api/v1/members',
-                {
-                  headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                }
+                'https://www.sangyeop.shop/api/v1/members'
               );
               set({ user: response.data.data });
             } catch (error) {
