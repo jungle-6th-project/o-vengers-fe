@@ -34,7 +34,7 @@ function App() {
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <div>
-      {/* {isLoggedIn ? (
+      {isLoggedIn ? (
         <button type="button" className="text-center btn" onClick={logOut}>
           로그아웃
         </button>
@@ -44,7 +44,7 @@ function App() {
             로그인
           </button>
         </Link>
-      )} */}
+      )}
 
       {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
       <div className="flex">
