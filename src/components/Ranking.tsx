@@ -10,7 +10,7 @@ import { useUser } from '@/store/userStore';
 
 const parseStudyTime = (studyTimeString: string): number[] => {
   if (!studyTimeString || typeof studyTimeString !== 'string') {
-    throw new Error('studyTimeString is not provided or is not a string');
+    return [0, 0];
   }
 
   const regex = /PT(\d*H)?(\d*M)?(\d*S)?/; // 정규식을 사용하여 형식 매칭
