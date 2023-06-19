@@ -1,11 +1,13 @@
 import { Link, redirect, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import axios from 'axios';
 import GroupMakeModal from './components/GroupMakeModal';
 import { useIsLoggedIn, useUserActions } from './store/userStore';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
 import Timer from './components/Timer';
 import GroupSearchModal from './components/GroupSearchModal';
+import GroupList from './components/Groups/GrouptList';
 import TodoList from './components/Todo/TodoList';
 import GroupJoinModal from './components/GroupJoinModal';
 
@@ -14,7 +16,7 @@ const groupId = 77;
 function App() {
   const isLoggedIn = useIsLoggedIn();
   const { setIsLoggedIn, reset } = useUserActions();
-  const [, , removeAccessTokenCookies] = useCookies(['accessToken']);
+  const [token, , removeAccessTokenCookies] = useCookies(['accessToken']);
   const [, , removeRefreshTokenCookies] = useCookies(['refreshToken']);
   const location = useLocation().pathname.split('/').filter(Boolean);
 
@@ -29,6 +31,7 @@ function App() {
     await redirect('/');
   };
 
+  axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <div>
       {isLoggedIn ? (
@@ -46,6 +49,7 @@ function App() {
       {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
       <GroupMakeModal />
       <GroupSearchModal />
+      <GroupList />
       <br />
       <Ranking groupId={groupId} />
       <TodoList />

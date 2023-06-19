@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
-import { useCookies } from 'react-cookie';
 import { AiOutlineCopy, AiOutlineCheck } from 'react-icons/ai';
 import { plusIcon } from '../utils/icons';
 import { makeGroup } from '../utils/api';
@@ -18,7 +17,6 @@ const GroupMakeModal = () => {
     groupName: '',
     password: '',
   };
-  const [{ accessToken }] = useCookies(['accessToken']);
 
   const [inputs, setInputs] = useState(initialInputs);
   const [isPassword, setIsPassword] = useState(false);
@@ -28,7 +26,6 @@ const GroupMakeModal = () => {
 
   const postMakeGroupMutation = useMutation(
     (values: {
-      accessToken: string;
       groupName: string;
       password: string;
       path: string;
@@ -83,7 +80,6 @@ const GroupMakeModal = () => {
     copy('');
     setShowCreateForm(true);
     postMakeGroupMutation.mutate({
-      accessToken,
       groupName: inputs.groupName,
       password: inputs.password,
       path: randomRoomId,
@@ -107,7 +103,6 @@ const GroupMakeModal = () => {
   const onClickMakeGroup = () => {
     const randomString = generateRandomString();
     setRandomRoomId(randomString);
-    console.log(randomString);
 
     setShowCreateForm(prevState => !prevState);
   };

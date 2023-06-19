@@ -62,7 +62,7 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
     isLoading,
     isError,
   } = useQuery(['MyTodoList', groupData.groupId], () =>
-    getTodoDatas(accessToken, groupData.groupId)
+    getTodoDatas(groupData.groupId)
   );
 
   useEffect(() => {

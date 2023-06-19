@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { useCookies } from 'react-cookie';
 import {
   UserRankingProfile,
   GroupRankingProfile,
@@ -51,11 +50,10 @@ type DatumType = {
 
 const GroupRankings = ({ groupId }: { groupId: number }) => {
   const user = useUser();
-  const [{ accessToken }, ,] = useCookies(['accessToken']);
 
   const { isLoading, isError, data } = useQuery(
     ['groupRankings'],
-    () => getGroupMembers(accessToken, groupId),
+    () => getGroupMembers(groupId),
     {
       refetchInterval: 60000,
       staleTime: 60000,

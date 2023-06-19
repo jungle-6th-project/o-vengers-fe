@@ -1,17 +1,9 @@
 import axios from 'axios';
 
-export async function getUsers() {
-  const res = await axios.get('https://jsonplaceholder.typicode.com/users');
-  const data = await res.data;
-  return data;
-}
+axios.defaults.baseURL = 'https://www.sangyeop.shop';
 
-export async function getUser(accessToken: string) {
-  const res = await axios.get('https://www.sangyeop.shop/api/v1/members', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+export async function getUser() {
+  const res = await axios.get('/api/v1/members');
 
   if (!res.data || !res.data.data) {
     throw new Error('User data is not available');
@@ -21,60 +13,49 @@ export async function getUser(accessToken: string) {
   return data;
 }
 
-export async function getAllGroups(accessToken: string) {
-  const res = await axios.get('https://www.sangyeop.shop/api/v1/groups/all', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const { data } = res.data;
+export async function getAllGroups() {
+  const res = await axios.get('/api/v1/groups/all');
+  const { data } = await res.data;
   return data;
 }
 
-export async function getMyGroups(accessToken: string) {
-  const res = await axios.get('https://www.sangyeop.shop/api/v1/groups', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const { data } = res.data;
+export async function getMyGroups() {
+  const res = await axios.get('/api/v1/groups');
+  const { data } = await res.data;
   return data;
 }
 
 export async function joinGroup({
-  accessToken,
   groupId,
   password,
 }: {
-  accessToken: string;
   groupId: number;
   password: string;
 }) {
-  const res = await axios.post(
-    `https://www.sangyeop.shop/api/v1/groups/${groupId}`,
-    {
-      // eslint-disable-next-line object-shorthand
-      password: password,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+  const res = await axios.post(`/api/v1/groups/${groupId}`, {
+    // eslint-disable-next-line object-shorthand
+    password: password,
+  });
+  const { data } = res.data;
+
+  return data;
+}
+
+export async function getJoinedGroupMemebers(groupId: number) {
+  const res = await axios.get(`/api/v1/ranks?groupId=${groupId}`);
+  const { data } = res.data;
+
+  return data;
+}
+
+export async function getTodoDatas(groupId: number) {
+  const res = await axios.get(`/api/v1/todos?groupId=${groupId}`);
   const { data } = res.data;
   return data;
 }
 
-export const getGroupMembers = async (accessToken: string, groupId: number) => {
-  const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/ranks?groupId=${groupId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+export const getGroupMembers = async (groupId: number) => {
+  const res = await axios.get(`/api/v1/ranks?groupId=${groupId}`);
 
   if (!res.data || !res.data.data) {
     throw new Error('Group member data is not available');
@@ -85,18 +66,12 @@ export const getGroupMembers = async (accessToken: string, groupId: number) => {
 };
 
 export const getUserReservation = async (
-  accessToken: string,
   groupId: number,
   from: string,
   to: string
 ) => {
   const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/rooms/reservation?groupId=${groupId}&from=${from}&to=${to}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
+    `/api/v1/rooms/reservation?groupId=${groupId}&from=${from}&to=${to}`
   );
 
   if (!res.data || !res.data.data) {
@@ -108,18 +83,12 @@ export const getUserReservation = async (
 };
 
 export const getGroupReservation = async (
-  accessToken: string,
   groupId: number,
   from: string,
   to: string
 ) => {
   const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/rooms?groupId=${groupId}&from=${from}&to=${to}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
+    `/api/v1/rooms?groupId=${groupId}&from=${from}&to=${to}`
   );
 
   if (!res.data || !res.data.data) {
@@ -130,91 +99,50 @@ export const getGroupReservation = async (
   return data;
 };
 
-export async function getTodoDatas(accessToken: string, groupId: number) {
-  const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/todos?groupId=${groupId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-  const { data } = res.data;
-  return data;
-}
-
 export async function postTodo({
-  accessToken,
   content,
   groupId,
 }: {
-  accessToken: string;
   content: string;
   groupId: number;
 }) {
-  const res = await axios.post(
-    `https://www.sangyeop.shop/api/v1/todos`,
-    {
-      // eslint-disable-next-line object-shorthand
-      content: content,
-      // eslint-disable-next-line object-shorthand
-      groupId: groupId,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+  const res = await axios.post(`/api/v1/todos`, {
+    // eslint-disable-next-line object-shorthand
+    content: content,
+    // eslint-disable-next-line object-shorthand
+    groupId: groupId,
+  });
   const { data } = res.data;
+
   return data;
 }
 
 export async function editOrDoneTodo({
-  accessToken,
   content,
   done,
   todoId,
 }: {
-  accessToken: string;
   content: string;
   done: boolean;
   todoId: number;
 }) {
-  const res = await axios.patch(
-    `https://www.sangyeop.shop/api/v1/todos`,
-    {
-      // eslint-disable-next-line object-shorthand
-      content: content,
-      // eslint-disable-next-line object-shorthand
-      done: done,
-      // eslint-disable-next-line object-shorthand
-      todoId: todoId,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+  const res = await axios.patch(`/api/v1/todos`, {
+    // eslint-disable-next-line object-shorthand
+    content: content,
+    // eslint-disable-next-line object-shorthand
+    done: done,
+    // eslint-disable-next-line object-shorthand
+    todoId: todoId,
+  });
   const { data } = res.data;
   return data;
 }
 
-export async function deleteTodo({
-  accessToken,
-  todoId,
-}: {
-  accessToken: string;
-  todoId: number;
-}) {
-  const res = await axios.delete(`https://www.sangyeop.shop/api/v1/todos`, {
+export async function deleteTodo({ todoId }: { todoId: number }) {
+  const res = await axios.delete(`/api/v1/todos`, {
     data: {
       // eslint-disable-next-line object-shorthand
       todoId: todoId,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
     },
   });
 
@@ -223,77 +151,62 @@ export async function deleteTodo({
 }
 
 export async function makeGroup({
-  accessToken,
   groupName,
   password,
   path,
   secret,
 }: {
-  accessToken: string;
   groupName: string;
   password: string;
   path: string;
   secret: boolean;
 }) {
-  const res = await axios.post(
-    `https://www.sangyeop.shop/api/v1/groups`,
-    {
-      // eslint-disable-next-line object-shorthand
-      groupName: groupName,
-      // eslint-disable-next-line object-shorthand
-      password: password,
-      // eslint-disable-next-line object-shorthand
-      path: path,
-      // eslint-disable-next-line object-shorthand
-      secret: secret,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-
-  const { data } = res.data;
-  return data;
-}
-
-export async function pathJoinGroup({
-  accessToken,
-  path,
-}: {
-  accessToken: string;
-  path: string;
-}) {
-  const res = await axios.post(
-    `https://www.sangyeop.shop/api/v1/groups/path`,
+  const res = await axios.post(`/api/v1/groups`, {
     // eslint-disable-next-line object-shorthand
-    { path: path },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
+    groupName: groupName,
+    // eslint-disable-next-line object-shorthand
+    password: password,
+    // eslint-disable-next-line object-shorthand
+    path: path,
+    // eslint-disable-next-line object-shorthand
+    secret: secret,
+  });
+
+  const { data } = res.data;
+  return data;
+}
+
+export async function pathJoinGroup({ path }: { path: string }) {
+  const res = await axios.post(
+    `/api/v1/groups/path`,
+    // eslint-disable-next-line object-shorthand
+    { path: path }
   );
 
   const { data } = res.data;
   return data;
 }
 
-export async function getGroupNameByPath({
-  accessToken,
-  path,
-}: {
-  accessToken: string;
-  path: string;
-}) {
-  const res = await axios.get('https://www.sangyeop.shop/api/v1/groups/path', {
+export async function getGroupNameByPath({ path }: { path: string }) {
+  const res = await axios.get('/api/v1/groups/path', {
     // eslint-disable-next-line object-shorthand
     params: { path: path },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   });
   const { data } = res.data;
   return data;
 }
+
+export async function deleteGroup(groupId: number) {
+  axios.delete('/api/v1/groups', {
+    data: {
+      groupId,
+    },
+  });
+}
+
+export const changeGroupColor = async (groupId: number, color: string) => {
+  await axios.patch('/api/v1/groups/color', {
+    color,
+    groupId,
+  });
+};

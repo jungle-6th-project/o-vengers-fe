@@ -1,21 +1,14 @@
-import { useCookies } from 'react-cookie';
 import { useQuery } from '@tanstack/react-query';
 import GroupTodo from './GroupTodo';
 import { GroupData } from './TodoTypes';
 import { getMyGroups } from '../../utils/api';
 
 const TodoList = () => {
-  const [{ accessToken }, ,] = useCookies(['accessToken']);
-
   const {
     data: myGroupList,
     isLoading,
     isError,
-  } = useQuery(['MyGroupData'], () => getMyGroups(accessToken));
-
-  if (isLoading || isError) {
-    return <span className="stat stat-title loading loading-dots loading-sm" />;
-  }
+  } = useQuery(['MyGroupData'], () => getMyGroups());
 
   return (
     <div className="card card-bordered border-[#D9D9D9] w-72 h-[30rem] bg-[#FAFAFA] rounded-md overflow-auto">

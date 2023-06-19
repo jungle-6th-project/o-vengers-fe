@@ -44,7 +44,6 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     ['userReservations'],
     () =>
       getUserReservation(
-        accessToken,
         groupId,
         startSearchTime.format('YYYY-MM-DDTHH:mm:ss'),
         endSearchTime.format('YYYY-MM-DDTHH:mm:ss')
@@ -76,7 +75,6 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     ['groupReservations'],
     () =>
       getGroupReservation(
-        accessToken,
         groupId,
         startSearchTime.format('YYYY-MM-DDTHH:mm:ss'),
         endSearchTime.format('YYYY-MM-DDTHH:mm:ss')
