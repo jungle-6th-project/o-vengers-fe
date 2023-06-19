@@ -136,7 +136,7 @@ const CancelReservationButton = ({
       onMouseOut={handleMouseOut}
       onBlur={handleMouseOut}
     >
-      {`${roomId} ${startTime.slice(11, 16)}-${endTime.slice(11, 16)}`}
+      {`${groupId}:${roomId} ${startTime.slice(11, 16)}-${endTime.slice(11, 16)}`}
     </button>
   );
 };
