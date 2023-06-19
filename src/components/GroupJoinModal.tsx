@@ -1,5 +1,5 @@
-import { isValidElement, useEffect, useRef, useState } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useCookies } from 'react-cookie';
 import { getGroupNameByPath, pathJoinGroup } from '../utils/api';
@@ -22,6 +22,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
         path: joinPath,
       });
       return groupData;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error);
       if (
