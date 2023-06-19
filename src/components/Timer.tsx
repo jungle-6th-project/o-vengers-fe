@@ -28,7 +28,11 @@ const TimerDisplay = ({ remainingTime }: TimerDisplayProps) => {
     return formattedTime;
   };
 
-  return <p className="font-mono text-4xl">{formatTime(remainingTime)}</p>;
+  return (
+    <p className="font-mono text-[4.375rem] text-white">
+      {formatTime(remainingTime)}
+    </p>
+  );
 };
 
 interface EntryButtonProps {
@@ -39,11 +43,13 @@ interface EntryButtonProps {
 const EntryButton = ({ onIdle, handleEnterRoom }: EntryButtonProps) => (
   <button
     type="button"
-    className={`btn btn-outline ${onIdle ? '' : 'btn-success'}`}
+    className={`btn btn-outline ${
+      onIdle ? '' : 'btn-success'
+    } w-[15.125rem] h-[3.8125rem] text-2xl rounded-xl`}
     disabled={onIdle}
     onClick={handleEnterRoom}
   >
-    예약한 방 입장하기
+    방 입장하기
   </button>
 );
 
@@ -53,9 +59,9 @@ interface RoomEnterMessageProps {
 
 const RoomEnterMessage = ({ onIdle }: RoomEnterMessageProps) => {
   if (onIdle) {
-    return <div>예약한 방이 없어요!</div>;
+    return <div className="text-base text-white">예약한 방이 없어요!</div>;
   }
-  return <div>방 입장까지 남은 시간</div>;
+  return <div className="text-base text-white">방 입장까지 남은 시간</div>;
 };
 
 interface TimerProps {
@@ -98,7 +104,7 @@ const Timer = ({ reservedTime }: TimerProps) => {
   };
 
   return (
-    <div className="bg-black">
+    <div className="bg-black w-[17rem] h-[13.625rem] flex flex-col justify-evenly items-center rounded-2xl">
       <EntryButton onIdle={onIdle} handleEnterRoom={handleEnterRoom} />
       <RoomEnterMessage onIdle={onIdle} />
       <TimerDisplay remainingTime={remainingTime} />

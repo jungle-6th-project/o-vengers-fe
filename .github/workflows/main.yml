@@ -24,6 +24,15 @@ jobs:
       - name: Install Dependencies # 의존 파일 설치
         run: npm install
 
+      - name: make .env files
+        run: |
+          touch .env
+          echo VITE_REDIRECT_URL=${{secrets.VITE_REDIRECT_URL}} >> .env
+          echo VITE_VITE_PUBLIC_LK_TOKEN_ENDPOINT=${{secrets.VITE_PUBLIC_LK_TOKEN_ENDPOINT}} >> .env
+          echo VITE_REST_API_KEY=${{secrets.VITE_REST_API_KEY}} >> .env
+          cat .env
+          
+
       - name: Build # React Build
         run: npm run build
 

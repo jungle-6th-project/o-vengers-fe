@@ -14,7 +14,6 @@ import GroupJoinModal from './components/GroupJoinModal';
 
 function App() {
   const groupId = useSelectedGroupId();
-  console.log('🚀 ~ file: App.tsx:17 ~ App ~ groupId:', groupId);
   const isLoggedIn = useIsLoggedIn();
   const { setIsLoggedIn, reset } = useUserActions();
   const [token, , removeAccessTokenCookies] = useCookies(['accessToken']);
@@ -35,7 +34,7 @@ function App() {
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <div>
-      {isLoggedIn ? (
+      {/* {isLoggedIn ? (
         <button type="button" className="text-center btn" onClick={logOut}>
           로그아웃
         </button>
@@ -45,16 +44,22 @@ function App() {
             로그인
           </button>
         </Link>
-      )}
+      )} */}
 
       {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
-      <GroupMakeModal />
-      <GroupSearchModal />
-      <GroupList />
+      <div className="flex">
+        <div className="flex flex-col">
+          <GroupMakeModal />
+          <GroupSearchModal />
+        </div>
+        <GroupList />
+        <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+      </div>
       <br />
-      <Ranking groupId={groupId} />
-      <TodoList />
-      <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+      <div>
+        <Ranking groupId={groupId} />
+        <TodoList />
+      </div>
       <Calendar groupId={groupId} />
     </div>
   );
