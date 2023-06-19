@@ -9,11 +9,11 @@ import { getGroupReservation, getUserReservation } from '@/utils/api';
 import CalendarHeader from './CalendarHeader';
 import TimeSlots from './TimeSlots';
 import Day from './Day';
-import {
-  useCalendarActions,
-  useTimeSlots,
-  useWeeks,
-} from '../../store/calendarStore';
+
+import { useGroupReservationActions } from '@/store/groupReservationStore';
+import { useUserReservationActions } from '@/store/userReservationStore';
+import { useUser } from '@/store/userStore';
+import { useTimeSlots, useWeeks } from '@/store/calendarStore';
 
 interface ReservationData {
   startTime: string;
@@ -26,80 +26,65 @@ interface WeeklyViewCalendarProp {
   groupId: number;
 }
 
-// TODO: groupID 추가
 const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
   const [{ accessToken }, ,] = useCookies(['accessToken']);
   const topic = `/topic/${groupId}`;
+  const user = useUser();
 
-  // api로 유저 예약 데이터 받아와서 store 업데이트하기
-  const {
-    setReservationUserReservedStatus,
-    setReservationRoomId,
-    setReservationParticipants,
-  } = useCalendarActions();
+  const { setGroupReservation, resetGroupReservationStore } =
+    useGroupReservationActions();
+  const { setUserReservation, removeUserReservation } =
+    useUserReservationActions();
 
   const startSearchTime = dayjs();
   const endSearchTime = startSearchTime.add(3, 'week');
-  const { data: userReservationData, isSuccess: userQuerySuccess } = useQuery(
+  const startSearchTimeString = startSearchTime.format('YYYY-MM-DDTHH:mm:ss');
+  const endSearchTimeString = endSearchTime.format('YYYY-MM-DDTHH:mm:ss');
+
+  // api로 유저 예약 데이터 받아와서 store 업데이트하기
+  useQuery(
     ['userReservations'],
-    () =>
-      getUserReservation(
-        groupId,
-        startSearchTime.format('YYYY-MM-DDTHH:mm:ss'),
-        endSearchTime.format('YYYY-MM-DDTHH:mm:ss')
-      ),
+    () => getUserReservation(startSearchTimeString, endSearchTimeString),
     {
       staleTime: Infinity,
       cacheTime: 0,
+      onSuccess: returnedData =>
+        returnedData.forEach(
+          ({ startTime, roomId, profiles }: ReservationData) => {
+            setUserReservation(startTime, groupId, roomId, profiles);
+          }
+        ),
     }
   );
-
-  useEffect(() => {
-    if (userReservationData) {
-      userReservationData.forEach((datum: ReservationData) => {
-        setReservationUserReservedStatus(datum.startTime, true);
-        setReservationRoomId(datum.startTime, datum.roomId);
-        setReservationParticipants(datum.startTime, datum.profiles);
-      });
-    }
-  }, [
-    userReservationData,
-    groupId,
-    setReservationUserReservedStatus,
-    setReservationRoomId,
-    setReservationParticipants,
-  ]);
 
   // api로 그룹원 예약 데이터 받아와서 store 업데이트하기
-  const { data: groupReservationData } = useQuery(
+  const { refetch: groupRefetch } = useQuery(
     ['groupReservations'],
-    () =>
-      getGroupReservation(
+    () => {
+      return getGroupReservation(
         groupId,
-        startSearchTime.format('YYYY-MM-DDTHH:mm:ss'),
-        endSearchTime.format('YYYY-MM-DDTHH:mm:ss')
-      ),
+        startSearchTimeString,
+        endSearchTimeString
+      );
+    },
     {
       staleTime: Infinity,
       cacheTime: 0,
-      enabled: userQuerySuccess,
+      onSuccess: returnedData =>
+        returnedData.forEach(
+          ({ startTime, roomId, profiles }: ReservationData) => {
+            setGroupReservation(startTime, roomId, profiles);
+          }
+        ),
     }
   );
 
   useEffect(() => {
-    if (groupReservationData) {
-      groupReservationData.forEach((datum: ReservationData) => {
-        setReservationRoomId(datum.startTime, datum.roomId);
-        setReservationParticipants(datum.startTime, datum.profiles);
-      });
-    }
-  }, [
-    groupReservationData,
-    groupId,
-    setReservationRoomId,
-    setReservationParticipants,
-  ]);
+    resetGroupReservationStore();
+    groupRefetch();
+  }, [groupId, groupRefetch, resetGroupReservationStore]);
 
+  // STOMP 연결
   const [client, setClient] = useState<Client | null>(null);
   const subscriptionRef = useRef<StompSubscription | null>(null);
 
@@ -116,16 +101,24 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
 
     newClient.onConnect = frame => {
       console.log(`Connected: ${frame}`);
+
       subscriptionRef.current = newClient.subscribe(topic, message => {
         if (message.body) {
           console.log(`Received: ${message.body}`);
-          const data = JSON.parse(message.body);
-          const { roomId, profiles } = data;
+          console.log(topic);
+          const data: ReservationData = JSON.parse(message.body);
+          const { startTime, roomId, profiles } = data;
 
-          setReservationRoomId(data.startTime, roomId);
-          setReservationParticipants(data.startTime, profiles);
+          setGroupReservation(startTime, roomId, profiles);
+          if (profiles && profiles.includes(user.profile)) {
+            setUserReservation(startTime, groupId, roomId, profiles);
+          }
         }
       });
+    };
+
+    newClient.onDisconnect = frame => {
+      console.log(`Disconnected: ${frame}`);
     };
 
     newClient.onStompError = frame => {
@@ -144,61 +137,33 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     newClient.activate();
 
     return () => {
-      // Clean up function on component unmount
-      // TODO: 중간에 client 몇 번 바뀌었어도 잘 닫히는지 확인
       newClient.deactivate();
     };
   }, [
     accessToken,
     groupId,
     topic,
-    setReservationParticipants,
-    setReservationRoomId,
+    user.profile,
+    setGroupReservation,
+    setUserReservation,
   ]);
 
-  useEffect(() => {
-    if (client && client.connected && subscriptionRef.current) {
-      subscriptionRef.current.unsubscribe();
-
-      subscriptionRef.current = client.subscribe(topic, message => {
-        if (message.body) {
-          console.log(`Received: ${message.body}`);
-        }
-      });
-    }
-  }, [client, groupId, topic]);
-
   const createReservation = (startTime: string, endTime: string) => {
+    console.log('create', groupId, topic);
     if (client && client.connected) {
       client.publish({
         destination: '/app/add',
-        body: JSON.stringify({
-          // eslint-disable-next-line object-shorthand
-          groupId: groupId,
-          // eslint-disable-next-line object-shorthand
-          startTime: startTime,
-          // eslint-disable-next-line object-shorthand
-          endTime: endTime,
-        }),
+        body: JSON.stringify({ groupId, startTime, endTime }),
       });
-      // TODO: 잘 올라갔는지 확인 가능?
-      setReservationUserReservedStatus(startTime, true);
     }
   };
 
-  const joinReservation = (startTime: string, roomId: number) => {
+  const joinReservation = (roomId: number) => {
     if (client && client.connected) {
       client.publish({
         destination: '/app/join',
-        body: JSON.stringify({
-          // eslint-disable-next-line object-shorthand
-          roomId: roomId,
-          // eslint-disable-next-line object-shorthand
-          groupId: groupId,
-        }),
+        body: JSON.stringify({ roomId, groupId }),
       });
-      // TODO: 잘 올라갔는지 확인 가능?
-      setReservationUserReservedStatus(startTime, true);
     }
   };
 
@@ -206,15 +171,9 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     if (client && client.connected) {
       client.publish({
         destination: '/app/join',
-        body: JSON.stringify({
-          // eslint-disable-next-line object-shorthand
-          roomId: roomId,
-          // eslint-disable-next-line object-shorthand
-          groupId: groupId,
-        }),
+        body: JSON.stringify({ roomId, groupId }),
       });
-      // TODO: 잘 올라갔는지 확인 가능?
-      setReservationUserReservedStatus(startTime, false);
+      removeUserReservation(startTime);
     }
   };
 
