@@ -13,7 +13,6 @@ function App() {
   const [preJoinChoices, setPreJoinChoices] = useState<
     LocalUserChoices | undefined
   >(undefined);
-
   return (
     <div data-lk-theme="default">
       {roomId && !Array.isArray(roomId) && preJoinChoices ? (

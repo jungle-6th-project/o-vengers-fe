@@ -4,15 +4,11 @@ import { GroupData } from './TodoTypes';
 import { getMyGroups } from '../../utils/api';
 
 const TodoList = () => {
-  const {
-    data: myGroupList,
-    isLoading,
-    isError,
-  } = useQuery(['MyGroupData'], () => getMyGroups());
+  const [{ accessToken }, ,] = useCookies(['accessToken']);
 
-  if (isLoading || isError) {
-    return <div>로딩중입니다</div>;
-  }
+  const { data: myGroupList } = useQuery(['MyGroupData'], () =>
+    getMyGroups(accessToken)
+  );
 
   return myGroupList?.map((group: GroupData) => (
     <GroupTodo key={group.groupId} groupData={group} />

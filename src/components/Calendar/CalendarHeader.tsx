@@ -46,7 +46,7 @@ const CalendarHeader = ({ weeks }: CalendarHeaderProps) => {
         <div key={day.date} className="carousel-item">
           <DayOfWeekComponent
             key={day.date}
-            date={day.date}
+            date={day.date.split('-')[2]}
             dayOfWeek={day.dayOfWeek}
             today={today}
           />

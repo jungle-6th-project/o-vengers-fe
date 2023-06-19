@@ -8,11 +8,13 @@ export default defineConfig({
   server: {
     proxy: {
       '/socket.io/': {
-        target: 'ws://localhost:3000',
+        target: 'ws://localhost:5000',
         ws: true,
         changeOrigin: true,
         secure: false,
       },
+      '/video/getToken': 'http://localhost:5000',
+      '/video/api/url': 'http://localhost:5000',
     },
   },
 });

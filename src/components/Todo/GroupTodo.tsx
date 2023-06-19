@@ -104,7 +104,7 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
   }, [showInput]);
 
   return (
-    <div className="p-2 m-3 bg-white border border-gray-300 rounded-md shadow-md">
+    <div className="p-2 m-3 bg-white border border-gray-300 shadow-md rounded-md">
       <div className="flex items-center justify-between p-2 m-2">
         <h3 className="text-2xl font-bold">{groupData.groupName}</h3>
         <button

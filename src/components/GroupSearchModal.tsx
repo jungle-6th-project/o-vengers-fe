@@ -201,7 +201,7 @@ const GroupSearchModal = () => {
           <div className="flex flex-col">
             <input
               type="reset"
-              className="col-auto mt-10 mb-2 btn btn-info btn-block"
+              className="mt-10 mb-2 col-auto btn btn-info btn-block"
               value="그룹 참여하기"
               onClick={onJoin}
               disabled={!selectedGroup}

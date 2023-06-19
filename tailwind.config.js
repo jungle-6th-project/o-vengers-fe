@@ -16,7 +16,7 @@ module.exports = {
         calendar: '0.3fr 1fr',
       },
       gridTemplateColumns: {
-        calendar: '100px repeat(7, 1fr)',
+        calendar: '100px repeat(21, 1fr)',
       },
     },
   },

@@ -1,49 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import {
   UserRankingProfile,
   GroupRankingProfile,
   GroupRankingProfileProps,
 } from './RankingProfile';
+import { getGroupMembers, getUser } from '../utils/api';
 
-const fetchUserRanking = async (accessToken: string) => {
-  const res = await axios.get(`https://www.sangyeop.shop/api/v1/members`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (!res.data || !res.data.data || !res.data.data.duration) {
-    throw new Error('User data is not available');
-  }
-
-  return res.data.data;
-};
-
-const fetchGroupRankings = async (accessToken: string, groupId: number) => {
-  const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/ranks/${groupId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-
-  if (!res.data || !res.data.data || !res.data.data[0]) {
-    throw new Error('Ranking data is not available');
-  }
-
-  return res.data.data;
-};
-
-// format: "PT30H35M" => [30, 35]
 const parseStudyTime = (studyTimeString: string): number[] => {
-  const hours = parseInt(studyTimeString.split('T')[1].split('H')[0], 10);
-  const minutes = parseInt(studyTimeString.split('H')[1].split('M')[0], 10);
+  // TODO: parseTimeDuration 함수 사용
+  if (studyTimeString) {
+    console.log(studyTimeString);
+  }
+  // const hours = parseInt(studyTimeString.split('T')[1].split('H')[0], 10);
+  // const minutes = parseInt(studyTimeString.split('H')[1].split('M')[0], 10);
 
-  return [hours, minutes];
+  // return [hours, minutes];
+  return [0, 0];
 };
 
 const sortByStudyTime = (
@@ -67,14 +40,14 @@ const UserRanking = () => {
 
   const { isLoading, isError, data } = useQuery(
     ['userRanking'],
-    () => fetchUserRanking(accessToken),
+    () => getUser(accessToken),
     {
       refetchInterval: 60000,
       staleTime: Infinity,
     }
   );
 
-  if (isLoading || isError) {
+  if (isLoading || isError || !data.duration) {
     return (
       <div className="sticky top-0 z-10">
         <UserRankingProfile studyTime={[0, 0]} />
@@ -84,7 +57,7 @@ const UserRanking = () => {
 
   return (
     <div className="sticky top-0 z-10">
-      {data.duration && (
+      {data.duration && ( // undefined or null
         <UserRankingProfile studyTime={parseStudyTime(data.duration)} />
       )}
     </div>
@@ -96,10 +69,10 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
 
   const { isLoading, isError, data } = useQuery(
     ['groupRankings'],
-    () => fetchGroupRankings(accessToken, groupId),
+    () => getGroupMembers(accessToken, groupId),
     {
       refetchInterval: 60000,
-      staleTime: 5000,
+      staleTime: 60000,
     }
   );
 
@@ -143,12 +116,10 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
   );
 };
 
-// TODO: 현재 그룹 아이디는 프론트에서 상태 관리
-const Ranking = () => {
-  const groupId = 0;
-
+const Ranking = ({ groupId }: { groupId: number }) => {
+  // TODO: 2명 이하 인원수 css 조정
   return (
-    <div className="stats stats-vertical shadow w-60 h-96">
+    <div className="shadow stats stats-vertical w-60 h-96">
       <UserRanking />
       <GroupRankings groupId={groupId} />
     </div>
