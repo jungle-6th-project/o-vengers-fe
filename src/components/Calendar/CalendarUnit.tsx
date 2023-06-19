@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import { useReservation } from '../../store/calendarStore';
-import { roomExpireMin } from '../Timer';
+import { BsX } from 'react-icons/bs';
+import { roomExpireMin } from '@/components/Timer';
+import { MemberProfiles } from '@/components/Groups/Groups';
+import { useGroupReservation } from '@/store/groupReservationStore';
+import { useUserReservation } from '@/store/userReservationStore';
+import { useSelectedGroupId } from '@/store/groupStore';
 
 const parseTime = (day: string, time: string): string[] => {
   // '2023-06-14T10:00:00'
@@ -12,6 +16,44 @@ const parseTime = (day: string, time: string): string[] => {
   const endTime = `${day}T${endHour}:${endMinute}:00`;
 
   return [startTime, endTime];
+};
+
+const CalendarButton = ({
+  className,
+  onClick,
+  children,
+  onMouseOver,
+  onMouseOut,
+  onFocus,
+  onBlur,
+}: {
+  className?: string;
+  onClick: () => void;
+  children: React.ReactNode;
+  onMouseOver?: () => void;
+  onMouseOut?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+}) => (
+  <button
+    type="button"
+    className={`absolute z-20 w-full h-full btn ${className}`}
+    onClick={onClick}
+    onMouseOver={onMouseOver}
+    onMouseOut={onMouseOut}
+    onFocus={onFocus}
+    onBlur={onBlur}
+  >
+    {children}
+  </button>
+);
+
+CalendarButton.defaultProps = {
+  className: '',
+  onMouseOver: () => {},
+  onMouseOut: () => {},
+  onFocus: () => {},
+  onBlur: () => {},
 };
 
 /**
@@ -35,13 +77,12 @@ const CreateReservationButton = ({
   };
 
   return (
-    <button
-      type="button"
-      className="absolute z-20 w-5/6 opacity-0 btn h-5/6 bg-reservation hover:opacity-100"
+    <CalendarButton
+      className="opacity-0 bg-reservation hover:opacity-100"
       onClick={handleClick}
     >
       예약하기
-    </button>
+    </CalendarButton>
   );
 };
 
@@ -53,26 +94,23 @@ const CreateReservationButton = ({
  * @returns 예약 버튼 JSX
  */
 const JoinReservationButton = ({
-  startTime,
   roomId,
   joinReservation,
 }: {
-  startTime: string;
   roomId: number;
-  joinReservation: (startTime: string, roomId: number) => void;
+  joinReservation: (roomId: number) => void;
 }) => {
   const handleClick = () => {
-    joinReservation(startTime, roomId);
+    joinReservation(roomId);
   };
 
   return (
-    <button
-      type="button"
-      className="absolute z-20 w-5/6 opacity-0 btn h-5/6 bg-reservation hover:opacity-100"
+    <CalendarButton
+      className="opacity-0 bg-reservation hover:opacity-100"
       onClick={handleClick}
     >
       예약하기
-    </button>
+    </CalendarButton>
   );
 };
 
@@ -97,69 +135,31 @@ const CancelReservationButton = ({
   groupId: number;
   cancelReservation: (startTime: string, roomId: number) => void;
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  // TODO: 그룹아이디로 그룹 이름 찾는 저장소 만들어서 그룹 이름 출력하기
+  const selectedGroupId = useSelectedGroupId();
 
   const handleClick = () => {
     cancelReservation(startTime, roomId);
   };
 
-  const handleMouseOver = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovered(false);
-  };
-
-  if (isHovered) {
-    return (
+  return (
+    <div
+      className={`absolute z-20 w-full h-full btn ${
+        groupId !== selectedGroupId ? ' btn-ghost' : 'btn-primary'
+      }  no-animation`}
+    >
+      <h1 className="absolute left-4 top-2.5 text-lg">그룹이름: {groupId}</h1>
       <button
         type="button"
-        className="absolute z-20 w-5/6 h-5/6 btn"
+        className="absolute right-0.5 top-0.5"
         onClick={handleClick}
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
-        onFocus={handleMouseOver}
-        onBlur={handleMouseOut}
       >
-        예약 취소
+        <BsX size={30} />
       </button>
-    );
-  }
-  return (
-    <button
-      type="button"
-      className="absolute z-20 w-5/6 h-5/6 btn btn-primary"
-      onClick={handleClick}
-      onMouseOver={handleMouseOver}
-      onFocus={handleMouseOver}
-      onMouseOut={handleMouseOut}
-      onBlur={handleMouseOut}
-    >
-      {`${groupId}:${roomId} ${startTime.slice(11, 16)}-${endTime.slice(
+      <span className="absolute left-4 bottom-3">{`${startTime.slice(
         11,
         16
-      )}`}
-    </button>
-  );
-};
-
-// FIXME: 현재는 임시. 나중에 합치고 나서 GroupList 컴포넌트 재사용하기
-/**
- * 예약한 사람들의 프로필을 보여줌
- * @param participants 예약 취소할 방 번호
- * @returns 겹쳐진 프로필 사진 및 인원수 JSX
- */
-const ReservationProfile = ({ participants }: { participants: string[] }) => {
-  return (
-    <div className="absolute -space-x-6 avatar-group">
-      {participants.map((profile: string) => (
-        <div key={profile} className="avatar">
-          <div className="w-12">
-            <img src={profile} alt="participant" />
-          </div>
-        </div>
-      ))}
+      )}-${endTime.slice(11, 16)}`}</span>
     </div>
   );
 };
@@ -182,8 +182,8 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
 
   const [startTime, endTime] = parseTime(day, time);
 
-  const key = startTime;
-  const reservation = useReservation(key);
+  const groupReservation = useGroupReservation(startTime);
+  const userReservation = useUserReservation(startTime);
 
   const [isExpired, setIsExpired] = useState(false);
 
@@ -206,27 +206,33 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
   }
 
   return (
-    <div className="border border-dashed h-[76px] relative">
-      {reservation && (
-        <ReservationProfile participants={reservation.participants} />
+    <div className="border border-dashed h-[76px] flex justify-center items-center relative">
+      {userReservation && (
+        <div className="absolute z-30 right-2 bottom-2">
+          <MemberProfiles profiles={userReservation.participants} />
+        </div>
+      )}
+      {groupReservation && (
+        <div className="absolute z-10 right-2 bottom-2">
+          <MemberProfiles profiles={groupReservation.participants} />
+        </div>
       )}
       {(() => {
-        if (reservation?.userReserved) {
+        if (userReservation) {
           return (
             <CancelReservationButton
               startTime={startTime}
               endTime={endTime}
-              roomId={reservation.roomId}
-              groupId={reservation.groupId}
+              roomId={userReservation.roomId}
+              groupId={userReservation.groupId}
               cancelReservation={cancelReservation}
             />
           );
         }
-        if (reservation) {
+        if (groupReservation) {
           return (
             <JoinReservationButton
-              startTime={startTime}
-              roomId={reservation.roomId}
+              roomId={groupReservation.roomId}
               joinReservation={joinReservation}
             />
           );
