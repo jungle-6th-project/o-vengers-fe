@@ -45,7 +45,7 @@ const EntryButton = ({ onIdle, handleEnterRoom }: EntryButtonProps) => (
     type="button"
     className={`btn btn-outline ${
       onIdle ? '' : 'btn-success'
-    } w-[15.125rem] h-[3.8125rem] text-2xl rounded-xl`}
+    } w-[14.125rem] h-[2.8125rem] text-2xl rounded-xl`}
     disabled={onIdle}
     onClick={handleEnterRoom}
   >
@@ -104,7 +104,7 @@ const Timer = ({ reservedTime }: TimerProps) => {
   };
 
   return (
-    <div className="bg-black w-[17rem] h-[13.625rem] flex flex-col justify-evenly items-center rounded-2xl">
+    <div className="bg-black w-[16rem] h-[12.625rem] flex flex-col justify-evenly items-center rounded-2xl">
       <EntryButton onIdle={onIdle} handleEnterRoom={handleEnterRoom} />
       <RoomEnterMessage onIdle={onIdle} />
       <TimerDisplay remainingTime={remainingTime} />

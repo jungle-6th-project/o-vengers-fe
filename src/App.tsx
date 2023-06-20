@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { useSelectedGroupId } from './store/groupStore';
 import GroupMakeModal from './components/GroupMakeModal';
-import { useIsLoggedIn, useUserActions } from './store/userStore';
+import { useUserActions } from './store/userStore';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
 import Timer from './components/Timer';
@@ -14,7 +14,6 @@ import GroupJoinModal from './components/GroupJoinModal';
 
 function App() {
   const groupId = useSelectedGroupId();
-  const isLoggedIn = useIsLoggedIn();
   const { setIsLoggedIn, reset } = useUserActions();
   const [token, , removeAccessTokenCookies] = useCookies(['accessToken']);
   const [, , removeRefreshTokenCookies] = useCookies(['refreshToken']);
@@ -33,35 +32,38 @@ function App() {
 
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
-    <div>
-      {isLoggedIn ? (
-        <button type="button" className="text-center btn" onClick={logOut}>
-          로그아웃
-        </button>
-      ) : (
-        <Link to="/login">
-          <button type="button" className="text-center btn">
-            로그인
-          </button>
-        </Link>
-      )}
-
-      {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
-      <div className="flex">
-        <div className="flex flex-col">
-          <GroupMakeModal />
-          <GroupSearchModal />
+    <>
+      <div className="grid grid-rows-container grid-cols-container">
+        <div className="row-span-3 col-todo">
+          <img src="./logo.png" alt="logo" />
+          <Ranking groupId={groupId} />
+          <TodoList />
         </div>
-        <GroupList />
-        <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+        <div className="flex 123">
+          <div className="flex flex-col justify-between mr-3 btn-3">
+            {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
+            <GroupMakeModal />
+            <GroupSearchModal />
+            <Link to="/mypage">
+              <button type="button" className="btn btn-square">
+                MY
+              </button>
+            </Link>
+          </div>
+
+          <div className="flex">
+            <GroupList />
+            <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+          </div>
+        </div>
+        <div className="self-end col-start-2 col-end-3 row-start-2 row-end-3">
+          <Calendar groupId={groupId} />
+        </div>
       </div>
-      <br />
-      <div>
-        <Ranking groupId={groupId} />
-        <TodoList />
-      </div>
-      <Calendar groupId={groupId} />
-    </div>
+      <button type="button" onClick={() => logOut()}>
+        로그아웃
+      </button>
+    </>
   );
 }
 
