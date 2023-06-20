@@ -93,7 +93,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   return (
     <div
       role="presentation"
-      className={`shadow card w-[15.0625rem] h-[13.625rem] ${selectedColor} cursor-pointer`}
+      className={`shadow card w-[225px] h-[12.625rem] ${selectedColor} cursor-pointer`}
       onClick={() => setGroupId(groupId)}
       onKeyDown={() => setGroupId(groupId)}
     >
@@ -186,7 +186,6 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
             </ul>
           </div>
         </div>
-
         <div className="flex items-center justify-between">
           <h2
             className={`${

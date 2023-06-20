@@ -14,9 +14,11 @@ module.exports = {
       },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
+        container: '200px 1fr',
       },
       gridTemplateColumns: {
         calendar: '100px repeat(21, 1fr)',
+        container: '0.3fr 1fr',
       },
     },
   },
