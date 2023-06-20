@@ -32,33 +32,38 @@ function App() {
 
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
-    <div className="grid grid-rows-container grid-cols-container">
-      <div className="row-span-3 col-todo">
-        <img src="./logo.png" alt="logo" />
-        <Ranking groupId={groupId} />
-        <TodoList />
-      </div>
-      <div className="flex 123">
-        <div className="flex flex-col justify-between mr-3 btn-3">
-          {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
-          <GroupMakeModal />
-          <GroupSearchModal />
-          <Link to="/mypage">
-            <button type="button" className="btn btn-square">
-              MY
-            </button>
-          </Link>
+    <>
+      <div className="grid grid-rows-container grid-cols-container">
+        <div className="row-span-3 col-todo">
+          <img src="./logo.png" alt="logo" />
+          <Ranking groupId={groupId} />
+          <TodoList />
         </div>
+        <div className="flex 123">
+          <div className="flex flex-col justify-between mr-3 btn-3">
+            {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
+            <GroupMakeModal />
+            <GroupSearchModal />
+            <Link to="/mypage">
+              <button type="button" className="btn btn-square">
+                MY
+              </button>
+            </Link>
+          </div>
 
-        <div className="flex">
-          <GroupList />
-          <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+          <div className="flex">
+            <GroupList />
+            <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+          </div>
+        </div>
+        <div className="self-end col-start-2 col-end-3 row-start-2 row-end-3">
+          <Calendar groupId={groupId} />
         </div>
       </div>
-      <div className="self-end col-start-2 col-end-3 row-start-2 row-end-3">
-        <Calendar groupId={groupId} />
-      </div>
-    </div>
+      <button type="button" onClick={() => logOut()}>
+        로그아웃
+      </button>
+    </>
   );
 }
 

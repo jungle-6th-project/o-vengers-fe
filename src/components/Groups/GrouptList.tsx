@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import Slider from 'react-slick';
+// import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { getMyGroups } from '@/utils/api';
 import Groups from './Groups';
-import { useGroups, useSelectedGroupIdActions } from '@/store/groupStore';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
 
 interface GroupsItem {
   color: string;
@@ -15,7 +15,7 @@ interface GroupsItem {
 }
 
 const GrouptList = () => {
-  const groups = useGroups();
+  // const groups = useGroups();
   const { setGroup, getGroupNameById } = useSelectedGroupIdActions();
   // 내가 속한 그룹들
   const {
