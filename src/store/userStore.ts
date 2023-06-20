@@ -43,7 +43,14 @@ const useUserStore = create<UserState>()(
                   },
                 }
               );
-              set({ user: response.data.data });
+
+              set({
+                user: {
+                  ...response.data.data,
+                  profile:
+                    response.data.data.profile ?? '../../defaultProfile.png',
+                },
+              });
             } catch (error) {
               console.error(error);
             }
