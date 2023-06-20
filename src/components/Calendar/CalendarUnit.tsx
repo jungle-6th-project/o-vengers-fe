@@ -141,7 +141,8 @@ const CancelReservationButton = ({
   const selectedGroupId = useSelectedGroupId();
   const { setGroupId, getGroupNameById } = useSelectedGroupIdActions();
 
-  const handleClickX = () => {
+  const handleClickX = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     cancelReservation(startTime, roomId);
   };
 
@@ -149,13 +150,22 @@ const CancelReservationButton = ({
     setGroupId(groupId);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === ' ' || event.key === 'Enter') {
+      handleClickCard();
+    }
+  };
+
   return (
-    <button
-      type="button"
+    <div
       className={`absolute z-20 w-full h-full btn ${
         groupId === selectedGroupId ? 'btn-primary' : 'btn-ghost'
       }  no-animation`}
       onClick={handleClickCard}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-pressed={groupId === selectedGroupId}
     >
       <h1 className="absolute left-4 top-2.5 text-lg text-left w-2/3 truncate">
         {getGroupNameById(groupId)}
@@ -173,7 +183,7 @@ const CancelReservationButton = ({
         11,
         16
       )}-${endTime.slice(11, 16)}`}</span>
-    </button>
+    </div>
   );
 };
 
