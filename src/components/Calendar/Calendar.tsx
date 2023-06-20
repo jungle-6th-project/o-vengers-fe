@@ -22,6 +22,10 @@ interface ReservationData {
   profiles: string[];
 }
 
+interface UserReservationData extends ReservationData {
+  groupId: number;
+}
+
 interface WeeklyViewCalendarProp {
   groupId: number;
 }
@@ -50,8 +54,13 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
       cacheTime: 0,
       onSuccess: returnedData =>
         returnedData.forEach(
-          ({ startTime, roomId, profiles }: ReservationData) => {
-            setUserReservation(startTime, groupId, roomId, profiles);
+          ({
+            startTime,
+            groupId: reservedGroupId,
+            roomId,
+            profiles,
+          }: UserReservationData) => {
+            setUserReservation(startTime, reservedGroupId, roomId, profiles);
           }
         ),
     }
