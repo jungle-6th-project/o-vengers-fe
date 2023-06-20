@@ -15,8 +15,7 @@ interface GroupsItem {
 }
 
 const GrouptList = () => {
-  // const groups = useGroups();
-  const { setGroup, getGroupNameById } = useSelectedGroupIdActions();
+  const { setGroup } = useSelectedGroupIdActions();
   // 내가 속한 그룹들
   const {
     data: myGroupList,
@@ -31,7 +30,6 @@ const GrouptList = () => {
   if (isSuccess) {
     setGroup(myGroupList);
   }
-  console.log(getGroupNameById(170));
 
   if (isError || isLoading) {
     return <div />;

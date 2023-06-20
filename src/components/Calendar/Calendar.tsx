@@ -114,7 +114,6 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
       subscriptionRef.current = newClient.subscribe(topic, message => {
         if (message.body) {
           console.log(`Received: ${message.body}`);
-          console.log(topic);
           const data: ReservationData = JSON.parse(message.body);
           const { startTime, roomId, profiles } = data;
 
@@ -158,7 +157,6 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
   ]);
 
   const createReservation = (startTime: string, endTime: string) => {
-    console.log('create', groupId, topic);
     if (client && client.connected) {
       client.publish({
         destination: '/app/add',

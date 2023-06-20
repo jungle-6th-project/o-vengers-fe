@@ -37,7 +37,6 @@ const useKeyPress = (
             content: inputValue,
             done: false,
           };
-          console.log(newTodo);
           setTodos(prevTodos => [newTodo, ...prevTodos]);
           setInputValue('');
           setShowInput(false);
