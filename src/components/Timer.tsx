@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { enterVideoRoom } from '@/utils/api';
 
 dayjs.extend(duration);
 
@@ -69,6 +71,8 @@ interface TimerProps {
 }
 
 const Timer = ({ reservedTime }: TimerProps) => {
+  // const userReservation = useUserReservation('YYYY-MM-DDTHH:mm:ss');
+  const navigate = useNavigate();
   const [remainingTime, setRemainingTime] = useState(
     dayjs(reservedTime, 'YYYY-MM-DDTHH:mm:ss').diff(dayjs(), 'second')
   );
@@ -100,7 +104,9 @@ const Timer = ({ reservedTime }: TimerProps) => {
   }, [remainingTime]);
 
   const handleEnterRoom = () => {
-    // TODO: 방 입장
+    // TODO: 가장 빠른 예약 roomId로 변경해야 함
+    navigate('study/141');
+    enterVideoRoom(141);
   };
 
   return (

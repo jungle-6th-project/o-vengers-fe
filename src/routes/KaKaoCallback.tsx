@@ -18,7 +18,7 @@ function KakaoCallback() {
 
       try {
         const response = await axios.post(
-          'https://www.sangyeop.shop/api/v1/members/login',
+          `https://www.sangyeop.shop/api/v1/members/login`,
           {
             authCode: code,
           }

@@ -221,3 +221,15 @@ export const changeGroupColor = async (groupId: number, color: string) => {
     groupId,
   });
 };
+
+export const enterVideoRoom = async (roomId: number) => {
+  await axios.post('/api/v1/rooms/histories', {
+    roomId,
+  });
+};
+
+export const leaveVideoRoom = async (roomId: number) => {
+  await axios.patch('/api/v1/rooms/histories', {
+    roomId,
+  });
+};
