@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import { BsX } from 'react-icons/bs';
+import { BsFillPersonFill, BsX } from 'react-icons/bs';
 import { roomExpireMin } from '@/components/Timer';
 import { MemberProfiles } from '@/components/Groups/Groups';
 import { useGroupReservation } from '@/store/groupReservationStore';
@@ -127,19 +127,20 @@ const JoinReservationButton = ({
  */
 const CancelReservationButton = ({
   startTime,
-  endTime,
   roomId,
   groupId,
+  people,
   cancelReservation,
 }: {
   startTime: string;
-  endTime: string;
   roomId: number;
   groupId: number;
+  people: number;
   cancelReservation: (startTime: string, roomId: number) => void;
 }) => {
   const selectedGroupId = useSelectedGroupId();
-  const { setGroupId, getGroupNameById } = useSelectedGroupIdActions();
+  const { setGroupId, getGroupNameById, getGroupColorById } =
+    useSelectedGroupIdActions();
 
   const handleClickX = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -156,11 +157,18 @@ const CancelReservationButton = ({
     }
   };
 
+  const groupColor = getGroupColorById(groupId);
+
   return (
     <div
       className={`absolute z-20 w-full h-full btn ${
-        groupId === selectedGroupId ? 'btn-primary' : 'btn-ghost'
-      }  no-animation`}
+        groupId === selectedGroupId ? `${groupColor}` : 'bg-gray-300'
+      } ${
+        groupId === selectedGroupId &&
+        (groupColor === 'bg-bbodog_blue' || groupColor === 'bg-black')
+          ? 'text-white'
+          : 'text-black'
+      } no-animation`}
       onClick={handleClickCard}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -179,10 +187,8 @@ const CancelReservationButton = ({
           <BsX size={30} />
         </button>
       )}
-      <span className="absolute left-4 bottom-3">{`${startTime.slice(
-        11,
-        16
-      )}-${endTime.slice(11, 16)}`}</span>
+      <BsFillPersonFill className="absolute left-4 bottom-3" />
+      <span className="absolute left-8 bottom-3">{`${people}명`}</span>
     </div>
   );
 };
@@ -211,43 +217,55 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
   const [isExpired, setIsExpired] = useState(false);
 
   useEffect(() => {
+    const startTimeDayJS = dayjs(startTime, 'YYYY-MM-DDTHH-mm-ss');
+
+    if (dayjs().add(3, 'hour').isBefore(startTimeDayJS)) {
+      return () => {};
+    }
+
     const checkTime = () => {
-      const startTimeDayJS = dayjs(startTime, 'YYYY-MM-DDTHH-mm-ss');
-      if (startTimeDayJS.isSameOrBefore(dayjs().subtract(30, 'minute'))) {
+      if (startTimeDayJS.isSameOrBefore(dayjs())) {
         setIsExpired(true);
       }
     };
 
     checkTime();
 
-    const interval = setInterval(checkTime, 30000);
+    const interval = setInterval(checkTime, 60000);
+
     return () => clearInterval(interval);
   }, [startTime]);
 
   if (isExpired) {
-    return <div className="h-[76px] bg-gray-300 border border-dashed" />;
+    return (
+      <div className="h-[76px] bg-gray-300 border border-dashed border-[#BFBFBF]" />
+    );
   }
 
   return (
-    <div className="border border-dashed h-[76px] flex justify-center items-center relative">
+    <div className="border border-dashed border-[#BFBFBF] h-[76px] flex justify-center items-center relative">
       {userReservation && (
         <div className="absolute z-30 right-2 bottom-2">
           <MemberProfiles profiles={userReservation.participants} />
         </div>
       )}
       {groupReservation && (
-        <div className="absolute z-10 right-2 bottom-2">
-          <MemberProfiles profiles={groupReservation.participants} />
-        </div>
+        <>
+          <BsFillPersonFill className="absolute left-4 bottom-3" />
+          <span className="absolute left-8 bottom-3">{`${groupReservation.participants.length}명`}</span>
+          <div className="absolute right-2 bottom-2">
+            <MemberProfiles profiles={groupReservation.participants} />
+          </div>
+        </>
       )}
       {(() => {
         if (userReservation) {
           return (
             <CancelReservationButton
               startTime={startTime}
-              endTime={endTime}
               roomId={userReservation.roomId}
               groupId={userReservation.groupId}
+              people={userReservation.participants.length}
               cancelReservation={cancelReservation}
             />
           );
