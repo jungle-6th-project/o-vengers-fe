@@ -5,7 +5,10 @@ import { roomExpireMin } from '@/components/Timer';
 import { MemberProfiles } from '@/components/Groups/Groups';
 import { useGroupReservation } from '@/store/groupReservationStore';
 import { useUserReservation } from '@/store/userReservationStore';
-import { useSelectedGroupId } from '@/store/groupStore';
+import {
+  useSelectedGroupId,
+  useSelectedGroupIdActions,
+} from '@/store/groupStore';
 
 const parseTime = (day: string, time: string): string[] => {
   // '2023-06-14T10:00:00'
@@ -137,30 +140,39 @@ const CancelReservationButton = ({
 }) => {
   // TODO: 그룹아이디로 그룹 이름 찾는 저장소 만들어서 그룹 이름 출력하기
   const selectedGroupId = useSelectedGroupId();
+  const { setGroupId } = useSelectedGroupIdActions();
 
-  const handleClick = () => {
+  const handleClickX = () => {
     cancelReservation(startTime, roomId);
   };
 
+  const handleClickCard = () => {
+    setGroupId(groupId);
+  };
+
   return (
-    <div
+    <button
+      type="button"
       className={`absolute z-20 w-full h-full btn ${
-        groupId !== selectedGroupId ? ' btn-ghost' : 'btn-primary'
+        groupId === selectedGroupId ? 'btn-primary' : 'btn-ghost'
       }  no-animation`}
+      onClick={handleClickCard}
     >
       <h1 className="absolute left-4 top-2.5 text-lg">그룹이름: {groupId}</h1>
-      <button
-        type="button"
-        className="absolute right-0.5 top-0.5"
-        onClick={handleClick}
-      >
-        <BsX size={30} />
-      </button>
+      {groupId === selectedGroupId && (
+        <button
+          type="button"
+          className="absolute right-0.5 top-0.5"
+          onClick={handleClickX}
+        >
+          <BsX size={30} />
+        </button>
+      )}
       <span className="absolute left-4 bottom-3">{`${startTime.slice(
         11,
         16
       )}-${endTime.slice(11, 16)}`}</span>
-    </div>
+    </button>
   );
 };
 
