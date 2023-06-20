@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Todo, GroupData } from './TodoTypes';
-import { getTodoDatas, postTodo } from '../../utils/api';
+import { getTodoDatas, postTodo } from '@/utils/api';
 import TodoItem from './TodoItem';
 import TodoAdd from './TodoAdd';
 
@@ -20,24 +20,30 @@ const useKeyPress = (
     (values: { content: string; groupId: number }) => postTodo(values)
   );
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       const inputValue = e.currentTarget.value.trim();
       if (inputValue !== '') {
-        const newTodo: Todo = {
-          todoId: Math.random(),
-          groupId: groupData.groupId,
-          content: inputValue,
-          done: false,
-        };
-        postTodoMutation.mutate({
-          content: inputValue,
-          groupId: groupData.groupId,
-        });
-        setTodos(prevTodos => [newTodo, ...prevTodos]);
-        setInputValue('');
-        setShowInput(false);
+        try {
+          const data = await postTodoMutation.mutateAsync({
+            content: inputValue,
+            groupId: groupData.groupId,
+          });
+
+          const newTodo: Todo = {
+            todoId: data.todoId,
+            groupId: groupData.groupId,
+            content: inputValue,
+            done: false,
+          };
+          console.log(newTodo);
+          setTodos(prevTodos => [newTodo, ...prevTodos]);
+          setInputValue('');
+          setShowInput(false);
+        } catch (error) {
+          // handle error
+        }
       }
     }
   };

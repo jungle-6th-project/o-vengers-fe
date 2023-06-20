@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import GroupTodo from './GroupTodo';
 import { GroupData } from './TodoTypes';
-import { getMyGroups } from '../../utils/api';
+import { getMyGroups } from '@/utils/api';
 
 const TodoList = () => {
   const {

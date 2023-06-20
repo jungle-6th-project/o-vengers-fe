@@ -5,11 +5,10 @@ import {
   GroupRankingProfile,
   GroupRankingProfileProps,
 } from './RankingProfile';
-import { getGroupMembers } from '../utils/api';
-import { useUser } from '../store/userStore';
+import { getGroupMembers } from '@/utils/api';
+import { useUser } from '@/store/userStore';
 
 const parseStudyTime = (studyTimeString: string): number[] => {
-  console.log('studytime: ', studyTimeString);
   if (!studyTimeString || typeof studyTimeString !== 'string') {
     return [0, 0];
   }

@@ -20,7 +20,7 @@ interface GroupStore {
 
 const groupStore = create<GroupStore>()((set, get) => ({
   groups: [],
-  selectedGroup: 152,
+  selectedGroup: 1,
   actions: {
     setGroupId: (id: number) => {
       set({ selectedGroup: id });

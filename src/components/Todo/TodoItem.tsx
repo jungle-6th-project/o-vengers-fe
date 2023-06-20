@@ -3,7 +3,7 @@ import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 import { useMutation } from '@tanstack/react-query';
 import { Todo } from './TodoTypes';
-import { editOrDoneTodo, deleteTodo } from '../../utils/api';
+import { editOrDoneTodo, deleteTodo } from '@/utils/api';
 
 interface TodoItemProps {
   todoData: Todo;
@@ -81,10 +81,6 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     setIsHovering(false);
   };
 
-  const handleBlur = () => {
-    setIsEditing(false);
-  };
-
   return (
     <div className="flex w-full TodoItem">
       <label
@@ -109,7 +105,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
               className="w-full h-full pl-1 pr-0 bg-transparent border-transparent rounded-sm input input-ghost"
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
-              onBlur={handleBlur}
+              onBlur={onClickSave}
               ref={inputRef}
             />
             <button

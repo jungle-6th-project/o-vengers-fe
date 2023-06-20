@@ -28,7 +28,11 @@ const TimerDisplay = ({ remainingTime }: TimerDisplayProps) => {
     return formattedTime;
   };
 
-  return <p className="font-mono text-4xl">{formatTime(remainingTime)}</p>;
+  return (
+    <p className="font-mono text-[4.375rem] text-white">
+      {formatTime(remainingTime)}
+    </p>
+  );
 };
 
 interface EntryButtonProps {
@@ -45,7 +49,7 @@ const EntryButton = ({ onIdle, handleEnterRoom }: EntryButtonProps) => (
     disabled={onIdle}
     onClick={handleEnterRoom}
   >
-    예약한 방 입장하기
+    방 입장하기
   </button>
 );
 
@@ -55,9 +59,9 @@ interface RoomEnterMessageProps {
 
 const RoomEnterMessage = ({ onIdle }: RoomEnterMessageProps) => {
   if (onIdle) {
-    return <div>예약한 방이 없어요!</div>;
+    return <div className="text-base text-white">예약한 방이 없어요!</div>;
   }
-  return <div>방 입장까지 남은 시간</div>;
+  return <div className="text-base text-white">방 입장까지 남은 시간</div>;
 };
 
 interface TimerProps {
