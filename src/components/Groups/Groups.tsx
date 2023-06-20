@@ -55,7 +55,6 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     color === null ? 'bg-white' : color
   );
   const queryClient = useQueryClient();
-  // const bgColor = color === null ? 'bg-white' : selectedColor;
   const [, copy] = useCopyToClipboard();
 
   const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
@@ -66,12 +65,13 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     },
   });
 
-  // 그룹 삭제
   const handleDelete = async (deleteGroupId: number) => {
+    if (deleteGroupId === 1) {
+      return;
+    }
     deleteGroupMutation.mutate(deleteGroupId);
   };
 
-  // 그룹 초대
   const handleInvite = (copyUrl: string) => {
     const url =
       import.meta.env.MODE === 'development'
@@ -91,7 +91,6 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     changeGroupColor(groupId, selectedValue);
   };
 
-  // 그룹의 그룹원 프로필 가져오기
   const {
     data: profiles,
     isError,
@@ -136,11 +135,13 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
                   그룹 초대
                 </button>
               </li>
-              <li>
-                <button type="button" onClick={() => handleDelete(groupId)}>
-                  그룹 삭제
-                </button>
-              </li>
+              {groupId !== 1 && (
+                <li>
+                  <button type="button" onClick={() => handleDelete(groupId)}>
+                    그룹 삭제
+                  </button>{' '}
+                </li>
+              )}
               <li>
                 <details open className="flex">
                   <summary>그룹 색상 변경</summary>
