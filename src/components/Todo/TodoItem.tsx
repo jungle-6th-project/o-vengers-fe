@@ -81,10 +81,6 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     setIsHovering(false);
   };
 
-  const handleBlur = () => {
-    setIsEditing(false);
-  };
-
   return (
     <div className="flex w-full TodoItem">
       <label
@@ -109,7 +105,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
               className="w-full h-full pl-1 pr-0 bg-transparent border-transparent rounded-sm input input-ghost"
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
-              onBlur={handleBlur}
+              onBlur={onClickSave}
               ref={inputRef}
             />
             <button

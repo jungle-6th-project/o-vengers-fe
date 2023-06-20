@@ -47,13 +47,19 @@ function App() {
       )}
 
       {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
-      <GroupMakeModal />
-      <GroupSearchModal />
-      <GroupList />
+      <div className="flex">
+        <div className="flex flex-col">
+          <GroupMakeModal />
+          <GroupSearchModal />
+        </div>
+        <GroupList />
+        <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+      </div>
       <br />
-      <Ranking groupId={groupId} />
-      <TodoList />
-      <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+      <div>
+        <Ranking groupId={groupId} />
+        <TodoList />
+      </div>
       <Calendar groupId={groupId} />
     </div>
   );

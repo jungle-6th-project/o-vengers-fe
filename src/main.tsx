@@ -9,6 +9,7 @@ import App from './App';
 import Login from './routes/Login';
 import KakaoCallback from './routes/KaKaoCallback';
 import Study from '@/routes/Study';
+import Mypage from '@/routes/Mypage';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: '/:joinPath',
     element: <App />,
+  },
+  {
+    path: '/mypage',
+    element: <Mypage />,
   },
 ]);
 
