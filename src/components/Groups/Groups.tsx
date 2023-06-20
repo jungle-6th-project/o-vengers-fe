@@ -30,9 +30,12 @@ export const MemberProfiles = ({ profiles }: { profiles: string[] }) => {
     <div className="-space-x-6 avatar-group">
       {profiles.slice(0, 3).map((profile: string) => {
         return (
-          <div key={profile} className="w-10 h-10 avatar">
+          <div key={`profile${Math.random()}`} className="w-10 h-10 avatar">
             <div className="w-12">
-              <img alt="profile" src={profile} />
+              <img
+                alt="profile"
+                src={profile ? `${profile}` : '../../defaultProfile.png'}
+              />
             </div>
           </div>
         );
