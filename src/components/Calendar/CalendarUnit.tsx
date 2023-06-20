@@ -211,16 +211,22 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
   const [isExpired, setIsExpired] = useState(false);
 
   useEffect(() => {
+    const startTimeDayJS = dayjs(startTime, 'YYYY-MM-DDTHH-mm-ss');
+
+    if (dayjs().add(3, 'hour').isBefore(startTimeDayJS)) {
+      return () => {};
+    }
+
     const checkTime = () => {
-      const startTimeDayJS = dayjs(startTime, 'YYYY-MM-DDTHH-mm-ss');
-      if (startTimeDayJS.isSameOrBefore(dayjs().subtract(30, 'minute'))) {
+      if (startTimeDayJS.isSameOrBefore(dayjs())) {
         setIsExpired(true);
       }
     };
 
     checkTime();
 
-    const interval = setInterval(checkTime, 30000);
+    const interval = setInterval(checkTime, 60000);
+
     return () => clearInterval(interval);
   }, [startTime]);
 
