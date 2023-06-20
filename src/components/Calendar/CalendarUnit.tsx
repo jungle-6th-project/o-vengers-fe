@@ -138,9 +138,8 @@ const CancelReservationButton = ({
   groupId: number;
   cancelReservation: (startTime: string, roomId: number) => void;
 }) => {
-  // TODO: 그룹아이디로 그룹 이름 찾는 저장소 만들어서 그룹 이름 출력하기
   const selectedGroupId = useSelectedGroupId();
-  const { setGroupId } = useSelectedGroupIdActions();
+  const { setGroupId, getGroupNameById } = useSelectedGroupIdActions();
 
   const handleClickX = () => {
     cancelReservation(startTime, roomId);
@@ -158,7 +157,9 @@ const CancelReservationButton = ({
       }  no-animation`}
       onClick={handleClickCard}
     >
-      <h1 className="absolute left-4 top-2.5 text-lg">그룹이름: {groupId}</h1>
+      <h1 className="absolute left-4 top-2.5 text-lg text-left w-2/3 truncate">
+        {getGroupNameById(groupId)}
+      </h1>
       {groupId === selectedGroupId && (
         <button
           type="button"
