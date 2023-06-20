@@ -65,7 +65,18 @@ export const getGroupMembers = async (groupId: number) => {
   return data;
 };
 
-export const getUserReservation = async (
+export const getUserReservation = async (from: string, to: string) => {
+  const res = await axios.get(`/api/v1/rooms/all?from=${from}&to=${to}`);
+
+  if (!res.data || !res.data.data) {
+    throw new Error('User reservation data is not available');
+  }
+
+  const { data } = res.data;
+  return data;
+};
+
+export const getUserInGroupReservation = async (
   groupId: number,
   from: string,
   to: string
@@ -75,7 +86,7 @@ export const getUserReservation = async (
   );
 
   if (!res.data || !res.data.data) {
-    throw new Error('User reservation data is not available');
+    throw new Error('User reservation in group data is not available');
   }
 
   const { data } = res.data;
@@ -112,8 +123,8 @@ export async function postTodo({
     // eslint-disable-next-line object-shorthand
     groupId: groupId,
   });
-  const { data } = res.data;
 
+  const { data } = res.data;
   return data;
 }
 

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
 import { AiOutlineCopy, AiOutlineCheck } from 'react-icons/ai';
-import { plusIcon } from '../utils/icons';
-import { makeGroup } from '../utils/api';
+import { plusIcon } from '@/utils/icons';
+import { makeGroup } from '@/utils/api';
 
 declare global {
   interface Window {

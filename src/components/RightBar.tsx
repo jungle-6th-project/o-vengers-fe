@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import ChatData from './Chat/ChatData';
-import TodoList from './Todo/TodoList';
-import ChatContainer from './Chat/ChatContainer';
+import ChatData from '@/components/Chat/ChatData';
+import ChatContainer from '@/components/Chat/ChatContainer';
+import TodoList from '@/components/Todo/TodoList';
 
 const RightBar = () => {
   const [selectedOption, setSelectedOption] = useState('TODO');
