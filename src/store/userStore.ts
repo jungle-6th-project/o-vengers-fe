@@ -24,7 +24,7 @@ interface UserState {
 const useUserStore = create<UserState>()(
   devtools(
     persist(
-      (set, get) => ({
+      set => ({
         user: {
           name: '',
           profile: '',
