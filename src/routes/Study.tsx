@@ -4,11 +4,18 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '@/store/userStore';
 import ActiveRoom from '@/Video/ActiveRoom';
+import { leaveVideoRoom } from '@/utils/api';
 
 function App() {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const user = useUser();
+  const numberRoomId = Number(roomId);
+
+  const handleOnLeave = async () => {
+    navigate('/');
+    await leaveVideoRoom(numberRoomId);
+  };
 
   const [preJoinChoices, setPreJoinChoices] = useState<
     LocalUserChoices | undefined
@@ -19,7 +26,7 @@ function App() {
         <ActiveRoom
           roomName={roomId}
           userChoices={preJoinChoices}
-          onLeave={() => navigate('/')}
+          onLeave={handleOnLeave}
         />
       ) : (
         <PreJoin
