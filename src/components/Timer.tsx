@@ -104,9 +104,9 @@ const Timer = ({ reservedTime }: TimerProps) => {
   }, [remainingTime]);
 
   const handleEnterRoom = () => {
-    // TODO: 가장 빠른 예약 roomId로 변경해야 함
-    navigate('study/141');
-    enterVideoRoom(141);
+    // TODO: 가장 빠른 예약 roomId로 변경해야 함 하드코딩 변경해야 함
+    navigate('study/55');
+    enterVideoRoom(55);
   };
 
   return (
