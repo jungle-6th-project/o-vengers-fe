@@ -45,7 +45,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     useUserReservationActions();
 
   const startSearchTime = dayjs();
-  const endSearchTime = startSearchTime.add(3, 'week');
+  const endSearchTime = startSearchTime.add(2, 'week');
   const startSearchTimeString = startSearchTime.format('YYYY-MM-DDTHH:mm:ss');
   const endSearchTimeString = endSearchTime.format('YYYY-MM-DDTHH:mm:ss');
 
@@ -70,9 +70,13 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     }
   );
 
-  // api로 가장 가까운 유저 예약 데이터 받아와서 store 업데이트하기
-  const { refetch: nearestRefetch } = useQuery(['userNearestReservation'], () =>
-    getUserNearestReservation()
+  // api로 가장 가까운 유저 예약 데이터 받아와서 캐시에 저장하기
+  const { refetch: nearestRefetch } = useQuery(
+    ['userNearestReservation'],
+    getUserNearestReservation,
+    {
+      staleTime: Infinity,
+    }
   );
 
   // api로 그룹원 예약 데이터 받아와서 store 업데이트하기
