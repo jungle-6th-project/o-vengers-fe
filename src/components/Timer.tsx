@@ -76,7 +76,8 @@ const RoomEnterMessage = ({
 
   if (onTimerIdle) {
     text = '100시간 이내에 예약한 방이 없어요!';
-  } else if (!onRoomIdle) {
+  }
+  if (!onRoomIdle) {
     text = '지금 입장할 수 있어요';
   }
   return <div className="text-base text-white">{text}</div>;
