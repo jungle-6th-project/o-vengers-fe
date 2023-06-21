@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { getAllGroups, joinGroup } from '@/utils/api';
 import { lockIcon, searchIcon } from '@/utils/icons';
@@ -97,6 +97,8 @@ const GroupSearchModal = () => {
   });
   const { data } = queryInfo;
 
+  const queryClient = useQueryClient();
+
   const [searchInputs, setSearchInputs] = useState('');
   const [selectedGroup, setSelectedGroup] = useState<SelectedGroup | null>(
     null
@@ -150,6 +152,7 @@ const GroupSearchModal = () => {
     {
       onSuccess: res => {
         if (res !== null) onClose();
+        queryClient.invalidateQueries(['MyGroupData']);
       },
     }
   );
@@ -163,8 +166,6 @@ const GroupSearchModal = () => {
       groupId: selectedGroup.groupId,
       password: passwordRef.current?.value || '',
     });
-    // TODO: 에러 처리, 모달 닫고 해당 그룹으로 이동
-    navigate('/');
   };
 
   return (
@@ -202,7 +203,7 @@ const GroupSearchModal = () => {
           <div className="flex flex-col">
             <input
               type="reset"
-              className="mt-10 mb-2 col-auto btn btn-info btn-block"
+              className="col-auto mt-10 mb-2 btn btn-info btn-block"
               value="그룹 참여하기"
               onClick={onJoin}
               disabled={!selectedGroup}
