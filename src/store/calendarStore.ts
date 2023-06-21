@@ -12,7 +12,7 @@ type Week = {
 const today: Dayjs = dayjs();
 
 const weeks: { date: string; dayOfWeek: string }[] = Array.from(
-  { length: 21 },
+  { length: 14 },
   (_, i) => {
     const currentDate: Dayjs = today.add(i, 'day');
     const date: string = currentDate.format('YYYY-MM-DD');
