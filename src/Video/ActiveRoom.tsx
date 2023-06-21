@@ -8,6 +8,8 @@ import {
 import { useMemo } from 'react';
 import { RoomOptions, VideoPresets } from 'livekit-client';
 import useServerUrl from '@/utils/livekit-utils';
+import Timer from '@/components/Timer';
+import RightBar from '@/components/RightBar';
 
 type ActiveRoomProps = {
   userChoices: LocalUserChoices;
@@ -44,6 +46,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       dynacast: true,
     };
   }, [userChoices]);
+
   return (
     <div>
       {liveKitUrl && (
@@ -55,7 +58,19 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           audio={userChoices.audioEnabled}
           onDisconnected={onLeave}
         >
-          <VideoConference chatMessageFormatter={formatChatMessageLinks} />
+          <div className="grid gap-3 grid-rows-video_container grid-cols-video_container">
+            <div className="col-start-1 col-end-2 row-start-2 row-end-3">
+              <VideoConference chatMessageFormatter={formatChatMessageLinks} />
+            </div>
+            <div className="col-start-2">
+              <Timer
+                reservedTime={new Date(Date.now() + 305000).toISOString()}
+              />
+            </div>
+            <div className="col-start-2 col-end-3 row-start-2 row-end-3">
+              <RightBar />
+            </div>
+          </div>
         </LiveKitRoom>
       )}
     </div>

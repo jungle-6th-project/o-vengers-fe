@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 // import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -27,9 +28,11 @@ const GrouptList = () => {
     refetchOnWindowFocus: true,
   });
 
-  if (isSuccess) {
-    setGroup(myGroupList);
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      setGroup(myGroupList);
+    }
+  }, [isSuccess, myGroupList, setGroup]);
 
   if (isError || isLoading) {
     return <div />;

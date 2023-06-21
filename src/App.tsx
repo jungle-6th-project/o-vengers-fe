@@ -33,7 +33,7 @@ function App() {
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <>
-      <div className="grid grid-rows-container grid-cols-container">
+      <div className="grid m-10 grid-rows-container grid-cols-container">
         <div className="row-span-3 col-todo">
           <img src="./logo.png" alt="logo" />
           <Ranking groupId={groupId} />

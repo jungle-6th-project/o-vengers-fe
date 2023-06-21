@@ -24,6 +24,7 @@ type UserReservationStore = {
 const initialReservationStatus: { [key: string]: Reservation } = {};
 
 const useUserReservationStore = create<UserReservationStore>(set => ({
+  // 유저의 예약 상태가 다 들어감
   reservationStatus: initialReservationStatus,
 
   actions: {
@@ -67,5 +68,6 @@ const useUserReservationStore = create<UserReservationStore>(set => ({
 
 export const useUserReservation = (key: string) =>
   useUserReservationStore(state => state.reservationStatus[key]);
+
 export const useUserReservationActions = () =>
   useUserReservationStore(state => state.actions, shallow);

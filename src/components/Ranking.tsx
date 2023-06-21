@@ -111,7 +111,9 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
               rank={index + 1}
               nickname={datum.nickname}
               studyTime={datum.studyTime}
-              profileImg={datum.profileImg}
+              profileImg={
+                datum.profileImg ? datum.profileImg : '../../defaultProfile.png'
+              }
             />
           );
         }

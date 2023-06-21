@@ -15,10 +15,12 @@ module.exports = {
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
         container: '200px 1fr',
+        video_container: '200px 1fr',
       },
       gridTemplateColumns: {
         calendar: '100px repeat(21, 1fr)',
-        container: '0.3fr 1fr',
+        container: '300px 1fr',
+        video_container: '1fr 0.3fr',
       },
     },
   },

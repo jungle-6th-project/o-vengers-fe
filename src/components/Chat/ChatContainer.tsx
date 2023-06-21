@@ -66,10 +66,10 @@ const ChatContainer: React.FC<{
   };
 
   return (
-    <>
+    <div className="w-72 h-[30rem]">
       <ChatList datas={datas} user={user} />
       <ChatForm onSubmit={handleSubmit} onChange={onChange} chat={chat} />
-    </>
+    </div>
   );
 };
 

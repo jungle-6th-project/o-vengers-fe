@@ -30,9 +30,12 @@ export const MemberProfiles = ({ profiles }: { profiles: string[] }) => {
     <div className="-space-x-6 avatar-group">
       {profiles.slice(0, 3).map((profile: string) => {
         return (
-          <div key={profile} className="w-10 h-10 avatar">
+          <div key={`profile${Math.random()}`} className="w-10 h-10 avatar">
             <div className="w-12">
-              <img alt="profile" src={profile} />
+              <img
+                alt="profile"
+                src={profile ? `${profile}` : '../../defaultProfile.png'}
+              />
             </div>
           </div>
         );
@@ -129,7 +132,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
             >
               <BsThreeDotsVertical size="24" />
             </button>
-            <ul className="z-30 w-56 menu dropdown-content bg-base-200 rounded-box">
+            <ul className="z-50 w-56 menu dropdown-content bg-base-200 rounded-box">
               <li>
                 <button type="button" onClick={() => handleInvite(path)}>
                   그룹 초대
