@@ -126,6 +126,10 @@ const Timer = () => {
         clearInterval(intervalId);
         refetch();
       }
+
+      return () => {
+        clearInterval(intervalId);
+      };
     }, SEC_IN_MILLISEC);
 
     return () => {
