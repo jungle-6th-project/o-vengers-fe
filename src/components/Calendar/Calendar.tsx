@@ -71,8 +71,12 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
   );
 
   // api로 가장 가까운 유저 예약 데이터 받아와서 store 업데이트하기
-  const { refetch: nearestRefetch } = useQuery(['userNearestReservation'], () =>
-    getUserNearestReservation()
+  const { refetch: nearestRefetch } = useQuery(
+    ['userNearestReservation'],
+    getUserNearestReservation,
+    {
+      staleTime: Infinity,
+    }
   );
 
   // api로 그룹원 예약 데이터 받아와서 store 업데이트하기
