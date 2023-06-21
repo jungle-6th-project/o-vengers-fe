@@ -41,7 +41,7 @@ function App() {
         </div>
         <div className="flex 123">
           <div className="flex flex-col justify-between mr-3 btn-3">
-            {isGroupPath && <GroupJoinModal joinPath={location[0]} />}
+            {isGroupPath && <GroupJoinModal joinPath={location[1]} />}
             <GroupMakeModal />
             <GroupSearchModal />
             <Link to="/mypage">

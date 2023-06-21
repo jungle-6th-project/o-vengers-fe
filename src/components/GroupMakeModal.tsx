@@ -192,14 +192,14 @@ const GroupMakeModal = () => {
             <div className="form-control">
               <div className="input-group">
                 <span>
-                  https://d23wakgp76ydiy.cloudfront.net/{randomRoomId}
+                  https://d23wakgp76ydiy.cloudfront.net/invite/{randomRoomId}
                 </span>
                 <button
                   type="button"
                   className="link"
                   onClick={() =>
                     copy(
-                      `https://d23wakgp76ydiy.cloudfront.net/${randomRoomId}`
+                      `https://d23wakgp76ydiy.cloudfront.net/invite/${randomRoomId}`
                     )
                   }
                 >
