@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 import { getAllGroups, joinGroup } from '@/utils/api';
 import { lockIcon, searchIcon } from '@/utils/icons';
 
@@ -90,8 +89,6 @@ const GroupsList = ({
 };
 
 const GroupSearchModal = () => {
-  const navigate = useNavigate();
-
   const queryInfo = useQuery(['allGroupData'], () => getAllGroups(), {
     enabled: false,
   });
