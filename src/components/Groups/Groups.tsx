@@ -55,7 +55,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const { setGroupId } = useSelectedGroupIdActions();
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
-    color === null ? 'bg-white' : color
+    color === null ? 'accent' : color
   );
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
@@ -118,7 +118,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   return (
     <div
       role="presentation"
-      className={`shadow card w-[225px] h-[12.625rem] ${selectedColor} cursor-pointer`}
+      className={`shadow card w-[225px] h-[12.625rem] bg-${selectedColor} cursor-pointer`}
       onClick={() => setGroupId(groupId)}
       onKeyDown={() => setGroupId(groupId)}
     >
@@ -152,41 +152,33 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
                     <input
                       type="radio"
                       name="radio-10"
-                      value="bg-black"
-                      className="radio checked:bg-black"
-                      checked={selectedColor === 'bg-black'}
+                      value="neutral"
+                      className="radio checked:bg-neutral"
+                      checked={selectedColor === 'neutral'}
                       onChange={handleRadioChange}
                     />
                     <input
                       type="radio"
                       name="radio-10"
-                      value="bg-bbodog_blue"
-                      className="radio checked:bg-bbodog_blue"
-                      checked={selectedColor === 'bg-bbodog_blue'}
+                      value="primary"
+                      className="radio checked:bg-primary"
+                      checked={selectedColor === 'primary'}
                       onChange={handleRadioChange}
                     />
                     <input
                       type="radio"
                       name="radio-10"
-                      value="bg-bbodog_green"
-                      className="radio checked:bg-bbodog_green"
-                      checked={selectedColor === 'bg-bbodog_green'}
+                      value="accent"
+                      className="radio checked:bg-accent"
+                      checked={selectedColor === 'accent'}
                       onChange={handleRadioChange}
                     />
                     <input
                       type="radio"
                       name="radio-10"
-                      value="bg-bbodog_orange"
-                      className="radio checked:bg-bbodog_orange"
-                      checked={selectedColor === 'bg-bbodog_orange'}
-                      onChange={handleRadioChange}
-                    />
-                    <input
-                      type="radio"
-                      name="radio-10"
-                      value="bg-white"
-                      className="radio checked:bg-white"
-                      checked={selectedColor === 'bg-white'}
+                      value="secondary"
+                      className="radio checked:bg-secondary"
+                      checked={selectedColor === 'secondary'}
                       onChange={handleRadioChange}
                     />
                   </form>
@@ -196,15 +188,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <h2
-            className={`${
-              selectedColor === 'bg-bbodog_blue' || selectedColor === 'bg-black'
-                ? 'text-white'
-                : 'text-black'
-            } card-title`}
-          >
-            {groupName}
-          </h2>
+          <h2 className={`card-title text-${selectedColor}`}>{groupName}</h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (

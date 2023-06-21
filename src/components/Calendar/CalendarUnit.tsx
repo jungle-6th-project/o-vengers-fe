@@ -161,14 +161,10 @@ const CancelReservationButton = ({
 
   return (
     <div
-      className={`absolute z-20 w-full h-full btn ${
-        groupId === selectedGroupId ? `${groupColor}` : 'bg-gray-300'
-      } ${
-        groupId === selectedGroupId &&
-        (groupColor === 'bg-bbodog_blue' || groupColor === 'bg-black')
-          ? 'text-white'
-          : 'text-black'
+      className={`absolute z-20 w-full h-full rounded-xl btn btn-${groupColor} ${
+        groupId === selectedGroupId ? '' : 'btn-outline'
       } no-animation`}
+      // className="absolute z-20 w-full h-full rounded-xl btn btn-primary no-animation"
       onClick={handleClickCard}
       onKeyDown={handleKeyDown}
       tabIndex={0}
