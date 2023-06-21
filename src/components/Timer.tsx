@@ -7,6 +7,7 @@ import duration from 'dayjs/plugin/duration';
 import toArray from 'dayjs/plugin/toArray';
 
 import { enterVideoRoom, getUserNearestReservation } from '@/utils/api';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
 
 dayjs.extend(duration);
 dayjs.extend(toArray);
@@ -68,18 +69,32 @@ const EntryButton = ({
 const RoomEnterMessage = ({
   onTimerIdle,
   onRoomIdle,
+  groupId,
 }: {
   onTimerIdle: boolean;
   onRoomIdle: boolean;
+  groupId: number;
 }) => {
+  const { getGroupNameById } = useSelectedGroupIdActions();
+  if (!onRoomIdle) {
+    return (
+      <div>
+        <span className="text-base text-white">지금 입장할 수 있어요</span>
+        {groupId !== 0 && (
+          <div className="text-lg text-white text-ellipsis text-center">{`${getGroupNameById(
+            groupId
+          )}`}</div>
+        )}
+      </div>
+    );
+  }
+
   let text = '방 입장까지 남은 시간';
 
   if (onTimerIdle) {
-    text = '100시간 이내에 예약한 방이 없어요!';
+    text = '100시간 이내에 예약한 방이 없어요';
   }
-  if (!onRoomIdle) {
-    text = '지금 입장할 수 있어요';
-  }
+
   return <div className="text-base text-white">{text}</div>;
 };
 
@@ -95,55 +110,57 @@ const Timer = () => {
 
   const [remainingTime, setRemainingTime] = useState(dayjs.duration(-9999999));
   const [roomId, setRoomId] = useState(0);
+  const [groupId, setGroupId] = useState(0);
+
   const [onTimerIdle, setOnTimerIdle] = useState(true);
   const [onRoomIdle, setOnRoomIdle] = useState(true);
 
   useEffect(() => {
     if (!nearestReservationData) {
+      // initialize reservation data
       setRemainingTime(dayjs.duration(-9999999));
       setRoomId(0);
+      setGroupId(0);
+
       setOnTimerIdle(true);
       setOnRoomIdle(true);
       return () => {};
     }
-    const { startTime: reservedTime, roomId: nearestRoomId } =
-      nearestReservationData;
+
+    const {
+      startTime: reservedTime,
+      roomId: nearestRoomId,
+      groupId: nearestGroupId,
+    } = nearestReservationData;
+    setRoomId(nearestRoomId);
+    setGroupId(nearestGroupId);
 
     const intervalId = setInterval(() => {
       const newRemainingTime = dayjs.duration(
         dayjs(reservedTime, 'YYYY-MM-DDTHH:mm:ss').diff(dayjs())
       );
       setRemainingTime(newRemainingTime);
-      setRoomId(nearestRoomId);
 
       const newRemainingTimeInSec = newRemainingTime.asSeconds();
       setOnTimerIdle(
         newRemainingTimeInSec <= 0 ||
           newRemainingTimeInSec > 100 * HOUR_IN_MIN * MIN_IN_SEC
       );
+      setOnRoomIdle(
+        newRemainingTimeInSec <= -ROOM_EXPIRE_SEC ||
+          newRemainingTimeInSec >= ROOM_ENTER_EXPIRE_SEC
+      );
 
-      if (newRemainingTime.asSeconds() <= -ROOM_EXPIRE_SEC) {
+      if (newRemainingTimeInSec <= -ROOM_EXPIRE_SEC) {
         clearInterval(intervalId);
         refetch();
       }
-
-      return () => {
-        clearInterval(intervalId);
-      };
     }, SEC_IN_MILLISEC);
 
     return () => {
       clearInterval(intervalId);
     };
   }, [nearestReservationData, refetch]);
-
-  useEffect(() => {
-    setOnRoomIdle(
-      !nearestReservationData ||
-        remainingTime.asSeconds() <= -ROOM_EXPIRE_SEC ||
-        remainingTime.asSeconds() >= ROOM_ENTER_EXPIRE_SEC
-    );
-  }, [nearestReservationData, remainingTime]);
 
   const handleEnterRoom = () => {
     if (!nearestReservationData) {
@@ -156,7 +173,11 @@ const Timer = () => {
   return (
     <div className="bg-black w-[16rem] h-[12.625rem] flex flex-col justify-evenly items-center rounded-2xl">
       <EntryButton onIdle={onRoomIdle} handleEnterRoom={handleEnterRoom} />
-      <RoomEnterMessage onTimerIdle={onTimerIdle} onRoomIdle={onRoomIdle} />
+      <RoomEnterMessage
+        onTimerIdle={onTimerIdle}
+        onRoomIdle={onRoomIdle}
+        groupId={groupId}
+      />
       <TimerDisplay onIdle={onTimerIdle} remainingTime={remainingTime} />
     </div>
   );
