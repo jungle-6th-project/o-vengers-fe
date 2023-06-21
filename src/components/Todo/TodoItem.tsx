@@ -87,13 +87,13 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
         className={`cursor-pointer label flex items-center w-full p-2 mx-2 mb-2 ${
           isChecked ? 'bg-gray-100' : 'bg-[#D2ED4A]'
         } rounded-lg`}
-        htmlFor={`${todoData.todoId}`}
+        htmlFor={`todo${todoData.todoId}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <input
           className="hidden"
-          id={`${todoData.todoId}`}
+          id={`todo${todoData.todoId}`}
           onClick={handleCheck}
           defaultChecked={isChecked}
         />

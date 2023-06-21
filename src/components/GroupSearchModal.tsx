@@ -39,14 +39,14 @@ const GroupRadio = ({
       <div className="form-control">
         <label
           className="cursor-pointer label h-[3.2rem]"
-          htmlFor={`${groupId}`}
+          htmlFor={`group${groupId}`}
         >
           {/* 라디오 버튼 */}
           <input
             type="radio"
             name="radio-group"
             className="radio checked:bg-blue-500"
-            id={`${groupId}`}
+            id={`group${groupId}`}
             onChange={onChange}
             checked={selectedGroup?.groupId === groupId}
           />
