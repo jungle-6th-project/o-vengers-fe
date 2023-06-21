@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { BsFillPersonFill, BsX } from 'react-icons/bs';
-import { roomExpireMin } from '@/components/Timer';
+import { ROOM_EXPIRE_MIN } from '@/components/Timer';
 import { MemberProfiles } from '@/components/Groups/Groups';
 import { useGroupReservation } from '@/store/groupReservationStore';
 import { useUserReservation } from '@/store/userReservationStore';
@@ -15,7 +15,7 @@ const parseTime = (day: string, time: string): string[] => {
   const startTime = `${day}T${time}:00`;
 
   const [endHour, startMinute] = time.split(':');
-  const endMinute = Number(startMinute) + roomExpireMin;
+  const endMinute = Number(startMinute) + ROOM_EXPIRE_MIN;
   const endTime = `${day}T${endHour}:${endMinute}:00`;
 
   return [startTime, endTime];

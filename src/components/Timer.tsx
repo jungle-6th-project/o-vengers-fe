@@ -11,16 +11,16 @@ import { enterVideoRoom, getUserNearestReservation } from '@/utils/api';
 dayjs.extend(duration);
 dayjs.extend(toArray);
 
-const SEC_IN_MILLISEC = 1000;
+export const SEC_IN_MILLISEC = 1000;
 const MIN_IN_SEC = 60;
 const HOUR_IN_MIN = 60;
 
-export const roomTimeMin = 30;
-export const roomExpireMin = 25;
-const roomEnterExpireMin = roomTimeMin - roomExpireMin;
+const ROOM_TIME_MIN = 30;
+export const ROOM_EXPIRE_MIN = 25;
+const ROOM_ENTER_EXPIRE_MIN = ROOM_TIME_MIN - ROOM_EXPIRE_MIN;
 
-const roomExpireSec = roomExpireMin * MIN_IN_SEC;
-const roomEnterExpireSec = roomEnterExpireMin * MIN_IN_SEC;
+export const ROOM_EXPIRE_SEC = ROOM_EXPIRE_MIN * MIN_IN_SEC;
+const ROOM_ENTER_EXPIRE_SEC = ROOM_ENTER_EXPIRE_MIN * MIN_IN_SEC;
 
 const TimerDisplay = ({
   onIdle,
@@ -122,7 +122,7 @@ const Timer = () => {
           newRemainingTimeInSec > 100 * HOUR_IN_MIN * MIN_IN_SEC
       );
 
-      if (newRemainingTime.asSeconds() <= -roomExpireSec) {
+      if (newRemainingTime.asSeconds() <= -ROOM_EXPIRE_SEC) {
         clearInterval(intervalId);
         refetch();
       }
@@ -136,8 +136,8 @@ const Timer = () => {
   useEffect(() => {
     setOnRoomIdle(
       !nearestReservationData ||
-        remainingTime.asSeconds() <= -roomExpireSec ||
-        remainingTime.asSeconds() >= roomEnterExpireSec
+        remainingTime.asSeconds() <= -ROOM_EXPIRE_SEC ||
+        remainingTime.asSeconds() >= ROOM_ENTER_EXPIRE_SEC
     );
   }, [nearestReservationData, remainingTime]);
 
