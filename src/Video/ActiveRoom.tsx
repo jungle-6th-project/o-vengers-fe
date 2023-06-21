@@ -8,7 +8,7 @@ import {
 import { useMemo } from 'react';
 import { RoomOptions, VideoPresets } from 'livekit-client';
 import useServerUrl from '@/utils/livekit-utils';
-import Timer from '@/components/Timer';
+import RoomTimer from '@/components/RoomTimer';
 import RightBar from '@/components/RightBar';
 
 type ActiveRoomProps = {
@@ -63,7 +63,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
               <VideoConference chatMessageFormatter={formatChatMessageLinks} />
             </div>
             <div className="col-start-2">
-              <Timer />
+              <RoomTimer />
             </div>
             <div className="col-start-2 col-end-3 row-start-2 row-end-3">
               <RightBar />

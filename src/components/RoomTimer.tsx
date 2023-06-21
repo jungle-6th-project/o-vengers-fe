@@ -11,6 +11,16 @@ import { ROOM_EXPIRE_SEC, SEC_IN_MILLISEC } from './Timer';
 dayjs.extend(duration);
 dayjs.extend(toArray);
 
+declare global {
+  interface Window {
+    roomExitModal: HTMLDialogElement;
+  }
+}
+
+const ExitModal = () => {
+  console.log('out');
+};
+
 const TimerDisplay = ({
   onIdle,
   remainingTime,
@@ -30,7 +40,6 @@ const TimerDisplay = ({
 };
 
 const RoomTimer = () => {
-  // get data only once, on mount
   const { data: nearestReservationData } = useQuery(
     ['userNearestReservation'],
     getUserNearestReservation,
@@ -43,11 +52,6 @@ const RoomTimer = () => {
   const [onTimerIdle, setOnTimerIdle] = useState(true);
 
   useEffect(() => {
-    if (!nearestReservationData) {
-      setRemainingTime(dayjs.duration(ROOM_EXPIRE_SEC * SEC_IN_MILLISEC));
-      setOnTimerIdle(false);
-      return () => {};
-    }
     const { endTime: exitTime } = nearestReservationData;
 
     const intervalId = setInterval(() => {
@@ -57,10 +61,11 @@ const RoomTimer = () => {
       setRemainingTime(newRemainingTime);
 
       const newRemainingTimeInSec = newRemainingTime.asSeconds();
+      setOnTimerIdle(newRemainingTimeInSec <= 0);
+
       if (newRemainingTimeInSec <= 0) {
-        setOnTimerIdle(true);
         clearInterval(intervalId);
-        // TODO: modal open => redirect
+        ExitModal();
       }
 
       return () => {
@@ -75,8 +80,13 @@ const RoomTimer = () => {
 
   return (
     <div className="rounded-2xl">
-      <span>쉬는시간까지 남은 시간</span>
+      <span>쉬는 시간까지 앞으로</span>
       <TimerDisplay onIdle={onTimerIdle} remainingTime={remainingTime} />
+      <progress
+        className="progress w-56"
+        value={ROOM_EXPIRE_SEC - remainingTime.asSeconds()}
+        max={ROOM_EXPIRE_SEC}
+      />
     </div>
   );
 };
