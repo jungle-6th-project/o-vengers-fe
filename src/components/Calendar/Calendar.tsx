@@ -4,7 +4,11 @@ import { useCookies } from 'react-cookie';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
-import { getGroupReservation, getUserReservation } from '@/utils/api';
+import {
+  getGroupReservation,
+  getUserNearestReservation,
+  getUserReservation,
+} from '@/utils/api';
 
 import CalendarHeader from './CalendarHeader';
 import TimeSlots from './TimeSlots';
@@ -66,6 +70,11 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     }
   );
 
+  // api로 가장 가까운 유저 예약 데이터 받아와서 store 업데이트하기
+  const { refetch: nearestRefetch } = useQuery(['userNearestReservation'], () =>
+    getUserNearestReservation()
+  );
+
   // api로 그룹원 예약 데이터 받아와서 store 업데이트하기
   const { refetch: groupRefetch } = useQuery(
     ['groupReservations'],
@@ -121,6 +130,8 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
           if (profiles && profiles.includes(user.profile)) {
             setUserReservation(startTime, groupId, roomId, profiles);
           }
+
+          nearestRefetch();
         }
       });
     };
@@ -154,6 +165,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
     user.profile,
     setGroupReservation,
     setUserReservation,
+    nearestRefetch,
   ]);
 
   const createReservation = (startTime: string, endTime: string) => {

@@ -53,7 +53,7 @@ function App() {
 
           <div className="flex">
             <GroupList />
-            <Timer reservedTime={new Date(Date.now() + 305000).toISOString()} />
+            <Timer />
           </div>
         </div>
         <div className="self-end col-start-2 col-end-3 row-start-2 row-end-3">

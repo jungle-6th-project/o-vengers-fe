@@ -76,6 +76,17 @@ export const getUserReservation = async (from: string, to: string) => {
   return data;
 };
 
+export const getUserNearestReservation = async () => {
+  const res = await axios.get('/api/v1/rooms/nearest');
+
+  if (!res.data || res.data.data === undefined) {
+    throw new Error('User nearest reservation data is not available');
+  }
+
+  const { data } = res.data;
+  return data;
+};
+
 export const getUserInGroupReservation = async (
   groupId: number,
   from: string,

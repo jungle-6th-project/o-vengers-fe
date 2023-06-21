@@ -224,7 +224,7 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
     }
 
     const checkTime = () => {
-      if (startTimeDayJS.isSameOrBefore(dayjs())) {
+      if (startTimeDayJS.isSameOrBefore(dayjs().add(1, 'minutes'))) {
         setIsExpired(true);
       }
     };
