@@ -132,7 +132,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
             >
               <BsThreeDotsVertical size="24" />
             </button>
-            <ul className="z-30 w-56 menu dropdown-content bg-base-200 rounded-box">
+            <ul className="z-50 w-56 menu dropdown-content bg-base-200 rounded-box">
               <li>
                 <button type="button" onClick={() => handleInvite(path)}>
                   그룹 초대

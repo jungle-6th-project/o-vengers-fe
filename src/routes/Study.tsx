@@ -1,4 +1,5 @@
 import '@livekit/components-styles';
+import '@/Video/activeRoom.css';
 import { PreJoin, LocalUserChoices } from '@livekit/components-react';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -21,7 +22,7 @@ function App() {
     LocalUserChoices | undefined
   >(undefined);
   return (
-    <div data-lk-theme="default">
+    <div>
       {roomId && !Array.isArray(roomId) && preJoinChoices ? (
         <ActiveRoom
           roomName={roomId}
@@ -41,7 +42,9 @@ function App() {
             setPreJoinChoices(values);
           }}
           joinLabel="입장하기"
-          debug
+          camLabel=""
+          micLabel=""
+          userLabel="닉네임"
         />
       )}
     </div>
