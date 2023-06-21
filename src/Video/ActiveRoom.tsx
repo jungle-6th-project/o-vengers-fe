@@ -63,9 +63,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
               <VideoConference chatMessageFormatter={formatChatMessageLinks} />
             </div>
             <div className="col-start-2">
-              <Timer
-                reservedTime={new Date(Date.now() + 305000).toISOString()}
-              />
+              <Timer />
             </div>
             <div className="col-start-2 col-end-3 row-start-2 row-end-3">
               <RightBar />
