@@ -8,6 +8,7 @@ import { useUserReservation } from '@/store/userReservationStore';
 import {
   useSelectedGroupId,
   useSelectedGroupIdActions,
+  useGroupColor,
 } from '@/store/groupStore';
 
 const parseTime = (day: string, time: string): string[] => {
@@ -139,8 +140,7 @@ const CurrentReservationButton = ({
   cancelReservation: (startTime: string, roomId: number) => void;
 }) => {
   const selectedGroupId = useSelectedGroupId();
-  const { setGroupId, getGroupNameById, getGroupColorById } =
-    useSelectedGroupIdActions();
+  const { setGroupId, getGroupNameById } = useSelectedGroupIdActions();
 
   const handleClickX = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -157,7 +157,7 @@ const CurrentReservationButton = ({
     }
   };
 
-  const groupColor = getGroupColorById(groupId);
+  const groupColor = useGroupColor(groupId);
 
   return (
     <div

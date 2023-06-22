@@ -52,7 +52,7 @@ export const MemberProfiles = ({ profiles }: { profiles: string[] }) => {
 };
 
 const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
-  const { setGroupId } = useSelectedGroupIdActions();
+  const { setGroupId, setGroupColorById } = useSelectedGroupIdActions();
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
     color === null ? 'accent' : color
@@ -92,6 +92,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     const selectedValue = event.currentTarget.value;
     setSelectedColor(selectedValue);
     changeGroupColor(groupId, selectedValue);
+    setGroupColorById(groupId, selectedValue);
   };
 
   const {
