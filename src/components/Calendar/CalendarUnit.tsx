@@ -40,7 +40,7 @@ const CalendarButton = ({
 }) => (
   <button
     type="button"
-    className={`absolute z-20 w-full h-full btn ${className}`}
+    className={`absolute z-20 w-11/12 h-5/6 btn ${className}`}
     onClick={onClick}
     onMouseOver={onMouseOver}
     onMouseOut={onMouseOut}
@@ -161,7 +161,7 @@ const CurrentReservationButton = ({
 
   return (
     <div
-      className={`absolute z-20 w-full h-full rounded-xl btn btn-${groupColor} ${
+      className={`absolute z-20 w-[97%] h-[90%] rounded-xl btn btn-${groupColor} ${
         groupId === selectedGroupId ? '' : 'btn-outline bg-[#F6F6F6]'
       } no-animation`}
       onClick={handleClickCard}
