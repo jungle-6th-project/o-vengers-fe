@@ -9,15 +9,28 @@ module.exports = {
         bbodog_green: '#D2ED4A',
         bbodog_orange: '#FF784E',
       },
+      width: {
+        calendar: '72vw',
+        ranking_todo: '18vw',
+        timer: '18vw',
+        group: '15vw',
+      },
+      height: {
+        ranking: '36vh',
+        groupList: '18vh',
+        todo: '61.4vh',
+        calendar: '97.8vh',
+      },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
-        container: '200px 1fr',
+        container: '0.2fr 1fr',
         video_container: '200px 1fr',
       },
       gridTemplateColumns: {
         calendar: '100px repeat(21, 1fr)',
-        container: '300px 1fr',
+        container: '0.2fr 1fr',
         video_container: '1fr 0.3fr',
+        rankingProfile: '10px 40px 1fr',
       },
     },
   },
@@ -41,12 +54,16 @@ module.exports = {
           'base-200': '#f9fafb',
           'base-300': '#ced3d9',
           'base-content': '#1e2734',
+          info: '#1c92f2',
+          success: '#009485',
+          warning: '#ff9900',
+          error: '#ff5724',
           '--rounded-box': '1rem',
           '--rounded-btn': '.5rem',
           '--rounded-badge': '1.9rem',
           '--animation-btn': '.25s',
           '--animation-input': '.2s',
-          '--btn-text-case': '',
+          '--btn-text-case': 'uppercase',
           '--navbar-padding': '.5rem',
           '--border-btn': '1px',
         },
@@ -57,7 +74,7 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /(bg|text|border|btn)-(primary|primary-content|secondary|secondary-content|accent|accent-content|neutral)/,
+        /(bg|text|border)-(primary|primary-content|secondary|secondary-content|accent|accent-content|neutral|info|success|warning|error)/,
     },
   ],
 };

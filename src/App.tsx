@@ -11,6 +11,7 @@ import GroupSearchModal from './components/GroupSearchModal';
 import GroupList from './components/Groups/GrouptList';
 import TodoList from './components/Todo/TodoList';
 import GroupJoinModal from './components/GroupJoinModal';
+import { ReactComponent as Logo } from '@/assets/bbodog_log_svg.svg';
 
 function App() {
   const groupId = useSelectedGroupId();
@@ -33,30 +34,32 @@ function App() {
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <>
-      <div className="grid m-10 grid-rows-container grid-cols-container">
+      <div className="grid m-10 gap-x-10 grid-rows-container grid-cols-container">
         <div className="row-span-3 col-todo">
-          <img src="./logo.png" alt="logo" />
+          <Logo width="200" height="150" />
           <Ranking groupId={groupId} />
           <TodoList />
         </div>
-        <div className="flex 123">
-          <div className="flex flex-col justify-between mr-3 btn-3">
-            {isGroupPath && <GroupJoinModal joinPath={location[1]} />}
-            <GroupMakeModal />
-            <GroupSearchModal />
-            <Link to="/mypage">
-              <button type="button" className="btn btn-square">
-                MY
-              </button>
-            </Link>
-          </div>
-
+        <div className="flex justify-between mb-5">
           <div className="flex">
-            <GroupList />
-            <Timer />
+            <div className="flex flex-col justify-between mr-3 btn-3 h-groupList">
+              {isGroupPath && <GroupJoinModal joinPath={location[1]} />}
+              <GroupMakeModal />
+              <GroupSearchModal />
+              <Link to="/mypage">
+                <button type="button" className="btn btn-square">
+                  MY
+                </button>
+              </Link>
+            </div>
+
+            <div className="flex">
+              <GroupList />
+            </div>
           </div>
+          <Timer />
         </div>
-        <div className="self-end col-start-2 col-end-3 row-start-2 row-end-3">
+        <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3">
           <Calendar groupId={groupId} />
         </div>
       </div>

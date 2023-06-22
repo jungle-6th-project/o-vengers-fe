@@ -125,7 +125,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
 const Ranking = ({ groupId }: { groupId: number }) => {
   // TODO: 2명 이하 인원수 css 조정
   return (
-    <div className="stats stats-vertical w-72 h-96 border border-[#D9D9D9] rounded-md">
+    <div className="stats stats-vertical w-ranking_todo h-ranking border border-[#D9D9D9] rounded-md mb-3">
       {/* <UserRanking /> */}
       <GroupRankings groupId={groupId} />
     </div>

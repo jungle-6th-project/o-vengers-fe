@@ -192,15 +192,15 @@ const GroupMakeModal = () => {
             <div className="form-control">
               <div className="input-group">
                 <span>
-                  https://d23wakgp76ydiy.cloudfront.net/invite/{randomRoomId}
+                  {import.meta.env.MODE === 'development'
+                    ? `http://localhost:5173/invite/${randomRoomId}`
+                    : `https://bbodogstudy.com/invite/${randomRoomId}`}
                 </span>
                 <button
                   type="button"
                   className="link"
                   onClick={() =>
-                    copy(
-                      `https://d23wakgp76ydiy.cloudfront.net/invite/${randomRoomId}`
-                    )
+                    copy(`https://bbodogstudy.com/invite/${randomRoomId}`)
                   }
                 >
                   {groupURL ? <AiOutlineCheck /> : <AiOutlineCopy />}
