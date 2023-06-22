@@ -42,9 +42,7 @@ const TimerDisplay = ({
     return formattedTime;
   };
 
-  return (
-    <p className="font-mono text-5xl text-white">{formatTime(remainingTime)}</p>
-  );
+  return <p className="font-mono text-5xl">{formatTime(remainingTime)}</p>;
 };
 
 const EntryButton = ({
@@ -57,7 +55,7 @@ const EntryButton = ({
   <button
     type="button"
     className={`btn btn-outline ${
-      onIdle ? '' : 'btn-success'
+      onIdle ? 'btn-disabled' : 'btn-accent'
     } w-[14.125rem] h-[2.8125rem] text-2xl rounded-xl`}
     disabled={onIdle}
     onClick={handleEnterRoom}
@@ -171,7 +169,7 @@ const Timer = () => {
   };
 
   return (
-    <div className="bg-black w-[16rem] h-[12.625rem] flex flex-col justify-evenly items-center rounded-2xl">
+    <div className="bg-neutral text-neutral-content w-[16rem] h-[12.625rem] flex flex-col justify-evenly items-center rounded-2xl">
       <EntryButton onIdle={onRoomIdle} handleEnterRoom={handleEnterRoom} />
       <RoomEnterMessage
         onTimerIdle={onTimerIdle}
