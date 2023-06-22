@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
-import { AiOutlineCopy, AiOutlineCheck } from 'react-icons/ai';
-import { plusIcon } from '@/utils/icons';
+import { AiOutlineCopy, AiOutlineCheck, AiOutlinePlus } from 'react-icons/ai';
 import { makeGroup } from '@/utils/api';
 
 declare global {
@@ -114,7 +113,7 @@ const GroupMakeModal = () => {
         className="btn btn-square"
         onClick={handleModalOpen}
       >
-        {plusIcon}
+        <AiOutlinePlus size={24} />
       </button>
       <dialog id="groupMakeModal" className="modal">
         {showCreateForm ? (
