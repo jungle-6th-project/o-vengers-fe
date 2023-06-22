@@ -1,92 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { BiSearch } from 'react-icons/bi';
 import { getAllGroups, joinGroup } from '@/utils/api';
-import { lockIcon, searchIcon } from '@/utils/icons';
+import { GroupData, SelectedGroup } from './GroupRadio';
+import GroupSearchList from './GroupSearchList';
 
 declare global {
   interface Window {
     groupSearchModal: HTMLDialogElement;
   }
 }
-
-interface SelectedGroup {
-  groupId: number;
-  secret: boolean;
-}
-interface GroupData extends SelectedGroup {
-  groupName: string;
-}
-
-interface GroupRadioProps extends GroupData {
-  onGroupSelect: (group: SelectedGroup | null) => void;
-  selectedGroup: SelectedGroup | null;
-}
-
-const GroupRadio = ({
-  groupId,
-  groupName,
-  secret,
-  onGroupSelect,
-  selectedGroup,
-}: GroupRadioProps) => {
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onGroupSelect(e.target.checked ? { groupId, secret } : null);
-  };
-
-  return (
-    <>
-      <div className="form-control">
-        <label
-          className="cursor-pointer label h-[3.2rem]"
-          htmlFor={`group${groupId}`}
-        >
-          {/* 라디오 버튼 */}
-          <input
-            type="radio"
-            name="radio-group"
-            className="radio checked:bg-blue-500"
-            id={`group${groupId}`}
-            onChange={onChange}
-            checked={selectedGroup?.groupId === groupId}
-          />
-          {/* 그룹 이름 */}
-          <span>{groupName}</span>
-          {/* 자물쇠 그림 */}
-          {secret ? lockIcon : <span className="w-5 h-5" />}
-        </label>
-      </div>
-      {/* 가로선 */}
-      <div className="divider h-0.5 m-0 p-0" />
-    </>
-  );
-};
-
-type GroupsListProps = {
-  filteredData: GroupData[];
-  onGroupSelect: (group: SelectedGroup | null) => void;
-  selectedGroup: SelectedGroup | null;
-};
-
-const GroupsList = ({
-  filteredData,
-  onGroupSelect,
-  selectedGroup,
-}: GroupsListProps) => {
-  return (
-    <div className="mt-8 overflow-y-scroll max-h-64">
-      {filteredData?.map((group: GroupData) => (
-        <GroupRadio
-          key={group.groupId}
-          groupId={group.groupId}
-          groupName={group.groupName}
-          secret={group.secret}
-          onGroupSelect={onGroupSelect}
-          selectedGroup={selectedGroup}
-        />
-      ))}
-    </div>
-  );
-};
 
 const GroupSearchModal = () => {
   const queryInfo = useQuery(['allGroupData'], () => getAllGroups(), {
@@ -168,7 +91,7 @@ const GroupSearchModal = () => {
   return (
     <>
       <button type="button" className="btn btn-square" onClick={handleOpen}>
-        {searchIcon}
+        <BiSearch size={24} />
       </button>
       <dialog id="groupSearchModal" className="modal">
         <form method="dialog" className="modal-box">
@@ -183,7 +106,7 @@ const GroupSearchModal = () => {
             value={searchInputs}
             onChange={onChange}
           />
-          <GroupsList
+          <GroupSearchList
             filteredData={filteredData}
             onGroupSelect={onGroupSelect}
             selectedGroup={selectedGroup}
@@ -200,7 +123,7 @@ const GroupSearchModal = () => {
           <div className="flex flex-col">
             <input
               type="reset"
-              className="col-auto mt-10 mb-2 btn btn-info btn-block"
+              className="col-auto mt-10 mb-2 btn btn-primary btn-block"
               value="그룹 참여하기"
               onClick={onJoin}
               disabled={!selectedGroup}

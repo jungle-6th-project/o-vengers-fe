@@ -2,55 +2,27 @@ import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import toArray from 'dayjs/plugin/toArray';
 
 import { getUserNearestReservation } from '@/utils/api';
-import { ROOM_EXPIRE_SEC, SEC_IN_MILLISEC } from './Timer';
-
-dayjs.extend(duration);
-dayjs.extend(toArray);
-
-declare global {
-  interface Window {
-    roomExitModal: HTMLDialogElement;
-  }
-}
-
-const ExitModal = () => {
-  console.log('out');
-};
-
-const TimerDisplay = ({
-  onIdle,
-  remainingTime,
-}: {
-  onIdle: boolean;
-  remainingTime: duration.Duration;
-}) => {
-  const formatTime = (durationTime: duration.Duration) => {
-    if (onIdle) {
-      return '00:00';
-    }
-    const formattedTime = durationTime.format('mm:ss');
-    return formattedTime;
-  };
-
-  return <p className="font-mono text-5xl">{formatTime(remainingTime)}</p>;
-};
+import { ROOM_EXPIRE_SEC, SEC_IN_MILLISEC } from '@/components/Timer/Timer';
+import ExitModal from './RoomExitModal';
+import RoomTimerDisplay from './RoomTimerDisplay';
 
 const RoomTimer = () => {
+  // 가장 가까운 예약 정보를 받아옴
   const { data: nearestReservationData } = useQuery(
     ['userNearestReservation'],
     getUserNearestReservation,
     { staleTime: Infinity }
   );
 
+  // 남은 시간 및 타이머 상태 관리
   const [remainingTime, setRemainingTime] = useState(
     dayjs.duration(ROOM_EXPIRE_SEC * SEC_IN_MILLISEC)
   );
-  const [onTimerIdle, setOnTimerIdle] = useState(true);
+  const [onTimerIdle, setOnTimerIdle] = useState(false);
 
+  // 가장 가까운 예약 시간을 받아와서 1초마다 남은 시간 계산
   useEffect(() => {
     const { endTime: exitTime } = nearestReservationData;
 
@@ -65,12 +37,7 @@ const RoomTimer = () => {
 
       if (newRemainingTimeInSec <= 0) {
         clearInterval(intervalId);
-        ExitModal();
       }
-
-      return () => {
-        clearInterval(intervalId);
-      };
     }, SEC_IN_MILLISEC);
 
     return () => {
@@ -80,16 +47,20 @@ const RoomTimer = () => {
 
   return (
     <div className="rounded-2xl">
-      <span>쉬는 시간까지 앞으로</span>
-      <TimerDisplay onIdle={onTimerIdle} remainingTime={remainingTime} />
+      <span>
+        {remainingTime.subtract(25, 'minutes').asSeconds() > 0
+          ? '공부할 시간까지 앞으로'
+          : '쉬는 시간까지 앞으로'}
+      </span>
+      <RoomTimerDisplay onIdle={onTimerIdle} remainingTime={remainingTime} />
       <progress
         className="w-56 progress"
         value={ROOM_EXPIRE_SEC - remainingTime.asSeconds()}
         max={ROOM_EXPIRE_SEC}
       />
+      <ExitModal roomId={nearestReservationData.roomId} expired={onTimerIdle} />
     </div>
   );
 };
 
 export default RoomTimer;
-export { TimerDisplay };

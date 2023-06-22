@@ -8,7 +8,7 @@ import {
 import { useMemo } from 'react';
 import { RoomOptions, VideoPresets } from 'livekit-client';
 import useServerUrl from '@/utils/livekit-utils';
-import RoomTimer from '@/components/RoomTimer';
+import RoomTimer from '@/components/RoomTimer/RoomTimer';
 import RightBar from '@/components/RightBar';
 
 type ActiveRoomProps = {
