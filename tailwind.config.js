@@ -63,7 +63,7 @@ module.exports = {
           '--rounded-badge': '1.9rem',
           '--animation-btn': '.25s',
           '--animation-input': '.2s',
-          '--btn-text-case': 'uppercase',
+          '--btn-text-case': '',
           '--navbar-padding': '.5rem',
           '--border-btn': '1px',
         },
@@ -74,7 +74,7 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /(bg|text|border)-(primary|primary-content|secondary|secondary-content|accent|accent-content|neutral|info|success|warning|error)/,
+        /(bg|text|border|btn)-(primary|primary-content|secondary|secondary-content|accent|accent-content|neutral)/,
     },
   ],
 };

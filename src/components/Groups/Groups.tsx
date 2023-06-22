@@ -128,10 +128,15 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   return (
     <div
       role="presentation"
-      className={`shadow card w-group h-groupsList bg-${selectedColor} text-${selectedColor}-content cursor-pointer mr-3 `}
+      className={`relative card w-group h-groupsList bg-${selectedColor} text-${selectedColor}-content cursor-pointer mr-3 `}
       onClick={() => setGroupId(groupId)}
       onKeyDown={() => setGroupId(groupId)}
     >
+      {groupId === selectedGroupId && (
+        <div
+          className={`absolute top-1 left-1 right-1 bottom-1 border-4 border-${selectedColor}-content rounded-xl`}
+        />
+      )}
       <div className="justify-between border-white border-double card-body">
         <div className="items-start justify-between card-actions">
           <MemberProfiles profiles={profiles} />
@@ -198,7 +203,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <h2 className="card-title font-medium">{groupName}</h2>
+          <h2 className="font-medium card-title">{groupName}</h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (
