@@ -60,6 +60,10 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
 
+  if (color === null) {
+    setGroupColorById(groupId, 'accent');
+  }
+
   const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
     onSuccess: (_, id) => {
       queryClient.setQueryData<GroupsItem[]>(['MyGroupData'], oldData =>
