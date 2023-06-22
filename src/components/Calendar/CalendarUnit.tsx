@@ -8,6 +8,7 @@ import { useUserReservation } from '@/store/userReservationStore';
 import {
   useSelectedGroupId,
   useSelectedGroupIdActions,
+  useGroupColor,
 } from '@/store/groupStore';
 
 const parseTime = (day: string, time: string): string[] => {
@@ -40,7 +41,7 @@ const CalendarButton = ({
 }) => (
   <button
     type="button"
-    className={`absolute z-20 w-full h-full btn ${className}`}
+    className={`absolute z-20 w-[97%] h-[90%] rounded-2xl btn ${className}`}
     onClick={onClick}
     onMouseOver={onMouseOver}
     onMouseOut={onMouseOut}
@@ -125,7 +126,7 @@ const JoinReservationButton = ({
  * @callback cancelReservation 방 예약 취소 요청을 보내는 함수
  * @returns 예약 취소 버튼 JSX
  */
-const CancelReservationButton = ({
+const CurrentReservationButton = ({
   startTime,
   roomId,
   groupId,
@@ -139,8 +140,7 @@ const CancelReservationButton = ({
   cancelReservation: (startTime: string, roomId: number) => void;
 }) => {
   const selectedGroupId = useSelectedGroupId();
-  const { setGroupId, getGroupNameById, getGroupColorById } =
-    useSelectedGroupIdActions();
+  const { setGroupId, getGroupNameById } = useSelectedGroupIdActions();
 
   const handleClickX = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -157,18 +157,13 @@ const CancelReservationButton = ({
     }
   };
 
-  const groupColor = getGroupColorById(groupId);
+  const groupColor = useGroupColor(groupId);
 
   return (
     <div
-      className={`absolute z-20 w-full h-full btn ${
-        groupId === selectedGroupId ? `${groupColor}` : 'bg-gray-300'
-      } ${
-        groupId === selectedGroupId &&
-        (groupColor === 'bg-bbodog_blue' || groupColor === 'bg-black')
-          ? 'text-white'
-          : 'text-black'
-      } no-animation`}
+      className={`absolute z-20 w-[97%] h-[90%] rounded-2xl btn btn-${groupColor} ${
+        groupId === selectedGroupId ? '' : 'btn-outline bg-[#F6F6F6]'
+      } no-animation font-normal`}
       onClick={handleClickCard}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -261,7 +256,7 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
       {(() => {
         if (userReservation) {
           return (
-            <CancelReservationButton
+            <CurrentReservationButton
               startTime={startTime}
               roomId={userReservation.roomId}
               groupId={userReservation.groupId}

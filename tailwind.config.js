@@ -2,11 +2,6 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    daisyui: {
-      themes: ['light'],
-      darkMode: false,
-    },
-
     extend: {
       colors: {
         reservation: '#E3E3E3',

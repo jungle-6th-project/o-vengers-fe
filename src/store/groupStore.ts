@@ -16,7 +16,7 @@ interface GroupStore {
     setGroupId: (id: number) => void;
     setGroup: (groups: Group[]) => void;
     getGroupNameById: (id: number) => string | undefined;
-    getGroupColorById: (id: number) => string | null | undefined;
+    setGroupColorById: (id: number, color: string) => void;
   };
 }
 
@@ -54,3 +54,9 @@ export const useGroups = () => groupStore(state => state.groups);
 
 export const useSelectedGroupIdActions = () =>
   groupStore(state => state.actions);
+
+export const useGroupColor = (id: number) =>
+  groupStore(state => {
+    const group = state.groups.find(groupItem => groupItem.groupId === id);
+    return group?.color;
+  });

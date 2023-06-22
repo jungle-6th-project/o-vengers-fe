@@ -3,7 +3,10 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
 import { FaLock } from 'react-icons/fa';
-import { useSelectedGroupIdActions } from '@/store/groupStore';
+import {
+  useSelectedGroupId,
+  useSelectedGroupIdActions,
+} from '@/store/groupStore';
 import {
   changeGroupColor,
   deleteGroup,
@@ -52,13 +55,17 @@ export const MemberProfiles = ({ profiles }: { profiles: string[] }) => {
 };
 
 const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
-  const { setGroupId } = useSelectedGroupIdActions();
+  const { setGroupId, setGroupColorById } = useSelectedGroupIdActions();
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
     color === null ? 'accent' : color
   );
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
+
+  if (color === null) {
+    setGroupColorById(groupId, 'accent');
+  }
 
   const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
     onSuccess: (_, id) => {
@@ -92,6 +99,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     const selectedValue = event.currentTarget.value;
     setSelectedColor(selectedValue);
     changeGroupColor(groupId, selectedValue);
+    setGroupColorById(groupId, selectedValue);
   };
 
   const {
@@ -111,6 +119,8 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     }
   );
 
+  const selectedGroupId = useSelectedGroupId();
+
   if (isError || isLoading) {
     return <div />;
   }
@@ -128,9 +138,9 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           <div className="dropdown">
             <button
               type="button"
-              className="justify-end btn btn-ghost btn-square"
+              className="absolute top-1 right-1 btn btn-ghost btn-square btn-sm"
             >
-              <BsThreeDotsVertical size="24" />
+              <BsThreeDotsVertical size="20" />
             </button>
             <ul className="z-50 w-56 text-black menu dropdown-content bg-base-200 rounded-box">
               <li>
@@ -188,7 +198,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <h2 className="card-title">{groupName}</h2>
+          <h2 className="card-title font-medium">{groupName}</h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (

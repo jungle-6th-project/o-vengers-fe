@@ -107,9 +107,9 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
   }, [showInput]);
 
   return (
-    <div className="card bg-white border border-[#D9D9D9] rounded-md">
+    <div className="card bg-white border border-[#D9D9D9] rounded-md text-[0.95rem]">
       <div className="flex justify-between p-2">
-        <h3 className="text-xl font-semibold pl-0.5">{groupData.groupName}</h3>
+        <h3 className="text-lg font-medium pl-0.5">{groupData.groupName}</h3>
         <button
           type="button"
           className="text-gray-600 mr-0.5 mt-[0.2rem] align-top max-h-5"
