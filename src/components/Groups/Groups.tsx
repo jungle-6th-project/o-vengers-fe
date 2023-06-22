@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
@@ -63,9 +63,9 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
 
-  if (color === null) {
-    setGroupColorById(groupId, 'accent');
-  }
+    if (color === null) {
+      setGroupColorById(groupId, 'accent');
+    }
 
   const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
     onSuccess: (_, id) => {

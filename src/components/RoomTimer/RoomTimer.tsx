@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
 import { getUserNearestReservation } from '@/utils/api';
-import { ROOM_EXPIRE_SEC, SEC_IN_MILLISEC } from '@/components/Timer';
+import { ROOM_EXPIRE_SEC, SEC_IN_MILLISEC } from '@/components/Timer/Timer';
 import ExitModal from './RoomExitModal';
 import RoomTimerDisplay from './RoomTimerDisplay';
 

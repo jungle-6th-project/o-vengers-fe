@@ -6,7 +6,7 @@ import GroupMakeModal from './components/GroupMakeModal';
 import { useUserActions } from './store/userStore';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking';
-import Timer from './components/Timer';
+import Timer from './components/Timer/Timer';
 import GroupSearchModal from './components/GroupSearchModal';
 import GroupList from './components/Groups/GrouptList';
 import TodoList from './components/Todo/TodoList';

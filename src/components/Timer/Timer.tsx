@@ -4,13 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import toArray from 'dayjs/plugin/toArray';
 
 import { enterVideoRoom, getUserNearestReservation } from '@/utils/api';
-import { useSelectedGroupIdActions } from '@/store/groupStore';
+import EntryButton from './EntryButton';
+import RoomEnterMessage from './RoomEnterMessage';
+import TimerDisplay from './TimerDisplay';
 
 dayjs.extend(duration);
-dayjs.extend(toArray);
 
 export const SEC_IN_MILLISEC = 1000;
 const MIN_IN_SEC = 60;
@@ -22,79 +22,6 @@ const ROOM_ENTER_EXPIRE_MIN = ROOM_TIME_MIN - ROOM_EXPIRE_MIN;
 
 export const ROOM_EXPIRE_SEC = ROOM_EXPIRE_MIN * MIN_IN_SEC;
 const ROOM_ENTER_EXPIRE_SEC = ROOM_ENTER_EXPIRE_MIN * MIN_IN_SEC;
-
-const TimerDisplay = ({
-  onIdle,
-  remainingTime,
-}: {
-  onIdle: boolean;
-  remainingTime: duration.Duration;
-}) => {
-  const formatTime = (durationTime: duration.Duration) => {
-    if (onIdle) {
-      return '00:00:00';
-    }
-
-    const hours = Math.floor(durationTime.asHours());
-    const paddedHours = String(hours).padStart(2, '0');
-
-    const formattedTime = `${paddedHours}:${durationTime.format('mm:ss')}`;
-    return formattedTime;
-  };
-
-  return <p className="font-mono text-5xl">{formatTime(remainingTime)}</p>;
-};
-
-const EntryButton = ({
-  onIdle,
-  handleEnterRoom,
-}: {
-  onIdle: boolean;
-  handleEnterRoom: () => void;
-}) => (
-  <button
-    type="button"
-    className={`btn btn-outline ${
-      onIdle ? 'btn-disabled' : 'btn-accent'
-    } w-[14.125rem] h-[2.8125rem] text-2xl rounded-xl`}
-    disabled={onIdle}
-    onClick={handleEnterRoom}
-  >
-    방 입장하기
-  </button>
-);
-
-const RoomEnterMessage = ({
-  onTimerIdle,
-  onRoomIdle,
-  groupId,
-}: {
-  onTimerIdle: boolean;
-  onRoomIdle: boolean;
-  groupId: number;
-}) => {
-  const { getGroupNameById } = useSelectedGroupIdActions();
-  if (!onRoomIdle) {
-    return (
-      <div>
-        <span className="text-base text-white">지금 입장할 수 있어요</span>
-        {groupId !== 0 && (
-          <div className="text-lg text-white text-ellipsis text-center">{`${getGroupNameById(
-            groupId
-          )}`}</div>
-        )}
-      </div>
-    );
-  }
-
-  let text = '방 입장까지 남은 시간';
-
-  if (onTimerIdle) {
-    text = '100시간 이내에 예약한 방이 없어요';
-  }
-
-  return <div className="text-base text-white">{text}</div>;
-};
 
 const Timer = () => {
   const navigate = useNavigate();
