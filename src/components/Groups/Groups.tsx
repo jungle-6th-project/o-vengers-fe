@@ -118,7 +118,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   return (
     <div
       role="presentation"
-      className={`shadow card w-[225px] h-[12.625rem] bg-${selectedColor} cursor-pointer`}
+      className={`shadow card w-[225px] h-[12.625rem] bg-${selectedColor} text-${selectedColor}-content cursor-pointer`}
       onClick={() => setGroupId(groupId)}
       onKeyDown={() => setGroupId(groupId)}
     >
@@ -132,7 +132,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
             >
               <BsThreeDotsVertical size="24" />
             </button>
-            <ul className="z-50 w-56 menu dropdown-content bg-base-200 rounded-box">
+            <ul className="z-50 w-56 menu dropdown-content bg-base-200 rounded-box text-black">
               <li>
                 <button type="button" onClick={() => handleInvite(path)}>
                   그룹 초대
@@ -188,7 +188,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <h2 className={`card-title text-${selectedColor}`}>{groupName}</h2>
+          <h2 className="card-title">{groupName}</h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (

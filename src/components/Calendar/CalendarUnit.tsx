@@ -125,7 +125,7 @@ const JoinReservationButton = ({
  * @callback cancelReservation 방 예약 취소 요청을 보내는 함수
  * @returns 예약 취소 버튼 JSX
  */
-const CancelReservationButton = ({
+const CurrentReservationButton = ({
   startTime,
   roomId,
   groupId,
@@ -162,9 +162,8 @@ const CancelReservationButton = ({
   return (
     <div
       className={`absolute z-20 w-full h-full rounded-xl btn btn-${groupColor} ${
-        groupId === selectedGroupId ? '' : 'btn-outline'
+        groupId === selectedGroupId ? '' : 'btn-outline bg-[#F6F6F6]'
       } no-animation`}
-      // className="absolute z-20 w-full h-full rounded-xl btn btn-primary no-animation"
       onClick={handleClickCard}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -257,7 +256,7 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
       {(() => {
         if (userReservation) {
           return (
-            <CancelReservationButton
+            <CurrentReservationButton
               startTime={startTime}
               roomId={userReservation.roomId}
               groupId={userReservation.groupId}
