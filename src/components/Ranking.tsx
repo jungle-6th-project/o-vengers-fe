@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   UserRankingProfile,
   GroupRankingProfile,
@@ -51,6 +52,7 @@ type DatumType = {
 
 const GroupRankings = ({ groupId }: { groupId: number }) => {
   const user = useUser();
+  const navigate = useNavigate();
 
   const { isLoading, isError, data, refetch } = useQuery(
     ['groupRankings'],
@@ -94,10 +96,12 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
   return (
     <>
       <div className="sticky top-0 z-10">
-        {userData && (
+        {userData ? (
           <UserRankingProfile
             studyTime={parseStudyTime(userData[0]?.duration)}
           />
+        ) : (
+          <div>test</div>
         )}
       </div>
       {sortedData.map(
@@ -125,7 +129,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
 const Ranking = ({ groupId }: { groupId: number }) => {
   // TODO: 2명 이하 인원수 css 조정
   return (
-    <div className="stats stats-vertical w-72 h-96 border border-[#D9D9D9] rounded-md">
+    <div className="stats stats-vertical w-ranking_todo h-ranking border border-[#D9D9D9] rounded-md mb-3">
       {/* <UserRanking /> */}
       <GroupRankings groupId={groupId} />
     </div>

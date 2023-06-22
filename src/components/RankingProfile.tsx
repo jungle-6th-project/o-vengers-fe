@@ -29,23 +29,23 @@ const RankingProfile = ({
 }: RankingProfileProps) => {
   return (
     <div
-      className={`stat ${bgColor}`}
-      style={{ gridTemplateColumns: '40px 64px 1fr' }}
+      className={`stat ${bgColor} grid-cols-rankingProfile gap-x-4  justify-center items-center`}
     >
       {/* 순위 */}
       <div className={`stat-title ${textColor}`}>{title}</div>
       {/* 프로필사진 */}
-      <div className="stat-figure">
+      <div className="relative">
         <div className="avatar">
-          <div className="w-14 mask mask-squircle">
+          <div className="w-11 mask mask-squircle ">
             <img src={profileImg} alt={nickname} />
           </div>
         </div>
+        <div className="absolute right-[-1rem] top-0 h-full w-4 bg-transparent" />
       </div>
       {/* 닉네임, 공부시간 */}
-      <div style={{ gridColumnStart: 3 }}>
+      <div className="col-start-3 mb-2">
         <div
-          className={`stat-title text-sm w-16 ${textColor}`}
+          className={`stat-title text-sm w-16 ${textColor} mb-1`}
           style={{
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -89,7 +89,7 @@ const GroupRankingProfile = ({
       nickname={nickname}
       studyTime={studyTime}
       profileImg={profileImg}
-      title={`${rank}위`}
+      title={`${rank}`}
       bgColor="bg-white"
       textColor="text-black"
     />

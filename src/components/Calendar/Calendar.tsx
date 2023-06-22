@@ -204,7 +204,7 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
   const weeks = useWeeks();
 
   return (
-    <div className="grid grid-rows-calendar grid-cols-calendar bg-[#F6F6F6] w-[1556px] h-[41.5625rem] rounded-[1.25rem] overflow-auto">
+    <div className="grid grid-rows-calendar grid-cols-calendar bg-[#F6F6F6] w-calendar h-calendar rounded-[1.25rem] overflow-auto">
       <span className="col-start-1 bg-[#F6F6F6] sticky top-0 left-0 z-50" />
       <div className="sticky top-0 z-40 col-span-6 col-start-2">
         <CalendarHeader weeks={weeks} />

@@ -83,7 +83,7 @@ const RoomTimer = () => {
       <span>쉬는 시간까지 앞으로</span>
       <TimerDisplay onIdle={onTimerIdle} remainingTime={remainingTime} />
       <progress
-        className="progress w-56"
+        className="w-56 progress"
         value={ROOM_EXPIRE_SEC - remainingTime.asSeconds()}
         max={ROOM_EXPIRE_SEC}
       />

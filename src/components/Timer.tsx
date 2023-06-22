@@ -43,7 +43,7 @@ const TimerDisplay = ({
   };
 
   return (
-    <p className="font-mono text-5xl text-white">{formatTime(remainingTime)}</p>
+    <p className="font-mono text-4xl text-white">{formatTime(remainingTime)}</p>
   );
 };
 
@@ -58,7 +58,7 @@ const EntryButton = ({
     type="button"
     className={`btn btn-outline ${
       onIdle ? '' : 'btn-success'
-    } w-[14.125rem] h-[2.8125rem] text-2xl rounded-xl`}
+    } w-[12.125rem] h-[0.8125rem] text-xl rounded-xl`}
     disabled={onIdle}
     onClick={handleEnterRoom}
   >
@@ -81,7 +81,7 @@ const RoomEnterMessage = ({
       <div>
         <span className="text-base text-white">지금 입장할 수 있어요</span>
         {groupId !== 0 && (
-          <div className="text-lg text-white text-ellipsis text-center">{`${getGroupNameById(
+          <div className="text-lg text-center text-white text-ellipsis">{`${getGroupNameById(
             groupId
           )}`}</div>
         )}
@@ -171,7 +171,7 @@ const Timer = () => {
   };
 
   return (
-    <div className="bg-black w-[16rem] h-[12.625rem] flex flex-col justify-evenly items-center rounded-2xl">
+    <div className="flex flex-col items-center mr-6 bg-black justify-self-end w-timer h-groupList justify-evenly rounded-2xl">
       <EntryButton onIdle={onRoomIdle} handleEnterRoom={handleEnterRoom} />
       <RoomEnterMessage
         onTimerIdle={onTimerIdle}

@@ -55,7 +55,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const { setGroupId } = useSelectedGroupIdActions();
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
-    color === null ? 'bg-white' : color
+    color === null ? 'accent' : color
   );
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
@@ -78,8 +78,8 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const handleInvite = (copyUrl: string) => {
     const url =
       import.meta.env.MODE === 'development'
-        ? `http://localhost:5173/${copyUrl}`
-        : `https://d23wakgp76ydiy.cloudfront.net/${path}`;
+        ? `http://localhost:5173/invite/${copyUrl}`
+        : `https://https://www.bbodogstudy.com/invite/${path}`;
 
     copy(url);
     setIsToastVisible(true);
@@ -118,11 +118,11 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   return (
     <div
       role="presentation"
-      className={`shadow card w-[225px] h-[12.625rem] ${selectedColor} cursor-pointer`}
+      className={`shadow card w-group h-groupsList bg-${selectedColor} text-${selectedColor}-content cursor-pointer mr-3 `}
       onClick={() => setGroupId(groupId)}
       onKeyDown={() => setGroupId(groupId)}
     >
-      <div className="justify-between card-body">
+      <div className="justify-between border-white border-double card-body">
         <div className="items-start justify-between card-actions">
           <MemberProfiles profiles={profiles} />
           <div className="dropdown">
@@ -132,7 +132,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
             >
               <BsThreeDotsVertical size="24" />
             </button>
-            <ul className="z-50 w-56 menu dropdown-content bg-base-200 rounded-box">
+            <ul className="z-50 w-56 text-black menu dropdown-content bg-base-200 rounded-box">
               <li>
                 <button type="button" onClick={() => handleInvite(path)}>
                   그룹 초대
@@ -141,7 +141,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
               {groupId !== 1 && (
                 <li>
                   <button type="button" onClick={() => handleDelete(groupId)}>
-                    그룹 삭제
+                    그룹 탈퇴
                   </button>{' '}
                 </li>
               )}
@@ -152,41 +152,33 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
                     <input
                       type="radio"
                       name="radio-10"
-                      value="bg-black"
-                      className="radio checked:bg-black"
-                      checked={selectedColor === 'bg-black'}
+                      value="neutral"
+                      className="radio checked:bg-neutral"
+                      checked={selectedColor === 'neutral'}
                       onChange={handleRadioChange}
                     />
                     <input
                       type="radio"
                       name="radio-10"
-                      value="bg-bbodog_blue"
-                      className="radio checked:bg-bbodog_blue"
-                      checked={selectedColor === 'bg-bbodog_blue'}
+                      value="primary"
+                      className="radio checked:bg-primary"
+                      checked={selectedColor === 'primary'}
                       onChange={handleRadioChange}
                     />
                     <input
                       type="radio"
                       name="radio-10"
-                      value="bg-bbodog_green"
-                      className="radio checked:bg-bbodog_green"
-                      checked={selectedColor === 'bg-bbodog_green'}
+                      value="accent"
+                      className="radio checked:bg-accent"
+                      checked={selectedColor === 'accent'}
                       onChange={handleRadioChange}
                     />
                     <input
                       type="radio"
                       name="radio-10"
-                      value="bg-bbodog_orange"
-                      className="radio checked:bg-bbodog_orange"
-                      checked={selectedColor === 'bg-bbodog_orange'}
-                      onChange={handleRadioChange}
-                    />
-                    <input
-                      type="radio"
-                      name="radio-10"
-                      value="bg-white"
-                      className="radio checked:bg-white"
-                      checked={selectedColor === 'bg-white'}
+                      value="secondary"
+                      className="radio checked:bg-secondary"
+                      checked={selectedColor === 'secondary'}
                       onChange={handleRadioChange}
                     />
                   </form>
@@ -196,15 +188,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <h2
-            className={`${
-              selectedColor === 'bg-bbodog_blue' || selectedColor === 'bg-black'
-                ? 'text-white'
-                : 'text-black'
-            } card-title`}
-          >
-            {groupName}
-          </h2>
+          <h2 className="card-title">{groupName}</h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (

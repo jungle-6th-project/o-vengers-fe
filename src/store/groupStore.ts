@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 interface Group {
   groupId: number;
@@ -19,30 +20,32 @@ interface GroupStore {
   };
 }
 
-const groupStore = create<GroupStore>()((set, get) => ({
-  groups: [],
-  selectedGroup: 1,
-  actions: {
-    setGroupId: (id: number) => {
-      set({ selectedGroup: id });
+const groupStore = create<GroupStore>()(
+  devtools((set, get) => ({
+    groups: [],
+    selectedGroup: 1,
+    actions: {
+      setGroupId: (id: number) => {
+        set({ selectedGroup: id });
+      },
+      setGroup: (groups: Group[]) => {
+        set({ groups });
+      },
+      getGroupNameById: (id: number) => {
+        const group = get().groups.find(
+          (groupItem: Group) => groupItem.groupId === id
+        );
+        return group?.groupName;
+      },
+      getGroupColorById: (id: number) => {
+        const group = get().groups.find(
+          (groupItem: Group) => groupItem.groupId === id
+        );
+        return group?.color;
+      },
     },
-    setGroup: (groups: Group[]) => {
-      set({ groups });
-    },
-    getGroupNameById: (id: number) => {
-      const group = get().groups.find(
-        (groupItem: Group) => groupItem.groupId === id
-      );
-      return group?.groupName;
-    },
-    getGroupColorById: (id: number) => {
-      const group = get().groups.find(
-        (groupItem: Group) => groupItem.groupId === id
-      );
-      return group?.color;
-    },
-  },
-}));
+  }))
+);
 
 export const useSelectedGroupId = () =>
   groupStore(state => state.selectedGroup);
