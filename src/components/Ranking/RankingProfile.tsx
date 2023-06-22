@@ -1,22 +1,13 @@
-import { useUser } from '@/store/userStore';
-
-interface UserRankingProfileProps {
+export interface BasicRankingProfileProps {
   studyTime: number[];
-}
-
-interface ExtendedRankingProfileProps extends UserRankingProfileProps {
   nickname: string;
   profileImg: string;
 }
 
-interface RankingProfileProps extends ExtendedRankingProfileProps {
+interface RankingProfileProps extends BasicRankingProfileProps {
   title: string;
   bgColor: string;
   textColor: string;
-}
-
-export interface GroupRankingProfileProps extends ExtendedRankingProfileProps {
-  rank: number;
 }
 
 const RankingProfile = ({
@@ -63,37 +54,4 @@ const RankingProfile = ({
   );
 };
 
-const UserRankingProfile = ({ studyTime }: UserRankingProfileProps) => {
-  const user = useUser();
-
-  return (
-    <RankingProfile
-      nickname={user.name}
-      studyTime={studyTime}
-      profileImg={user.profile}
-      title="MY"
-      bgColor="bg-black"
-      textColor="text-white"
-    />
-  );
-};
-
-const GroupRankingProfile = ({
-  rank,
-  nickname,
-  studyTime,
-  profileImg,
-}: GroupRankingProfileProps) => {
-  return (
-    <RankingProfile
-      nickname={nickname}
-      studyTime={studyTime}
-      profileImg={profileImg}
-      title={`${rank}위`}
-      bgColor="bg-white"
-      textColor="text-black"
-    />
-  );
-};
-
-export { UserRankingProfile, GroupRankingProfile };
+export default RankingProfile;

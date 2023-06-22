@@ -5,7 +5,7 @@ import { useSelectedGroupId } from './store/groupStore';
 import GroupMakeModal from './components/GroupMakeModal';
 import { useUserActions } from './store/userStore';
 import Calendar from './components/Calendar/Calendar';
-import Ranking from './components/Ranking';
+import Ranking from './components/Ranking/Ranking';
 import Timer from './components/Timer/Timer';
 import GroupSearchModal from './components/GroupSearchModal/GroupSearchModal';
 import GroupList from './components/Groups/GrouptList';

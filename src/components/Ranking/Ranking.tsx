@@ -1,29 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import {
-  UserRankingProfile,
-  GroupRankingProfile,
-  GroupRankingProfileProps,
-} from './RankingProfile';
+import dayjs from 'dayjs';
+
 import { getGroupMembers } from '@/utils/api';
 import { useUser } from '@/store/userStore';
+import UserRankingProfile from './UserRankingProfile';
+import GroupRankingProfile, {
+  GroupRankingProfileProps,
+} from './GroupRankingProfile';
 
 const parseStudyTime = (studyTimeString: string): number[] => {
   if (!studyTimeString || typeof studyTimeString !== 'string') {
     return [0, 0];
   }
 
-  const regex = /PT(\d*H)?(\d*M)?(\d*S)?/; // 정규식을 사용하여 형식 매칭
-  const matches = studyTimeString.match(regex);
+  const studyTime = dayjs.duration(studyTimeString);
 
-  if (!matches) {
-    throw new Error('Invalid time duration format');
-  }
-
-  const hours = matches[1] ? parseInt(matches[1].slice(0, -1), 10) : 0; // 시간 값 파싱
-  const minutes = matches[2] ? parseInt(matches[2].slice(0, -1), 10) : 0; // 분 값 파싱
-
-  return [hours, minutes];
+  return [studyTime.hours(), studyTime.minutes()];
 };
 
 const sortByStudyTime = (
@@ -42,7 +35,7 @@ const sortByStudyTime = (
   return 0;
 };
 
-type DatumType = {
+type RankDataType = {
   duration: string;
   memberId: number;
   nickname: string;
@@ -52,7 +45,7 @@ type DatumType = {
 const GroupRankings = ({ groupId }: { groupId: number }) => {
   const user = useUser();
 
-  const { isLoading, isError, data, refetch } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     ['groupRankings'],
     () => getGroupMembers(groupId),
     {
@@ -80,7 +73,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
   let sortedData = [];
   if (data) {
     userData = data.filter(
-      (datum: DatumType) => datum.profile === user.profile
+      (datum: RankDataType) => datum.profile === user.profile
     );
     sortedData = [...data]
       .map(datum => ({
