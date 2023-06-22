@@ -63,9 +63,11 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
 
+  useEffect(() => {
     if (color === null) {
       setGroupColorById(groupId, 'accent');
     }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
     onSuccess: (_, id) => {
