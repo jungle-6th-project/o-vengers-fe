@@ -27,7 +27,8 @@
     ".eslintrc.cjs",
     "src/components",
     "tailwindcss.config.js",
-    "vite.config.ts"
+    "vite.config.ts",
+    "svg.d.ts"
   ],
   "references": [
     {
