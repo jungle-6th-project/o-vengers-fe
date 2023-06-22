@@ -18,6 +18,7 @@ import { useGroupReservationActions } from '@/store/groupReservationStore';
 import { useUserReservationActions } from '@/store/userReservationStore';
 import { useUser } from '@/store/userStore';
 import { useTimeSlots, useWeeks } from '@/store/calendarStore';
+import { useGroupColor } from '@/store/groupStore';
 
 interface ReservationData {
   startTime: string;
@@ -203,8 +204,12 @@ const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
   const timeSlots = useTimeSlots();
   const weeks = useWeeks();
 
+  const groupColor = useGroupColor(groupId);
+
   return (
-    <div className="grid grid-rows-calendar grid-cols-calendar bg-[#F6F6F6] w-[1556px] h-[41.5625rem] rounded-[1.25rem] overflow-auto">
+    <div
+      className={`grid grid-rows-calendar grid-cols-calendar bg-[#F6F6F6] w-[1556px] h-[41.5625rem] rounded-[1.25rem] overflow-auto border-${groupColor} border-2`}
+    >
       <span className="col-start-1 bg-[#F6F6F6] sticky top-0 left-0 z-50" />
       <div className="sticky top-0 z-40 col-span-6 col-start-2">
         <CalendarHeader weeks={weeks} />

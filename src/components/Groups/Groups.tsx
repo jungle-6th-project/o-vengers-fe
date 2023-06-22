@@ -3,7 +3,10 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
 import { FaLock } from 'react-icons/fa';
-import { useSelectedGroupIdActions } from '@/store/groupStore';
+import {
+  useSelectedGroupId,
+  useSelectedGroupIdActions,
+} from '@/store/groupStore';
 import {
   changeGroupColor,
   deleteGroup,
@@ -116,6 +119,8 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     }
   );
 
+  const selectedGroupId = useSelectedGroupId();
+
   if (isError || isLoading) {
     return <div />;
   }
@@ -123,19 +128,24 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   return (
     <div
       role="presentation"
-      className={`shadow card w-[225px] h-[12.625rem] bg-${selectedColor} text-${selectedColor}-content cursor-pointer`}
+      className={`relative card w-[225px] h-[12.625rem] bg-${selectedColor} text-${selectedColor}-content cursor-pointer`}
       onClick={() => setGroupId(groupId)}
       onKeyDown={() => setGroupId(groupId)}
     >
+      {groupId === selectedGroupId && (
+        <div
+          className={`absolute top-1 left-1 right-1 bottom-1 border-4 border-${selectedColor}-content rounded-xl`}
+        />
+      )}
       <div className="justify-between card-body">
         <div className="items-start justify-between card-actions">
           <MemberProfiles profiles={profiles} />
           <div className="dropdown">
             <button
               type="button"
-              className="justify-end btn btn-ghost btn-square"
+              className="absolute top-1 right-1 btn btn-ghost btn-square btn-sm"
             >
-              <BsThreeDotsVertical size="24" />
+              <BsThreeDotsVertical size="20" />
             </button>
             <ul className="z-50 w-56 menu dropdown-content bg-base-200 rounded-box text-black">
               <li>
@@ -193,7 +203,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <h2 className="card-title">{groupName}</h2>
+          <h2 className="card-title font-medium">{groupName}</h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (
