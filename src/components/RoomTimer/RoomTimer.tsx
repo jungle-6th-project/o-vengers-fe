@@ -20,7 +20,7 @@ const RoomTimer = () => {
   const [remainingTime, setRemainingTime] = useState(
     dayjs.duration(ROOM_EXPIRE_SEC * SEC_IN_MILLISEC)
   );
-  const [onTimerIdle, setOnTimerIdle] = useState(true);
+  const [onTimerIdle, setOnTimerIdle] = useState(false);
 
   // 가장 가까운 예약 시간을 받아와서 1초마다 남은 시간 계산
   useEffect(() => {
@@ -58,7 +58,7 @@ const RoomTimer = () => {
         value={ROOM_EXPIRE_SEC - remainingTime.asSeconds()}
         max={ROOM_EXPIRE_SEC}
       />
-      <ExitModal roomId={nearestReservationData.roomId} />
+      <ExitModal roomId={nearestReservationData.roomId} expired={onTimerIdle} />
     </div>
   );
 };
