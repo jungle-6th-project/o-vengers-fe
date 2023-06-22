@@ -17,6 +17,10 @@ const ExitModal = ({ roomId }: { roomId: number }) => {
       await leaveVideoRoom(roomId);
     };
 
+    if (window.roomExitModal.open) {
+      window.roomExitModal.close();
+    }
+
     window.roomExitModal.showModal();
     handleOnLeave();
   }, [navigate, roomId]);
