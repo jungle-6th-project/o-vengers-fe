@@ -2,6 +2,72 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://www.sangyeop.shop';
 
+export function parseCookies(cookieString: string) {
+  const cookies: { [key: string]: string } = {};
+  cookieString.split(';').forEach(cookie => {
+    const [key, value] = cookie.split('=');
+    cookies[key.trim()] = decodeURIComponent(value);
+  });
+  return cookies;
+}
+
+axios.interceptors.request.use(
+  function requestInterceptor(config) {
+    const cookieString = document.cookie;
+    const cookies = parseCookies(cookieString);
+    if (
+      config.url !== 'https://www.sangyeop.shop/api/v1/members/login' &&
+      !cookies.accessToken
+    ) {
+      window.location.href = '/login';
+    }
+
+    const newConfig = { ...config };
+
+    newConfig.headers.Authorization = `Bearer ${cookies.accessToken}`;
+    return newConfig;
+  },
+  function errorInterceptor(error) {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  function responseInterceptor(response) {
+    return response;
+  },
+  function errorInterceptor(error) {
+    console.log(error);
+    const originalRequest = error.config;
+    const cookieString = document.cookie;
+    const cookies = parseCookies(cookieString);
+
+    if (error.response.status === 401) {
+      return axios
+        .post('/api/v1/members/tokens', null, {
+          headers: {
+            'X-BBODOK-REFRESH-TOKEN': cookies.refreshToken,
+          },
+        })
+        .then(response => {
+          const newAccessToken = response.data.accessToken;
+
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+          return axios(originalRequest);
+        })
+        .catch(err => {
+          console.log(err);
+          window.location.href = '/login';
+          return Promise.reject(err);
+        });
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export async function getUser() {
   const res = await axios.get('/api/v1/members');
 

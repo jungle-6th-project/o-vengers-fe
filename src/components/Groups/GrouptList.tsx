@@ -39,7 +39,7 @@ const GrouptList = () => {
   }
 
   return (
-    <div className="flex h-[12.625rem]">
+    <div className="flex h-groupList">
       {myGroupList?.map((group: GroupsItem) => {
         return (
           <Groups

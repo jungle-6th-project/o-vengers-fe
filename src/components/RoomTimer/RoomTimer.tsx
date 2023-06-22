@@ -54,7 +54,7 @@ const RoomTimer = () => {
       </span>
       <RoomTimerDisplay onIdle={onTimerIdle} remainingTime={remainingTime} />
       <progress
-        className="progress w-56"
+        className="w-56 progress"
         value={ROOM_EXPIRE_SEC - remainingTime.asSeconds()}
         max={ROOM_EXPIRE_SEC}
       />

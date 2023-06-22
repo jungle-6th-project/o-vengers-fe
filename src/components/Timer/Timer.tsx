@@ -96,7 +96,7 @@ const Timer = () => {
   };
 
   return (
-    <div className="bg-neutral text-neutral-content w-[16rem] h-[12.625rem] flex flex-col justify-evenly items-center rounded-2xl">
+    <div className="flex flex-col items-center mr-6 bg-black justify-self-end w-timer h-groupList justify-evenly rounded-2xl">
       <EntryButton onIdle={onRoomIdle} handleEnterRoom={handleEnterRoom} />
       <RoomEnterMessage
         onTimerIdle={onTimerIdle}
@@ -109,4 +109,3 @@ const Timer = () => {
 };
 
 export default Timer;
-export { TimerDisplay };

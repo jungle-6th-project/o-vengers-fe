@@ -87,8 +87,8 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const handleInvite = (copyUrl: string) => {
     const url =
       import.meta.env.MODE === 'development'
-        ? `http://localhost:5173/${copyUrl}`
-        : `https://d23wakgp76ydiy.cloudfront.net/${path}`;
+        ? `http://localhost:5173/invite/${copyUrl}`
+        : `https://https://www.bbodogstudy.com/invite/${path}`;
 
     copy(url);
     setIsToastVisible(true);
@@ -130,7 +130,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   return (
     <div
       role="presentation"
-      className={`relative card w-[225px] h-[12.625rem] bg-${selectedColor} text-${selectedColor}-content cursor-pointer`}
+      className={`relative card w-group h-groupsList bg-${selectedColor} text-${selectedColor}-content cursor-pointer mr-3 `}
       onClick={() => setGroupId(groupId)}
       onKeyDown={() => setGroupId(groupId)}
     >
@@ -139,7 +139,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           className={`absolute top-1 left-1 right-1 bottom-1 border-4 border-${selectedColor}-content rounded-xl`}
         />
       )}
-      <div className="justify-between card-body">
+      <div className="justify-between border-white border-double card-body">
         <div className="items-start justify-between card-actions">
           <MemberProfiles profiles={profiles} />
           <div className="dropdown">
@@ -149,7 +149,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
             >
               <BsThreeDotsVertical size="20" />
             </button>
-            <ul className="z-50 w-56 menu dropdown-content bg-base-200 rounded-box text-black">
+            <ul className="z-50 w-56 text-black menu dropdown-content bg-base-200 rounded-box">
               <li>
                 <button type="button" onClick={() => handleInvite(path)}>
                   그룹 초대
@@ -158,7 +158,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
               {groupId !== 1 && (
                 <li>
                   <button type="button" onClick={() => handleDelete(groupId)}>
-                    그룹 삭제
+                    그룹 탈퇴
                   </button>{' '}
                 </li>
               )}
@@ -205,7 +205,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <h2 className="card-title font-medium">{groupName}</h2>
+          <h2 className="font-medium card-title">{groupName}</h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (
