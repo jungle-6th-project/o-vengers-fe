@@ -46,7 +46,7 @@ module.exports = {
           '--rounded-badge': '1.9rem',
           '--animation-btn': '.25s',
           '--animation-input': '.2s',
-          '--btn-text-case': 'uppercase',
+          '--btn-text-case': '',
           '--navbar-padding': '.5rem',
           '--border-btn': '1px',
         },

@@ -203,7 +203,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <h2 className="card-title">{groupName}</h2>
+          <h2 className="card-title font-medium">{groupName}</h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (

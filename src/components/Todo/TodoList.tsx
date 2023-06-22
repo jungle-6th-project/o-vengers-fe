@@ -15,7 +15,7 @@ const TodoList = () => {
   return (
     <div className="card card-bordered border-[#D9D9D9] w-72 h-[30rem] bg-[#FAFAFA] rounded-md overflow-auto">
       <div className="card-body" style={{ padding: '0.6rem' }}>
-        <h2 className="ml-2 font-bold card-title">TO DO</h2>
+        <h2 className="ml-2 font-normal card-title">TO DO</h2>
         {isError || isLoading ? (
           <span className="loading loading-dots loading-sm" />
         ) : (
