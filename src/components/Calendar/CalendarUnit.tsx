@@ -41,7 +41,7 @@ const CalendarButton = ({
 }) => (
   <button
     type="button"
-    className={`absolute z-20 w-11/12 h-5/6 btn ${className}`}
+    className={`absolute z-20 w-[97%] h-[90%] rounded-xl btn ${className}`}
     onClick={onClick}
     onMouseOver={onMouseOver}
     onMouseOut={onMouseOut}
