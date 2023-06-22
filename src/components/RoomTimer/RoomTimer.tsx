@@ -12,8 +12,7 @@ const RoomTimer = () => {
   // 가장 가까운 예약 정보를 받아옴
   const { data: nearestReservationData } = useQuery(
     ['userNearestReservation'],
-    getUserNearestReservation,
-    { staleTime: Infinity }
+    getUserNearestReservation
   );
 
   // 남은 시간 및 타이머 상태 관리
