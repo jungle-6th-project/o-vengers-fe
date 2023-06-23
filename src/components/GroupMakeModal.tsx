@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
 import { AiOutlineCopy, AiOutlineCheck, AiOutlinePlus } from 'react-icons/ai';
 import { makeGroup } from '@/utils/api';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
 
 declare global {
   interface Window {
@@ -23,6 +24,8 @@ const GroupMakeModal = () => {
   const [groupURL, copy] = useCopyToClipboard();
   const queryClient = useQueryClient();
 
+  const { setGroupId } = useSelectedGroupIdActions();
+
   const postMakeGroupMutation = useMutation(
     (values: {
       groupName: string;
@@ -31,7 +34,16 @@ const GroupMakeModal = () => {
       secret: boolean;
     }) => makeGroup(values),
     {
-      onSuccess: () => {
+      onSuccess: (res: {
+        color: string;
+        groupId: number;
+        groupName: string;
+        path: string;
+        secret: boolean;
+      }) => {
+        if (res !== null) {
+          setGroupId(res.groupId);
+        }
         queryClient.invalidateQueries(['MyGroupData']);
       },
     }
@@ -146,7 +158,7 @@ const GroupMakeModal = () => {
                   )}
                   <input
                     type="checkbox"
-                    className="toggle"
+                    className="toggle toggle-accent"
                     onChange={onChangeToggle}
                     name="passwordToggle"
                     checked={isPassword}

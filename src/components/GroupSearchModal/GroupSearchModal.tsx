@@ -4,6 +4,7 @@ import { BiSearch } from 'react-icons/bi';
 import { getAllGroups, joinGroup } from '@/utils/api';
 import { GroupData, SelectedGroup } from './GroupRadio';
 import GroupSearchList from './GroupSearchList';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
 
 declare global {
   interface Window {
@@ -67,11 +68,22 @@ const GroupSearchModal = () => {
     }
   }, [searchInputs, selectedGroup, filteredData]);
 
+  const { setGroupId } = useSelectedGroupIdActions();
+
   const joinGroupMutation = useMutation(
     (values: { groupId: number; password: string }) => joinGroup(values),
     {
-      onSuccess: res => {
-        if (res !== null) onClose();
+      onSuccess: (res: {
+        color: string;
+        groupId: number;
+        groupName: string;
+        path: string;
+        secret: boolean;
+      }) => {
+        if (res !== null) {
+          onClose();
+          setGroupId(res.groupId);
+        }
         queryClient.invalidateQueries(['MyGroupData']);
       },
     }

@@ -8,6 +8,7 @@ import UserRankingProfile from './UserRankingProfile';
 import GroupRankingProfile, {
   GroupRankingProfileProps,
 } from './GroupRankingProfile';
+import { useSelectedGroupId } from '@/store/groupStore';
 
 const parseStudyTime = (studyTimeString: string): number[] => {
   if (!studyTimeString || typeof studyTimeString !== 'string') {
@@ -115,7 +116,9 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
   );
 };
 
-const Ranking = ({ groupId }: { groupId: number }) => {
+const Ranking = () => {
+  const groupId = useSelectedGroupId();
+
   // TODO: 2명 이하 인원수 css 조정
   return (
     <div className="stats stats-vertical w-ranking_todo h-ranking border border-[#D9D9D9] rounded-md mb-3">

@@ -1,7 +1,6 @@
 import { Link, redirect, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import { useSelectedGroupId } from './store/groupStore';
 import GroupMakeModal from './components/GroupMakeModal';
 import { useUserActions } from './store/userStore';
 import Calendar from './components/Calendar/Calendar';
@@ -14,7 +13,6 @@ import GroupJoinModal from './components/GroupJoinModal';
 import { ReactComponent as Logo } from '@/assets/bbodog_log_svg.svg';
 
 function App() {
-  const groupId = useSelectedGroupId();
   const { setIsLoggedIn, reset } = useUserActions();
   const [token, , removeAccessTokenCookies] = useCookies(['accessToken']);
   const [, , removeRefreshTokenCookies] = useCookies(['refreshToken']);
@@ -37,7 +35,7 @@ function App() {
       <div className="grid m-10 gap-x-10 grid-rows-container grid-cols-container">
         <div className="row-span-3 col-todo">
           <Logo width="200" height="150" />
-          <Ranking groupId={groupId} />
+          <Ranking />
           <TodoList />
         </div>
         <div className="flex justify-between mb-5">
@@ -60,7 +58,7 @@ function App() {
           <Timer />
         </div>
         <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3">
-          <Calendar groupId={groupId} />
+          <Calendar />
         </div>
       </div>
       <button type="button" onClick={() => logOut()}>

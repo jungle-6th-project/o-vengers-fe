@@ -102,20 +102,21 @@ export async function joinGroup({
     // eslint-disable-next-line object-shorthand
     password: password,
   });
-  const { data } = res.data;
 
+  const { data } = res.data;
   return data;
 }
 
 export async function getJoinedGroupMemebers(groupId: number) {
   const res = await axios.get(`/api/v1/ranks?groupId=${groupId}`);
-  const { data } = res.data;
 
+  const { data } = res.data;
   return data;
 }
 
 export async function getTodoDatas(groupId: number) {
   const res = await axios.get(`/api/v1/todos?groupId=${groupId}`);
+
   const { data } = res.data;
   return data;
 }
