@@ -121,7 +121,7 @@ const Ranking = () => {
 
   // TODO: 2명 이하 인원수 css 조정
   return (
-    <div className="stats stats-vertical w-ranking_todo h-ranking border border-[#D9D9D9] rounded-md mb-3">
+    <div className="stats-vertical w-ranking_todo min-w-leftbar h-ranking border border-[#D9D9D9] rounded-md mb-3">
       {/* <UserRanking /> */}
       <GroupRankings groupId={groupId} />
     </div>
