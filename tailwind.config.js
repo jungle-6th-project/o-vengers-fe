@@ -17,7 +17,7 @@ module.exports = {
       },
       minWidth: {
         'group-min': '158px',
-        'timer': '260px'
+        timer: '260px',
       },
       maxWidth: {
         'group-max': '200px',
