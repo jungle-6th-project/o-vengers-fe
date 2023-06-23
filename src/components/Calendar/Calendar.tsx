@@ -18,7 +18,7 @@ import { useGroupReservationActions } from '@/store/groupReservationStore';
 import { useUserReservationActions } from '@/store/userReservationStore';
 import { useUser } from '@/store/userStore';
 import { useTimeSlots, useWeeks } from '@/store/calendarStore';
-import { useGroupColor } from '@/store/groupStore';
+import { useGroupColor, useSelectedGroupId } from '@/store/groupStore';
 
 interface ReservationData {
   startTime: string;
@@ -31,11 +31,8 @@ interface UserReservationData extends ReservationData {
   groupId: number;
 }
 
-interface WeeklyViewCalendarProp {
-  groupId: number;
-}
-
-const WeeklyViewCalendar = ({ groupId }: WeeklyViewCalendarProp) => {
+const WeeklyViewCalendar = () => {
+  const groupId = useSelectedGroupId();
   const [{ accessToken }, ,] = useCookies(['accessToken']);
   const topic = `/topic/${groupId}`;
   const user = useUser();
