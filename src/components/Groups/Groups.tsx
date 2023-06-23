@@ -130,7 +130,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   return (
     <div
       role="presentation"
-      className={`relative card w-group h-groupsList bg-${selectedColor} text-${selectedColor}-content cursor-pointer mr-3 `}
+      className={`relative card w-group min-w-group-min max-w-group-max h-groupsList min-h-header-min max-h-header-max bg-${selectedColor} text-${selectedColor}-content cursor-pointer mr-3`}
       onClick={() => setGroupId(groupId)}
       onKeyDown={() => setGroupId(groupId)}
     >
@@ -139,14 +139,11 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           className={`absolute top-1 left-1 right-1 bottom-1 border-4 border-${selectedColor}-content rounded-xl`}
         />
       )}
-      <div className="justify-between border-white border-double card-body">
+      <div className="justify-between border-white border-double card-body p-5">
         <div className="items-start justify-between card-actions">
           <MemberProfiles profiles={profiles} />
           <div className="dropdown">
-            <button
-              type="button"
-              className="absolute top-1 right-1 btn btn-ghost btn-square btn-sm"
-            >
+            <button type="button" className="btn btn-ghost btn-sm p-0">
               <BsThreeDotsVertical size="20" />
             </button>
             <ul className="z-50 w-56 text-black menu dropdown-content bg-base-200 rounded-box">
@@ -204,8 +201,10 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
             </ul>
           </div>
         </div>
-        <div className="flex items-center justify-between">
-          <h2 className="font-medium card-title">{groupName}</h2>
+        <div className="flex items-end justify-between">
+          <h2 className="font-medium card-title leading-none line-clamp-2">
+            {groupName}
+          </h2>
           <span>{secret && <FaLock />}</span>
         </div>
         {isToastVisible && (

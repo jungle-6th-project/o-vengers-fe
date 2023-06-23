@@ -13,7 +13,6 @@ const RoomEnterMessage = ({
   if (!onRoomIdle) {
     return (
       <div>
-        <span className="text-base text-white">지금 입장할 수 있어요</span>
         {groupId !== 0 && (
           <div className="text-lg text-white text-ellipsis text-center">{`${getGroupNameById(
             groupId

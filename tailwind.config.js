@@ -15,11 +15,24 @@ module.exports = {
         timer: '18vw',
         group: '15vw',
       },
+      minWidth: {
+        'group-min': '158px',
+        'timer': '260px'
+      },
+      maxWidth: {
+        'group-max': '200px',
+      },
       height: {
         ranking: '36vh',
         groupList: '18vh',
         todo: '61.4vh',
         calendar: '97.8vh',
+      },
+      minHeight: {
+        'header-min': '144px',
+      },
+      maxHeight: {
+        'header-max': '200px',
       },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
