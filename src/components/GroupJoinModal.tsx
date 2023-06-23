@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getGroupNameByPath, pathJoinGroup } from '@/utils/api';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
 
 interface GroupJoinModalProps {
   joinPath: string;
@@ -36,10 +37,21 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
     }
   });
 
+  const { setGroupId } = useSelectedGroupIdActions();
+
   const postPathJoinGroupMutation = useMutation(
     (values: { path: string }) => pathJoinGroup(values),
     {
-      onSuccess: () => {
+      onSuccess: (res: {
+        color: string;
+        groupId: number;
+        groupName: string;
+        path: string;
+        secret: boolean;
+      }) => {
+        if (res !== null) {
+          setGroupId(res.groupId);
+        }
         queryClient.invalidateQueries(['MyGroupData']);
       },
     }
