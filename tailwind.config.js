@@ -18,9 +18,12 @@ module.exports = {
       minWidth: {
         'group-min': '158px',
         timer: '260px',
+        leftbar: '200px',
       },
       maxWidth: {
         'group-max': '200px',
+        timer: '335px',
+        leftbar: '400px',
       },
       height: {
         ranking: '36vh',
@@ -43,7 +46,8 @@ module.exports = {
         calendar: '100px repeat(21, 1fr)',
         container: '0.2fr 1fr',
         video_container: '1fr 0.3fr',
-        rankingProfile: '10px 40px 1fr',
+        rankingProfile:
+          'minmax(20px, 1fr) minmax(2.75rem, 1fr) minmax(64px, 2fr)',
       },
     },
   },

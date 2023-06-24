@@ -1,5 +1,5 @@
 export interface BasicRankingProfileProps {
-  studyTime: number[];
+  studyTime: string;
   nickname: string;
   profileImg: string;
 }
@@ -20,23 +20,20 @@ const RankingProfile = ({
 }: RankingProfileProps) => {
   return (
     <div
-      className={`stat ${bgColor}`}
-      style={{ gridTemplateColumns: '40px 64px 1fr' }}
+      className={`stat ${bgColor} grid-cols-rankingProfile justify-evenly items-center p-4`}
     >
       {/* 순위 */}
-      <div className={`stat-title ${textColor}`}>{title}</div>
+      <div className={`stat-title ${textColor} text-center`}>{title}</div>
       {/* 프로필사진 */}
-      <div className="stat-figure">
-        <div className="avatar">
-          <div className="w-14 mask mask-squircle">
-            <img src={profileImg} alt={nickname} />
-          </div>
+      <div className="avatar">
+        <div className="w-11 mask mask-squircle">
+          <img src={profileImg} alt={nickname} />
         </div>
       </div>
       {/* 닉네임, 공부시간 */}
-      <div style={{ gridColumnStart: 3 }}>
+      <div className="col-start-3">
         <div
-          className={`stat-title text-sm w-16 ${textColor}`}
+          className={`whitespace-nowrap text-sm w-16 ${textColor}`}
           style={{
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -46,9 +43,9 @@ const RankingProfile = ({
         >
           {nickname}
         </div>
-        <div
-          className={`stat-desc text-xs ${textColor}`}
-        >{`${studyTime[0]}H ${studyTime[1]}m`}</div>
+        <div className={`whitespace-nowrap text-xs ${textColor}`}>
+          {studyTime}
+        </div>
       </div>
     </div>
   );

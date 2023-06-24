@@ -2,7 +2,7 @@ import { useUser } from '@/store/userStore';
 import RankingProfile from './RankingProfile';
 
 interface UserRankingProfileProps {
-  studyTime: number[];
+  studyTime: string;
 }
 
 const UserRankingProfile = ({ studyTime }: UserRankingProfileProps) => {

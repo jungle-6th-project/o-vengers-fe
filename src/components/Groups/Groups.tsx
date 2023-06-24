@@ -139,11 +139,11 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           className={`absolute top-1 left-1 right-1 bottom-1 border-4 border-${selectedColor}-content rounded-xl`}
         />
       )}
-      <div className="justify-between border-white border-double card-body p-5">
+      <div className="justify-between p-5 border-white border-double card-body">
         <div className="items-start justify-between card-actions">
           <MemberProfiles profiles={profiles} />
           <div className="dropdown">
-            <button type="button" className="btn btn-ghost btn-sm p-0">
+            <button type="button" className="p-0 btn btn-ghost btn-sm">
               <BsThreeDotsVertical size="20" />
             </button>
             <ul className="z-50 w-56 text-black menu dropdown-content bg-base-200 rounded-box">
@@ -202,7 +202,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
           </div>
         </div>
         <div className="flex items-end justify-between">
-          <h2 className="font-medium card-title leading-none line-clamp-2">
+          <h2 className="font-medium leading-none card-title line-clamp-2">
             {groupName}
           </h2>
           <span>{secret && <FaLock />}</span>

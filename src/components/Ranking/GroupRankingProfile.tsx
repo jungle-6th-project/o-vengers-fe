@@ -15,7 +15,7 @@ const GroupRankingProfile = ({
       nickname={nickname}
       studyTime={studyTime}
       profileImg={profileImg}
-      title={`${rank}위`}
+      title={`${rank}`}
       bgColor="bg-white"
       textColor="text-black"
     />
