@@ -7,7 +7,7 @@ import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking/Ranking';
 import Timer from './components/Timer/Timer';
 import GroupSearchModal from './components/GroupSearchModal/GroupSearchModal';
-import GroupList from './components/Groups/GrouptList';
+import GroupsList from './components/Groups/GroupsList';
 import TodoList from './components/Todo/TodoList';
 import GroupJoinModal from './components/GroupJoinModal';
 import { ReactComponent as Logo } from '@/assets/bbodog_log_svg.svg';
@@ -52,7 +52,7 @@ function App() {
             </div>
 
             <div className="flex">
-              <GroupList />
+              <GroupsList />
             </div>
           </div>
           <Timer />
