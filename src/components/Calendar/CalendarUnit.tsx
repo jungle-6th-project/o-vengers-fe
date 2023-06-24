@@ -161,8 +161,8 @@ const CurrentReservationButton = ({
 
   return (
     <div
-      className={`absolute z-20 w-[97%] h-[90%] rounded-2xl btn btn-${groupColor} ${
-        groupId === selectedGroupId ? '' : 'btn-outline bg-[#F6F6F6]'
+      className={`absolute z-20 w-[97%] h-[95%] rounded-2xl btn btn-${groupColor} ${
+        groupId === selectedGroupId ? '' : 'btn-outline bg-calendar'
       } no-animation font-normal`}
       onClick={handleClickCard}
       onKeyDown={handleKeyDown}
@@ -233,12 +233,12 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
 
   if (isExpired) {
     return (
-      <div className="h-[76px] bg-gray-300 border border-dashed border-[#BFBFBF]" />
+      <div className="h-24 bg-gray-300 border border-dashed border-calendar-border" />
     );
   }
 
   return (
-    <div className="border border-dashed border-[#BFBFBF] h-[76px] flex justify-center items-center relative">
+    <div className="relative flex items-center justify-center h-24 border border-dashed border-calendar-border">
       {userReservation && (
         <div className="absolute z-30 right-2 bottom-2">
           <MemberProfiles profiles={userReservation.participants} />

@@ -6,7 +6,7 @@ interface DayProps extends BasicCalendarProps {
 
 const Day = ({ day, timeSlots, actions }: DayProps) => {
   return (
-    <div className="text-black w-[208px]">
+    <div className="text-black w-[11rem]">
       {timeSlots.map(timeSlot => (
         <CalendarUnit
           key={`${day}T${timeSlot}`}
