@@ -1,3 +1,5 @@
+import { ReactComponent as KakoLogin } from '@/assets/login.svg';
+
 function Login() {
   const KakaoLogin = () => {
     const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
@@ -9,10 +11,18 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen hero bg-base-200">
-      <button type="button" onClick={KakaoLogin} className="btn">
-        <img src="./kakao-login.png" alt="kakao-login" />
-      </button>
+    <div className="min-h-screen bg-cover bg-login min-w-max">
+      <div className="min-h-screen hero">
+        <div className="text-center hero-content">
+          <div className="flex flex-col items-center max-w-md">
+            <h1 className="mb-8 font-bold text-9xl">뽀독뽀독</h1>
+            <KakoLogin
+              onClick={KakaoLogin}
+              className="cursor-pointer hover:brightness-50"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
