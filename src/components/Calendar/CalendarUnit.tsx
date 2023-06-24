@@ -1,17 +1,63 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import { useReservation } from '../../store/calendarStore';
-import { roomExpireMin } from '../Timer';
+import { BsFillPersonFill, BsX } from 'react-icons/bs';
+import { ROOM_EXPIRE_MIN } from '@/components/Timer/Timer';
+import { MemberProfiles } from '@/components/Groups/Groups';
+import { useGroupReservation } from '@/store/groupReservationStore';
+import { useUserReservation } from '@/store/userReservationStore';
+import {
+  useSelectedGroupId,
+  useSelectedGroupIdActions,
+  useGroupColor,
+} from '@/store/groupStore';
 
 const parseTime = (day: string, time: string): string[] => {
   // '2023-06-14T10:00:00'
   const startTime = `${day}T${time}:00`;
 
   const [endHour, startMinute] = time.split(':');
-  const endMinute = Number(startMinute) + roomExpireMin;
+  const endMinute = Number(startMinute) + ROOM_EXPIRE_MIN;
   const endTime = `${day}T${endHour}:${endMinute}:00`;
 
   return [startTime, endTime];
+};
+
+const CalendarButton = ({
+  className,
+  onClick,
+  children,
+  onMouseOver,
+  onMouseOut,
+  onFocus,
+  onBlur,
+}: {
+  className?: string;
+  onClick: () => void;
+  children: React.ReactNode;
+  onMouseOver?: () => void;
+  onMouseOut?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+}) => (
+  <button
+    type="button"
+    className={`absolute z-20 w-[97%] h-[90%] rounded-2xl btn ${className}`}
+    onClick={onClick}
+    onMouseOver={onMouseOver}
+    onMouseOut={onMouseOut}
+    onFocus={onFocus}
+    onBlur={onBlur}
+  >
+    {children}
+  </button>
+);
+
+CalendarButton.defaultProps = {
+  className: '',
+  onMouseOver: () => {},
+  onMouseOut: () => {},
+  onFocus: () => {},
+  onBlur: () => {},
 };
 
 /**
@@ -35,13 +81,12 @@ const CreateReservationButton = ({
   };
 
   return (
-    <button
-      type="button"
-      className="absolute z-20 w-5/6 opacity-0 btn h-5/6 bg-reservation hover:opacity-100"
+    <CalendarButton
+      className="opacity-0 bg-reservation hover:opacity-100"
       onClick={handleClick}
     >
       예약하기
-    </button>
+    </CalendarButton>
   );
 };
 
@@ -53,26 +98,23 @@ const CreateReservationButton = ({
  * @returns 예약 버튼 JSX
  */
 const JoinReservationButton = ({
-  startTime,
   roomId,
   joinReservation,
 }: {
-  startTime: string;
   roomId: number;
-  joinReservation: (startTime: string, roomId: number) => void;
+  joinReservation: (roomId: number) => void;
 }) => {
   const handleClick = () => {
-    joinReservation(startTime, roomId);
+    joinReservation(roomId);
   };
 
   return (
-    <button
-      type="button"
-      className="absolute z-20 w-5/6 opacity-0 btn h-5/6 bg-reservation hover:opacity-100"
+    <CalendarButton
+      className="opacity-0 bg-reservation hover:opacity-100"
       onClick={handleClick}
     >
       예약하기
-    </button>
+    </CalendarButton>
   );
 };
 
@@ -84,146 +126,149 @@ const JoinReservationButton = ({
  * @callback cancelReservation 방 예약 취소 요청을 보내는 함수
  * @returns 예약 취소 버튼 JSX
  */
-const CancelReservationButton = ({
+const CurrentReservationButton = ({
   startTime,
-  endTime,
   roomId,
   groupId,
+  people,
   cancelReservation,
 }: {
   startTime: string;
-  endTime: string;
   roomId: number;
   groupId: number;
+  people: number;
   cancelReservation: (startTime: string, roomId: number) => void;
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const selectedGroupId = useSelectedGroupId();
+  const { setGroupId, getGroupNameById } = useSelectedGroupIdActions();
 
-  const handleClick = () => {
+  const handleClickX = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     cancelReservation(startTime, roomId);
   };
 
-  const handleMouseOver = () => {
-    setIsHovered(true);
+  const handleClickCard = () => {
+    setGroupId(groupId);
   };
 
-  const handleMouseOut = () => {
-    setIsHovered(false);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === ' ' || event.key === 'Enter') {
+      handleClickCard();
+    }
   };
 
-  if (isHovered) {
-    return (
-      <button
-        type="button"
-        className="absolute z-20 w-5/6 h-5/6 btn"
-        onClick={handleClick}
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
-        onFocus={handleMouseOver}
-        onBlur={handleMouseOut}
-      >
-        예약 취소
-      </button>
-    );
-  }
+  const groupColor = useGroupColor(groupId);
+
   return (
-    <button
-      type="button"
-      className="absolute z-20 w-5/6 h-5/6 btn btn-primary"
-      onClick={handleClick}
-      onMouseOver={handleMouseOver}
-      onFocus={handleMouseOver}
-      onMouseOut={handleMouseOut}
-      onBlur={handleMouseOut}
+    <div
+      className={`absolute z-20 w-[97%] h-[90%] rounded-2xl btn btn-${groupColor} ${
+        groupId === selectedGroupId ? '' : 'btn-outline bg-[#F6F6F6]'
+      } no-animation font-normal`}
+      onClick={handleClickCard}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-pressed={groupId === selectedGroupId}
     >
-      {`${groupId}:${roomId} ${startTime.slice(11, 16)}-${endTime.slice(
-        11,
-        16
-      )}`}
-    </button>
-  );
-};
-
-// FIXME: 현재는 임시. 나중에 합치고 나서 GroupList 컴포넌트 재사용하기
-/**
- * 예약한 사람들의 프로필을 보여줌
- * @param participants 예약 취소할 방 번호
- * @returns 겹쳐진 프로필 사진 및 인원수 JSX
- */
-const ReservationProfile = ({ participants }: { participants: string[] }) => {
-  return (
-    <div className="absolute -space-x-6 avatar-group">
-      {participants.map((profile: string) => (
-        <div key={profile} className="avatar">
-          <div className="w-12">
-            <img src={profile} alt="participant" />
-          </div>
-        </div>
-      ))}
+      <h1 className="absolute left-4 top-2.5 text-lg text-left w-2/3 truncate">
+        {getGroupNameById(groupId)}
+      </h1>
+      {groupId === selectedGroupId && (
+        <button
+          type="button"
+          className="absolute right-0.5 top-0.5"
+          onClick={handleClickX}
+        >
+          <BsX size={30} />
+        </button>
+      )}
+      <BsFillPersonFill className="absolute left-4 bottom-3" />
+      <span className="absolute left-8 bottom-3">{`${people}명`}</span>
     </div>
   );
 };
 
-interface RectangleProps {
+export interface BasicCalendarProps {
   day: string;
-  time: string;
   actions: {
     createReservation: (startTime: string, endTime: string) => void;
-    joinReservation: (startTime: string, roomId: number) => void;
+    joinReservation: (roomId: number) => void;
     cancelReservation: (startTime: string, roomId: number) => void;
   };
 }
 
-const CalendarUnit = ({ day, time, actions }: RectangleProps) => {
+interface CalendarUnitProps extends BasicCalendarProps {
+  time: string;
+}
+
+const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
   const { createReservation, joinReservation, cancelReservation } = actions;
 
   const [startTime, endTime] = parseTime(day, time);
 
-  const key = startTime;
-  const reservation = useReservation(key);
+  const groupReservation = useGroupReservation(startTime);
+  const userReservation = useUserReservation(startTime);
 
   const [isExpired, setIsExpired] = useState(false);
 
   useEffect(() => {
+    const startTimeDayJS = dayjs(startTime, 'YYYY-MM-DDTHH-mm-ss');
+
+    if (dayjs().add(3, 'hour').isBefore(startTimeDayJS)) {
+      return () => {};
+    }
+
     const checkTime = () => {
-      const startTimeDayJS = dayjs(startTime, 'YYYY-MM-DDTHH-mm-ss');
-      if (startTimeDayJS.isSameOrBefore(dayjs().subtract(30, 'minute'))) {
+      if (startTimeDayJS.isSameOrBefore(dayjs().add(1, 'minutes'))) {
         setIsExpired(true);
       }
     };
 
     checkTime();
 
-    const interval = setInterval(checkTime, 30000);
+    const interval = setInterval(checkTime, 60000);
+
     return () => clearInterval(interval);
   }, [startTime]);
 
   if (isExpired) {
-    return <div className="h-[76px] bg-gray-300 border border-dashed" />;
+    return (
+      <div className="h-[76px] bg-gray-300 border border-dashed border-[#BFBFBF]" />
+    );
   }
 
   return (
-    <div className="border border-dashed h-[76px] relative">
-      {reservation && (
-        <ReservationProfile participants={reservation.participants} />
+    <div className="border border-dashed border-[#BFBFBF] h-[76px] flex justify-center items-center relative">
+      {userReservation && (
+        <div className="absolute z-30 right-2 bottom-2">
+          <MemberProfiles profiles={userReservation.participants} />
+        </div>
+      )}
+      {groupReservation && (
+        <>
+          <BsFillPersonFill className="absolute left-4 bottom-3" />
+          <span className="absolute left-8 bottom-3">{`${groupReservation.participants.length}명`}</span>
+          <div className="absolute right-2 bottom-2">
+            <MemberProfiles profiles={groupReservation.participants} />
+          </div>
+        </>
       )}
       {(() => {
-        if (reservation?.userReserved) {
+        if (userReservation) {
           return (
-            <CancelReservationButton
+            <CurrentReservationButton
               startTime={startTime}
-              endTime={endTime}
-              roomId={reservation.roomId}
-              groupId={reservation.groupId}
+              roomId={userReservation.roomId}
+              groupId={userReservation.groupId}
+              people={userReservation.participants.length}
               cancelReservation={cancelReservation}
             />
           );
         }
-        if (reservation) {
+        if (groupReservation) {
           return (
             <JoinReservationButton
-              startTime={startTime}
-              roomId={reservation.roomId}
+              roomId={groupReservation.roomId}
               joinReservation={joinReservation}
             />
           );

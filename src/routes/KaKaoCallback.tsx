@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import { useUserActions } from '../store/userStore';
+import { useUserActions } from '@/store/userStore';
 
 function KakaoCallback() {
   const { setUser, setIsLoggedIn } = useUserActions();
@@ -18,7 +18,7 @@ function KakaoCallback() {
 
       try {
         const response = await axios.post(
-          `https://www.sangyeop.shop/api/v1/members/tokens`,
+          `https://www.sangyeop.shop/api/v1/members/login`,
           {
             authCode: code,
           }

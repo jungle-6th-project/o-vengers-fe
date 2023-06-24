@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
-import { AiOutlineCopy, AiOutlineCheck } from 'react-icons/ai';
-import { plusIcon } from '../utils/icons';
-import { makeGroup } from '../utils/api';
+import { AiOutlineCopy, AiOutlineCheck, AiOutlinePlus } from 'react-icons/ai';
+import { makeGroup } from '@/utils/api';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
 
 declare global {
   interface Window {
@@ -24,6 +24,8 @@ const GroupMakeModal = () => {
   const [groupURL, copy] = useCopyToClipboard();
   const queryClient = useQueryClient();
 
+  const { setGroupId } = useSelectedGroupIdActions();
+
   const postMakeGroupMutation = useMutation(
     (values: {
       groupName: string;
@@ -32,7 +34,16 @@ const GroupMakeModal = () => {
       secret: boolean;
     }) => makeGroup(values),
     {
-      onSuccess: () => {
+      onSuccess: (res: {
+        color: string;
+        groupId: number;
+        groupName: string;
+        path: string;
+        secret: boolean;
+      }) => {
+        if (res !== null) {
+          setGroupId(res.groupId);
+        }
         queryClient.invalidateQueries(['MyGroupData']);
       },
     }
@@ -114,7 +125,7 @@ const GroupMakeModal = () => {
         className="btn btn-square"
         onClick={handleModalOpen}
       >
-        {plusIcon}
+        <AiOutlinePlus size={24} />
       </button>
       <dialog id="groupMakeModal" className="modal">
         {showCreateForm ? (
@@ -147,7 +158,7 @@ const GroupMakeModal = () => {
                   )}
                   <input
                     type="checkbox"
-                    className="toggle"
+                    className="toggle toggle-accent"
                     onChange={onChangeToggle}
                     name="passwordToggle"
                     checked={isPassword}
@@ -192,15 +203,15 @@ const GroupMakeModal = () => {
             <div className="form-control">
               <div className="input-group">
                 <span>
-                  https://d23wakgp76ydiy.cloudfront.net/{randomRoomId}
+                  {import.meta.env.MODE === 'development'
+                    ? `http://localhost:5173/invite/${randomRoomId}`
+                    : `https://bbodogstudy.com/invite/${randomRoomId}`}
                 </span>
                 <button
                   type="button"
                   className="link"
                   onClick={() =>
-                    copy(
-                      `https://d23wakgp76ydiy.cloudfront.net/${randomRoomId}`
-                    )
+                    copy(`https://bbodogstudy.com/invite/${randomRoomId}`)
                   }
                 >
                   {groupURL ? <AiOutlineCheck /> : <AiOutlineCopy />}

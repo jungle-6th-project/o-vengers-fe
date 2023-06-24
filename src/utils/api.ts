@@ -2,6 +2,72 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://www.sangyeop.shop';
 
+export function parseCookies(cookieString: string) {
+  const cookies: { [key: string]: string } = {};
+  cookieString.split(';').forEach(cookie => {
+    const [key, value] = cookie.split('=');
+    cookies[key.trim()] = decodeURIComponent(value);
+  });
+  return cookies;
+}
+
+axios.interceptors.request.use(
+  function requestInterceptor(config) {
+    const cookieString = document.cookie;
+    const cookies = parseCookies(cookieString);
+    if (
+      config.url !== 'https://www.sangyeop.shop/api/v1/members/login' &&
+      !cookies.accessToken
+    ) {
+      window.location.href = '/login';
+    }
+
+    const newConfig = { ...config };
+
+    newConfig.headers.Authorization = `Bearer ${cookies.accessToken}`;
+    return newConfig;
+  },
+  function errorInterceptor(error) {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  function responseInterceptor(response) {
+    return response;
+  },
+  function errorInterceptor(error) {
+    console.log(error);
+    const originalRequest = error.config;
+    const cookieString = document.cookie;
+    const cookies = parseCookies(cookieString);
+
+    if (error.response.status === 401) {
+      return axios
+        .post('/api/v1/members/tokens', null, {
+          headers: {
+            'X-BBODOK-REFRESH-TOKEN': cookies.refreshToken,
+          },
+        })
+        .then(response => {
+          const newAccessToken = response.data.accessToken;
+
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+          return axios(originalRequest);
+        })
+        .catch(err => {
+          console.log(err);
+          window.location.href = '/login';
+          return Promise.reject(err);
+        });
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export async function getUser() {
   const res = await axios.get('/api/v1/members');
 
@@ -36,20 +102,21 @@ export async function joinGroup({
     // eslint-disable-next-line object-shorthand
     password: password,
   });
-  const { data } = res.data;
 
+  const { data } = res.data;
   return data;
 }
 
 export async function getJoinedGroupMemebers(groupId: number) {
   const res = await axios.get(`/api/v1/ranks?groupId=${groupId}`);
-  const { data } = res.data;
 
+  const { data } = res.data;
   return data;
 }
 
 export async function getTodoDatas(groupId: number) {
   const res = await axios.get(`/api/v1/todos?groupId=${groupId}`);
+
   const { data } = res.data;
   return data;
 }
@@ -65,7 +132,29 @@ export const getGroupMembers = async (groupId: number) => {
   return data;
 };
 
-export const getUserReservation = async (
+export const getUserReservation = async (from: string, to: string) => {
+  const res = await axios.get(`/api/v1/rooms/all?from=${from}&to=${to}`);
+
+  if (!res.data || !res.data.data) {
+    throw new Error('User reservation data is not available');
+  }
+
+  const { data } = res.data;
+  return data;
+};
+
+export const getUserNearestReservation = async () => {
+  const res = await axios.get('/api/v1/rooms/nearest');
+
+  if (!res.data || res.data.data === undefined) {
+    throw new Error('User nearest reservation data is not available');
+  }
+
+  const { data } = res.data;
+  return data;
+};
+
+export const getUserInGroupReservation = async (
   groupId: number,
   from: string,
   to: string
@@ -75,7 +164,7 @@ export const getUserReservation = async (
   );
 
   if (!res.data || !res.data.data) {
-    throw new Error('User reservation data is not available');
+    throw new Error('User reservation in group data is not available');
   }
 
   const { data } = res.data;
@@ -112,8 +201,8 @@ export async function postTodo({
     // eslint-disable-next-line object-shorthand
     groupId: groupId,
   });
-  const { data } = res.data;
 
+  const { data } = res.data;
   return data;
 }
 
@@ -208,5 +297,17 @@ export const changeGroupColor = async (groupId: number, color: string) => {
   await axios.patch('/api/v1/groups/color', {
     color,
     groupId,
+  });
+};
+
+export const enterVideoRoom = async (roomId: number) => {
+  await axios.post('/api/v1/rooms/histories', {
+    roomId,
+  });
+};
+
+export const leaveVideoRoom = async (roomId: number) => {
+  await axios.patch('/api/v1/rooms/histories', {
+    roomId,
   });
 };

@@ -1,13 +1,7 @@
-import CalendarUnit from './CalendarUnit';
+import CalendarUnit, { BasicCalendarProps } from './CalendarUnit';
 
-interface DayProps {
-  day: string;
+interface DayProps extends BasicCalendarProps {
   timeSlots: string[];
-  actions: {
-    createReservation: (startTime: string, endTime: string) => void;
-    joinReservation: (startTime: string, roomId: number) => void;
-    cancelReservation: (startTime: string, roomId: number) => void;
-  };
 }
 
 const Day = ({ day, timeSlots, actions }: DayProps) => {

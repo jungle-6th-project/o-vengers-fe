@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     element: <Study />,
   },
   {
-    path: '/:joinPath',
+    path: '/invite/:joinPath',
     element: <App />,
   },
   {

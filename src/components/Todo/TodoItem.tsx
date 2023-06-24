@@ -3,7 +3,7 @@ import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 import { useMutation } from '@tanstack/react-query';
 import { Todo } from './TodoTypes';
-import { editOrDoneTodo, deleteTodo } from '../../utils/api';
+import { editOrDoneTodo, deleteTodo } from '@/utils/api';
 
 interface TodoItemProps {
   todoData: Todo;
@@ -85,15 +85,15 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     <div className="flex w-full TodoItem">
       <label
         className={`cursor-pointer label flex items-center w-full p-2 mx-2 mb-2 ${
-          isChecked ? 'bg-gray-100' : 'bg-[#D2ED4A]'
+          isChecked ? 'bg-gray-100' : 'bg-accent'
         } rounded-lg`}
-        htmlFor={`${todoData.todoId}`}
+        htmlFor={`todo${todoData.todoId}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <input
           className="hidden"
-          id={`${todoData.todoId}`}
+          id={`todo${todoData.todoId}`}
           onClick={handleCheck}
           defaultChecked={isChecked}
         />

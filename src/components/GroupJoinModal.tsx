@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { getGroupNameByPath, pathJoinGroup } from '../utils/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getGroupNameByPath, pathJoinGroup } from '@/utils/api';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
 
 interface GroupJoinModalProps {
   joinPath: string;
@@ -12,6 +13,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   const [isAlreadyJoined, setAlreadyJoined] = useState(false);
   const [isNotValidPath, setIsNotValidPath] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { data } = useQuery(['groupName'], async () => {
     try {
@@ -35,8 +37,24 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
     }
   });
 
-  const postPathJoinGroupMutation = useMutation((values: { path: string }) =>
-    pathJoinGroup(values)
+  const { setGroupId } = useSelectedGroupIdActions();
+
+  const postPathJoinGroupMutation = useMutation(
+    (values: { path: string }) => pathJoinGroup(values),
+    {
+      onSuccess: (res: {
+        color: string;
+        groupId: number;
+        groupName: string;
+        path: string;
+        secret: boolean;
+      }) => {
+        if (res !== null) {
+          setGroupId(res.groupId);
+        }
+        queryClient.invalidateQueries(['MyGroupData']);
+      },
+    }
   );
 
   useEffect(() => {
@@ -54,7 +72,6 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
     postPathJoinGroupMutation.mutate({ path: joinPath });
     joinModalRef.current?.close();
     navigate('/');
-    window.location.reload();
   };
 
   return (

@@ -1,30 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import {
-  UserRankingProfile,
-  GroupRankingProfile,
+import dayjs from 'dayjs';
+
+import { getGroupMembers } from '@/utils/api';
+import { useUser } from '@/store/userStore';
+import UserRankingProfile from './UserRankingProfile';
+import GroupRankingProfile, {
   GroupRankingProfileProps,
-} from './RankingProfile';
-import { getGroupMembers } from '../utils/api';
-import { useUser } from '../store/userStore';
+} from './GroupRankingProfile';
 
 const parseStudyTime = (studyTimeString: string): number[] => {
-  console.log('studytime: ', studyTimeString);
   if (!studyTimeString || typeof studyTimeString !== 'string') {
     return [0, 0];
   }
 
-  const regex = /PT(\d*H)?(\d*M)?(\d*S)?/; // 정규식을 사용하여 형식 매칭
-  const matches = studyTimeString.match(regex);
+  const studyTime = dayjs.duration(studyTimeString);
 
-  if (!matches) {
-    throw new Error('Invalid time duration format');
-  }
-
-  const hours = matches[1] ? parseInt(matches[1].slice(0, -1), 10) : 0; // 시간 값 파싱
-  const minutes = matches[2] ? parseInt(matches[2].slice(0, -1), 10) : 0; // 분 값 파싱
-
-  return [hours, minutes];
+  return [studyTime.hours(), studyTime.minutes()];
 };
 
 const sortByStudyTime = (
@@ -43,7 +35,7 @@ const sortByStudyTime = (
   return 0;
 };
 
-type DatumType = {
+type RankDataType = {
   duration: string;
   memberId: number;
   nickname: string;
@@ -53,7 +45,7 @@ type DatumType = {
 const GroupRankings = ({ groupId }: { groupId: number }) => {
   const user = useUser();
 
-  const { isLoading, isError, data, refetch } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     ['groupRankings'],
     () => getGroupMembers(groupId),
     {
@@ -70,19 +62,16 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
     return (
       <>
         <div className="sticky top-0 z-10">
-          <UserRankingProfile studyTime={[0, 0]} />
+          <UserRankingProfile studyTime="1위" />
         </div>
-        <span className="stat stat-title loading loading-dots loading-sm" />
+        <span className="loading loading-dots loading-md place-self-center h-full" />
       </>
     );
   }
 
-  let userData = [];
+  let userIndex = 0;
   let sortedData = [];
   if (data) {
-    userData = data.filter(
-      (datum: DatumType) => datum.profile === user.profile
-    );
     sortedData = [...data]
       .map(datum => ({
         ...datum,
@@ -91,15 +80,16 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
         studyTime: parseStudyTime(datum.duration),
       }))
       .sort((a, b) => sortByStudyTime(a.studyTime, b.studyTime));
+
+    userIndex = sortedData.findIndex(
+      (datum: RankDataType) => datum.profile === user.profile
+    );
   }
+
   return (
     <>
       <div className="sticky top-0 z-10">
-        {userData && (
-          <UserRankingProfile
-            studyTime={parseStudyTime(userData[0]?.duration)}
-          />
-        )}
+        <UserRankingProfile studyTime={`${userIndex + 1}위`} />
       </div>
       {sortedData.map(
         (
@@ -111,8 +101,10 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
               key={datum.memberId}
               rank={index + 1}
               nickname={datum.nickname}
-              studyTime={datum.studyTime}
-              profileImg={datum.profileImg}
+              studyTime={`${datum.studyTime[0]}H ${datum.studyTime[1]}m`}
+              profileImg={
+                datum.profileImg ? datum.profileImg : '../../defaultProfile.png'
+              }
             />
           );
         }
@@ -121,14 +113,4 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
   );
 };
 
-const Ranking = ({ groupId }: { groupId: number }) => {
-  // TODO: 2명 이하 인원수 css 조정
-  return (
-    <div className="stats stats-vertical w-72 h-96 border border-[#D9D9D9] rounded-md">
-      {/* <UserRanking /> */}
-      <GroupRankings groupId={groupId} />
-    </div>
-  );
-};
-
-export default Ranking;
+export default GroupRankings;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
-import { useUser } from '../../store/userStore';
+import { useUser } from '@/store/userStore';
 import ChatData from './ChatData';
 import ChatForm from './ChatForm';
 import ChatList from './ChatList';
@@ -66,10 +66,10 @@ const ChatContainer: React.FC<{
   };
 
   return (
-    <>
+    <div className="w-72 h-[30rem]">
       <ChatList datas={datas} user={user} />
       <ChatForm onSubmit={handleSubmit} onChange={onChange} chat={chat} />
-    </>
+    </div>
   );
 };
 

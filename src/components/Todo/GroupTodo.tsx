@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Todo, GroupData } from './TodoTypes';
-import { getTodoDatas, postTodo } from '../../utils/api';
+import { getTodoDatas, postTodo } from '@/utils/api';
 import TodoItem from './TodoItem';
 import TodoAdd from './TodoAdd';
 
@@ -37,7 +37,6 @@ const useKeyPress = (
             content: inputValue,
             done: false,
           };
-          console.log(newTodo);
           setTodos(prevTodos => [newTodo, ...prevTodos]);
           setInputValue('');
           setShowInput(false);
@@ -108,9 +107,9 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
   }, [showInput]);
 
   return (
-    <div className="card bg-white border border-[#D9D9D9] rounded-md">
+    <div className="card bg-white border border-[#D9D9D9] rounded-md text-[0.95rem]">
       <div className="flex justify-between p-2">
-        <h3 className="text-xl font-semibold pl-0.5">{groupData.groupName}</h3>
+        <h3 className="text-lg font-medium pl-0.5">{groupData.groupName}</h3>
         <button
           type="button"
           className="text-gray-600 mr-0.5 mt-[0.2rem] align-top max-h-5"

@@ -1,25 +1,33 @@
 import '@livekit/components-styles';
+import '@/Video/activeRoom.css';
 import { PreJoin, LocalUserChoices } from '@livekit/components-react';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '@/store/userStore';
 import ActiveRoom from '@/Video/ActiveRoom';
+import { leaveVideoRoom } from '@/utils/api';
 
 function App() {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const user = useUser();
+  const numberRoomId = Number(roomId);
+
+  const handleOnLeave = async () => {
+    navigate('/');
+    await leaveVideoRoom(numberRoomId);
+  };
 
   const [preJoinChoices, setPreJoinChoices] = useState<
     LocalUserChoices | undefined
   >(undefined);
   return (
-    <div data-lk-theme="default">
+    <div>
       {roomId && !Array.isArray(roomId) && preJoinChoices ? (
         <ActiveRoom
           roomName={roomId}
           userChoices={preJoinChoices}
-          onLeave={() => navigate('/')}
+          onLeave={handleOnLeave}
         />
       ) : (
         <PreJoin
@@ -34,7 +42,9 @@ function App() {
             setPreJoinChoices(values);
           }}
           joinLabel="입장하기"
-          debug
+          camLabel=""
+          micLabel=""
+          userLabel="닉네임"
         />
       )}
     </div>

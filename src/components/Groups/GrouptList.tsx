@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getMyGroups } from '@/utils/api';
 import Groups from './Groups';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
 
 interface GroupsItem {
   color: string;
@@ -11,18 +13,30 @@ interface GroupsItem {
 }
 
 const GrouptList = () => {
+  const { setGroup } = useSelectedGroupIdActions();
   // 내가 속한 그룹들
   const {
     data: myGroupList,
     isError,
     isLoading,
-  } = useQuery<GroupsItem[], Error>(['MyGroupData'], () => getMyGroups());
+    isSuccess,
+  } = useQuery<GroupsItem[], Error>(['MyGroupData'], () => getMyGroups(), {
+    staleTime: 20000,
+    refetchOnWindowFocus: true,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setGroup(myGroupList);
+    }
+  }, [isSuccess, myGroupList, setGroup]);
+
   if (isError || isLoading) {
     return <div />;
   }
 
   return (
-    <div className="flex">
+    <div className="flex h-groupList">
       {myGroupList?.map((group: GroupsItem) => {
         return (
           <Groups
