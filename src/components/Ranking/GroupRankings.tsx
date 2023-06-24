@@ -64,7 +64,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
         <div className="sticky top-0 z-10">
           <UserRankingProfile studyTime="1위" />
         </div>
-        <span className="loading loading-dots loading-md place-self-center h-full" />
+        <span className="h-full loading loading-dots loading-md place-self-center" />
       </>
     );
   }
