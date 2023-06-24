@@ -24,8 +24,8 @@ const parseTimeDuration = (durationString: string) => {
     throw new Error('Invalid time duration format');
   }
 
-  const hours = matches[1] ? parseInt(matches[1].slice(0, -1), 10) : 0; // 시간 값 파싱
-  const minutes = matches[2] ? parseInt(matches[2].slice(0, -1), 10) : 0; // 분 값 파싱
+  const hours = matches[1] ? parseInt(matches[1].slice(0, -1), 10) : 0;
+  const minutes = matches[2] ? parseInt(matches[2].slice(0, -1), 10) : 0;
   const sum = hours * 60 + minutes;
   return { sum };
 };
@@ -82,7 +82,6 @@ const Mypage = () => {
   });
 
   const lastItem = transformedData[transformedData.length - 1];
-  // console.log(transformedData);
   return (
     <div className="grid grid-cols-8 grid-rows-2 margin-auto">
       <div className="col-start-1 col-end-2 row-span-2 ">

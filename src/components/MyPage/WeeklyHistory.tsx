@@ -1,5 +1,5 @@
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import {
@@ -58,7 +58,6 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
     date = date.add(1, 'day')
   ) {
     const foundData = data.find(item => dayjs(item.day).isSame(date));
-    // console.log(dayjs('2023-06-21'));
     if (!foundData) {
       const zeroData = {
         value: 0,
@@ -72,7 +71,6 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
 
   const barChartData: BarDatum[] = weekData.map(item => ({
     value: item.value,
-    // value: item.value,
     day: dayjs(item.day).format('MM.DD'),
   }));
 
@@ -111,40 +109,14 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
             enableGridY={false}
             enableGridX={false}
             // isInteractive={false}
-            /**
-             * chart에 사용될 데이터
-             */
             data={barChartData}
-            /**
-             * chart에 보여질 데이터 key (측정되는 값)
-             */
             keys={['value']}
-            /**
-             * keys들을 그룹화하는 index key (분류하는 값)
-             */
             indexBy="day"
-            /**
-             * chart margin
-             */
             margin={{ top: 20, right: 0, bottom: 40, left: 15 }}
-            /**
-             * chart padding (bar간 간격)
-             */
             padding={0.02}
-            /**
-             * chart 색상
-             */
-            colors={barColor} // 커스터하여 사용할 때
-            // colors={{ scheme: 'nivo' }} // nivo에서 제공해주는 색상 조합 사용할 때
-            /**
-             * color 적용 방식
-             */
-            colorBy="id" // 색상을 keys 요소들에 각각 적용
-            // colorBy="indexValue" // indexBy로 묵인 인덱스별로 각각 적용
+            colors={barColor}
+            colorBy="id"
             theme={{
-              /**
-               * label style (bar에 표현되는 글씨)
-               */
               labels: {
                 text: {
                   fontSize: 0,
@@ -152,9 +124,6 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
                 },
               },
               axis: {
-                /**
-                 * axis ticks style (bottom, left에 있는 값)
-                 */
                 ticks: {
                   text: {
                     fontSize: 12,
@@ -164,25 +133,18 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
               },
             }}
             labelSkipHeight={20}
-            /**
-             * axis bottom 설정
-             */
-            // 폰트 변경하기
             axisBottom={{
-              tickSize: 0, // 값 설명하기 위해 튀어나오는 점 크기
-              tickPadding: 5, // tick padding
-              tickRotation: 0, // tick 기울기
-              // legendPosition: 'middle', // 글씨 위치
-              // legendOffset: 10, // 글씨와 chart간 간격
+              tickSize: 0,
+              tickPadding: 5,
+              tickRotation: 0,
+              // legendPosition: 'middle',
+              // legendOffset: 10,
             }}
-            /**
-             * axis left 설정
-             */
             axisLeft={{
               tickValues: [],
-              tickSize: 0, // 값 설명하기 위해 튀어나오는 점 크기
-              tickPadding: 5, // tick padding
-              tickRotation: 0, // tick 기울기
+              tickSize: 0,
+              tickPadding: 5,
+              tickRotation: 0,
             }}
           />
         </div>

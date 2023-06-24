@@ -1,8 +1,4 @@
-import {
-  ResponsiveCalendar,
-  // CalendarDatum,
-  CalendarTooltipProps,
-} from '@nivo/calendar';
+import { ResponsiveCalendar, CalendarTooltipProps } from '@nivo/calendar';
 import dayjs from 'dayjs';
 
 interface DataItem {
@@ -42,7 +38,7 @@ const YearlyHistory = ({ data }: YearlyHistoryProps) => {
     if (item.value >= 420) {
       return '#0725E3';
     }
-    return '#eeeeee'; // 예외 처리: 적용할 색상이 없는 경우에 대한 처리
+    return '#eeeeee';
   });
   const today = dayjs();
   return (

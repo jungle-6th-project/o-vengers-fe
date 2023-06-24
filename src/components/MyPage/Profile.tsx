@@ -1,4 +1,3 @@
-// import React from 'react';
 import { useUser } from '@/store/userStore';
 
 const Profile = () => {
