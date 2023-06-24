@@ -14,7 +14,7 @@ const RoomEnterMessage = ({
     return (
       <div>
         {groupId !== 0 && (
-          <div className="text-lg text-white text-ellipsis text-center">{`${getGroupNameById(
+          <div className="text-lg text-center text-white text-ellipsis">{`${getGroupNameById(
             groupId
           )}`}</div>
         )}

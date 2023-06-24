@@ -58,7 +58,7 @@ const ExitModal = ({
   return (
     <dialog ref={modalRef} id="roomExitModal" className="modal">
       <form method="dialog" className="modal-box">
-        <h3 className="font-bold text-lg">수고하셨습니다!</h3>
+        <h3 className="text-lg font-bold">수고하셨습니다!</h3>
         <div className="modal-action">
           <button type="button" className="btn" onClick={handleOnLeave}>
             캘린더로 돌아가기
