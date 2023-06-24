@@ -205,13 +205,13 @@ const WeeklyViewCalendar = () => {
 
   return (
     <div
-      className={`grid grid-rows-calendar grid-cols-calendar bg-[#F6F6F6] w-calendar h-calendar rounded-[1.25rem] border-${groupColor} overflow-auto`}
+      className={`grid grid-rows-calendar grid-cols-calendar bg-calendar w-calendar h-calendar border-${groupColor}`}
     >
-      <span className="col-start-1 bg-[#F6F6F6] sticky top-0 left-0 z-50" />
+      <span className="col-start-1 bg-calendar sticky top-0 left-0 z-50 after:absolute after:w-[20%] after:h-[30%] after:border-r-[1px] after:border-b-[1px] after:border-dashed after:border-calendar-border after:right-0 after:bottom-0" />
       <div className="sticky top-0 z-40 col-span-6 col-start-2">
         <CalendarHeader weeks={weeks} />
       </div>
-      <div className="sticky left-0 z-40 items-start col-span-1 col-start-1 bg-[#F6F6F6]">
+      <div className="sticky left-0 z-40 items-start col-span-1 col-start-1 bg-calendar">
         <TimeSlots timeSlots={timeSlots} />
       </div>
       {weeks.map((week, index) => (

@@ -12,6 +12,8 @@ module.exports = {
         bbodog_blue: '#0725E3',
         bbodog_green: '#D2ED4A',
         bbodog_orange: '#FF784E',
+        calendar: '#F6F6F6',
+        'calendar-border': '#BFBFBF',
       },
       width: {
         calendar: '72vw',
@@ -47,7 +49,7 @@ module.exports = {
         video_container: '200px 1fr',
       },
       gridTemplateColumns: {
-        calendar: '100px repeat(21, 1fr)',
+        calendar: '100px repeat(14, 1fr)',
         container: '0.2fr 1fr',
         video_container: '1fr 0.3fr',
         rankingProfile:

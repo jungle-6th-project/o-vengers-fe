@@ -7,7 +7,7 @@ import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking/Ranking';
 import Timer from './components/Timer/Timer';
 import GroupSearchModal from './components/GroupSearchModal/GroupSearchModal';
-import GroupList from './components/Groups/GrouptList';
+import GroupsList from './components/Groups/GroupsList';
 import TodoList from './components/Todo/TodoList';
 import GroupJoinModal from './components/GroupJoinModal';
 import { ReactComponent as Logo } from '@/assets/bbodog_log_svg.svg';
@@ -32,7 +32,7 @@ function App() {
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <>
-      <div className="m-10 grid gap-x-10 grid-rows-container grid-cols-container">
+      <div className="m-10 grid gap-x-10 grid-rows-container grid-cols-container w-max-screen">
         <div className="row-span-3 col-todo">
           <Logo width="200" height="150" />
           <Ranking />
@@ -40,7 +40,7 @@ function App() {
         </div>
         <div className="flex justify-between mb-5">
           <div className="flex">
-            <div className="flex flex-col justify-between mr-3 btn-3 h-groupList">
+            <div className="flex flex-col justify-between mr-3 btn-3 h-groupList min-h-header-min max-h-header-max">
               {isGroupPath && <GroupJoinModal joinPath={location[1]} />}
               <GroupMakeModal />
               <GroupSearchModal />
@@ -52,12 +52,12 @@ function App() {
             </div>
 
             <div className="flex">
-              <GroupList />
+              <GroupsList />
             </div>
           </div>
           <Timer />
         </div>
-        <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3">
+        <div className="self-start overflow-auto col-start-2 col-end-3 row-start-2 row-end-3 rounded-2xl bg-calendar">
           <Calendar />
         </div>
       </div>

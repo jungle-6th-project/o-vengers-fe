@@ -17,7 +17,7 @@ const TodoList = () => {
       <div className="card-body" style={{ padding: '0.6rem' }}>
         <h2 className="ml-2 font-normal card-title">TO DO</h2>
         {isError || isLoading ? (
-          <span className="loading loading-dots loading-md place-self-center h-full" />
+          <span className="h-full loading loading-dots loading-md place-self-center" />
         ) : (
           myGroupList?.map((group: GroupData) => (
             <GroupTodo key={group.groupId} groupData={group} />

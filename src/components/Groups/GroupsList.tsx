@@ -12,11 +12,11 @@ interface GroupsItem {
   path: string;
 }
 
-const GrouptList = () => {
+const GroupsList = () => {
   const { setGroup } = useSelectedGroupIdActions();
   // 내가 속한 그룹들
   const {
-    data: myGroupList,
+    data: myGroupsList,
     isError,
     isLoading,
     isSuccess,
@@ -27,17 +27,17 @@ const GrouptList = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      setGroup(myGroupList);
+      setGroup(myGroupsList);
     }
-  }, [isSuccess, myGroupList, setGroup]);
+  }, [isSuccess, myGroupsList, setGroup]);
 
   if (isError || isLoading) {
     return <div />;
   }
 
   return (
-    <div className="flex h-groupList">
-      {myGroupList?.map((group: GroupsItem) => {
+    <div className="flex h-groupList min-h-header-min max-h-header-max">
+      {myGroupsList?.map((group: GroupsItem) => {
         return (
           <Groups
             key={group.groupId}
@@ -53,4 +53,4 @@ const GrouptList = () => {
   );
 };
 
-export default GrouptList;
+export default GroupsList;

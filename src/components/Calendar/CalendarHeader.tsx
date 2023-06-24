@@ -17,7 +17,7 @@ const DayOfWeekComponent = ({ date, dayOfWeek, today }: Week) => {
 
   return (
     <div className="flex flex-col items-center text-black">
-      <div className="flex justify-center items-center flex-col w-[13rem] h-[8.8125rem] ">
+      <div className="flex justify-center items-center flex-col w-[11rem] h-[6rem] relative after:absolute after:w-full after:h-[30%] after:border-[1px] after:border-t-0 after:border-dashed after:border-calendar-border after:bottom-0">
         <div>{dayOfWeek}</div>
         <div className="flex items-center justify-center">
           {isToday ? (
@@ -41,7 +41,7 @@ const CalendarHeader = ({ weeks }: CalendarHeaderProps) => {
   const today = dayjs();
 
   return (
-    <div className="carousel bg-[#F6F6F6] rounded-r-lg">
+    <div className="carousel bg-calendar">
       {weeks.map(day => (
         <div key={day.date} className="carousel-item">
           <DayOfWeekComponent
