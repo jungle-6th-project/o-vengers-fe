@@ -20,7 +20,7 @@ const RankingProfile = ({
 }: RankingProfileProps) => {
   return (
     <div
-      className={`stat ${bgColor} grid-cols-rankingProfile justify-evenly items-center px-4 py-3`}
+      className={`stat ${bgColor} grid-cols-rankingProfile justify-evenly items-center p-4`}
     >
       {/* 순위 */}
       <div className={`stat-title ${textColor} text-center`}>{title}</div>
