@@ -12,6 +12,7 @@ import {
   deleteGroup,
   getJoinedGroupMemebers,
 } from '@/utils/api';
+import { useUserReservationActions } from '@/store/userReservationStore';
 
 interface JoinedGroupsItem {
   duration: string;
@@ -56,6 +57,7 @@ export const MemberProfiles = ({ profiles }: { profiles: string[] }) => {
 
 const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const { setGroupId, setGroupColorById } = useSelectedGroupIdActions();
+  const { removeUserGroupReservation } = useUserReservationActions();
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
     color === null ? 'accent' : color
@@ -74,6 +76,8 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
       queryClient.setQueryData<GroupsItem[]>(['MyGroupData'], oldData =>
         oldData?.filter(group => group.groupId !== id)
       );
+      removeUserGroupReservation(id);
+      setGroupId(1);
     },
   });
 
