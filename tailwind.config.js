@@ -3,6 +3,10 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      backgroundImage: {
+        login:
+          "url('/Users/bang/Documents/project/o-vengers-fe/public/ppodog.png')",
+      },
       colors: {
         reservation: '#E3E3E3',
         bbodog_blue: '#0725E3',
