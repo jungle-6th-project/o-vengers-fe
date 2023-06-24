@@ -1,5 +1,5 @@
 export interface BasicRankingProfileProps {
-  studyTime: number[];
+  studyTime: string;
   nickname: string;
   profileImg: string;
 }
@@ -30,7 +30,6 @@ const RankingProfile = ({
           <img src={profileImg} alt={nickname} />
         </div>
       </div>
-      <div className="absolute right-[-1rem] top-0 h-full w-4 bg-transparent" />
       {/* 닉네임, 공부시간 */}
       <div className="col-start-3">
         <div
@@ -44,9 +43,9 @@ const RankingProfile = ({
         >
           {nickname}
         </div>
-        <div
-          className={`whitespace-nowrap text-xs ${textColor}`}
-        >{`${studyTime[0]}H ${studyTime[1]}m`}</div>
+        <div className={`whitespace-nowrap text-xs ${textColor}`}>
+          {studyTime}
+        </div>
       </div>
     </div>
   );

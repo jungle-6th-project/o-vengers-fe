@@ -63,19 +63,16 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
     return (
       <>
         <div className="sticky top-0 z-10">
-          <UserRankingProfile studyTime={[0, 0]} />
+          <UserRankingProfile studyTime="0H 0m" />
         </div>
-        <span className="stat stat-title loading loading-dots loading-sm" />
+        <span className="stat loading loading-dots loading-sm" />
       </>
     );
   }
 
-  let userData = [];
+  let userIndex = 0;
   let sortedData = [];
   if (data) {
-    userData = data.filter(
-      (datum: RankDataType) => datum.profile === user.profile
-    );
     sortedData = [...data]
       .map(datum => ({
         ...datum,
@@ -84,15 +81,16 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
         studyTime: parseStudyTime(datum.duration),
       }))
       .sort((a, b) => sortByStudyTime(a.studyTime, b.studyTime));
+
+    userIndex = sortedData.findIndex(
+      (datum: RankDataType) => datum.profile === user.profile
+    );
   }
+
   return (
     <>
       <div className="sticky top-0 z-10">
-        {userData && (
-          <UserRankingProfile
-            studyTime={parseStudyTime(userData[0]?.duration)}
-          />
-        )}
+        <UserRankingProfile studyTime={`${userIndex + 1}위`} />
       </div>
       {sortedData.map(
         (
@@ -104,7 +102,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
               key={datum.memberId}
               rank={index + 1}
               nickname={datum.nickname}
-              studyTime={datum.studyTime}
+              studyTime={`${datum.studyTime[0]}H ${datum.studyTime[1]}m`}
               profileImg={
                 datum.profileImg ? datum.profileImg : '../../defaultProfile.png'
               }
@@ -119,9 +117,8 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
 const Ranking = () => {
   const groupId = useSelectedGroupId();
 
-  // TODO: 2명 이하 인원수 css 조정
   return (
-    <div className="stats-vertical w-ranking_todo min-w-leftbar h-ranking border border-[#D9D9D9] rounded-md mb-3">
+    <div className="stats-vertical w-ranking_todo min-w-leftbar max-w-leftbar h-ranking border border-[#D9D9D9] rounded-md mb-3">
       {/* <UserRanking /> */}
       <GroupRankings groupId={groupId} />
     </div>
