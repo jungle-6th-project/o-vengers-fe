@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
 import { BsThreeDotsVertical } from 'react-icons/bs';
@@ -12,6 +12,7 @@ import {
   deleteGroup,
   getJoinedGroupMemebers,
 } from '@/utils/api';
+import { useUserReservationActions } from '@/store/userReservationStore';
 
 interface JoinedGroupsItem {
   duration: string;
@@ -56,6 +57,7 @@ export const MemberProfiles = ({ profiles }: { profiles: string[] }) => {
 
 const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const { setGroupId, setGroupColorById } = useSelectedGroupIdActions();
+  const { removeUserGroupReservation } = useUserReservationActions();
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [selectedColor, setSelectedColor] = useState(
     color === null ? 'accent' : color
@@ -63,17 +65,13 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
 
-  useEffect(() => {
-    if (color === null) {
-      setGroupColorById(groupId, 'accent');
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
     onSuccess: (_, id) => {
       queryClient.setQueryData<GroupsItem[]>(['MyGroupData'], oldData =>
         oldData?.filter(group => group.groupId !== id)
       );
+      removeUserGroupReservation(id);
+      setGroupId(1);
     },
   });
 
