@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
 import { BsThreeDotsVertical } from 'react-icons/bs';
@@ -64,12 +64,6 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   );
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
-
-  useEffect(() => {
-    if (color === null) {
-      setGroupColorById(groupId, 'accent');
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
     onSuccess: (_, id) => {

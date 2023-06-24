@@ -27,7 +27,13 @@ const groupStore = create<GroupStore>()((set, get) => ({
       set({ selectedGroup: id });
     },
     setGroup: (groups: Group[]) => {
-      set({ groups });
+      const updatedGroups = groups.map(group => {
+        if (group.color === null) {
+          return { ...group, color: 'accent' };
+        }
+        return group;
+      });
+      set({ groups: updatedGroups });
     },
     getGroupNameById: (id: number) => {
       const group = get().groups.find(
