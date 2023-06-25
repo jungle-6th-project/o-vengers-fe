@@ -22,7 +22,9 @@ const TimerDisplay = ({
     return formattedTime;
   };
 
-  return <p className="font-mono text-5xl">{formatTime(remainingTime)}</p>;
+  return (
+    <p className="font-mono text-5xl text-white">{formatTime(remainingTime)}</p>
+  );
 };
 
 export default TimerDisplay;
