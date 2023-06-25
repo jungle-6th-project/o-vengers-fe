@@ -257,7 +257,7 @@ export async function makeGroup({
   return data;
 }
 
-export async function pathJoinGroup({ path }: { path: string }) {
+export async function pathJoinGroup(path: string) {
   const res = await axios.post(
     `/api/v1/groups/path`,
     // eslint-disable-next-line object-shorthand
@@ -268,11 +268,12 @@ export async function pathJoinGroup({ path }: { path: string }) {
   return data;
 }
 
-export async function getGroupNameByPath({ path }: { path: string }) {
+export async function getGroupNameByPath(path: string) {
   const res = await axios.get('/api/v1/groups/path', {
     // eslint-disable-next-line object-shorthand
     params: { path: path },
   });
+
   const { data } = res.data;
   return data;
 }

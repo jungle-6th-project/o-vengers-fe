@@ -158,7 +158,7 @@ const GroupMakeModal = () => {
                   )}
                   <input
                     type="checkbox"
-                    className="toggle toggle-accent"
+                    className="toggle toggle-primary"
                     onChange={onChangeToggle}
                     name="passwordToggle"
                     checked={isPassword}
@@ -196,35 +196,50 @@ const GroupMakeModal = () => {
           </form>
         ) : (
           <div className="modal-box">
-            <div className="m-5 text-lg">
+            <div className="mx-5 my-3 text-lg">
               함께하고 싶은 사람들에게 <strong>링크</strong>를 보내보세요!
+              <br />
+              바로 참여할 수 있습니다.
             </div>
-            <div className="m-5 text-lg">바로 참여할 수 있습니다.</div>
             <div className="form-control">
-              <div className="input-group">
-                <span>
-                  {import.meta.env.MODE === 'development'
-                    ? `http://localhost:5173/invite/${randomRoomId}`
-                    : `https://bbodogstudy.com/invite/${randomRoomId}`}
-                </span>
+              <div className="join mx-5">
+                <input
+                  className="input bg-gray-200 w-full join-item"
+                  type="text"
+                  value={
+                    import.meta.env.MODE === 'development'
+                      ? `http://localhost:5173/invite/${randomRoomId}`
+                      : `https://bbodogstudy.com/invite/${randomRoomId}`
+                  }
+                  readOnly
+                />
                 <button
                   type="button"
-                  className="link"
+                  className="btn btn-primary join-item"
                   onClick={() =>
                     copy(`https://bbodogstudy.com/invite/${randomRoomId}`)
                   }
                 >
-                  {groupURL ? <AiOutlineCheck /> : <AiOutlineCopy />}
+                  {groupURL ? (
+                    <AiOutlineCheck size={20} />
+                  ) : (
+                    <AiOutlineCopy size={20} />
+                  )}
                 </button>
               </div>
             </div>
-            <button
-              type="button"
-              className="m-3 btn"
-              onClick={handleModalClose}
-            >
-              닫기
-            </button>
+            <div className="ml-9 text-gray-500">
+              링크는 그룹 카드에서 언제든 다시 볼 수 있어요.
+            </div>
+            <div className="modal-action m-0">
+              <button
+                type="button"
+                className="m-3 btn"
+                onClick={handleModalClose}
+              >
+                닫기
+              </button>
+            </div>
           </div>
         )}
       </dialog>
