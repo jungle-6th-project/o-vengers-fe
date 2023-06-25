@@ -15,47 +15,48 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(['groupName'], async () => {
-    try {
-      const groupData = await getGroupNameByPath({
-        path: joinPath,
-      });
-      return groupData;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      console.log(error);
-      if (
-        error.response.data.message ===
-        `유효하지 않은 초대 코드입니다. : ${joinPath}`
-      ) {
-        setIsNotValidPath(true);
+  const { data } = useQuery(
+    ['groupName'],
+    async () => {
+      try {
+        const groupData = await getGroupNameByPath(joinPath);
+        return groupData;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        if (
+          error.response.data.message ===
+          `유효하지 않은 초대 코드입니다. : ${joinPath}`
+        ) {
+          setIsNotValidPath(true);
+        }
+        if (error.response.data.message === '이미 가입한 그룹입니다.') {
+          setAlreadyJoined(true);
+        }
+        throw error;
       }
-      if (error.response.data.message === '이미 가입한 그룹입니다.') {
-        setAlreadyJoined(true);
-      }
-      throw error;
+    },
+    {
+      refetchOnWindowFocus: false,
+      retryDelay: Infinity,
     }
-  });
+  );
 
   const { setGroupId } = useSelectedGroupIdActions();
 
-  const postPathJoinGroupMutation = useMutation(
-    (values: { path: string }) => pathJoinGroup(values),
-    {
-      onSuccess: (res: {
-        color: string;
-        groupId: number;
-        groupName: string;
-        path: string;
-        secret: boolean;
-      }) => {
-        if (res !== null) {
-          setGroupId(res.groupId);
-        }
-        queryClient.invalidateQueries(['MyGroupData']);
-      },
-    }
-  );
+  const postPathJoinGroupMutation = useMutation(() => pathJoinGroup(joinPath), {
+    onSuccess: (res: {
+      color: string;
+      groupId: number;
+      groupName: string;
+      path: string;
+      secret: boolean;
+    }) => {
+      if (res !== null) {
+        setGroupId(res.groupId);
+      }
+      queryClient.invalidateQueries(['MyGroupData']);
+    },
+  });
 
   useEffect(() => {
     if (joinModalRef.current) {
@@ -69,51 +70,40 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   };
 
   const handleAcceptInvite = () => {
-    postPathJoinGroupMutation.mutate({ path: joinPath });
+    postPathJoinGroupMutation.mutate();
     joinModalRef.current?.close();
     navigate('/');
   };
 
+  let message = '초대 링크를 확인하고 있습니다...';
+  if (isAlreadyJoined) {
+    message = '이미 가입된 그룹입니다.';
+  } else if (isNotValidPath) {
+    message = '유효하지 않은 초대 링크입니다.';
+  } else if (data) {
+    message = `${data.groupName} 그룹에 초대되었습니다!`;
+  }
+
   return (
     <dialog ref={joinModalRef} id="groupJoinModal" className="modal">
-      <form method="dialog" className="w-11/12 max-w-5xl modal-box">
-        {isAlreadyJoined && (
-          <div>
-            <p className="py-4">이미 가입된 그룹입니다!</p>
-            <div className="modal-action">
-              <button type="button" className="btn" onClick={handleModalClose}>
-                닫기
-              </button>
-            </div>
-          </div>
-        )}
-        {isNotValidPath && (
-          <div>
-            <p className="py-4">유효하지 않은 초대코드 입니다.</p>
-            <div className="modal-action">
-              <button type="button" className="btn" onClick={handleModalClose}>
-                닫기
-              </button>
-            </div>
-          </div>
-        )}
-        {!isAlreadyJoined && !isNotValidPath && (
-          <div>
-            <p className="py-4">{data?.groupName} 그룹에 초대되었습니다!</p>
-            <div className="modal-action">
-              <button type="button" className="btn" onClick={handleModalClose}>
-                취소
-              </button>
+      <form method="dialog" className="modal-box">
+        <div>
+          <p>{message}</p>
+          <div className="modal-action m-0">
+            <button type="button" className="btn" onClick={handleModalClose}>
+              {data ? '취소' : '닫기'}
+            </button>
+            {data && (
               <button
                 type="button"
                 className="btn"
                 onClick={handleAcceptInvite}
               >
-                초대수락
+                초대 수락
               </button>
-            </div>
+            )}
           </div>
-        )}
+        </div>
       </form>
     </dialog>
   );
