@@ -16,7 +16,12 @@ const ChatContainer: React.FC<{
   const user = useUser();
 
   useEffect(() => {
-    const newSocket = io('localhost:5173/study');
+    const url =
+      import.meta.env.MODE === 'development'
+        ? 'localhost:5173/study'
+        : 'wss://www.sangyeop.shop/';
+
+    const newSocket = io(url);
     setSocket(newSocket);
 
     newSocket.emit('enter-room', roomID);
