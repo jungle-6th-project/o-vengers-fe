@@ -57,7 +57,7 @@ function App() {
           </div>
           <Timer />
         </div>
-        <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3 overflow-auto rounded-2xl bg-calendar">
+        <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3 rounded-2xl bg-calendar overflow-hidden">
           <Calendar />
         </div>
       </div>

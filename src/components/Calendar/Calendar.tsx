@@ -212,7 +212,7 @@ const WeeklyViewCalendar = () => {
 
   return (
     <div
-      className={`grid grid-rows-calendar grid-cols-calendar bg-calendar w-calendar h-calendar border-${groupColor}`}
+      className={`grid grid-rows-calendar grid-cols-calendar bg-calendar w-calendar h-calendar border-${groupColor} overflow-auto`}
     >
       <span className="col-start-1 bg-calendar sticky top-0 left-0 z-50 after:absolute after:w-[20%] after:h-[30%] after:border-r-[1px] after:border-b-[1px] after:border-dashed after:border-calendar-border after:right-0 after:bottom-0" />
       <div className="sticky top-0 z-40 col-span-6 col-start-2">
