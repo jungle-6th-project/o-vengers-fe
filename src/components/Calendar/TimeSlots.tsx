@@ -9,6 +9,7 @@ const TimeSlots = () => {
         <div
           key={timeSlot}
           className="w-[100px] text-center h-24 after:absolute after:w-[20%] after:h-24 after:border-[1px] after:border-l-0 after:border-dashed after:border-calendar-border after:right-0"
+          id={`${timeSlot}`}
         >
           {timeSlot}
         </div>

@@ -199,8 +199,16 @@ const WeeklyViewCalendar = () => {
   };
 
   const weeks = useWeeks();
-
   const groupColor = useGroupColor(groupId);
+
+  useEffect(() => {
+    const nearestTimeBefore = `${dayjs().hour()}:${
+      dayjs().minute() < 30 ? '00' : '30'
+    }`;
+    const timeElement = document.getElementById(nearestTimeBefore);
+
+    timeElement?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
 
   return (
     <div
