@@ -7,11 +7,7 @@ import {
   useSelectedGroupId,
   useSelectedGroupIdActions,
 } from '@/store/groupStore';
-import {
-  changeGroupColor,
-  deleteGroup,
-  getJoinedGroupMemebers,
-} from '@/utils/api';
+import { changeGroupColor, deleteGroup, getGroupMembers } from '@/utils/api';
 import { useUserReservationActions } from '@/store/userReservationStore';
 
 interface JoinedGroupsItem {
@@ -106,18 +102,12 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     data: profiles,
     isError,
     isLoading,
-  } = useQuery(
-    ['membersInfo', groupId],
-    () => getJoinedGroupMemebers(groupId),
-    {
-      select(data) {
-        const profileImages = data.map(
-          (item: JoinedGroupsItem) => item.profile
-        );
-        return profileImages;
-      },
-    }
-  );
+  } = useQuery(['membersInfo', groupId], () => getGroupMembers(groupId), {
+    select(data) {
+      const profileImages = data.map((item: JoinedGroupsItem) => item.profile);
+      return profileImages;
+    },
+  });
 
   const selectedGroupId = useSelectedGroupId();
 

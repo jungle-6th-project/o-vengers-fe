@@ -106,21 +106,6 @@ export async function joinGroup({
   const { data } = res.data;
   return data;
 }
-
-export async function getJoinedGroupMemebers(groupId: number) {
-  const res = await axios.get(`/api/v1/ranks?groupId=${groupId}`);
-
-  const { data } = res.data;
-  return data;
-}
-
-export async function getTodoDatas(groupId: number) {
-  const res = await axios.get(`/api/v1/todos?groupId=${groupId}`);
-
-  const { data } = res.data;
-  return data;
-}
-
 export const getGroupMembers = async (groupId: number) => {
   const res = await axios.get(`/api/v1/ranks?groupId=${groupId}`);
 
@@ -131,6 +116,13 @@ export const getGroupMembers = async (groupId: number) => {
   const { data } = res.data;
   return data;
 };
+
+export async function getTodoDatas(groupId: number) {
+  const res = await axios.get(`/api/v1/todos?groupId=${groupId}`);
+
+  const { data } = res.data;
+  return data;
+}
 
 export const getUserReservation = async (from: string, to: string) => {
   const res = await axios.get(`/api/v1/rooms/all?from=${from}&to=${to}`);
@@ -318,5 +310,6 @@ export const getStudyHistory = async (DateStart: string, DateEnd: string) => {
   );
 
   const { data } = res.data;
+  console.log(data);
   return data;
 };
