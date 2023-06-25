@@ -12,7 +12,6 @@ import {
 } from '@/store/groupStore';
 
 const parseTime = (day: string, time: string): string[] => {
-  // '2023-06-14T10:00:00'
   const startTime = `${day}T${time}:00`;
 
   const [endHour, startMinute] = time.split(':');
@@ -214,7 +213,7 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
   useEffect(() => {
     const startTimeDayJS = dayjs(startTime, 'YYYY-MM-DDTHH-mm-ss');
 
-    if (dayjs().add(3, 'hour').isBefore(startTimeDayJS)) {
+    if (startTimeDayJS.isAfter(dayjs().add(3, 'hour'))) {
       return () => {};
     }
 
