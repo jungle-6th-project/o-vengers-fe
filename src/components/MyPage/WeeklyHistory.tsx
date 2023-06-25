@@ -25,9 +25,9 @@ const CustomTooltip = (props: BarTooltipProps<BarDatum>) => {
   const hour = Math.floor(Number(value) / 60);
   const min = Number(value) - hour * 60;
   return (
-    <div className="bg-white card rounded-[4px] p-1 text-[12px] text-bbodog_blue font-medium bg-opacity-100">
+    <div className="bg-white card rounded-md p-2 text-[0.9vw] text-bbodog_blue font-medium bg-opacity-100">
       <p>
-        {hour}H{min}M
+        {hour}H {min}M
       </p>
     </div>
   );
@@ -80,16 +80,16 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
     bar.data.day === today ? '#0725E3' : '#000000';
 
   return (
-    <div className="s bg-gray-200 card top-[60.93px] w-[567.33px] h-[288.06px] font-medium">
+    <div className="s bg-reservation card w-[42vw] h-[50vh] font-medium">
       <div className="flex space-x-3">
-        <div className="text-[35px] pl-[21px] pt-[17px] text-black mt-0">
-          {total.toFixed(1)}H
+        <div className="text-[2.5vw] pl-[2vw] pt-[4vh] text-black mt-0">
+          {total > 0 ? total.toFixed(1) : 0}H
         </div>
         <div>
-          <div className="text-black pt-[25px] text-[12px]">
+          <div className="text-black pt-[4.8vh] text-[0.9vw]">
             WEEKLY STUDY TIME
           </div>
-          <div className="text-bbodog_blue text-[12px]">
+          <div className="text-bbodog_blue text-[0.9vw]">
             {weekStart.format('MM.DD')} - {weekEnd.format('MM.DD')}
           </div>
         </div>
@@ -97,12 +97,12 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
       <div className="flex justify-center space-x-4">
         <button
           type="button"
-          className="pl-[20px] text-black flex pt-[55px]"
+          className="pl-[1.5vw] text-black flex pt-[12vh]"
           onClick={handlePreviousWeek}
         >
-          <FiChevronLeft size="20" />
+          <FiChevronLeft size="30" />
         </button>
-        <div style={{ width: '100%', height: '210px', margin: '0' }}>
+        <div style={{ width: '100%', height: '36.5vh', margin: '0' }}>
           <ResponsiveBar
             tooltip={CustomTooltip}
             animate={false}
@@ -126,7 +126,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
               axis: {
                 ticks: {
                   text: {
-                    fontSize: 12,
+                    fontSize: 13,
                     fill: '#000000',
                   },
                 },
@@ -150,10 +150,10 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
         </div>
         <button
           type="button"
-          className="pr-[20px] text-black flex pt-[55px]"
+          className="pr-[1.5vw] text-black flex pt-[12vh]"
           onClick={handleNextWeek}
         >
-          <FiChevronRight size="20" />
+          <FiChevronRight size="30" />
         </button>
       </div>
     </div>
