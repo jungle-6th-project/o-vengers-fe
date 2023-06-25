@@ -1,7 +1,7 @@
 import { Link, redirect, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import GroupMakeModal from './components/GroupMakeModal';
+import GroupMakeModal from './components/GroupMakeModal/GroupMakeModal';
 import { useUserActions } from './store/userStore';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking/Ranking';
