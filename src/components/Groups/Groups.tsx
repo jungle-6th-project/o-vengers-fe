@@ -149,17 +149,19 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
               <BsThreeDotsVertical size="20" />
             </button>
             <ul className="z-50 w-56 text-black menu dropdown-content bg-base-200 rounded-box">
-              <li>
-                <button type="button" onClick={() => handleInvite(path)}>
-                  그룹 초대
-                </button>
-              </li>
               {groupId !== 1 && (
-                <li>
-                  <button type="button" onClick={() => handleDelete(groupId)}>
-                    그룹 탈퇴
-                  </button>{' '}
-                </li>
+                <>
+                  <li>
+                    <button type="button" onClick={() => handleInvite(path)}>
+                      그룹 초대
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" onClick={() => handleDelete(groupId)}>
+                      그룹 탈퇴
+                    </button>{' '}
+                  </li>
+                </>
               )}
               <li>
                 <details open className="flex">
