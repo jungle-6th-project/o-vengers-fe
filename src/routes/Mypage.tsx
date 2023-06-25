@@ -1,7 +1,5 @@
 import { FiArrowLeft } from 'react-icons/fi';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import dayjs from 'dayjs';
 import Profile from '@/components/MyPage/Profile';
 import YearlyHistory from '@/components/MyPage/YearlyHistory';
@@ -9,6 +7,7 @@ import TaskProgress from '@/components/MyPage/TaskProgress';
 import DailyHistory from '@/components/MyPage/DailyHistory';
 import WeeklyHistory from '@/components/MyPage/WeeklyHistory';
 import TodoList from '@/components/Todo/TodoList';
+import { getStudyHistory } from '@/utils/api';
 
 interface DataItem {
   calculatedAt: string;
@@ -30,32 +29,7 @@ const parseTimeDuration = (durationString: string) => {
   return { sum };
 };
 
-const fetchStudyHistory = async (
-  accessToken: string,
-  DateStart: string,
-  DateEnd: string
-) => {
-  const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/study-histories/durations`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        from: DateStart,
-        to: DateEnd,
-      },
-    }
-  );
-
-  // if (!res.data || !res.data.data || !res.data.data.duration) {
-  //   throw new Error('User data is not available');
-  // }
-  return res.data.data;
-};
-
 const Mypage = () => {
-  const [{ accessToken }, ,] = useCookies(['accessToken']);
   const today = dayjs();
   const startDate = dayjs(`${today.subtract(1, 'year').year()}-12-25`).format(
     'YYYY-MM-DDT00:00:00'
@@ -63,7 +37,7 @@ const Mypage = () => {
   const endDate = dayjs().add(1, 'day').format('YYYY-MM-DDT00:00:00');
 
   const { data, isLoading, isError } = useQuery(['studyHistory'], () =>
-    fetchStudyHistory(accessToken, startDate, endDate)
+    getStudyHistory(startDate, endDate)
   );
 
   if (isLoading || isError) {
