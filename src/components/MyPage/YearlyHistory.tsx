@@ -15,10 +15,10 @@ const CustomTooltip = (props: CalendarTooltipProps) => {
   const hour = Math.floor(Number(value) / 60);
   const min = Number(value) - hour * 60;
   return (
-    <div className="bg-[#FAFAFA] card rounded-md text-[0.9vw] p-2 font-semibold bg-opacity-100">
+    <div className="bg-white card rounded-[4px] text-[12px] p-2 font-semibold bg-opacity-100">
       <p>{day}</p>
       <p>
-        {hour}H {min}M
+        {hour}hours {min}minutes
       </p>
     </div>
   );
@@ -26,38 +26,32 @@ const CustomTooltip = (props: CalendarTooltipProps) => {
 
 const YearlyHistory = ({ data }: YearlyHistoryProps) => {
   const Colors = data.map(item => {
-    if (item.value > 0 && item.value <= 25) {
+    if (item.value > 0 && item.value < 60) {
       return 'rgba(7, 37, 227, 0.25)';
     }
-    if (item.value > 25 && item.value <= 50) {
+    if (item.value >= 60 && item.value < 240) {
       return 'rgba(7, 37, 227, 0.5)';
     }
-    if (item.value > 50 && item.value <= 100) {
+    if (item.value >= 240 && item.value < 420) {
       return 'rgba(7, 7, 227, 0.75)';
     }
-    if (item.value > 100 ) {
+    if (item.value >= 420) {
       return '#0725E3';
     }
     return '#eeeeee';
   });
   const today = dayjs();
   return (
-    <div className="absolute overflow-x-auto border-[#D9D9D9] border-[1px] rounded-2xl bg-white w-[75.5vw] h-[55vh] card">
-      <div style={{ width: '170%', height: '95%' }}>
+    <div className="absolute overflow-x-auto border-gray-300 border-[1px] rounded-[13.48px] bg-white left-[240.71px] top-[364.55px] w-[1014.29px] h-[294.88px] card">
+      <div style={{ width: '130%', height: '90%' }}>
         <ResponsiveCalendar
           tooltip={CustomTooltip}
           data={data}
           from={dayjs(`${today.year()}-01-01`).format('YYYY-MM-DD')}
           to={today.format('YYYY-MM-DD')}
           emptyColor="#eeeeee"
-          // colors={[
-          //   'rgba(7, 37, 227, 0.25)',
-          //   'rgba(7, 37, 227, 0.5)',
-          //   'rgba(7, 7, 227, 0.75)',
-          //   '#0725E3',
-          // ]}
-          colors ={Colors}
-          margin={{ top: 0, right: 0, bottom: 0, left: 45 }}
+          colors={Colors}
+          margin={{ top: 50, right: 0, bottom: 20, left: 40 }}
           yearSpacing={40}
           monthBorderColor="#ffffff"
           dayBorderWidth={2}

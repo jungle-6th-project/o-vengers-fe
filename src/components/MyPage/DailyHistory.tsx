@@ -1,31 +1,30 @@
-interface Data {
+import dayjs from 'dayjs';
+
+interface DataItem {
   value: number;
   day: string;
 }
 
 interface DailyHistoryProps {
-  data: Data;
+  data: DataItem;
 }
 
 const DailyHistory = ({ data }: DailyHistoryProps) => {
-  // const today = dayjs().format('YYYY-MM-DD');
-  // const { value, day } = data;
-  // let hours = 0;
-  // let minutes = 0;
+  const today = dayjs().format('YYYY-MM-DD');
+  const { value, day } = data;
+  let hours = 0;
+  let minutes = 0;
 
-  // if (today === day) {
-
-  // hours = Math.floor(value / 60);
-  // minutes = value % 60;
-
+  if (today === day) {
+    hours = Math.floor(value / 60);
+    minutes = value % 60;
+  }
   return (
-    <div className="pl-[2vw] rounded-2xl bg-bbodog_blue h-[50vh] w-[16vw] font-medium">
-      <p className="text-[2vw] pt-[4vh] text-white">
-        {Math.floor(data.value / 60)}H
-      </p>
-      <p className="text-[2vw] text-white">{data.value % 60}M</p>
-      <p className="text-white sub-title text-[0.9vw] pt-[23.5vh]">TODAY</p>
-      <p className="text-white sub-title text-[0.9vw]">STUDY TIME</p>
+    <div className="pl-[21px] rounded-[13.48px] bg-bbodog_blue card w-[208.94px] h-[288.06px] top-[60.93px] font-medium">
+      <p className="text-[30px] pt-[25px] text-white">{hours}H</p>
+      <p className="text-[30px] text-white">{minutes}M</p>
+      <p className="text-white sub-title text-[12px] pt-[120px]">TODAY</p>
+      <p className="text-white sub-title text-[12px]">STUDY TIME</p>
     </div>
   );
 };

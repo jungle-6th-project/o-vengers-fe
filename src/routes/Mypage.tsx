@@ -1,5 +1,4 @@
 import { FiArrowLeft } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Profile from '@/components/MyPage/Profile';
@@ -13,11 +12,6 @@ import { getStudyHistory } from '@/utils/api';
 interface DataItem {
   calculatedAt: string;
   duration: string;
-}
-
-interface Data {
-  value: number;
-  day: string;
 }
 
 const parseTimeDuration = (durationString: string) => {
@@ -47,13 +41,9 @@ const Mypage = () => {
   );
 
   if (isLoading || isError) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <span className="loading-xl">Loading...</span>
-      </div>
-    );
+    return <div>로딩중입니다</div>;
   }
-  // console.log(data);
+  console.log(data);
 
   const transformedData = data.map((item: DataItem) => {
     const { duration, calculatedAt } = item;
@@ -65,35 +55,29 @@ const Mypage = () => {
     };
   });
 
-  let targetData: Data = {
-    value: 0,
-    day: today.format('YYYY-MM-DD'),
-  };
-
-  const foundItem = transformedData.find((item: Data) => item.day === today.format('YYYY-MM-DD'));
-
-  if (foundItem) {
-    targetData = foundItem;
-  }
-
+  const lastItem = transformedData[transformedData.length - 1];
   return (
-    <div className="grid m-10 gap-x-5 grid-rows-container grid-cols-container w-max-screen">
-      <div className="row-span-3 col-todo">
-        <Link to="/">
-          <button type="button" className="flex items-center mb-3">
-            <FiArrowLeft className="icon" size="20" />
-            <span className="ml-2 text-[2.5vh] font-medium"> MAIN </span>
-          </button>
-        </Link>
+    <div className="grid grid-cols-8 grid-rows-2 margin-auto">
+      <div className="col-start-1 col-end-2 row-span-2 ">
+        <button type="button" className="flex items-center pl-[33px] pt-[40px]">
+          <FiArrowLeft className="icon" size="20" />
+          <span className="ml-2 text-[17px] font-bold"> MAIN </span>
+        </button>
         <Profile />
-        <TodoList />
+        <div className="pt-[300px] pl-[33px]">
+          <TodoList />
+        </div>
       </div>
-      <div className="flex justify-between mb-5">
+      <div className="col-start-2">
         <TaskProgress />
-        <DailyHistory data={targetData} />
+      </div>
+      <div className="col-start-3 pl-[35px]">
+        <DailyHistory data={lastItem} />
+      </div>
+      <div className="col-start-4 pl-[45px]">
         <WeeklyHistory data={transformedData} />
       </div>
-      <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3 rounded-xl">
+      <div className="col-span-2">
         <YearlyHistory data={transformedData} />
       </div>
     </div>
