@@ -155,7 +155,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
                       type="radio"
                       name="radio-10"
                       value="neutral"
-                      className="radio checked:bg-neutral"
+                      className="radio checked:bg-neutral ring ring-neutral"
                       checked={selectedColor === 'neutral'}
                       onChange={handleRadioChange}
                     />
@@ -163,7 +163,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
                       type="radio"
                       name="radio-10"
                       value="primary"
-                      className="radio checked:bg-primary"
+                      className="radio checked:bg-primary ring ring-primary"
                       checked={selectedColor === 'primary'}
                       onChange={handleRadioChange}
                     />
@@ -171,7 +171,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
                       type="radio"
                       name="radio-10"
                       value="accent"
-                      className="radio checked:bg-accent"
+                      className="radio checked:bg-accent ring ring-accent"
                       checked={selectedColor === 'accent'}
                       onChange={handleRadioChange}
                     />
@@ -179,7 +179,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
                       type="radio"
                       name="radio-10"
                       value="secondary"
-                      className="radio checked:bg-secondary"
+                      className="radio checked:bg-secondary ring ring-secondary"
                       checked={selectedColor === 'secondary'}
                       onChange={handleRadioChange}
                     />
