@@ -20,7 +20,11 @@ type ActiveRoomProps = {
 const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   // token 생성
   const token = useToken(
-    import.meta.env.VITE_PUBLIC_LK_TOKEN_ENDPOINT,
+    import.meta.env.MODE === 'development'
+      ? import.meta.env.VITE_PUBLIC_LK_TOKEN_ENDPOINT
+      : `https://www.sangyeop.shop/${
+          import.meta.env.VITE_PUBLIC_LK_TOKEN_ENDPOINT
+        }`,
     roomName,
     {
       userInfo: {

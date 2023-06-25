@@ -32,7 +32,7 @@ function App() {
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <>
-      <div className="m-10 grid gap-x-10 grid-rows-container grid-cols-container w-max-screen">
+      <div className="grid m-10 gap-x-10 grid-rows-container grid-cols-container w-max-screen">
         <div className="row-span-3 col-todo">
           <Logo width="200" height="150" />
           <Ranking />
@@ -57,7 +57,7 @@ function App() {
           </div>
           <Timer />
         </div>
-        <div className="self-start overflow-auto col-start-2 col-end-3 row-start-2 row-end-3 rounded-2xl bg-calendar">
+        <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3 overflow-auto rounded-2xl bg-calendar">
           <Calendar />
         </div>
       </div>
