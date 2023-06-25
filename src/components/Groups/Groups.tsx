@@ -7,7 +7,12 @@ import {
   useSelectedGroupId,
   useSelectedGroupIdActions,
 } from '@/store/groupStore';
-import { changeGroupColor, deleteGroup, getGroupMembers } from '@/utils/api';
+import {
+  changeGroupColor,
+  deleteGroup,
+  getGroupMembers,
+  getUserNearestReservation,
+} from '@/utils/api';
 import { useUserReservationActions } from '@/store/userReservationStore';
 
 interface JoinedGroupsItem {
@@ -61,6 +66,14 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
 
+  const { refetch } = useQuery(
+    ['userNearestReservation'],
+    getUserNearestReservation,
+    {
+      enabled: false,
+    }
+  );
+
   const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
     onSuccess: (_, id) => {
       queryClient.setQueryData<GroupsItem[]>(['MyGroupData'], oldData =>
@@ -68,6 +81,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
       );
       removeUserGroupReservation(id);
       setGroupId(1);
+      refetch();
     },
   });
 
