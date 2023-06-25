@@ -17,7 +17,7 @@ import Day from './Day';
 import { useGroupReservationActions } from '@/store/groupReservationStore';
 import { useUserReservationActions } from '@/store/userReservationStore';
 import { useUser } from '@/store/userStore';
-import { useTimeSlots, useWeeks } from '@/store/calendarStore';
+import { useWeeks } from '@/store/calendarStore';
 import { useGroupColor, useSelectedGroupId } from '@/store/groupStore';
 
 interface ReservationData {
@@ -198,7 +198,6 @@ const WeeklyViewCalendar = () => {
     }
   };
 
-  const timeSlots = useTimeSlots();
   const weeks = useWeeks();
 
   const groupColor = useGroupColor(groupId);
@@ -209,16 +208,15 @@ const WeeklyViewCalendar = () => {
     >
       <span className="col-start-1 bg-calendar sticky top-0 left-0 z-50 after:absolute after:w-[20%] after:h-[30%] after:border-r-[1px] after:border-b-[1px] after:border-dashed after:border-calendar-border after:right-0 after:bottom-0" />
       <div className="sticky top-0 z-40 col-span-6 col-start-2">
-        <CalendarHeader weeks={weeks} />
+        <CalendarHeader />
       </div>
       <div className="sticky left-0 z-40 items-start col-span-1 col-start-1 bg-calendar">
-        <TimeSlots timeSlots={timeSlots} />
+        <TimeSlots />
       </div>
       {weeks.map((week, index) => (
         <div key={week.date} className={`col-start-${index + 2} col-span-1`}>
           <Day
             day={week.date}
-            timeSlots={timeSlots}
             actions={{ createReservation, joinReservation, cancelReservation }}
           />
         </div>

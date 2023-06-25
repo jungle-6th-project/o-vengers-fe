@@ -1,8 +1,8 @@
-type TimeSlotsProps = {
-  timeSlots: string[];
-};
+import { useTimeSlots } from '@/store/calendarStore';
 
-const TimeSlots = ({ timeSlots }: TimeSlotsProps) => {
+const TimeSlots = () => {
+  const timeSlots = useTimeSlots();
+
   return (
     <div className="flex flex-col items-center justify-start">
       {timeSlots.map(timeSlot => (
