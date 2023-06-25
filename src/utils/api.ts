@@ -311,3 +311,12 @@ export const leaveVideoRoom = async (roomId: number) => {
     roomId,
   });
 };
+
+export const getStudyHistory = async (DateStart: string, DateEnd: string) => {
+  const res = await axios.get(
+    `https://www.sangyeop.shop/api/v1/study-histories/durations?from=${DateStart}&to=${DateEnd}`
+  );
+
+  const { data } = res.data;
+  return data;
+};
