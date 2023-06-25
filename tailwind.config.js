@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        login:
-          "url('/Users/bang/Documents/project/o-vengers-fe/public/ppodog.png')",
+        login: "url('/ppodog.png')",
+        background: "url('/background.png')",
       },
       colors: {
         reservation: '#E3E3E3',

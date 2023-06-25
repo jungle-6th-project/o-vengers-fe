@@ -2,14 +2,13 @@ import {
   LiveKitRoom,
   LocalUserChoices,
   useToken,
-  VideoConference,
-  formatChatMessageLinks,
 } from '@livekit/components-react';
 import { useMemo } from 'react';
 import { RoomOptions, VideoPresets } from 'livekit-client';
 import useServerUrl from '@/utils/livekit-utils';
 import RoomTimer from '@/components/RoomTimer/RoomTimer';
 import RightBar from '@/components/RightBar';
+import VideoConference2 from './Videoconference2';
 
 type ActiveRoomProps = {
   userChoices: LocalUserChoices;
@@ -64,9 +63,10 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
         >
           <div className="grid gap-3 grid-rows-video_container grid-cols-video_container">
             <div className="col-start-1 col-end-2 row-start-2 row-end-3">
-              <VideoConference chatMessageFormatter={formatChatMessageLinks} />
+              {/* <VideoConference chatMessageFormatter={formatChatMessageLinks} /> */}
+              <VideoConference2 />
             </div>
-            <div className="col-start-2">
+            <div className="self-end col-start-2">
               <RoomTimer />
             </div>
             <div className="col-start-2 col-end-3 row-start-2 row-end-3">

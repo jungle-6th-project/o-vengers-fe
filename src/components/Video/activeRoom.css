@@ -1,0 +1,64 @@
+.lk-prejoin
+  .lk-button-group-container
+  > .lk-button-group
+  > .lk-button:first-child {
+  width: 26%;
+}
+
+.lk-button-group video {
+  justify-content: center;
+}
+
+.lk-button-group audio {
+  justify-content: center;
+}
+
+.lk-prejoin {
+  background-image: url('/background.png');
+  width: 100%;
+  height: 100%;
+}
+
+#root
+  > div
+  > div
+  > div.lk-button-group-container
+  > div.lk-button-group.audio
+  > div
+  > div[style] {
+  background-color: white;
+  border-radius: 16px;
+  top: 30px !important;
+  left: 4px !important;
+  border: 1px solid black;
+}
+
+div.lk-button-group-container > div.lk-button-group.video > div > div[style] {
+  background-color: white;
+  border-radius: 16px;
+  top: 30px !important;
+  left: 4px !important;
+  border: 1px solid black;
+}
+/* 
+.lk-prejoin .lk-join-button {
+  border-radius: 16px;
+  background-color: black;
+  color: white;
+}
+
+.lk-join-button:hover[style] {
+  background-color: transparent;
+  filter: brightness(90%);
+}
+
+.lk-join-button:active {
+  filter: brightness(80%);
+  transform: translateY(2px);
+}
+
+#root > div > div > form > button[style]:hover {
+  filter: brightness(80%) !important;
+  transform: translateY(2px) !important;
+  color: transparent;
+} */

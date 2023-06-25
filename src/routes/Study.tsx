@@ -1,10 +1,10 @@
 import '@livekit/components-styles';
-import '@/Video/activeRoom.css';
+import '@/components/Video/activeRoom.css';
 import { PreJoin, LocalUserChoices } from '@livekit/components-react';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '@/store/userStore';
-import ActiveRoom from '@/Video/ActiveRoom';
+import ActiveRoom from '@/components/Video/ActiveRoom';
 import { leaveVideoRoom } from '@/utils/api';
 
 function App() {

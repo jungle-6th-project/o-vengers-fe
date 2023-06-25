@@ -58,7 +58,10 @@ const RoomTimer = () => {
         value={ROOM_EXPIRE_SEC - remainingTime.asSeconds()}
         max={ROOM_EXPIRE_SEC}
       />
-      <ExitModal roomId={nearestReservationData.roomId} expired={onTimerIdle} />
+      <ExitModal
+        roomId={nearestReservationData?.roomId}
+        expired={onTimerIdle}
+      />
     </div>
   );
 };

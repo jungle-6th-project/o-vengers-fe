@@ -6,3 +6,7 @@
 body {
   font-family: Pretendard;
 }
+
+/* .tab-lg{
+  @apply --tab-padding
+} */
