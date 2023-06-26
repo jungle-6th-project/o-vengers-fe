@@ -24,24 +24,29 @@ const RoomTimer = () => {
 
   // 가장 가까운 예약 시간을 받아와서 1초마다 남은 시간 계산
   useEffect(() => {
-    const { endTime: exitTime } = nearestReservationData;
+    let intervalId: NodeJS.Timeout;
+    if (nearestReservationData) {
+      const { endTime: exitTime } = nearestReservationData;
 
-    const intervalId = setInterval(() => {
-      const newRemainingTime = dayjs.duration(
-        dayjs(exitTime, 'YYYY-MM-DDTHH:mm:ss').diff(dayjs())
-      );
-      setRemainingTime(newRemainingTime);
+      intervalId = setInterval(() => {
+        const newRemainingTime = dayjs.duration(
+          dayjs(exitTime, 'YYYY-MM-DDTHH:mm:ss').diff(dayjs())
+        );
+        setRemainingTime(newRemainingTime);
 
-      const newRemainingTimeInSec = newRemainingTime.asSeconds();
-      setOnTimerIdle(newRemainingTimeInSec <= 0);
+        const newRemainingTimeInSec = newRemainingTime.asSeconds();
+        setOnTimerIdle(newRemainingTimeInSec <= 0);
 
-      if (newRemainingTimeInSec <= 0) {
-        clearInterval(intervalId);
-      }
-    }, SEC_IN_MILLISEC);
+        if (newRemainingTimeInSec <= 0) {
+          clearInterval(intervalId);
+        }
+      }, SEC_IN_MILLISEC);
+    }
 
     return () => {
-      clearInterval(intervalId);
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
     };
   }, [nearestReservationData]);
 
