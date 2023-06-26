@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ChatData from '@/components/Chat/ChatData';
 import ChatContainer from '@/components/Chat/ChatContainer';
-import TodoList from '@/components/Todo/TodoList';
+import VideoTodoList from './Todo/VideoTodoList';
 
 const RightBar = () => {
   const [selectedOption, setSelectedOption] = useState('TODO');
@@ -40,7 +40,7 @@ const RightBar = () => {
         >
           Chat
         </button>
-        {selectedOption === 'TODO' && <TodoList />}
+        {selectedOption === 'TODO' && <VideoTodoList />}
         {selectedOption === 'CHAT' && (
           <ChatContainer datas={datas} setDatas={setDatas} />
         )}
