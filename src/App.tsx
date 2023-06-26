@@ -34,7 +34,11 @@ function App() {
     <>
       <div className="grid m-10 gap-x-10 grid-rows-container grid-cols-container w-max-screen">
         <div className="row-span-3 col-todo">
-          <Logo width="200" height="150" />
+          <Logo
+            className="mb-8 w-ranking_todo min-w-leftbar max-w-leftbar"
+            width="w-ranking_todo min-w-leftbar max-w-leftbar"
+            height="90"
+          />
           <Ranking />
           <TodoList />
         </div>
