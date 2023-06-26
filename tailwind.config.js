@@ -14,6 +14,7 @@ module.exports = {
         bbodog_orange: '#FF784E',
         calendar: '#F6F6F6',
         'calendar-border': '#BFBFBF',
+        todo: '#434827',
       },
       width: {
         calendar: '72vw',

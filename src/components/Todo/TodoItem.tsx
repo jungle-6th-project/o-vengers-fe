@@ -102,14 +102,16 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
             <input
               type="text"
               value={editedContent}
-              className="w-full h-full pl-1 pr-0 bg-transparent border-transparent rounded-sm input input-ghost"
+              className="w-full h-full pl-1 pr-0 bg-transparent border-transparent rounded-sm input flex-grow"
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               onBlur={onClickSave}
               ref={inputRef}
             />
             <button
-              className={`px-1 m-0 ${isHovering ? 'opacity-100' : 'opacity-0'}`}
+              className={`pl-2 pr-1 m-0 ${
+                isHovering ? 'opacity-100' : 'opacity-0'
+              }`}
               onClick={onClickSave}
               type="button"
             >
@@ -119,18 +121,15 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
         ) : (
           <>
             <span
-              className={`Content ml-2 flex-grow ${
-                todoData.done ? 'text-gray-400' : 'text-[#434827]'
+              className={`Content ml-2 flex-grow break-words overflow-auto w-full ${
+                todoData.done ? 'text-gray-400 line-through' : 'text-todo'
               }`}
-              style={{
-                textDecoration: todoData.done ? 'line-through' : 'none',
-              }}
             >
               {editedContent}
             </span>
             <button
               className={`px-1 m-0 ${
-                todoData.done ? 'opacity-0' : 'text-[#434827]'
+                todoData.done ? 'opacity-0' : 'text-todo'
               }  ${isHovering && !todoData.done ? 'opacity-100' : 'opacity-0'}`}
               style={{ minHeight: 1 }}
               onClick={onClickEdit}
@@ -141,7 +140,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
             </button>
             <button
               className={`px-1 m-0 ${
-                todoData.done ? 'text-gray-400' : 'text-[#434827]'
+                todoData.done ? 'text-gray-400' : 'text-todo'
               } ${isHovering ? 'opacity-100' : 'opacity-0'}`}
               onClick={onClickDelete}
               type="button"
