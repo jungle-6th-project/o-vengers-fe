@@ -17,9 +17,9 @@ const TodoAdd = ({
 }: GroupTodoInputProps) => {
   return (
     <div className="flex w-full">
-      <div className="flex w-full p-2 mx-2 mb-2 bg-gray-100 rounded-lg">
+      <div className="flex w-full p-1 mx-2 mb-2 bg-accent rounded-lg">
         <input
-          className="w-full input bg-inherit border-hidden input-sm"
+          className="w-full input bg-inherit border-hidden input-sm input-accent text-todo placeholder-todo placeholder-opacity-50"
           ref={inputRef}
           id="myInput"
           type="text"
