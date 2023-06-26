@@ -96,7 +96,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     const url =
       import.meta.env.MODE === 'development'
         ? `http://localhost:5173/invite/${copyUrl}`
-        : `https://https://www.bbodogstudy.com/invite/${path}`;
+        : `https://www.bbodogstudy.com/invite/${path}`;
 
     copy(url);
     setIsToastVisible(true);
