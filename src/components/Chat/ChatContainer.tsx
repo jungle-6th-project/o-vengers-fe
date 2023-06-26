@@ -12,27 +12,27 @@ const ChatContainer: React.FC<{
 }> = ({ datas, setDatas }) => {
   const [chat, setChat] = useState('');
   const [socket, setSocket] = useState<Socket | null>(null);
-  const { roomID } = useParams();
+  const { roomId } = useParams();
   const user = useUser();
 
   useEffect(() => {
     const url =
       import.meta.env.MODE === 'development'
-        ? 'localhost:5173/study'
-        : 'wss://www.sangyeop.shop/video/socket.io/';
+        ? 'localhost:5173'
+        : 'wss://www.sangyeop.shop/socket.io/';
 
     const newSocket = io(url);
     setSocket(newSocket);
-
-    newSocket.emit('enter-room', roomID);
+    newSocket.connect();
 
     return () => {
       newSocket.disconnect();
     };
-  }, [roomID, user]);
+  }, [user]);
 
   useEffect(() => {
     if (!socket) return; // 소켓이 초기화되지 않았을 경우 처리합니다.
+    socket.emit('enter-room', roomId);
 
     socket.on('showMessage', (chatData: ChatData) => {
       const newChatData: ChatData = {
@@ -47,7 +47,7 @@ const ChatContainer: React.FC<{
     return () => {
       socket.off('showMessage');
     };
-  }, [setDatas, socket]);
+  }, [setDatas, socket, roomId]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

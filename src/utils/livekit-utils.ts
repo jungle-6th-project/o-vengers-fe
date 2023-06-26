@@ -4,7 +4,7 @@ function useServerUrl(region?: string) {
   const [serverUrl, setServerUrl] = useState<string | undefined>();
   useEffect(() => {
     let endpoint =
-      import.meta.env.MODE === 'development '
+      import.meta.env.MODE === 'development'
         ? `/video/api/url`
         : `https://www.sangyeop.shop/video/api/url`;
     if (region) {
