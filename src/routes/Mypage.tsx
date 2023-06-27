@@ -54,15 +54,26 @@ const Mypage = () => {
     );
   }
 
-  const transformedData = data?.map((item: DataItem) => {
-    const { duration, calculatedAt } = item;
-    const { sum } = parseTimeDuration(duration);
+  let transformedData: Data[] = [];
 
-    return {
-      value: sum,
-      day: calculatedAt,
-    };
-  });
+  if (data.length === 0) {
+    transformedData = [
+      {
+        value: 0,
+        day: today.format('YYYY-MM-DD'),
+      },
+    ];
+  } else {
+    transformedData = data.map((item: DataItem) => {
+      const { duration, calculatedAt } = item;
+      const { sum } = parseTimeDuration(duration);
+
+      return {
+        value: sum,
+        day: calculatedAt,
+      };
+    });
+  }
 
   let targetData: Data = {
     value: 0,
