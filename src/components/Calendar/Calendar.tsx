@@ -110,7 +110,10 @@ const WeeklyViewCalendar = () => {
 
   useEffect(() => {
     const newClient = new Client({
-      brokerURL: 'wss://www.sangyeop.shop/bbodok-websocket',
+      brokerURL:
+        import.meta.env.MODE === 'development'
+          ? 'wss://www.api-bbodog.shop/bbodok-websocket'
+          : 'wss://www.sangyeop.shop/bbodok-websocket',
       connectHeaders: {
         Authorization: `Bearer ${accessToken}`,
       },
