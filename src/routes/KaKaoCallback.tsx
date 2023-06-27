@@ -31,15 +31,15 @@ function KakaoCallback() {
         setUser(accessToken);
         setIsLoggedIn(true);
 
-        // await axios.post(
-        //   '/api/v1/groups/1',
-        //   {},
-        //   {
-        //     headers: {
-        //       Authorization: `Bearer ${accessToken}`,
-        //     },
-        //   }
-        // );
+        await axios.post(
+          '/api/v1/groups/1',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         navigate('/');
       } catch (error) {
         console.error(error);

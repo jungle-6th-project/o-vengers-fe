@@ -202,9 +202,9 @@ const GroupMakeModal = () => {
               바로 참여할 수 있습니다.
             </div>
             <div className="form-control">
-              <div className="join mx-5">
+              <div className="mx-5 join">
                 <input
-                  className="input bg-gray-200 w-full join-item"
+                  className="w-full bg-gray-200 input join-item"
                   type="text"
                   value={
                     import.meta.env.MODE === 'development'
@@ -217,7 +217,11 @@ const GroupMakeModal = () => {
                   type="button"
                   className="btn btn-primary join-item"
                   onClick={() =>
-                    copy(`https://bbodogstudy.com/invite/${randomRoomId}`)
+                    copy(
+                      import.meta.env.MODE === 'development'
+                        ? `http://localhost:5173/invite/${randomRoomId}`
+                        : `https://bbodogstudy.com/invite/${randomRoomId}`
+                    )
                   }
                 >
                   {groupURL ? (
@@ -228,10 +232,10 @@ const GroupMakeModal = () => {
                 </button>
               </div>
             </div>
-            <div className="ml-9 text-gray-500">
+            <div className="text-gray-500 ml-9">
               링크는 그룹 카드에서 언제든 다시 볼 수 있어요.
             </div>
-            <div className="modal-action m-0">
+            <div className="m-0 modal-action">
               <button
                 type="button"
                 className="m-3 btn"

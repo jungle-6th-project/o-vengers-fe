@@ -16,67 +16,67 @@ export function parseCookies(cookieString: string) {
   return cookies;
 }
 
-// axios.interceptors.request.use(
-//   function requestInterceptor(config) {
-//     const url =
-//       import.meta.env.MODE === 'production'
-//         ? 'https://www.sangyeop.shop'
-//         : 'https://www.api-bbodog.shop';
-//     console.log(url);
-//     console.log(config.url);
-//     const cookieString = document.cookie;
-//     const cookies = parseCookies(cookieString);
-//     console.log(`url: ${url}/api/v1/members/login`);
+axios.interceptors.request.use(
+  function requestInterceptor(config) {
+    const url =
+      import.meta.env.MODE === 'production'
+        ? 'https://www.sangyeop.shop'
+        : 'https://www.api-bbodog.shop';
+    console.log(url);
+    console.log(config.url);
+    const cookieString = document.cookie;
+    const cookies = parseCookies(cookieString);
+    console.log(`url: ${url}/api/v1/members/login`);
 
-//     if (config.url !== `${url}/api/v1/members/login` && !cookies.accessToken) {
-//       window.location.href = '/login';
-//     }
+    if (config.url !== `${url}/api/v1/members/login` && !cookies.accessToken) {
+      window.location.href = '/login';
+    }
 
-//     const newConfig = { ...config };
+    const newConfig = { ...config };
 
-//     newConfig.headers.Authorization = `Bearer ${cookies.accessToken}`;
-//     return newConfig;
-//   },
-//   function errorInterceptor(error) {
-//     console.log(error);
-//     return Promise.reject(error);
-//   }
-// );
+    newConfig.headers.Authorization = `Bearer ${cookies.accessToken}`;
+    return newConfig;
+  },
+  function errorInterceptor(error) {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
 
-// axios.interceptors.response.use(
-//   function responseInterceptor(response) {
-//     return response;
-//   },
-//   function errorInterceptor(error) {
-//     console.log(error);
-//     const originalRequest = error.config;
-//     const cookieString = document.cookie;
-//     const cookies = parseCookies(cookieString);
+axios.interceptors.response.use(
+  function responseInterceptor(response) {
+    return response;
+  },
+  function errorInterceptor(error) {
+    console.log(error);
+    const originalRequest = error.config;
+    const cookieString = document.cookie;
+    const cookies = parseCookies(cookieString);
 
-//     if (error.response.status === 401) {
-//       return axios
-//         .post('/api/v1/members/tokens', null, {
-//           headers: {
-//             'X-BBODOK-REFRESH-TOKEN': cookies.refreshToken,
-//           },
-//         })
-//         .then(response => {
-//           const newAccessToken = response.data.accessToken;
+    if (error.response.status === 401) {
+      return axios
+        .post('/api/v1/members/tokens', null, {
+          headers: {
+            'X-BBODOK-REFRESH-TOKEN': cookies.refreshToken,
+          },
+        })
+        .then(response => {
+          const newAccessToken = response.data.accessToken;
 
-//           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-//           return axios(originalRequest);
-//         })
-//         .catch(err => {
-//           console.log(err);
-//           window.location.href = '/login';
-//           return Promise.reject(err);
-//         });
-//     }
+          return axios(originalRequest);
+        })
+        .catch(err => {
+          console.log(err);
+          window.location.href = '/login';
+          return Promise.reject(err);
+        });
+    }
 
-//     return Promise.reject(error);
-//   }
-// );
+    return Promise.reject(error);
+  }
+);
 
 export async function getUser() {
   const res = await axios.get('/api/v1/members');
@@ -317,7 +317,7 @@ export const leaveVideoRoom = async (roomId: number) => {
 
 export const getStudyHistory = async (DateStart: string, DateEnd: string) => {
   const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/study-histories/durations?from=${DateStart}&to=${DateEnd}`
+    `/api/v1/study-histories/durations?from=${DateStart}&to=${DateEnd}`
   );
 
   const { data } = res.data;
