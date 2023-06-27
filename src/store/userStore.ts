@@ -34,9 +34,13 @@ const useUserStore = create<UserState>()(
         isLoggedIn: false,
         actions: {
           setUser: async (accessToken: string) => {
+            const url =
+              import.meta.env.MODE === 'production'
+                ? 'https://www.sangyeop.shop'
+                : 'https://www.api-bbodog.shop';
             try {
               const response: AxiosResponse = await axios.get(
-                'https://www.sangyeop.shop/api/v1/members',
+                `${url}/api/v1/members`,
                 {
                   headers: {
                     Authorization: `Bearer ${accessToken}`,

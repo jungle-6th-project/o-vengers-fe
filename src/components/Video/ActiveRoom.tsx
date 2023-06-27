@@ -1,4 +1,5 @@
 import {
+  ControlBar,
   LiveKitRoom,
   LocalUserChoices,
   useToken,
@@ -8,7 +9,7 @@ import { RoomOptions, VideoPresets } from 'livekit-client';
 import useServerUrl from '@/utils/livekit-utils';
 import RoomTimer from '@/components/RoomTimer/RoomTimer';
 import RightBar from '@/components/RightBar';
-import VideoConference2 from './Videoconference2';
+import VideoConference from './Videoconference';
 
 type ActiveRoomProps = {
   userChoices: LocalUserChoices;
@@ -51,7 +52,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   }, [userChoices]);
 
   return (
-    <div>
+    <div className="m-10">
       {liveKitUrl && (
         <LiveKitRoom
           token={token}
@@ -62,9 +63,12 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           onDisconnected={onLeave}
         >
           <div className="grid gap-3 grid-rows-video_container grid-cols-video_container">
+            <div className="self-end col-start-1 row-start-1">
+              <ControlBar controls={{ chat: false }} variation="minimal" />
+            </div>
             <div className="col-start-1 col-end-2 row-start-2 row-end-3">
-              {/* <VideoConference chatMessageFormatter={formatChatMessageLinks} /> */}
-              <VideoConference2 />
+              {/* <VideoConference /> */}
+              <VideoConference />
             </div>
             <div className="self-end col-start-2">
               <RoomTimer />

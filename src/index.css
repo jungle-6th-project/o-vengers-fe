@@ -7,6 +7,14 @@ body {
   font-family: Pretendard;
 }
 
-/* .tab-lg{
-  @apply --tab-padding
-} */
+.tab-lifted.tab-active:not(.tab-disabled):not([disabled]) {
+  @apply bg-[#FAFAFA];
+}
+
+.tab-lg {
+  /* --tab-padding: minmax(100px, 4.5rem); */
+  min-width: 114.5px;
+  max-width: 200px;
+  width: 200px;
+  @apply 2xl:w-[200px] xl:w-[128px];
+}

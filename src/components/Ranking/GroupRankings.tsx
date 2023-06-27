@@ -53,7 +53,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
       staleTime: 60000,
     }
   );
-
+  console.log(data);
   useEffect(() => {
     refetch();
   }, [refetch, groupId]);

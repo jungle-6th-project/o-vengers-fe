@@ -59,7 +59,7 @@ const ChatContainer: React.FC<{
           profile: user.profile,
         },
         content: chat,
-        id: new Date().toLocaleTimeString(),
+        id: crypto.randomUUID(),
       };
       socket.emit('sentMessage', newChatData);
       setChat('');
@@ -72,7 +72,7 @@ const ChatContainer: React.FC<{
   };
 
   return (
-    <div className="w-72 h-[30rem]">
+    <div className="rounded-b-lg border border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar h-video_todo bg-[#FAFAFA] overflow-auto border-t-0 relative">
       <ChatList datas={datas} user={user} />
       <ChatForm onSubmit={handleSubmit} onChange={onChange} chat={chat} />
     </div>
