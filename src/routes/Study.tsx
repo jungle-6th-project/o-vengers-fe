@@ -1,11 +1,12 @@
 import '@livekit/components-styles';
 import '@/components/Video/activeRoom.css';
-import { PreJoin, LocalUserChoices } from '@livekit/components-react';
+import { LocalUserChoices } from '@livekit/components-react';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '@/store/userStore';
 import ActiveRoom from '@/components/Video/ActiveRoom';
 import { leaveVideoRoom } from '@/utils/api';
+import { PreJoin } from '@/components/Video/Prejoin';
 
 function App() {
   const { roomId } = useParams();
@@ -22,7 +23,15 @@ function App() {
     LocalUserChoices | undefined
   >(undefined);
   return (
-    <div>
+    <div
+      className="w-full h-full"
+      style={{
+        backgroundImage: 'url("/background.png")',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
       {roomId && !Array.isArray(roomId) && preJoinChoices ? (
         <ActiveRoom
           roomName={roomId}
@@ -35,16 +44,12 @@ function App() {
           defaults={{
             username: user.name,
             videoEnabled: true,
-            audioEnabled: true,
+            audioEnabled: false,
           }}
           onSubmit={values => {
             console.log('Joining with: ', values);
             setPreJoinChoices(values);
           }}
-          joinLabel="입장하기"
-          camLabel=""
-          micLabel=""
-          userLabel="닉네임"
         />
       )}
     </div>

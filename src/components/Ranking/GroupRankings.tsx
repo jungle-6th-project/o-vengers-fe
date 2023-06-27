@@ -51,6 +51,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
     {
       refetchInterval: 60000,
       staleTime: 60000,
+      refetchOnMount: 'always',
     }
   );
   console.log(data);
