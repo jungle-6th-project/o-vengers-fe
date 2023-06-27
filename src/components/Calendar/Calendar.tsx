@@ -42,7 +42,7 @@ const WeeklyViewCalendar = () => {
   const { setUserReservation, removeUserReservation } =
     useUserReservationActions();
 
-  const startSearchTime = dayjs();
+  const startSearchTime = dayjs().startOf('day');
   const endSearchTime = startSearchTime.add(2, 'week');
   const startSearchTimeString = startSearchTime.format('YYYY-MM-DDTHH:mm:ss');
   const endSearchTimeString = endSearchTime.format('YYYY-MM-DDTHH:mm:ss');
