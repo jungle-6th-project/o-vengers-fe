@@ -37,8 +37,8 @@ module.exports = {
       height: {
         ranking: '36vh',
         groupList: '18vh',
-        todo: '50vh',
-        // calendar: '97.8vh',
+        calendar: '97.8vh',
+        video_todo: '68.4vh',
       },
       minHeight: {
         'header-min': '144px',
@@ -48,13 +48,15 @@ module.exports = {
       },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
-        container: 'auto 1fr',
+        container: 'max(0.2fr, 400px) 1fr',
         video_container: '0.3fr 1fr',
       },
       gridTemplateColumns: {
         calendar: '100px repeat(14, 176px)',
         container: 'auto 1fr',
-        video_container: '1fr 0.3fr',
+        video_container: '1fr auto',
+        container: 'auto 1fr',
+        video_container: '0.3fr 1fr',
         rankingProfile:
           'minmax(20px, 1fr) minmax(2.75rem, 1fr) minmax(64px, 2fr)',
       },

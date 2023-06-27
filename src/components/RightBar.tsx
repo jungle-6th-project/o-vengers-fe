@@ -21,7 +21,7 @@ const RightBar = () => {
             selectedOption === 'TODO' ? 'tab-active' : ''
           } ${
             selectedOption === 'TODO'
-              ? 'bg-white'
+              ? 'bg-[#FAFAFA]'
               : 'bg-neutral text-neutral-content'
           }`}
         >
@@ -34,17 +34,17 @@ const RightBar = () => {
             selectedOption === 'CHAT' ? 'tab-active' : ''
           } ${
             selectedOption === 'CHAT'
-              ? 'bg-white'
+              ? 'bg-[#FAFAFA]'
               : 'bg-neutral text-neutral-content'
           }`}
         >
           Chat
         </button>
-        {selectedOption === 'TODO' && <VideoTodoList />}
-        {selectedOption === 'CHAT' && (
-          <ChatContainer datas={datas} setDatas={setDatas} />
-        )}
       </div>
+      {selectedOption === 'TODO' && <VideoTodoList />}
+      {selectedOption === 'CHAT' && (
+        <ChatContainer datas={datas} setDatas={setDatas} />
+      )}
     </div>
   );
 };

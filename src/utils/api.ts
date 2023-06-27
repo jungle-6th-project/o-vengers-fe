@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://www.sangyeop.shop';
+axios.defaults.baseURL =
+  import.meta.env.MODE === 'production'
+    ? 'https://www.sangyeop.shop'
+    : 'https://www.api-bbodog.shop';
+
+console.log(axios.defaults.baseURL);
 
 export function parseCookies(cookieString: string) {
   const cookies: { [key: string]: string } = {};
@@ -11,62 +16,67 @@ export function parseCookies(cookieString: string) {
   return cookies;
 }
 
-axios.interceptors.request.use(
-  function requestInterceptor(config) {
-    const cookieString = document.cookie;
-    const cookies = parseCookies(cookieString);
-    if (
-      config.url !== 'https://www.sangyeop.shop/api/v1/members/login' &&
-      !cookies.accessToken
-    ) {
-      window.location.href = '/login';
-    }
+// axios.interceptors.request.use(
+//   function requestInterceptor(config) {
+//     const url =
+//       import.meta.env.MODE === 'production'
+//         ? 'https://www.sangyeop.shop'
+//         : 'https://www.api-bbodog.shop';
+//     console.log(url);
+//     console.log(config.url);
+//     const cookieString = document.cookie;
+//     const cookies = parseCookies(cookieString);
+//     console.log(`url: ${url}/api/v1/members/login`);
 
-    const newConfig = { ...config };
+//     if (config.url !== `${url}/api/v1/members/login` && !cookies.accessToken) {
+//       window.location.href = '/login';
+//     }
 
-    newConfig.headers.Authorization = `Bearer ${cookies.accessToken}`;
-    return newConfig;
-  },
-  function errorInterceptor(error) {
-    console.log(error);
-    return Promise.reject(error);
-  }
-);
+//     const newConfig = { ...config };
 
-axios.interceptors.response.use(
-  function responseInterceptor(response) {
-    return response;
-  },
-  function errorInterceptor(error) {
-    console.log(error);
-    const originalRequest = error.config;
-    const cookieString = document.cookie;
-    const cookies = parseCookies(cookieString);
+//     newConfig.headers.Authorization = `Bearer ${cookies.accessToken}`;
+//     return newConfig;
+//   },
+//   function errorInterceptor(error) {
+//     console.log(error);
+//     return Promise.reject(error);
+//   }
+// );
 
-    if (error.response.status === 401) {
-      return axios
-        .post('/api/v1/members/tokens', null, {
-          headers: {
-            'X-BBODOK-REFRESH-TOKEN': cookies.refreshToken,
-          },
-        })
-        .then(response => {
-          const newAccessToken = response.data.accessToken;
+// axios.interceptors.response.use(
+//   function responseInterceptor(response) {
+//     return response;
+//   },
+//   function errorInterceptor(error) {
+//     console.log(error);
+//     const originalRequest = error.config;
+//     const cookieString = document.cookie;
+//     const cookies = parseCookies(cookieString);
 
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+//     if (error.response.status === 401) {
+//       return axios
+//         .post('/api/v1/members/tokens', null, {
+//           headers: {
+//             'X-BBODOK-REFRESH-TOKEN': cookies.refreshToken,
+//           },
+//         })
+//         .then(response => {
+//           const newAccessToken = response.data.accessToken;
 
-          return axios(originalRequest);
-        })
-        .catch(err => {
-          console.log(err);
-          window.location.href = '/login';
-          return Promise.reject(err);
-        });
-    }
+//           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-    return Promise.reject(error);
-  }
-);
+//           return axios(originalRequest);
+//         })
+//         .catch(err => {
+//           console.log(err);
+//           window.location.href = '/login';
+//           return Promise.reject(err);
+//         });
+//     }
+
+//     return Promise.reject(error);
+//   }
+// );
 
 export async function getUser() {
   const res = await axios.get('/api/v1/members');

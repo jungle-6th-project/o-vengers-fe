@@ -1,4 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import GroupMakeModal from './components/GroupMakeModal/GroupMakeModal';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking/Ranking';
@@ -11,9 +13,10 @@ import { ReactComponent as Logo } from '@/assets/bbodog_log_svg.svg';
 
 function App() {
   const location = useLocation().pathname.split('/').filter(Boolean);
-
   const isGroupPath = !(location.length < 1);
+  const [token, ,] = useCookies(['accessToken']);
 
+  axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <>
       <div className="grid m-10 gap-x-10 gap-y-5 grid-rows-container grid-cols-container w-max-full h-max-full">

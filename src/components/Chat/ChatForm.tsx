@@ -8,7 +8,10 @@ interface ChatFormProps {
 
 const ChatForm: React.FC<ChatFormProps> = ({ onSubmit, onChange, chat }) => {
   return (
-    <form onSubmit={onSubmit} className="join">
+    <form
+      onSubmit={onSubmit}
+      className="absolute bottom-0 join min-w-leftbar max-w-leftbar"
+    >
       <div>
         <input
           type="text"
