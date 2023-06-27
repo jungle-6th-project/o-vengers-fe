@@ -31,12 +31,14 @@ module.exports = {
         'group-max': '200px',
         timer: '335px',
         leftbar: '400px',
+        calendar: '2564px',
+        page: '2994px',
       },
       height: {
         ranking: '36vh',
         groupList: '18vh',
-        todo: '61.4vh',
-        calendar: '97.8vh',
+        todo: '50vh',
+        // calendar: '97.8vh',
       },
       minHeight: {
         'header-min': '144px',
@@ -46,12 +48,12 @@ module.exports = {
       },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
-        container: '0.2fr 1fr',
+        container: 'auto 1fr',
         video_container: '0.3fr 1fr',
       },
       gridTemplateColumns: {
-        calendar: '100px repeat(14, 1fr)',
-        container: '0.2fr 1fr',
+        calendar: '100px repeat(14, 176px)',
+        container: 'auto 1fr',
         video_container: '1fr 0.3fr',
         rankingProfile:
           'minmax(20px, 1fr) minmax(2.75rem, 1fr) minmax(64px, 2fr)',
