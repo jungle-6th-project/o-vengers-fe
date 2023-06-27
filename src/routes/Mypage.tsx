@@ -53,9 +53,8 @@ const Mypage = () => {
       </div>
     );
   }
-  // console.log(data);
 
-  const transformedData = data.map((item: DataItem) => {
+  const transformedData = data?.map((item: DataItem) => {
     const { duration, calculatedAt } = item;
     const { sum } = parseTimeDuration(duration);
 

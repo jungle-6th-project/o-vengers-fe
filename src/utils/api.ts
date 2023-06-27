@@ -311,6 +311,5 @@ export const getStudyHistory = async (DateStart: string, DateEnd: string) => {
   );
 
   const { data } = res.data;
-  console.log(data);
   return data;
 };
