@@ -60,8 +60,12 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
     data: todoList,
     isLoading,
     isError,
-  } = useQuery(['MyTodoList', groupData.groupId], () =>
-    getTodoDatas(groupData.groupId)
+  } = useQuery(
+    ['MyTodoList', groupData.groupId],
+    () => getTodoDatas(groupData.groupId),
+    {
+      staleTime: 20000,
+    }
   );
 
   useEffect(() => {

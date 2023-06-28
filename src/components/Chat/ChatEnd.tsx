@@ -5,7 +5,7 @@ interface ChatStartProps {
   message: string;
 }
 
-const ChatEnd: React.FC<ChatStartProps> = ({ src, name, time, message }) => {
+const ChatEnd = ({ src, name, time, message }: ChatStartProps) => {
   return (
     <div className="chat chat-end">
       <div className="chat-image avatar">
@@ -13,11 +13,12 @@ const ChatEnd: React.FC<ChatStartProps> = ({ src, name, time, message }) => {
           <img alt="" src={src} />
         </div>
       </div>
-      <div className="chat-header">
-        {name}
-        <time className="text-xs opacity-50">{time}</time>
+      <div className="chat-header">{name}</div>
+
+      <div className="flex flex-row-reverse items-end">
+        <div className="chat-bubble">{message}</div>
+        <time className="mr-2 text-xs opacity-50">{time}</time>
       </div>
-      <div className="chat-bubble">{message}</div>
     </div>
   );
 };

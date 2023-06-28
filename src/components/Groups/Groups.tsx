@@ -117,6 +117,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     isError,
     isLoading,
   } = useQuery(['membersInfo', groupId], () => getGroupMembers(groupId), {
+    staleTime: 20000,
     select(data) {
       const profileImages = data.map((item: JoinedGroupsItem) => item.profile);
       return profileImages;

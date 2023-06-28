@@ -56,7 +56,6 @@ module.exports = {
         container: 'auto 1fr',
         video_container: '1fr auto',
         container: 'auto 1fr',
-        video_container: '0.3fr 1fr',
         rankingProfile:
           'minmax(20px, 1fr) minmax(2.75rem, 1fr) minmax(64px, 2fr)',
       },

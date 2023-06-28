@@ -54,7 +54,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
       refetchOnMount: 'always',
     }
   );
-  console.log(data);
+
   useEffect(() => {
     refetch();
   }, [refetch, groupId]);
