@@ -66,7 +66,6 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
     newColor = ['primary', 'secondary', 'accent', 'neutral'][
       Math.floor(Math.random() * 4)
     ];
-    console.log(newColor);
     changeGroupColor(groupId, newColor);
     setGroupColorById(groupId, newColor);
   }

@@ -5,8 +5,6 @@ axios.defaults.baseURL =
     ? 'https://www.sangyeop.shop'
     : 'https://www.api-bbodog.shop';
 
-console.log(axios.defaults.baseURL);
-
 export function parseCookies(cookieString: string) {
   const cookies: { [key: string]: string } = {};
   cookieString.split(';').forEach(cookie => {
@@ -22,11 +20,8 @@ axios.interceptors.request.use(
       import.meta.env.MODE === 'production'
         ? 'https://www.sangyeop.shop'
         : 'https://www.api-bbodog.shop';
-    console.log(url);
-    console.log(config.url);
     const cookieString = document.cookie;
     const cookies = parseCookies(cookieString);
-    console.log(`url: ${url}/api/v1/members/login`);
 
     if (config.url !== `${url}/api/v1/members/login` && !cookies.accessToken) {
       window.location.href = '/login';

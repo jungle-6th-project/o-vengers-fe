@@ -21,7 +21,6 @@ const ChatContainer: React.FC<{
         ? 'localhost:5173'
         : 'wss://www.sangyeop.shop';
 
-    console.log(url);
     const newSocket = io(url);
     setSocket(newSocket);
     newSocket.connect();
