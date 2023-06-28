@@ -13,7 +13,7 @@ const EntryButton = ({
     disabled={onIdle}
     onClick={handleEnterRoom}
   >
-    {onIdle ? '입장 대기중' : '방 입장하기'}
+    {onIdle ? '입장 대기중' : '공부방 들어가기'}
   </button>
 );
 
