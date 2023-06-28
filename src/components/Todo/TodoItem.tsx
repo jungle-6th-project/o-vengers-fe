@@ -24,7 +24,11 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
       return queryClient.invalidateQueries(['MyTodoList']);
     },
   });
-  const { mutate: deleteTodoMutation } = useMutation(deleteTodo);
+  const { mutate: deleteTodoMutation } = useMutation(deleteTodo, {
+    onSuccess() {
+      return queryClient.invalidateQueries(['MyTodoList']);
+    },
+  });
 
   const onClickEdit = () => {
     setIsChecked(!isChecked);
