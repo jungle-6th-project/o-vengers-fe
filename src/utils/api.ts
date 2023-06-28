@@ -74,6 +74,7 @@ axios.interceptors.response.use(
   }
 );
 
+// user
 export async function getUser() {
   const res = await axios.get('/api/v1/members');
 
@@ -85,6 +86,7 @@ export async function getUser() {
   return data;
 }
 
+// groups
 export async function getAllGroups() {
   const res = await axios.get('/api/v1/groups/all');
   const { data } = await res.data;
@@ -212,6 +214,7 @@ export async function editOrDoneTodo({
   content: string;
   done: boolean;
   todoId: number;
+  groupId: number;
 }) {
   const res = await axios.patch(`/api/v1/todos`, {
     // eslint-disable-next-line object-shorthand

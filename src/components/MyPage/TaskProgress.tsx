@@ -1,12 +1,52 @@
+import { useQueries, useQuery } from '@tanstack/react-query';
+import { GroupsItem } from '@/types/types';
+import { getMyGroups, getTodoDatas } from '@/utils/api';
+import { Todo } from '../Todo/TodoTypes';
+
 const TaskProgress = () => {
-  // progress bar 색상 변경안되서 퍼센티지 텍스트에 컬러 적용해둠
+  // const [todoDatas, setTodoDatas] = useState([]);
+  // const [filterCompleteTodo, setFilterCompleteTodo] = useState(0);
+
+  // 가입한 groupId 가져옴
+  const { data: groupsId } = useQuery(['MyGroupData'], () => getMyGroups(), {
+    staleTime: 50000,
+    select(data) {
+      return data.map((item: GroupsItem) => item.groupId);
+    },
+  });
+
+  // groupId별 todo목록을 한번에 받아옴
+  const result = useQueries({
+    queries:
+      groupsId?.map((id: number) => ({
+        queryKey: ['MyTodoList', id],
+        queryFn: getTodoDatas(id),
+        staleTime: 100000,
+        enabled: !!groupsId,
+      })) ?? [],
+  });
+  const todoDatas = result?.flatMap(todos => todos.data);
+
+  const filterCompleteTodo = (todoDatas as Todo[]).filter(
+    (todo: Todo) => todo?.done
+  )?.length;
+
+  const completeRate = Number(
+    ((filterCompleteTodo / todoDatas.length) * 100).toFixed(1)
+  );
   return (
     <div className="rounded-2xl pl-[2vw] bg-reservation card h-[50vh] w-[16vw] min-w-leftbar max-w-leftbar">
       <p className="pt-[4vh] font-semibold  text-black text-[1.8vw]">TODO</p>
       <p className=" text-bbodog_blue font-medium text-[0.9vw] ">투두리스트</p>
       <div className="pt-[28.5vh] font-medium">
-        <p className="text-bbodog_blue text-[0.9vw] mb-0">0% TASK COMPLETED</p>
-        <progress className="w-[12vw] progress mb-1" value={0} max="100" />
+        <p className="text-bbodog_blue text-[0.9vw] mb-0">
+          {completeRate}% TASK COMPLETED
+        </p>
+        <progress
+          className="w-[12vw] progress mb-1"
+          value={completeRate}
+          max="100"
+        />
       </div>
     </div>
   );
