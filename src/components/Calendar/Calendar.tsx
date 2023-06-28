@@ -206,9 +206,8 @@ const WeeklyViewCalendar = () => {
 
   useEffect(() => {
     const now = dayjs();
-    const nearestTimeBefore = `${now.hour()}:${
-      now.minute() < 30 ? '00' : '30'
-    }`;
+    const nearestTimeBefore =
+      now.minute() < 30 ? `${(now.hour() - 1) % 24}:30` : `${now.hour()}:00`;
     const timeElement = document.getElementById(nearestTimeBefore);
 
     timeElement?.scrollIntoView({ behavior: 'smooth' });
