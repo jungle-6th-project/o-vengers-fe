@@ -16,5 +16,9 @@ body {
   min-width: 114.5px;
   max-width: 200px;
   width: 200px;
-  @apply 2xl:w-[200px] xl:w-[128px];
+  @apply 2xl:w-[200px] xl:w-[129.5px];
+}
+
+.chat-bubble {
+  @apply w-[75%];
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import UserData from './UserData';
 import ChatData from './ChatData';
 import ChatEnd from './ChatEnd';
@@ -9,16 +9,26 @@ interface ChatListProps {
   user: UserData;
 }
 
-const ChatList: React.FC<ChatListProps> = ({ datas, user }) => {
+const ChatList = ({ datas, user }: ChatListProps) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView();
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [datas]);
+
   return (
-    <div className="absolute bottom-[4.25rem]">
+    <div className="absolute bottom-[4.25rem] w-[15vw] right-4 2xl:h-[92%] xl:h-[87%] overflow-auto">
       {datas.map(data =>
         data.userData.name === user.name ? (
           <ChatEnd
             key={data.id}
             src={user.profile}
             name={user.name}
-            time={data.id.slice(0, 8)}
+            time={data.time}
             message={data.content}
           />
         ) : (
@@ -26,11 +36,12 @@ const ChatList: React.FC<ChatListProps> = ({ datas, user }) => {
             key={data.id}
             src={data.userData.profile}
             name={data.userData.name}
-            time={data.id.slice(0, 8)}
+            time={data.time}
             message={data.content}
           />
         )
       )}
+      <div ref={messagesEndRef} />
     </div>
   );
 };
