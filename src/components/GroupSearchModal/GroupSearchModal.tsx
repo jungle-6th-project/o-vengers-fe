@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { BiSearch } from 'react-icons/bi';
+import { BiSearch } from '@react-icons/all-files/bi/BiSearch';
 import { getAllGroups, joinGroup } from '@/utils/api';
 import { GroupData, SelectedGroup } from './GroupRadio';
 import GroupSearchList from './GroupSearchList';

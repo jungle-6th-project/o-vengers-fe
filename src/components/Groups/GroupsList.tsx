@@ -11,14 +11,7 @@ import './styles.css';
 import { getMyGroups } from '@/utils/api';
 import { useSelectedGroupIdActions } from '@/store/groupStore';
 import Groups from './Groups';
-
-interface GroupsItem {
-  color: string;
-  groupId: number;
-  groupName: string;
-  secret: boolean;
-  path: string;
-}
+import { GroupsItem } from '@/types/types';
 
 const GroupsList = () => {
   const { setGroup } = useSelectedGroupIdActions();

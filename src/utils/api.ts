@@ -20,6 +20,7 @@ axios.interceptors.request.use(
       import.meta.env.MODE === 'production'
         ? 'https://www.sangyeop.shop'
         : 'https://www.api-bbodog.shop';
+
     const cookieString = document.cookie;
     const cookies = parseCookies(cookieString);
 
@@ -73,6 +74,7 @@ axios.interceptors.response.use(
   }
 );
 
+// user
 export async function getUser() {
   const res = await axios.get('/api/v1/members');
 
@@ -84,6 +86,7 @@ export async function getUser() {
   return data;
 }
 
+// groups
 export async function getAllGroups() {
   const res = await axios.get('/api/v1/groups/all');
   const { data } = await res.data;
@@ -211,6 +214,7 @@ export async function editOrDoneTodo({
   content: string;
   done: boolean;
   todoId: number;
+  groupId: number;
 }) {
   const res = await axios.patch(`/api/v1/todos`, {
     // eslint-disable-next-line object-shorthand
@@ -317,4 +321,9 @@ export const getStudyHistory = async (DateStart: string, DateEnd: string) => {
 
   const { data } = res.data;
   return data;
+};
+
+export const getFakeCalendar = async () => {
+  const res = await axios.get('http://localhost:3000/time');
+  return res.data;
 };

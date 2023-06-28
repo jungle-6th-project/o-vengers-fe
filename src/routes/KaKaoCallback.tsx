@@ -19,6 +19,7 @@ function KakaoCallback() {
         import.meta.env.MODE === 'production'
           ? 'https://www.sangyeop.shop'
           : 'https://www.api-bbodog.shop';
+
       try {
         const response = await axios.post(`${url}/api/v1/members/login`, {
           authCode: code,

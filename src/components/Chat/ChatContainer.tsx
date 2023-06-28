@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 import { useUser } from '@/store/userStore';
 import ChatData from './ChatData';
 import ChatForm from './ChatForm';
 import ChatList from './ChatList';
 
-const ChatContainer: React.FC<{
+dayjs.locale('ko');
+interface ChatContainerProps {
   datas: ChatData[];
   setDatas: React.Dispatch<React.SetStateAction<ChatData[]>>;
-}> = ({ datas, setDatas }) => {
+}
+
+const ChatContainer = ({ datas, setDatas }: ChatContainerProps) => {
   const [chat, setChat] = useState('');
   const [socket, setSocket] = useState<Socket | null>(null);
   const { roomId } = useParams();
   const user = useUser();
+  const currentTime = dayjs().format('A hh:MM');
 
   useEffect(() => {
     const url =
@@ -38,6 +44,7 @@ const ChatContainer: React.FC<{
       const newChatData: ChatData = {
         userData: chatData.userData,
         content: chatData.content,
+        time: chatData.time,
         id: chatData.id,
       };
 
@@ -58,6 +65,7 @@ const ChatContainer: React.FC<{
           profile: user.profile,
         },
         content: chat,
+        time: currentTime,
         id: crypto.randomUUID(),
       };
       socket.emit('sentMessage', newChatData);
@@ -71,7 +79,7 @@ const ChatContainer: React.FC<{
   };
 
   return (
-    <div className="rounded-b-lg border border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar h-video_todo bg-[#FAFAFA] overflow-auto border-t-0 relative">
+    <div className="rounded-b-lg border border-[#D9D9D9]  min-w-leftbar max-w-leftbar h-video_todo bg-[#FAFAFA]  border-t-0 relative  overflow-scroll">
       <ChatList datas={datas} user={user} />
       <ChatForm onSubmit={handleSubmit} onChange={onChange} chat={chat} />
     </div>

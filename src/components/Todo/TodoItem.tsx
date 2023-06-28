@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect, KeyboardEvent } from 'react';
-import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
-import { BsCheckLg } from 'react-icons/bs';
-import { useMutation } from '@tanstack/react-query';
+import { AiFillEdit } from '@react-icons/all-files/ai/AiFillEdit';
+import { AiFillDelete } from '@react-icons/all-files/ai/AiFillDelete';
+import { AiOutlineCheck } from '@react-icons/all-files/ai/AiOutlineCheck';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Todo } from './TodoTypes';
 import { editOrDoneTodo, deleteTodo } from '@/utils/api';
 
@@ -11,13 +12,18 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
+  const queryClient = useQueryClient();
   const [editedContent, setEditedContent] = useState(todoData.content);
   const [isEditing, setIsEditing] = useState(false);
   const [isChecked, setIsChecked] = useState(todoData.done);
   const [isHovering, setIsHovering] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { mutate: editOrDoneTodoMutation } = useMutation(editOrDoneTodo);
+  const { mutate: editOrDoneTodoMutation } = useMutation(editOrDoneTodo, {
+    onSuccess() {
+      return queryClient.invalidateQueries(['MyTodoList']);
+    },
+  });
   const { mutate: deleteTodoMutation } = useMutation(deleteTodo);
 
   const onClickEdit = () => {
@@ -38,6 +44,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
       content: editedContent,
       done: isChecked,
       todoId: todoData.todoId,
+      groupId: todoData.groupId,
     });
     setIsEditing(false);
   };
@@ -63,6 +70,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
       content: todoData.content,
       done: !isChecked,
       todoId: todoData.todoId,
+      groupId: todoData.groupId,
     });
     setIsChecked(!isChecked);
   };
@@ -115,7 +123,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
               onClick={onClickSave}
               type="button"
             >
-              <BsCheckLg />
+              <AiOutlineCheck />
             </button>
           </>
         ) : (
