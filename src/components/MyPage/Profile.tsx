@@ -19,22 +19,26 @@ const Profile = () => {
     await navigate('/login');
   };
   return (
-    <div className="card card-bordered flex items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-md min-h-[250px] h-[20.5vw] mb-3">
-      <div className="flex justify-center avatar">
-        <div className="rounded-full w-[13vw] min-w-[150px] mt-[1.5vw]">
+    <div className="card card-bordered grid grid-rows-7 grid-cols-1 p-4 items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-md min-h-[250px] h-[20.5vw]">
+      <div className="row-span-5 flex justify-center avatar">
+        <div className="rounded-full w-[13vw] min-w-[150px]">
           <img src={user.profile} alt="Profile" />
         </div>
       </div>
-      <div className="mt-[0.5vw] text-[1.3rem] font-semibold text-black profile-name">
-        {user.name}
+      <div className="flex items-center justify-center">
+        <div className="text-[1.3rem] font-semibold text-black profile-name">
+          {user.name}
+        </div>
       </div>
-      <button
-        type="button"
-        className="items-center font-medium text-[0.9rem] mb-[0.6vw] text-black w-[5rem] h-[1.8rem] bg-gray-200 border-transparent rounded btn btn-xs"
-        onClick={() => logOut()}
-      >
-        로그아웃
-      </button>
+      <div className="flex items-center pb-4 justify-center">
+        <button
+          type="button"
+          className="items-center font-medium text-[0.9rem] text-black w-[5rem] h-[1.8rem] bg-gray-200 border-transparent rounded btn btn-xs"
+          onClick={() => logOut()}
+        >
+          로그아웃
+        </button>
+      </div>
     </div>
   );
 };

@@ -41,9 +41,10 @@ const YearlyHistory = ({ data }: YearlyHistoryProps) => {
     return '#eeeeee';
   });
   const today = dayjs();
+  // 풋터 제거 후 h-full로 수정하기, max-h 설정하기
   return (
-    <div className="absolute overflow-x-auto border-[#D9D9D9] border-[1px] rounded-2xl bg-white w-[75.5vw] h-[55vh] card">
-      <div style={{ width: '170%', height: '95%' }}>
+    <div className="absolute overflow-x-auto border-[#D9D9D9] border-[1px] rounded-md bg-white w-full h-[22vw] min-h-[350px] card">
+      <div style={{ width: '160%', height: '100%' }}>
         <ResponsiveCalendar
           tooltip={CustomTooltip}
           data={data}

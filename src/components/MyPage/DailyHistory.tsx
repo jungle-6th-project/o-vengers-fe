@@ -8,16 +8,6 @@ interface DailyHistoryProps {
 }
 
 const DailyHistory = ({ data }: DailyHistoryProps) => {
-  // const today = dayjs().format('YYYY-MM-DD');
-  // const { value, day } = data;
-  // let hours = 0;
-  // let minutes = 0;
-
-  // if (today === day) {
-
-  // hours = Math.floor(value / 60);
-  // minutes = value % 60;
-
   return (
     <div className="rounded-md min-h-[250px] h-[20.5vw] p-[1.5vw] w-[16vw] min-w-leftbar max-w-leftbar flex flex-col bg-bbodog_blue">
       <div className="space-y-[-0.8vw]">

@@ -80,19 +80,21 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
     bar.data.day === today ? '#0725E3' : '#000000';
 
   return (
-    <div className="bg-reservation card w-[42vw] min-w-[800px] rounded-md min-h-[250px] h-[20.5vw] p-[1.5vw] font-medium">
-      <div className="flex space-x-3">
-        <div className="text-[2.5vw] text-black leading-[2.5vw]">
+    <div className="grid grid-rows-6 grid-flow-col bg-reservation card w-full min-w-[600px] rounded-md min-h-[250px] h-[20.5vw] p-[1.5vw] font-medium">
+      <div className="row-span-1 flex space-x-3">
+        <div className="text-[2.5vw] text-black leading-[3vw]">
           {total > 0 ? total.toFixed(1) : 0}H
         </div>
         <div>
-          <div className="text-black text-[0.9vw]">WEEKLY STUDY TIME</div>
-          <div className="text-bbodog_blue text-[0.9vw]">
+          <div className="text-black text-[0.9vw] leading-[1.6vw]">
+            WEEKLY STUDY TIME
+          </div>
+          <div className="text-bbodog_blue text-[0.9vw] leading-none">
             {weekStart.format('MM.DD')} - {weekEnd.format('MM.DD')}
           </div>
         </div>
       </div>
-      <div className="flex justify-between">
+      <div className="row-start-2 row-span-5 flex justify-between">
         <button
           type="button"
           className=" text-black flex pt-[5vw]"
@@ -100,7 +102,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
         >
           <FiChevronLeft size="30" />
         </button>
-        <div style={{ width: '41vw', height: '100%', margin: '0' }}>
+        <div style={{ width: '90%', height: '100%', margin: '0' }}>
           <ResponsiveBar
             tooltip={CustomTooltip}
             animate={false}
@@ -110,7 +112,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
             data={barChartData}
             keys={['value']}
             indexBy="day"
-            margin={{ top: 20, right: 0, bottom: 40, left: 15 }}
+            margin={{ top: 20, right: 0, bottom: 30, left: 0 }}
             padding={0.02}
             colors={barColor}
             colorBy="id"
@@ -124,7 +126,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
               axis: {
                 ticks: {
                   text: {
-                    fontSize: 13,
+                    fontSize: 14,
                     fill: '#000000',
                   },
                 },
@@ -148,7 +150,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
         </div>
         <button
           type="button"
-          className="pl-0 text-black flex pt-[5vw]"
+          className="text-black flex pt-[5vw]"
           onClick={handleNextWeek}
         >
           <FiChevronRight size="30" />
