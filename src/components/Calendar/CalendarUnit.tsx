@@ -233,7 +233,7 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
   return (
     <div className="relative flex items-center justify-center h-24 border border-dashed border-calendar-border">
       {isExpired && (
-        <div className="w-full h-24 bg-[#8C8C8C] opacity-50 z-[35]" />
+        <div className="w-full h-24 bg-[#8F8F8F] opacity-50 z-[35]" />
       )}
       {userReservation && (
         <div className="absolute z-30 right-2 bottom-2">
