@@ -140,7 +140,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   return (
     <div
       role="presentation"
-      className={`relative card w-group min-w-group-min max-w-group-max h-groupsList min-h-header-min max-h-header-max bg-${selectedColor} text-${selectedColor}-content cursor-pointer mr-3`}
+      className={`relative card w-group min-w-group-min max-w-group-max h-groupList min-h-header-min max-h-header-max bg-${selectedColor} text-${selectedColor}-content cursor-pointer`}
       onClick={() => setGroupId(groupId)}
       onKeyDown={() => setGroupId(groupId)}
     >

@@ -19,15 +19,15 @@ function App() {
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <>
-      <div className="grid m-10 gap-x-10 gap-y-5 grid-rows-container grid-cols-container w-max-full h-max-full">
-        <div className="row-span-2 flex flex-col flex-grow">
+      <div className="p-10 grid gap-x-5 gap-y-5 grid-rows-container grid-cols-container w-max-full h-max-screen h-screen">
+        <div className="row-span-2 grid grid-rows-leftbar gap-3">
           <div className="mb-8 w-ranking_todo min-w-leftbar max-w-leftbar h-[90px]">
             <Logo width="100%" height="100%" />
           </div>
           <Ranking />
           <TodoList />
         </div>
-        <div className="Navigator flex justify-between max-w-calendar">
+        <div className="Navigator max-w-calendar grid grid-cols-navigator gap-3">
           <div className="flex flex-col justify-between mr-3 btn-3 h-groupList min-h-header-min max-h-header-max">
             {isGroupPath && <GroupJoinModal joinPath={location[1]} />}
             <GroupMakeModal />
@@ -38,14 +38,10 @@ function App() {
               </button>
             </Link>
           </div>
-          <div className="flex">
-            <div className="flex">
-              <GroupsList />
-            </div>
-          </div>
+          <GroupsList />
           <Timer />
         </div>
-        <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3 overflow-hidden rounded-2xl bg-calendar max-w-calendar">
+        <div className="h-full overflow-auto col-start-2 row-start-2 max-w-calendar">
           <Calendar />
         </div>
       </div>

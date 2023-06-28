@@ -96,7 +96,7 @@ const Timer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-black justify-self-end w-timer h-groupList justify-evenly rounded-2xl min-h-header-min max-h-header-max min-w-timer max-w-timer">
+    <div className="flex flex-col items-center bg-black w-timer h-groupList justify-evenly rounded-2xl min-h-header-min max-h-header-max">
       <EntryButton onIdle={onRoomIdle} handleEnterRoom={handleEnterRoom} />
       <RoomEnterMessage
         onTimerIdle={onTimerIdle}
