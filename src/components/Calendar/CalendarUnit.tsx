@@ -139,7 +139,7 @@ const CurrentReservationButton = ({
   cancelReservation: (startTime: string, roomId: number) => void;
 }) => {
   const selectedGroupId = useSelectedGroupId();
-  const { setGroupId, getGroupNameById } = useSelectedGroupIdActions();
+  const { setSelectedGroupId, getGroupNameById } = useSelectedGroupIdActions();
 
   const handleClickX = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -147,7 +147,7 @@ const CurrentReservationButton = ({
   };
 
   const handleClickCard = () => {
-    setGroupId(groupId);
+    setSelectedGroupId(groupId);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {

@@ -41,7 +41,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
     }
   );
 
-  const { setGroupId } = useSelectedGroupIdActions();
+  const { setSelectedGroupId } = useSelectedGroupIdActions();
 
   const postPathJoinGroupMutation = useMutation(() => pathJoinGroup(joinPath), {
     onSuccess: (res: {
@@ -52,7 +52,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
       secret: boolean;
     }) => {
       if (res !== null) {
-        setGroupId(res.groupId);
+        setSelectedGroupId(res.groupId);
       }
       queryClient.invalidateQueries(['MyGroupData']);
     },

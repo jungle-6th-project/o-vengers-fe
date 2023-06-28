@@ -35,7 +35,7 @@ const Timer = () => {
 
   const [remainingTime, setRemainingTime] = useState(dayjs.duration(-9999999));
   const [roomId, setRoomId] = useState(0);
-  const [groupId, setGroupId] = useState(0);
+  const [groupId, setSelectedGroupId] = useState(0);
 
   const [onTimerIdle, setOnTimerIdle] = useState(true);
   const [onRoomIdle, setOnRoomIdle] = useState(true);
@@ -45,7 +45,7 @@ const Timer = () => {
       // initialize reservation data
       setRemainingTime(dayjs.duration(-9999999));
       setRoomId(0);
-      setGroupId(0);
+      setSelectedGroupId(0);
 
       setOnTimerIdle(true);
       setOnRoomIdle(true);
@@ -58,7 +58,7 @@ const Timer = () => {
       groupId: nearestGroupId,
     } = nearestReservationData;
     setRoomId(nearestRoomId);
-    setGroupId(nearestGroupId);
+    setSelectedGroupId(nearestGroupId);
 
     const intervalId = setInterval(() => {
       const newRemainingTime = dayjs.duration(

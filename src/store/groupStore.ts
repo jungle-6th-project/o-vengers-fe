@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { shallow } from 'zustand/shallow';
 
 interface Group {
   groupId: number;
@@ -9,10 +10,10 @@ interface Group {
 }
 
 interface GroupStore {
-  groups: Group[];
-  selectedGroup: number;
+  groups: { [id: string]: Group };
+  selectedGroupId: number;
   actions: {
-    setGroupId: (id: number) => void;
+    setSelectedGroupId: (id: number) => void;
     setGroup: (groups: Group[]) => void;
     getGroupNameById: (id: number) => string | undefined;
     setGroupColorById: (id: number, color: string) => void;
@@ -20,54 +21,44 @@ interface GroupStore {
 }
 
 const groupStore = create<GroupStore>()((set, get) => ({
-  groups: [],
-  selectedGroup: 1,
+  groups: {},
+  selectedGroupId: 1,
   actions: {
-    setGroupId: (id: number) => {
-      set({ selectedGroup: id });
+    setSelectedGroupId: (id: number) => {
+      set({ selectedGroupId: id });
     },
     setGroup: (groups: Group[]) => {
-      const updatedGroups = groups.map(group => {
-        if (group.color === null) {
-          return { ...group, color: 'accent' };
-        }
-        return group;
-      });
+      const updatedGroups = Object.fromEntries(
+        Object.entries(groups).map(([index, group]) => {
+          return [`${group.groupId}`, group];
+        })
+      );
       set({ groups: updatedGroups });
     },
     getGroupNameById: (id: number) => {
-      const group = get().groups.find(
-        (groupItem: Group) => groupItem.groupId === id
-      );
+      const group = get().groups[`${id}`];
       return group?.groupName;
     },
     setGroupColorById: (id: number, color: string) => {
-      const groupIndex = get().groups.findIndex(
-        (groupItem: Group) => groupItem.groupId === id
-      );
-
-      if (groupIndex !== -1) {
-        const newGroups = [...get().groups];
-        newGroups[groupIndex] = {
-          ...newGroups[groupIndex],
-          color,
-        };
-        set({ groups: newGroups });
+      const group = get().groups[`${id}`];
+      if (group) {
+        set(state => {
+          return {
+            groups: { ...state.groups, [`${id}`]: { ...group, color } },
+          };
+        });
       }
     },
   },
 }));
 
 export const useSelectedGroupId = () =>
-  groupStore(state => state.selectedGroup);
+  groupStore(state => state.selectedGroupId);
 
 export const useGroups = () => groupStore(state => state.groups);
-
-export const useSelectedGroupIdActions = () =>
-  groupStore(state => state.actions);
-
+export const useGroup = (id: number) =>
+  groupStore(state => state.groups[`${id}`]);
 export const useGroupColor = (id: number) =>
-  groupStore(state => {
-    const group = state.groups.find(groupItem => groupItem.groupId === id);
-    return group?.color;
-  });
+  groupStore(state => state.groups[`${id}`]?.color);
+export const useSelectedGroupIdActions = () =>
+  groupStore(state => state.actions, shallow);
