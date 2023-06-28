@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus } from '@react-icons/all-files/ai/AiOutlinePlus';
 import { Todo, GroupData } from './TodoTypes';
 import { getTodoDatas, postTodo } from '@/utils/api';
 import TodoItem from './TodoItem';
