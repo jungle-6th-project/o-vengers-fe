@@ -322,3 +322,8 @@ export const getStudyHistory = async (DateStart: string, DateEnd: string) => {
   const { data } = res.data;
   return data;
 };
+
+export const getFakeCalendar = async () => {
+  const res = await axios.get('http://localhost:3000/time');
+  return res.data;
+};
