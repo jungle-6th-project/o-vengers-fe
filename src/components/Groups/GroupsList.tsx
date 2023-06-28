@@ -1,5 +1,13 @@
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Keyboard, Mousewheel, Navigation } from 'node_modules/swiper';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+import './styles.css';
+
 import { getMyGroups } from '@/utils/api';
 import Groups from './Groups';
 import { useSelectedGroupIdActions } from '@/store/groupStore';
@@ -36,20 +44,34 @@ const GroupsList = () => {
   }
 
   return (
-    <div className="flex h-groupList min-h-header-min max-h-header-max">
+    // <div className="slider">
+    <Swiper
+      modules={[Keyboard, Navigation, Mousewheel]}
+      spaceBetween={20}
+      slidesPerView="auto"
+      // slidesPerView={3}
+      navigation
+      // loop
+      rewind
+      keyboard={{ enabled: true }}
+      mousewheel
+      className="min-h-header-min max-h-header-max h-groupList"
+    >
       {myGroupsList?.map((group: GroupsItem) => {
         return (
-          <Groups
-            key={group.groupId}
-            groupId={group.groupId}
-            groupName={group.groupName}
-            color={group.color}
-            secret={group.secret}
-            path={group.path}
-          />
+          <SwiperSlide key={group.groupId}>
+            <Groups
+              groupId={group.groupId}
+              groupName={group.groupName}
+              color={group.color}
+              secret={group.secret}
+              path={group.path}
+            />
+          </SwiperSlide>
         );
       })}
-    </div>
+    </Swiper>
+    // </div>
   );
 };
 
