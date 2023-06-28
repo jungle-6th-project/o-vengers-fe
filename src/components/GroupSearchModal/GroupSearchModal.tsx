@@ -68,7 +68,7 @@ const GroupSearchModal = () => {
     }
   }, [searchInputs, selectedGroup, filteredData]);
 
-  const { setGroupId } = useSelectedGroupIdActions();
+  const { setSelectedGroupId } = useSelectedGroupIdActions();
 
   const joinGroupMutation = useMutation(
     (values: { groupId: number; password: string }) => joinGroup(values),
@@ -82,7 +82,7 @@ const GroupSearchModal = () => {
       }) => {
         if (res !== null) {
           onClose();
-          setGroupId(res.groupId);
+          setSelectedGroupId(res.groupId);
         }
         queryClient.invalidateQueries(['MyGroupData']);
       },

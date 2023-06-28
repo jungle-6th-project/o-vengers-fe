@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { BsFillPersonFill } from '@react-icons/all-files/bs/BsFillPersonFill';
 import { BsX } from '@react-icons/all-files/bs/BsX';
 import { ROOM_EXPIRE_MIN } from '@/components/Timer/Timer';
-import { MemberProfiles } from '@/components/Groups/Groups';
+import MemberProfiles from '@/components/Groups/MemberProfiles';
 import { useGroupReservation } from '@/store/groupReservationStore';
 import { useUserReservation } from '@/store/userReservationStore';
 import {
@@ -140,7 +140,7 @@ const CurrentReservationButton = ({
   cancelReservation: (startTime: string, roomId: number) => void;
 }) => {
   const selectedGroupId = useSelectedGroupId();
-  const { setGroupId, getGroupNameById } = useSelectedGroupIdActions();
+  const { setSelectedGroupId, getGroupNameById } = useSelectedGroupIdActions();
 
   const handleClickX = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -148,7 +148,7 @@ const CurrentReservationButton = ({
   };
 
   const handleClickCard = () => {
-    setGroupId(groupId);
+    setSelectedGroupId(groupId);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -234,7 +234,7 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
   return (
     <div className="relative flex items-center justify-center h-24 border border-dashed border-calendar-border">
       {isExpired && (
-        <div className="w-full h-24 bg-[#8C8C8C] opacity-50 z-[35]" />
+        <div className="w-full h-24 bg-[#8F8F8F] opacity-50 z-[35]" />
       )}
       {userReservation && (
         <div className="absolute z-30 right-2 bottom-2">

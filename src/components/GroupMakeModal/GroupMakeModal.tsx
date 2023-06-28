@@ -26,7 +26,7 @@ const GroupMakeModal = () => {
   const [groupURL, copy] = useCopyToClipboard();
   const queryClient = useQueryClient();
 
-  const { setGroupId } = useSelectedGroupIdActions();
+  const { setSelectedGroupId } = useSelectedGroupIdActions();
 
   const postMakeGroupMutation = useMutation(
     (values: {
@@ -44,7 +44,7 @@ const GroupMakeModal = () => {
         secret: boolean;
       }) => {
         if (res !== null) {
-          setGroupId(res.groupId);
+          setSelectedGroupId(res.groupId);
         }
         queryClient.invalidateQueries(['MyGroupData']);
       },

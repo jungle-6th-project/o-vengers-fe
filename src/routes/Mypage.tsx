@@ -111,8 +111,7 @@ const Mypage = () => {
     targetData = foundItem;
   }
 
-  return (
-    <div className="mx-[2.5rem] mb-[2.5rem] mt-[1rem]">
+  return (2.5rem] mt-[1rem]">
       <div>
         <Link to="/" className="inline-block">
           <button type="button" className="flex items-center">

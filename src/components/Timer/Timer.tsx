@@ -35,7 +35,7 @@ const Timer = () => {
 
   const [remainingTime, setRemainingTime] = useState(dayjs.duration(-9999999));
   const [roomId, setRoomId] = useState(0);
-  const [groupId, setGroupId] = useState(0);
+  const [groupId, setSelectedGroupId] = useState(0);
 
   const [onTimerIdle, setOnTimerIdle] = useState(true);
   const [onRoomIdle, setOnRoomIdle] = useState(true);
@@ -45,7 +45,7 @@ const Timer = () => {
       // initialize reservation data
       setRemainingTime(dayjs.duration(-9999999));
       setRoomId(0);
-      setGroupId(0);
+      setSelectedGroupId(0);
 
       setOnTimerIdle(true);
       setOnRoomIdle(true);
@@ -58,7 +58,7 @@ const Timer = () => {
       groupId: nearestGroupId,
     } = nearestReservationData;
     setRoomId(nearestRoomId);
-    setGroupId(nearestGroupId);
+    setSelectedGroupId(nearestGroupId);
 
     const intervalId = setInterval(() => {
       const newRemainingTime = dayjs.duration(
@@ -96,7 +96,7 @@ const Timer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-black justify-self-end w-timer h-groupList justify-evenly rounded-2xl min-h-header-min max-h-header-max min-w-timer max-w-timer">
+    <div className="flex flex-col items-center bg-black w-timer h-groupList justify-evenly rounded-2xl min-h-header-min max-h-header-max">
       <EntryButton onIdle={onRoomIdle} handleEnterRoom={handleEnterRoom} />
       <RoomEnterMessage
         onTimerIdle={onTimerIdle}

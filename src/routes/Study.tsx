@@ -23,7 +23,7 @@ function App() {
     LocalUserChoices | undefined
   >(undefined);
   return (
-    <div className="w-full h-full bg-background bg-center bg-cover bg-no-repeat">
+    <div className="w-full h-full bg-center bg-no-repeat bg-cover bg-background">
       {roomId && !Array.isArray(roomId) && preJoinChoices ? (
         <ActiveRoom
           roomName={roomId}

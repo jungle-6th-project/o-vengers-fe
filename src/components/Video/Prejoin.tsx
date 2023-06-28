@@ -240,7 +240,7 @@ PreJoinProps) => {
   }
 
   return (
-    <div className="lk-prejoin w-screen h-screen m-0">
+    <div className="w-screen h-screen m-0 lk-prejoin">
       <div className="lk-video-container">
         {video.localTrack && <video ref={videoEl} width="1280" height="720" />}
         {(!video.localTrack || !videoEnabled) && (
@@ -286,7 +286,7 @@ PreJoinProps) => {
             />
           </div>
         </div>
-        <form className="join flex-grow">
+        <form className="flex-grow join">
           <input
             className="input border-success border-[2.5px] border-r-0 join-item w-full bg-white bg-opacity-50 text-success"
             id="username"
