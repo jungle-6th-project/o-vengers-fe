@@ -102,7 +102,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
             <input
               type="text"
               value={editedContent}
-              className="w-full h-full pl-1 pr-0 bg-transparent border-transparent rounded-sm input flex-grow"
+              className="flex-grow w-full h-full pl-1 pr-0 bg-transparent border-transparent rounded-sm input"
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               onBlur={onClickSave}

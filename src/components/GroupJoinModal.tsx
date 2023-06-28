@@ -89,7 +89,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
       <form method="dialog" className="modal-box">
         <div>
           <p>{message}</p>
-          <div className="modal-action m-0">
+          <div className="m-0 modal-action">
             <button type="button" className="btn" onClick={handleModalClose}>
               {data ? '취소' : '닫기'}
             </button>
