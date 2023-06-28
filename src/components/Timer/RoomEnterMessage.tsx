@@ -28,7 +28,7 @@ const RoomEnterMessage = ({
     text = '100시간 이내에 예약한 방이 없어요';
   }
 
-  return <div className="text-base text-white">{text}</div>;
+  return <div className="text-lg text-white">{text}</div>;
 };
 
 export default RoomEnterMessage;
