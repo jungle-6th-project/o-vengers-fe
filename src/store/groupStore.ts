@@ -29,7 +29,7 @@ const groupStore = create<GroupStore>()((set, get) => ({
     },
     setGroup: (groups: Group[]) => {
       const updatedGroups = Object.fromEntries(
-        Object.entries(groups).map(([index, group]) => {
+        Object.entries(groups).map(([, group]) => {
           return [`${group.groupId}`, group];
         })
       );
