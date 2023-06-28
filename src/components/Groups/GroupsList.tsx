@@ -9,8 +9,8 @@ import 'swiper/css/navigation';
 import './styles.css';
 
 import { getMyGroups } from '@/utils/api';
-import Groups from './Groups';
 import { useSelectedGroupIdActions } from '@/store/groupStore';
+import Groups from './Groups';
 
 interface GroupsItem {
   color: string;
@@ -44,14 +44,11 @@ const GroupsList = () => {
   }
 
   return (
-    // <div className="slider">
     <Swiper
       modules={[Keyboard, Navigation, Mousewheel]}
       spaceBetween={20}
       slidesPerView="auto"
-      // slidesPerView={3}
       navigation
-      // loop
       rewind
       keyboard={{ enabled: true }}
       mousewheel
@@ -71,7 +68,6 @@ const GroupsList = () => {
         );
       })}
     </Swiper>
-    // </div>
   );
 };
 

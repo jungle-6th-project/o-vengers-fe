@@ -48,6 +48,7 @@ module.exports = {
         container: 'auto 1fr',
         video_container: '0.3fr 1fr',
         leftbar: '90px 0.8fr 1fr',
+        'group-edit': 'repeat(3, 1fr)',
       },
       gridTemplateColumns: {
         calendar: '100px repeat(14, 176px)',
@@ -56,6 +57,7 @@ module.exports = {
         rankingProfile:
           'minmax(20px, 1fr) minmax(2.75rem, 1fr) minmax(64px, 2fr)',
         navigator: '48px 1fr 300px',
+        'group-edit': '1fr, 30px',
       },
     },
   },

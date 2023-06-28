@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { BsFillPersonFill, BsX } from 'react-icons/bs';
 import { ROOM_EXPIRE_MIN } from '@/components/Timer/Timer';
-import { MemberProfiles } from '@/components/Groups/Groups';
+import MemberProfiles from '@/components/Groups/MemberProfiles';
 import { useGroupReservation } from '@/store/groupReservationStore';
 import { useUserReservation } from '@/store/userReservationStore';
 import {
