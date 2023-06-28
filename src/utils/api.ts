@@ -5,8 +5,6 @@ axios.defaults.baseURL =
     ? 'https://www.sangyeop.shop'
     : 'https://www.api-bbodog.shop';
 
-console.log(axios.defaults.baseURL);
-
 export function parseCookies(cookieString: string) {
   const cookies: { [key: string]: string } = {};
   cookieString.split(';').forEach(cookie => {
@@ -22,11 +20,9 @@ axios.interceptors.request.use(
       import.meta.env.MODE === 'production'
         ? 'https://www.sangyeop.shop'
         : 'https://www.api-bbodog.shop';
-    console.log(url);
-    console.log(config.url);
+
     const cookieString = document.cookie;
     const cookies = parseCookies(cookieString);
-    console.log(`url: ${url}/api/v1/members/login`);
 
     if (config.url !== `${url}/api/v1/members/login` && !cookies.accessToken) {
       window.location.href = '/login';
@@ -78,6 +74,7 @@ axios.interceptors.response.use(
   }
 );
 
+// user
 export async function getUser() {
   const res = await axios.get('/api/v1/members');
 
@@ -89,6 +86,7 @@ export async function getUser() {
   return data;
 }
 
+// groups
 export async function getAllGroups() {
   const res = await axios.get('/api/v1/groups/all');
   const { data } = await res.data;
@@ -216,6 +214,7 @@ export async function editOrDoneTodo({
   content: string;
   done: boolean;
   todoId: number;
+  groupId: number;
 }) {
   const res = await axios.patch(`/api/v1/todos`, {
     // eslint-disable-next-line object-shorthand

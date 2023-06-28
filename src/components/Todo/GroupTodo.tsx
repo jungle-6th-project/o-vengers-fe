@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Todo, GroupData } from './TodoTypes';
 import { getTodoDatas, postTodo } from '@/utils/api';
@@ -16,8 +16,14 @@ const useKeyPress = (
   setInputValue: React.Dispatch<React.SetStateAction<string>>,
   setShowInput: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
+  const queryClient = useQueryClient();
   const postTodoMutation = useMutation(
-    (values: { content: string; groupId: number }) => postTodo(values)
+    (values: { content: string; groupId: number }) => postTodo(values),
+    {
+      onSuccess() {
+        return queryClient.invalidateQueries(['MyTodoList']);
+      },
+    }
   );
 
   const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -60,15 +66,13 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
     data: todoList,
     isLoading,
     isError,
-  } = useQuery(['MyTodoList', groupData.groupId], () =>
-    getTodoDatas(groupData.groupId)
-  );
-
-  useEffect(() => {
-    if (todoList) {
-      setTodos(todoList);
+  } = useQuery(
+    ['MyTodoList', groupData.groupId],
+    () => getTodoDatas(groupData.groupId),
+    {
+      staleTime: 100000,
     }
-  }, [todoList]);
+  );
 
   const handleButtonClick = (): void => {
     setShowInput(true);
@@ -91,8 +95,14 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
   );
 
   useEffect(() => {
-    if (!isLoading && !isError && todoList) {
-      setTodos(todoList.reverse());
+    if (
+      !isLoading &&
+      !isError &&
+      todoList &&
+      todoList.length !== 0 &&
+      Array.isArray(todoList)
+    ) {
+      setTodos(todoList?.reverse());
     }
   }, [todoList, isLoading, isError]);
 
@@ -127,13 +137,14 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
           onBlur={handleBlur}
         />
       )}
-      {todos.map((todo: Todo) => (
-        <TodoItem
-          key={todo.todoId}
-          todoData={todo}
-          onDelete={() => handleDelete(todo.todoId)}
-        />
-      ))}
+      {todos.length !== 0 &&
+        todos?.map((todo: Todo) => (
+          <TodoItem
+            key={todo.todoId}
+            todoData={todo}
+            onDelete={() => handleDelete(todo.todoId)}
+          />
+        ))}
     </div>
   );
 };

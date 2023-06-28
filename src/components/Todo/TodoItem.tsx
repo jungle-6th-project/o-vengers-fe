@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Todo } from './TodoTypes';
 import { editOrDoneTodo, deleteTodo } from '@/utils/api';
 
@@ -11,13 +11,18 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
+  const queryClient = useQueryClient();
   const [editedContent, setEditedContent] = useState(todoData.content);
   const [isEditing, setIsEditing] = useState(false);
   const [isChecked, setIsChecked] = useState(todoData.done);
   const [isHovering, setIsHovering] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { mutate: editOrDoneTodoMutation } = useMutation(editOrDoneTodo);
+  const { mutate: editOrDoneTodoMutation } = useMutation(editOrDoneTodo, {
+    onSuccess() {
+      return queryClient.invalidateQueries(['MyTodoList']);
+    },
+  });
   const { mutate: deleteTodoMutation } = useMutation(deleteTodo);
 
   const onClickEdit = () => {
@@ -38,6 +43,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
       content: editedContent,
       done: isChecked,
       todoId: todoData.todoId,
+      groupId: todoData.groupId,
     });
     setIsEditing(false);
   };
@@ -63,6 +69,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
       content: todoData.content,
       done: !isChecked,
       todoId: todoData.todoId,
+      groupId: todoData.groupId,
     });
     setIsChecked(!isChecked);
   };
@@ -102,7 +109,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
             <input
               type="text"
               value={editedContent}
-              className="w-full h-full pl-1 pr-0 bg-transparent border-transparent rounded-sm input flex-grow"
+              className="flex-grow w-full h-full pl-1 pr-0 bg-transparent border-transparent rounded-sm input"
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               onBlur={onClickSave}

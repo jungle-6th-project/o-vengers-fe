@@ -3,14 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getMyGroups } from '@/utils/api';
 import Groups from './Groups';
 import { useSelectedGroupIdActions } from '@/store/groupStore';
-
-interface GroupsItem {
-  color: string;
-  groupId: number;
-  groupName: string;
-  secret: boolean;
-  path: string;
-}
+import { GroupsItem } from '@/types/types';
 
 const GroupsList = () => {
   const { setGroup } = useSelectedGroupIdActions();

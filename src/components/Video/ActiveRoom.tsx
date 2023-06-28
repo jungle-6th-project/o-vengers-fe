@@ -52,7 +52,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   }, [userChoices]);
 
   return (
-    <div className="m-10">
+    <div className="mx-10">
       {liveKitUrl && (
         <LiveKitRoom
           token={token}
