@@ -12,7 +12,6 @@ interface GroupDataProps {
 
 const useKeyPress = (
   groupData: GroupData,
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>,
   setInputValue: React.Dispatch<React.SetStateAction<string>>,
   setShowInput: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
@@ -32,18 +31,11 @@ const useKeyPress = (
       const inputValue = e.currentTarget.value.trim();
       if (inputValue !== '') {
         try {
-          const data = await postTodoMutation.mutateAsync({
+          await postTodoMutation.mutateAsync({
             content: inputValue,
             groupId: groupData.groupId,
           });
 
-          const newTodo: Todo = {
-            todoId: data.todoId,
-            groupId: groupData.groupId,
-            content: inputValue,
-            done: false,
-          };
-          setTodos(prevTodos => [newTodo, ...prevTodos]);
           setInputValue('');
           setShowInput(false);
         } catch (error) {
@@ -87,12 +79,7 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
     setInputValue(event.target.value);
   };
 
-  const onKeyPress = useKeyPress(
-    groupData,
-    setTodos,
-    setInputValue,
-    setShowInput
-  );
+  const onKeyPress = useKeyPress(groupData, setInputValue, setShowInput);
 
   useEffect(() => {
     if (
