@@ -21,11 +21,9 @@ function App() {
     <>
       <div className="grid m-10 gap-x-10 gap-y-5 grid-rows-container grid-cols-container w-max-full h-max-full">
         <div className="row-span-2 flex flex-col flex-grow">
-          <Logo
-            className="mb-8 w-ranking_todo min-w-leftbar max-w-leftbar"
-            width="w-ranking_todo min-w-leftbar max-w-leftbar"
-            height="90"
-          />
+          <div className="mb-8 w-ranking_todo min-w-leftbar max-w-leftbar h-[90px]">
+            <Logo width="100%" height="100%" />
+          </div>
           <Ranking />
           <TodoList />
         </div>
