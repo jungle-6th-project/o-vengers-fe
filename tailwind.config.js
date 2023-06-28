@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         login: "url('/ppodog.png')",
-        background: "url('/background.png')",
+        background: "url('/chatroomBackground.svg')",
       },
       colors: {
         reservation: '#E3E3E3',
@@ -31,12 +31,14 @@ module.exports = {
         'group-max': '200px',
         timer: '335px',
         leftbar: '400px',
+        calendar: '2564px',
+        page: '2994px',
       },
       height: {
         ranking: '36vh',
         groupList: '18vh',
-        todo: '61.4vh',
         calendar: '97.8vh',
+        video_todo: '68.4vh',
       },
       minHeight: {
         'header-min': '144px',
@@ -46,13 +48,15 @@ module.exports = {
       },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
-        container: '0.2fr 1fr',
+        container: 'max(0.2fr, 400px) 1fr',
         video_container: '0.3fr 1fr',
       },
       gridTemplateColumns: {
-        calendar: '100px repeat(14, 1fr)',
-        container: '0.2fr 1fr',
-        video_container: '1fr 0.3fr',
+        calendar: '100px repeat(14, 176px)',
+        container: 'auto 1fr',
+        video_container: '1fr auto',
+        container: 'auto 1fr',
+        video_container: '0.3fr 1fr',
         rankingProfile:
           'minmax(20px, 1fr) minmax(2.75rem, 1fr) minmax(64px, 2fr)',
       },
@@ -79,7 +83,7 @@ module.exports = {
           'base-300': '#ced3d9',
           'base-content': '#1e2734',
           info: '#1c92f2',
-          success: '#009485',
+          success: '#1f2734',
           warning: '#ff9900',
           error: '#ff5724',
           '--rounded-box': '1rem',

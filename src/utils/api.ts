@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://www.sangyeop.shop';
+axios.defaults.baseURL =
+  import.meta.env.MODE === 'production'
+    ? 'https://www.sangyeop.shop'
+    : 'https://www.api-bbodog.shop';
+
+console.log(axios.defaults.baseURL);
 
 export function parseCookies(cookieString: string) {
   const cookies: { [key: string]: string } = {};
@@ -13,12 +18,17 @@ export function parseCookies(cookieString: string) {
 
 axios.interceptors.request.use(
   function requestInterceptor(config) {
+    const url =
+      import.meta.env.MODE === 'production'
+        ? 'https://www.sangyeop.shop'
+        : 'https://www.api-bbodog.shop';
+    console.log(url);
+    console.log(config.url);
     const cookieString = document.cookie;
     const cookies = parseCookies(cookieString);
-    if (
-      config.url !== 'https://www.sangyeop.shop/api/v1/members/login' &&
-      !cookies.accessToken
-    ) {
+    console.log(`url: ${url}/api/v1/members/login`);
+
+    if (config.url !== `${url}/api/v1/members/login` && !cookies.accessToken) {
       window.location.href = '/login';
     }
 
@@ -307,7 +317,7 @@ export const leaveVideoRoom = async (roomId: number) => {
 
 export const getStudyHistory = async (DateStart: string, DateEnd: string) => {
   const res = await axios.get(
-    `https://www.sangyeop.shop/api/v1/study-histories/durations?from=${DateStart}&to=${DateEnd}`
+    `/api/v1/study-histories/durations?from=${DateStart}&to=${DateEnd}`
   );
 
   const { data } = res.data;

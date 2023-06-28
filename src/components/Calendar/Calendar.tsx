@@ -42,7 +42,7 @@ const WeeklyViewCalendar = () => {
   const { setUserReservation, removeUserReservation } =
     useUserReservationActions();
 
-  const startSearchTime = dayjs();
+  const startSearchTime = dayjs().startOf('day');
   const endSearchTime = startSearchTime.add(2, 'week');
   const startSearchTimeString = startSearchTime.format('YYYY-MM-DDTHH:mm:ss');
   const endSearchTimeString = endSearchTime.format('YYYY-MM-DDTHH:mm:ss');
@@ -110,7 +110,10 @@ const WeeklyViewCalendar = () => {
 
   useEffect(() => {
     const newClient = new Client({
-      brokerURL: 'wss://www.sangyeop.shop/bbodok-websocket',
+      brokerURL:
+        import.meta.env.MODE === 'development'
+          ? 'wss://www.api-bbodog.shop/bbodok-websocket'
+          : 'wss://www.sangyeop.shop/bbodok-websocket',
       connectHeaders: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -202,8 +205,9 @@ const WeeklyViewCalendar = () => {
   const groupColor = useGroupColor(groupId);
 
   useEffect(() => {
-    const nearestTimeBefore = `${dayjs().hour()}:${
-      dayjs().minute() < 30 ? '00' : '30'
+    const now = dayjs();
+    const nearestTimeBefore = `${now.hour()}:${
+      now.minute() < 30 ? '00' : '30'
     }`;
     const timeElement = document.getElementById(nearestTimeBefore);
 
@@ -212,9 +216,9 @@ const WeeklyViewCalendar = () => {
 
   return (
     <div
-      className={`grid grid-rows-calendar grid-cols-calendar bg-calendar w-full h-calendar border-${groupColor} border-4 rounded-2xl overflow-auto`}
+      className={`grid grid-rows-calendar grid-cols-calendar bg-calendar w-full w-max-calendar border-${groupColor} border-4 rounded-2xl overflow-auto h-[490px]`}
     >
-      <span className="col-start-1 bg-calendar sticky top-0 left-0 z-50 after:absolute after:w-[20%] after:h-[30%] after:border-r-[1px] after:border-b-[1px] after:border-dashed after:border-calendar-border after:right-0 after:bottom-0" />
+      <span className="col-start-1 bg-calendar sticky top-0 left-0 h-[96px] z-50 after:absolute after:w-[20%] after:h-[30%] after:border-r-[1px] after:border-b-[1px] after:border-dashed after:border-calendar-border after:right-0 after:bottom-0" />
       <div className="sticky top-0 z-40 col-span-6 col-start-2">
         <CalendarHeader />
       </div>

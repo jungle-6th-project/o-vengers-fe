@@ -60,9 +60,18 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const { setGroupId, setGroupColorById } = useSelectedGroupIdActions();
   const { removeUserGroupReservation } = useUserReservationActions();
   const [isToastVisible, setIsToastVisible] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(
-    color === null ? 'accent' : color
-  );
+
+  let newColor = color;
+  if (color === null) {
+    newColor = ['primary', 'secondary', 'accent', 'neutral'][
+      Math.floor(Math.random() * 4)
+    ];
+    console.log(newColor);
+    changeGroupColor(groupId, newColor);
+    setGroupColorById(groupId, newColor);
+  }
+
+  const [selectedColor, setSelectedColor] = useState(newColor);
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
 

@@ -22,13 +22,13 @@ const RoomEnterMessage = ({
     );
   }
 
-  let text = '방 입장까지 남은 시간';
+  let text = '공부방 입장까지 남은 시간';
 
   if (onTimerIdle) {
-    text = '100시간 이내에 예약한 방이 없어요';
+    text = '100시간 이내에 예약한 공부방이 없어요';
   }
 
-  return <div className="text-base text-white">{text}</div>;
+  return <div className="text-lg text-white">{text}</div>;
 };
 
 export default RoomEnterMessage;

@@ -1,4 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import GroupMakeModal from './components/GroupMakeModal/GroupMakeModal';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking/Ranking';
@@ -11,13 +13,14 @@ import { ReactComponent as Logo } from '@/assets/bbodog_log_svg.svg';
 
 function App() {
   const location = useLocation().pathname.split('/').filter(Boolean);
-
   const isGroupPath = !(location.length < 1);
+  const [token, ,] = useCookies(['accessToken']);
 
+  axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
     <>
-      <div className="grid m-10 gap-x-10 grid-rows-container grid-cols-container w-max-screen">
-        <div className="row-span-3 col-todo">
+      <div className="grid m-10 gap-x-10 gap-y-5 grid-rows-container grid-cols-container w-max-full h-max-full">
+        <div className="row-span-2 flex flex-col flex-grow">
           <Logo
             className="mb-8 w-ranking_todo min-w-leftbar max-w-leftbar"
             width="w-ranking_todo min-w-leftbar max-w-leftbar"
@@ -26,26 +29,25 @@ function App() {
           <Ranking />
           <TodoList />
         </div>
-        <div className="flex justify-between mb-5">
+        <div className="Navigator flex justify-between max-w-calendar">
+          <div className="flex flex-col justify-between mr-3 btn-3 h-groupList min-h-header-min max-h-header-max">
+            {isGroupPath && <GroupJoinModal joinPath={location[1]} />}
+            <GroupMakeModal />
+            <GroupSearchModal />
+            <Link to="/mypage">
+              <button type="button" className="btn btn-square">
+                MY
+              </button>
+            </Link>
+          </div>
           <div className="flex">
-            <div className="flex flex-col justify-between mr-3 btn-3 h-groupList min-h-header-min max-h-header-max">
-              {isGroupPath && <GroupJoinModal joinPath={location[1]} />}
-              <GroupMakeModal />
-              <GroupSearchModal />
-              <Link to="/mypage">
-                <button type="button" className="btn btn-square">
-                  MY
-                </button>
-              </Link>
-            </div>
-
             <div className="flex">
               <GroupsList />
             </div>
           </div>
           <Timer />
         </div>
-        <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3 overflow-hidden rounded-2xl bg-calendar">
+        <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3 overflow-hidden rounded-2xl bg-calendar max-w-calendar">
           <Calendar />
         </div>
       </div>

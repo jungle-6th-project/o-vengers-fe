@@ -15,14 +15,15 @@ function KakaoCallback() {
     const fetchData = async () => {
       const params = new URLSearchParams(window.location.search);
       const code = params.get('code');
-
+      const url =
+        import.meta.env.MODE === 'production'
+          ? 'https://www.sangyeop.shop'
+          : 'https://www.api-bbodog.shop';
+      console.log(`${url}/api/v1/members/login`);
       try {
-        const response = await axios.post(
-          `https://www.sangyeop.shop/api/v1/members/login`,
-          {
-            authCode: code,
-          }
-        );
+        const response = await axios.post(`${url}/api/v1/members/login`, {
+          authCode: code,
+        });
         const { accessToken, refreshToken } = response.data.data;
 
         setAccessToken('accessToken', accessToken, { path: '/' });

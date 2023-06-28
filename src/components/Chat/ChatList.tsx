@@ -11,7 +11,7 @@ interface ChatListProps {
 
 const ChatList: React.FC<ChatListProps> = ({ datas, user }) => {
   return (
-    <div>
+    <div className="absolute bottom-[4.25rem]">
       {datas.map(data =>
         data.userData.name === user.name ? (
           <ChatEnd

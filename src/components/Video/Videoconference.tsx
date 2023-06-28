@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   isEqualTrackRef,
   isTrackReference,
   log,
 } from '@livekit/components-core';
 import {
-  ControlBar,
   FocusLayout,
   FocusLayoutContainer,
   GridLayout,
@@ -16,17 +16,16 @@ import {
   ParticipantTile,
   useCreateLayoutContext,
   LayoutContextProvider,
-  Chat,
-  VideoConferenceProps,
 } from '@livekit/components-react';
 import type { WidgetState } from '@livekit/components-core';
 import { RoomEvent, Track } from 'livekit-client';
 import { useEffect, useState } from 'react';
 
-function VideoConference({ chatMessageFormatter }: VideoConferenceProps) {
-  const [widgetState, setWidgetState] = useState<WidgetState>({
+function VideoConference2() {
+  const [, setWidgetState] = useState<WidgetState>({
     showChat: false,
   });
+
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
@@ -50,9 +49,6 @@ function VideoConference({ chatMessageFormatter }: VideoConferenceProps) {
   const carouselTracks = tracks.filter(
     track => !isEqualTrackRef(track, focusTrack)
   );
-  const screenShareTracksJson = JSON.stringify(
-    screenShareTracks.map(ref => ref.publication.trackSid)
-  );
 
   useEffect(() => {
     // if screen share tracks are published, and no pin is set explicitly, auto set the screen share
@@ -69,18 +65,16 @@ function VideoConference({ chatMessageFormatter }: VideoConferenceProps) {
       layoutContext.pin.dispatch?.({ msg: 'clear_pin' });
     }
   }, [
-    screenShareTracksJson,
+    JSON.stringify(screenShareTracks.map(ref => ref.publication.trackSid)),
     tracks.length,
     focusTrack?.publication?.trackSid,
-    focusTrack,
-    layoutContext.pin,
-    screenShareTracks,
   ]);
 
   return (
     <div className="lk-video-conference">
       <LayoutContextProvider
         value={layoutContext}
+        // onPinChange={handleFocusStateChange}
         onWidgetChange={widgetUpdate}
       >
         <div className="lk-video-conference-inner">
@@ -100,16 +94,16 @@ function VideoConference({ chatMessageFormatter }: VideoConferenceProps) {
               </FocusLayoutContainer>
             </div>
           )}
-          <ControlBar variation="minimal" />
         </div>
-        <Chat
+        {/* <Chat
           style={{ display: widgetState.showChat ? 'flex' : 'none' }}
           messageFormatter={chatMessageFormatter}
-        />
+        /> */}
       </LayoutContextProvider>
       <RoomAudioRenderer />
       <ConnectionStateToast />
     </div>
   );
 }
-export default VideoConference;
+
+export default VideoConference2;

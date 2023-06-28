@@ -66,3 +66,4 @@ sketch
 .idea
 src/test.json
 .env.production
+.vscode/launch.json

@@ -46,8 +46,9 @@ const Mypage = () => {
   );
   const endDate = dayjs().add(1, 'day').format('YYYY-MM-DDT00:00:00');
 
-  const { data, isLoading, isError } = useQuery(['studyHistory'], () =>
-    getStudyHistory(startDate, endDate)
+  const { data, isLoading, isError } = useQuery(
+    ['studyHistory', startDate, endDate],
+    () => getStudyHistory(startDate, endDate)
   );
 
   if (isLoading || isError) {
