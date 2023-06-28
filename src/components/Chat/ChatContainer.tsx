@@ -79,7 +79,7 @@ const ChatContainer = ({ datas, setDatas }: ChatContainerProps) => {
   };
 
   return (
-    <div className="rounded-b-lg border border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar h-video_todo bg-[#FAFAFA]  border-t-0 relative  overflow-scroll">
+    <div className="rounded-b-lg border border-[#D9D9D9]  min-w-leftbar max-w-leftbar h-video_todo bg-[#FAFAFA]  border-t-0 relative  overflow-scroll">
       <ChatList datas={datas} user={user} />
       <ChatForm onSubmit={handleSubmit} onChange={onChange} chat={chat} />
     </div>
