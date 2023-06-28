@@ -49,7 +49,7 @@ module.exports = {
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
         container: 'max(0.2fr, 400px) 1fr',
-        video_container: '0.3fr 1fr',
+        video_container: '0.3fr auto',
       },
       gridTemplateColumns: {
         calendar: '100px repeat(14, 176px)',
