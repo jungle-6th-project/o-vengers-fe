@@ -80,29 +80,27 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
     bar.data.day === today ? '#0725E3' : '#000000';
 
   return (
-    <div className="s bg-reservation card w-[42vw] h-[50vh] font-medium">
+    <div className="bg-reservation card w-[42vw] min-w-[800px] rounded-md min-h-[250px] h-[20.5vw] p-[1.5vw] font-medium">
       <div className="flex space-x-3">
-        <div className="text-[2.5vw] pl-[2vw] pt-[4vh] text-black mt-0">
+        <div className="text-[2.5vw] text-black leading-[2.5vw]">
           {total > 0 ? total.toFixed(1) : 0}H
         </div>
         <div>
-          <div className="text-black pt-[4.8vh] text-[0.9vw]">
-            WEEKLY STUDY TIME
-          </div>
+          <div className="text-black text-[0.9vw]">WEEKLY STUDY TIME</div>
           <div className="text-bbodog_blue text-[0.9vw]">
             {weekStart.format('MM.DD')} - {weekEnd.format('MM.DD')}
           </div>
         </div>
       </div>
-      <div className="flex justify-center space-x-4">
+      <div className="flex justify-between">
         <button
           type="button"
-          className="pl-[1.5vw] text-black flex pt-[12vh]"
+          className=" text-black flex pt-[5vw]"
           onClick={handlePreviousWeek}
         >
           <FiChevronLeft size="30" />
         </button>
-        <div style={{ width: '100%', height: '36.5vh', margin: '0' }}>
+        <div style={{ width: '41vw', height: '100%', margin: '0' }}>
           <ResponsiveBar
             tooltip={CustomTooltip}
             animate={false}
@@ -150,7 +148,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
         </div>
         <button
           type="button"
-          className="pr-[1.5vw] text-black flex pt-[12vh]"
+          className="pl-0 text-black flex pt-[5vw]"
           onClick={handleNextWeek}
         >
           <FiChevronRight size="30" />

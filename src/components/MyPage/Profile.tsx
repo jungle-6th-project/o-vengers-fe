@@ -19,18 +19,18 @@ const Profile = () => {
     await navigate('/login');
   };
   return (
-    <div className="card card-bordered flex items-center border-[#D9D9D9] w-ranking_todo bg-[#FAFAFA] rounded-xl h-[45vh] mb-3">
-      <div className="flex items-center avatar">
-        <div className="rounded-full w-[13vw] h-[13vw] mt-[3vh]">
+    <div className="card card-bordered flex items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-md min-h-[250px] h-[20.5vw] mb-3">
+      <div className="flex justify-center avatar">
+        <div className="rounded-full w-[13vw] min-w-[150px] mt-[1.5vw]">
           <img src={user.profile} alt="Profile" />
         </div>
       </div>
-      <div className="mt-1 text-xl font-semibold text-black profile-name">
+      <div className="mt-[0.5vw] text-[1.3rem] font-semibold text-black profile-name">
         {user.name}
       </div>
       <button
         type="button"
-        className="mt-1 items-center font-medium text-sm text-black w-[5vw] h-[3vh] bg-gray-200 border-transparent rounded btn btn-xs"
+        className="items-center font-medium text-[0.9rem] mb-[0.6vw] text-black w-[5rem] h-[1.8rem] bg-gray-200 border-transparent rounded btn btn-xs"
         onClick={() => logOut()}
       >
         로그아웃
