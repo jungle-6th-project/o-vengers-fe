@@ -90,7 +90,7 @@ const Mypage = () => {
   }
 
   return (
-    <div className="grid m-10 gap-x-5 grid-rows-container grid-cols-container w-max-screen">
+    <div className="m-10 grid gap-x-5 grid-rows-container grid-cols-container w-max-screen">
       <div className="row-span-3 col-todo">
         <Link to="/">
           <button type="button" className="flex items-center mb-3">
