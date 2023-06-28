@@ -205,8 +205,9 @@ const WeeklyViewCalendar = () => {
   const groupColor = useGroupColor(groupId);
 
   useEffect(() => {
-    const nearestTimeBefore = `${dayjs().hour()}:${
-      dayjs().minute() < 30 ? '00' : '30'
+    const now = dayjs();
+    const nearestTimeBefore = `${now.hour()}:${
+      now.minute() < 30 ? '00' : '30'
     }`;
     const timeElement = document.getElementById(nearestTimeBefore);
 
