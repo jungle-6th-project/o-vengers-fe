@@ -190,7 +190,7 @@ const GroupMakeModal = () => {
                 onClick={onClickMakeGroup}
                 disabled={isPassword && inputs.password.length < 1}
               >
-                방 만들기
+                그룹 만들기
               </button>
             </div>
           </form>
