@@ -21,17 +21,11 @@ interface Data {
 }
 
 const parseTimeDuration = (durationString: string) => {
-  const stringValue = durationString ? String(durationString) : 'PT'; // 값이 null 또는 undefined인 경우 'PT'로 정의
-  const regex = /PT(\d*H)?(\d*M)?(\d*S)?/; // 정규식을 사용하여 형식 매칭
-  const matches = stringValue.match(regex);
-
-  if (!matches) {
-    throw new Error('Invalid time duration format');
+  if (!durationString || typeof durationString !== 'string') {
+    return { sum: 0 };
   }
-
-  const hours = matches[1] ? parseInt(matches[1].slice(0, -1), 10) : 0;
-  const minutes = matches[2] ? parseInt(matches[2].slice(0, -1), 10) : 0;
-  const sum = hours * 60 + minutes;
+  const studyHistory = dayjs.duration(durationString);
+  const sum = studyHistory.hours() * 60 + studyHistory.minutes();
   return { sum };
 };
 
@@ -50,7 +44,10 @@ const Mypage = () => {
   if (isLoading || isError) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <span className="loading-xl">Loading...</span>
+        <span
+          className="loading loading-dots loading-lg place-self-center"
+          style={{ fontSize: '4rem' }}
+        />
       </div>
     );
   }
@@ -90,24 +87,38 @@ const Mypage = () => {
   }
 
   return (
-    <div className="grid m-10 gap-x-5 grid-rows-container grid-cols-container w-max-screen">
-      <div className="row-span-3 col-todo">
-        <Link to="/">
-          <button type="button" className="flex items-center mb-3">
-            <FiArrowLeft className="icon" size="20" />
-            <span className="ml-2 text-[2.5vh] font-medium"> MAIN </span>
+    <div className="mx-[2.5rem] mb-[2.5rem] mt-[1rem]">
+      <div>
+        <Link to="/" className="inline-block">
+          <button type="button" className="flex items-center">
+            <FiArrowLeft className="icon" size="1.8rem" />
+            <span className="text-[1.8rem] font-medium"> MAIN </span>
           </button>
         </Link>
-        <Profile />
-        <TodoList />
       </div>
-      <div className="flex justify-between mb-5">
-        <TaskProgress />
-        <DailyHistory data={targetData} />
-        <WeeklyHistory data={transformedData} />
-      </div>
-      <div className="self-start col-start-2 col-end-3 row-start-2 row-end-3 rounded-xl">
-        <YearlyHistory data={transformedData} />
+      <div className="grid gap-x-3 gap-y-3 grid-rows-mypage grid-cols-container w-max-screen">
+        <div>
+          <Profile />
+        </div>
+        <div className="flex">
+          <div style={{ marginRight: '0.75rem' }}>
+            <TaskProgress />
+          </div>
+          <div style={{ marginRight: '0.75rem' }}>
+            <DailyHistory data={targetData} />
+          </div>
+          <div style={{ flex: 'auto' }}>
+            <WeeklyHistory data={transformedData} />
+          </div>
+        </div>
+        <div>
+          <TodoList />
+        </div>
+        <div style={{ position: 'relative' }}>
+          <div style={{ width: 'calc(100% + 0.75rem)' }}>
+            <YearlyHistory data={transformedData} />
+          </div>
+        </div>
       </div>
     </div>
   );

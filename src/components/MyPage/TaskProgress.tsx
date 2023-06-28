@@ -35,17 +35,19 @@ const TaskProgress = () => {
     ((filterCompleteTodo / todoDatas.length) * 100).toFixed(1)
   );
   return (
-    <div className="rounded-2xl pl-[2vw] bg-reservation card h-[50vh] w-[16vw] min-w-leftbar max-w-leftbar">
-      <p className="pt-[4vh] font-semibold  text-black text-[1.8vw]">TODO</p>
-      <p className=" text-bbodog_blue font-medium text-[0.9vw] ">투두리스트</p>
-      <div className="pt-[28.5vh] font-medium">
-        <p className="text-bbodog_blue text-[0.9vw] mb-0">
+    <div className="rounded-md min-h-[250px] h-[20.5vw] p-[1.5vw] bg-reservation w-[16vw] min-w-leftbar max-w-leftbar flex flex-col">
+      <p className="font-semibold  text-black text-[1.9vw]">TODO</p>
+      <p className=" text-bbodog_blue font-medium text-[0.9vw] ml-1 leading-none">
+        투두리스트
+      </p>
+      <div className="font-medium mt-auto">
+        <p className="text-bbodog_blue text-[0.9vw] leading-none">
           {completeRate}% TASK COMPLETED
         </p>
-        <progress
-          className="w-[12vw] progress mb-1"
+        <progress 
+          className="w-[13vw] progress" 
           value={completeRate}
-          max="100"
+          max="100" 
         />
       </div>
     </div>
