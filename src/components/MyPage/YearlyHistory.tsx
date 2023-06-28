@@ -25,21 +25,21 @@ const CustomTooltip = (props: CalendarTooltipProps) => {
 };
 
 const YearlyHistory = ({ data }: YearlyHistoryProps) => {
-  const Colors = data.map(item => {
-    if (item.value > 0 && item.value <= 25) {
-      return 'rgba(7, 37, 227, 0.25)';
-    }
-    if (item.value > 25 && item.value <= 50) {
-      return 'rgba(7, 37, 227, 0.5)';
-    }
-    if (item.value > 50 && item.value <= 100) {
-      return 'rgba(7, 7, 227, 0.75)';
-    }
-    if (item.value > 100) {
-      return '#0725E3';
-    }
-    return '#eeeeee';
-  });
+  // const Colors = data.map(item => {
+  //   if (item.value > 0 && item.value <= 60) {
+  //     return '#A2F9F9';
+  //   }
+  //   if (item.value > 60 && item.value <= 120) {
+  //     return '#8696FE';
+  //   }
+  //   if (item.value > 120 && item.value <= 180) {
+  //     return '#4942E4';
+  //   }
+  //   if (item.value > 180) {
+  //     return '#11009E';
+  //   }
+  //   return '#eeeeee';
+  // });
   const today = dayjs();
   // 풋터 제거 후 h-full로 수정하기, max-h 설정하기
   return (
@@ -51,13 +51,8 @@ const YearlyHistory = ({ data }: YearlyHistoryProps) => {
           from={dayjs(`${today.year()}-01-01`).format('YYYY-MM-DD')}
           to={today.format('YYYY-MM-DD')}
           emptyColor="#eeeeee"
-          // colors={[
-          //   'rgba(7, 37, 227, 0.25)',
-          //   'rgba(7, 37, 227, 0.5)',
-          //   'rgba(7, 7, 227, 0.75)',
-          //   '#0725E3',
-          // ]}
-          colors={Colors}
+          colors={['#A2F9F9', '#8696FE', '#4942E4', '#11009E']}
+          // colors={Colors}
           margin={{ top: 0, right: 0, bottom: 0, left: 45 }}
           yearSpacing={40}
           monthBorderColor="#ffffff"

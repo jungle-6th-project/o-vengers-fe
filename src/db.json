@@ -1,0 +1,128 @@
+{
+  "time": [
+    {
+      "calculatedAt": "2023-05-25",
+      "duration": "PT2H15M30S"
+    },
+    {
+      "calculatedAt": "2023-05-26",
+      "duration": "PT0H45M12S"
+    },
+    {
+      "calculatedAt": "2023-05-27",
+      "duration": "PT1H50M20S"
+    },
+    {
+      "calculatedAt": "2023-05-28",
+      "duration": "PT0H59M48S"
+    },
+    {
+      "calculatedAt": "2023-05-29",
+      "duration": "PT1H40M5S"
+    },
+    {
+      "calculatedAt": "2023-05-30",
+      "duration": "PT1H15M21S"
+    },
+    {
+      "calculatedAt": "2023-05-31",
+      "duration": "PT2H30M45S"
+    },
+    {
+      "calculatedAt": "2023-06-01",
+      "duration": "PT1H5M37S"
+    },
+    {
+      "calculatedAt": "2023-06-02",
+      "duration": "PT2H25M16S"
+    },
+    {
+      "calculatedAt": "2023-06-03",
+      "duration": "PT0H50M59S"
+    },
+    {
+      "calculatedAt": "2023-06-04",
+      "duration": "PT2H5M32S"
+    },
+    {
+      "calculatedAt": "2023-06-05",
+      "duration": "PT1H10M17S"
+    },
+    {
+      "calculatedAt": "2023-06-07",
+      "duration": "PT1H50M39S"
+    },
+    {
+      "calculatedAt": "2023-06-08",
+      "duration": "PT2H20M55S"
+    },
+    {
+      "calculatedAt": "2023-06-09",
+      "duration": "PT1H35M44S"
+    },
+    {
+      "calculatedAt": "2023-06-12",
+      "duration": "PT2H0M9S"
+    },
+    {
+      "calculatedAt": "2023-06-13",
+      "duration": "PT1H15M53S"
+    },
+    {
+      "calculatedAt": "2023-06-14",
+      "duration": "PT2H25M26S"
+    },
+    {
+      "calculatedAt": "2023-06-15",
+      "duration": "PT0H49M2S"
+    },
+    {
+      "calculatedAt": "2023-06-16",
+      "duration": "PT2H4M41S"
+    },
+    {
+      "calculatedAt": "2023-06-17",
+      "duration": "PT3H9M27S"
+    },
+    {
+      "calculatedAt": "2023-06-18",
+      "duration": "PT2H14M57S"
+    },
+    {
+      "calculatedAt": "2023-06-20",
+      "duration": "PT1H30M12S"
+    },
+    {
+      "calculatedAt": "2023-06-21",
+      "duration": "PT0H20M0S"
+    },
+    {
+      "calculatedAt": "2023-06-22",
+      "duration": "PT3H20M0S"
+    },
+    {
+      "calculatedAt": "2023-06-23",
+      "duration": "PT2H0M0S"
+    },
+    {
+      "calculatedAt": "2023-06-24",
+      "duration": "PT1H20M0S"
+    },
+    {
+      "calculatedAt": "2023-06-25",
+      "duration": "PT1H40M0S"
+    },
+    {
+      "calculatedAt": "2023-06-26",
+      "duration": "PT0H20M0S"
+    },
+    {
+      "calculatedAt": "2023-06-27",
+      "duration": "PT1H20M0S"
+    },
+    {
+      "calculatedAt": "2023-06-28",
+      "duration": "PT3H20M0S"
+    }
+  ]
+}

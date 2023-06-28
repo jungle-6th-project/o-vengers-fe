@@ -1,4 +1,4 @@
-import { FaLock } from 'react-icons/fa';
+import { FaLock } from '@react-icons/all-files/fa/FaLock';
 
 export interface SelectedGroup {
   groupId: number;

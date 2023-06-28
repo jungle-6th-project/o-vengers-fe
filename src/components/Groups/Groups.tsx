@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
-import { BsThreeDotsVertical } from 'react-icons/bs';
-import { FaLock } from 'react-icons/fa';
+import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical';
+import { FaLock } from '@react-icons/all-files/fa/FaLock';
 import {
   useSelectedGroupId,
   useSelectedGroupIdActions,

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, KeyboardEvent } from 'react';
-import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
-import { BsCheckLg } from 'react-icons/bs';
+import { AiFillEdit } from '@react-icons/all-files/ai/AiFillEdit';
+import { AiFillDelete } from '@react-icons/all-files/ai/AiFillDelete';
+import { AiOutlineCheck } from '@react-icons/all-files/ai/AiOutlineCheck';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Todo } from './TodoTypes';
 import { editOrDoneTodo, deleteTodo } from '@/utils/api';
@@ -122,7 +123,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
               onClick={onClickSave}
               type="button"
             >
-              <BsCheckLg />
+              <AiOutlineCheck />
             </button>
           </>
         ) : (

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCopyToClipboard } from 'usehooks-ts';
-import { AiOutlineCopy, AiOutlineCheck, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlineCopy } from '@react-icons/all-files/ai/AiOutlineCopy';
+import { AiOutlineCheck } from '@react-icons/all-files/ai/AiOutlineCheck';
+import { AiOutlinePlus } from '@react-icons/all-files/ai/AiOutlinePlus';
 import { makeGroup } from '@/utils/api';
 import { useSelectedGroupIdActions } from '@/store/groupStore';
 

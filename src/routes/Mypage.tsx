@@ -1,4 +1,4 @@
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft } from '@react-icons/all-files/fi/FiArrowLeft';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -8,7 +8,8 @@ import TaskProgress from '@/components/MyPage/TaskProgress';
 import DailyHistory from '@/components/MyPage/DailyHistory';
 import WeeklyHistory from '@/components/MyPage/WeeklyHistory';
 import TodoList from '@/components/Todo/TodoList';
-import { getStudyHistory } from '@/utils/api';
+import { getFakeCalendar, getStudyHistory } from '@/utils/api';
+import { useUser } from '@/store/userStore';
 
 interface DataItem {
   calculatedAt: string;
@@ -30,6 +31,8 @@ const parseTimeDuration = (durationString: string) => {
 };
 
 const Mypage = () => {
+  // 지워야 함
+  const user = useUser();
   const today = dayjs();
   const startDate = dayjs(`${today.subtract(1, 'year').year()}-12-25`).format(
     'YYYY-MM-DDT00:00:00'
@@ -41,6 +44,9 @@ const Mypage = () => {
     () => getStudyHistory(startDate, endDate)
   );
 
+  const { data: fakeData } = useQuery(['fakeData'], () => {
+    return getFakeCalendar();
+  });
   if (isLoading || isError) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -53,8 +59,16 @@ const Mypage = () => {
   }
 
   let transformedData: Data[] = [];
+  // transformedData = fakeData.map((item: DataItem) => {
+  //   const { duration, calculatedAt } = item;
+  //   const { sum } = parseTimeDuration(duration);
+  //   return {
+  //     value: sum,
+  //     day: calculatedAt,
+  //   };
+  // });
 
-  if (data.length === 0) {
+  if (data.length === 0 && user.name !== '김현지') {
     transformedData = [
       {
         value: 0,
@@ -62,15 +76,26 @@ const Mypage = () => {
       },
     ];
   } else {
-    transformedData = data.map((item: DataItem) => {
-      const { duration, calculatedAt } = item;
-      const { sum } = parseTimeDuration(duration);
+    transformedData =
+      user.name === '김현지'
+        ? fakeData.map((item: DataItem) => {
+            const { duration, calculatedAt } = item;
+            const { sum } = parseTimeDuration(duration);
 
-      return {
-        value: sum,
-        day: calculatedAt,
-      };
-    });
+            return {
+              value: sum,
+              day: calculatedAt,
+            };
+          })
+        : data.map((item: DataItem) => {
+            const { duration, calculatedAt } = item;
+            const { sum } = parseTimeDuration(duration);
+
+            return {
+              value: sum,
+              day: calculatedAt,
+            };
+          });
   }
 
   let targetData: Data = {
