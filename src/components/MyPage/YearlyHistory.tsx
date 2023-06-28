@@ -51,7 +51,7 @@ const YearlyHistory = ({ data }: YearlyHistoryProps) => {
           from={dayjs(`${today.year()}-01-01`).format('YYYY-MM-DD')}
           to={today.format('YYYY-MM-DD')}
           emptyColor="#eeeeee"
-          colors={['#A2F9F9', '#8696FE', '#4942E4', '#11009E']}
+          colors={['#71BEFA', '#8696FE', '#4942E4', '#11009E']}
           // colors={Colors}
           margin={{ top: 0, right: 0, bottom: 0, left: 45 }}
           yearSpacing={40}
