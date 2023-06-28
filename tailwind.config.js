@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         login: "url('/ppodog.png')",
-        background: "url('/background.png')",
+        background: "url('/chatroomBackground.svg')",
       },
       colors: {
         reservation: '#E3E3E3',

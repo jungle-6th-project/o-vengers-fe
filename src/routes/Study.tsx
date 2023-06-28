@@ -23,15 +23,7 @@ function App() {
     LocalUserChoices | undefined
   >(undefined);
   return (
-    <div
-      className="w-full h-full"
-      style={{
-        backgroundImage: 'url("/background.png")',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
+    <div className="w-full h-full bg-background bg-center bg-cover bg-no-repeat">
       {roomId && !Array.isArray(roomId) && preJoinChoices ? (
         <ActiveRoom
           roomName={roomId}
