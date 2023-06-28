@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { FaLock } from 'react-icons/fa';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical';
+import { FaLock } from '@react-icons/all-files/fa/FaLock';
 import MemberProfiles from './MemberProfiles';
 import { getGroupMembers } from '@/utils/api';
 import {

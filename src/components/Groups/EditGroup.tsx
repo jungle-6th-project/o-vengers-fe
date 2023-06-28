@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RiArrowGoBackLine } from 'react-icons/ri';
+import { RiArrowGoBackLine } from '@react-icons/all-files/ri/RiArrowGoBackLine';
 
 export interface GroupsItem {
   color: string;
@@ -37,12 +37,12 @@ const EditGroup = ({
       role="presentation"
       className={`relative card w-group min-w-group-min max-w-group-max h-groupList min-h-header-min max-h-header-max bg-base-200 border-4 border-${selectedColor} text-black cursor-pointer`}
     >
-      <div className="w-full h-full p-3 grid grid-rows-group-edit grid-cols-group-edit card-body">
+      <div className="grid w-full h-full p-3 grid-rows-group-edit grid-cols-group-edit card-body">
         {groupId !== 1 && (
           <div className="tooltip tooltip-bottom" data-tip={tooltip}>
             <button
               type="button"
-              className="justify-start w-full py-0 my-0 btn btn-sm row-start-1 col-start-1"
+              className="justify-start w-full col-start-1 row-start-1 py-0 my-0 btn btn-sm"
               onClick={() => {
                 handleInvite(path);
                 handleTooltip();
@@ -54,16 +54,16 @@ const EditGroup = ({
         )}
         <button
           type="button"
-          className="p-0 btn btn-ghost btn-sm row-start-1 col-start-2"
+          className="col-start-2 row-start-1 p-0 btn btn-ghost btn-sm"
           onClick={handleEdit}
         >
           <RiArrowGoBackLine size="20" />
         </button>
-        {/* <div className="grid-rows-2 grid-cols-1"> */}
+        {/* <div className="grid-cols-1 grid-rows-2"> */}
         {groupId !== 1 && (
           <button
             type="button"
-            className="justify-start w-full py-0 my-0 btn btn-sm row-start-2 col-start-1"
+            className="justify-start w-full col-start-1 row-start-2 py-0 my-0 btn btn-sm"
             onClick={() => handleDelete(groupId)}
           >
             그룹 탈퇴

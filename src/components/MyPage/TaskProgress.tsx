@@ -40,14 +40,14 @@ const TaskProgress = () => {
       <p className=" text-bbodog_blue font-medium text-[0.9vw] ml-1 leading-none">
         투두리스트
       </p>
-      <div className="font-medium mt-auto">
+      <div className="mt-auto font-medium">
         <p className="text-bbodog_blue text-[0.9vw] leading-none">
           {completeRate}% TASK COMPLETED
         </p>
-        <progress 
-          className="w-[13vw] progress" 
+        <progress
+          className="w-[13vw] progress"
           value={completeRate}
-          max="100" 
+          max="100"
         />
       </div>
     </div>
