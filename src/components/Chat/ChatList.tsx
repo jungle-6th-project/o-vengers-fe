@@ -22,7 +22,7 @@ const ChatList = ({ datas, user }: ChatListProps) => {
 
   return (
     <div
-      className="absolute w-full px-4 overflow-scroll"
+      className="absolute w-full px-3 overflow-scroll"
       style={{ height: 'calc(100% - 60px - 0.75rem)' }}
     >
       {datas.map(data =>

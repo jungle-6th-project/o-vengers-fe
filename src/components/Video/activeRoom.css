@@ -39,6 +39,7 @@
 
 div.lk-button-group-container {
   width: 100%;
+  flex-wrap: wrap !important;
 }
 
 div.lk-button-group-container > div.lk-button-group.video {
