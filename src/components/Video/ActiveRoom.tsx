@@ -65,14 +65,13 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           <div className="self-end col-start-1 row-start-1">
             <ControlBar controls={{ chat: false }} variation="minimal" />
           </div>
-          <div className="w-full h-full col-start-1 col-end-2 row-start-2 row-end-3">
-            {/* <VideoConference /> */}
+          <div className="max-w-full col-start-1 col-end-2 row-start-2 row-end-3 h-rightbar max-h-rightbar">
             <VideoConference />
           </div>
           <div className="self-end col-start-2">
             <RoomTimer />
           </div>
-          <div className="w-full h-full col-start-2 col-end-3 row-start-2 row-end-3">
+          <div className="w-full col-start-2 col-end-3 row-start-2 row-end-3 h-rightbar max-h-rightbar">
             <RightBar />
           </div>
         </div>
