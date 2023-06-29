@@ -89,7 +89,7 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
       todoList.length !== 0 &&
       Array.isArray(todoList)
     ) {
-      setTodos(todoList?.reverse());
+      setTodos(todoList);
     }
   }, [todoList, isLoading, isError]);
 
@@ -125,13 +125,15 @@ const GroupTodo = ({ groupData }: GroupDataProps) => {
         />
       )}
       {todos.length !== 0 &&
-        todos?.map((todo: Todo) => (
-          <TodoItem
-            key={todo.todoId}
-            todoData={todo}
-            onDelete={() => handleDelete(todo.todoId)}
-          />
-        ))}
+        [...todos]
+          ?.reverse()
+          .map((todo: Todo) => (
+            <TodoItem
+              key={todo.todoId}
+              todoData={todo}
+              onDelete={() => handleDelete(todo.todoId)}
+            />
+          ))}
     </div>
   );
 };
