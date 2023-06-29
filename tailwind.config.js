@@ -46,9 +46,11 @@ module.exports = {
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
         container: 'auto 1fr',
-        video_container: '0.3fr auto',
+        video_container: '100px 1fr',
         leftbar: '90px 0.8fr 1fr',
         'group-edit': 'repeat(3, 1fr)',
+        rightbar: 'auto 1fr',
+        chat: '1fr 60px',
       },
       gridTemplateColumns: {
         calendar: '100px repeat(14, 176px)',

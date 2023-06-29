@@ -52,34 +52,32 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   }, [userChoices]);
 
   return (
-    <div className="mx-10">
-      {liveKitUrl && (
-        <LiveKitRoom
-          token={token}
-          serverUrl={liveKitUrl}
-          options={roomOptions}
-          video={userChoices.videoEnabled}
-          audio={userChoices.audioEnabled}
-          onDisconnected={onLeave}
-        >
-          <div className="grid gap-3 grid-rows-video_container grid-cols-video_container">
-            <div className="self-end col-start-1 row-start-1">
-              <ControlBar controls={{ chat: false }} variation="minimal" />
-            </div>
-            <div className="col-start-1 col-end-2 row-start-2 row-end-3">
-              {/* <VideoConference /> */}
-              <VideoConference />
-            </div>
-            <div className="self-end col-start-2">
-              <RoomTimer />
-            </div>
-            <div className="col-start-2 col-end-3 row-start-2 row-end-3">
-              <RightBar />
-            </div>
+    liveKitUrl && (
+      <LiveKitRoom
+        token={token}
+        serverUrl={liveKitUrl}
+        options={roomOptions}
+        video={userChoices.videoEnabled}
+        audio={userChoices.audioEnabled}
+        onDisconnected={onLeave}
+      >
+        <div className="grid w-screen h-screen gap-3 px-10 pb-10 grid-rows-video_container grid-cols-video_container h-max-screen w-max-screen">
+          <div className="self-end col-start-1 row-start-1">
+            <ControlBar controls={{ chat: false }} variation="minimal" />
           </div>
-        </LiveKitRoom>
-      )}
-    </div>
+          <div className="w-full h-full col-start-1 col-end-2 row-start-2 row-end-3">
+            {/* <VideoConference /> */}
+            <VideoConference />
+          </div>
+          <div className="self-end col-start-2">
+            <RoomTimer />
+          </div>
+          <div className="w-full h-full col-start-2 col-end-3 row-start-2 row-end-3">
+            <RightBar />
+          </div>
+        </div>
+      </LiveKitRoom>
+    )
   );
 };
 
