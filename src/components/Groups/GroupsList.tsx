@@ -6,7 +6,7 @@ import { Keyboard, Mousewheel, Navigation } from 'node_modules/swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-import './styles.css';
+import './GroupsList.css';
 
 import { getMyGroups } from '@/utils/api';
 import { useSelectedGroupIdActions } from '@/store/groupStore';
