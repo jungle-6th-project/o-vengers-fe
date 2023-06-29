@@ -12,39 +12,43 @@ const RightBar = () => {
   };
 
   return (
-    <div className="rightbar">
-      <div className="tabs">
-        <button
-          type="button"
-          onClick={() => handleOptionChange('TODO')}
-          className={`tab tab-lg tab-lifted ${
-            selectedOption === 'TODO' ? 'tab-active' : ''
-          } ${
-            selectedOption === 'TODO'
-              ? 'bg-[#FAFAFA]'
-              : 'bg-neutral text-neutral-content'
-          }`}
-        >
-          TO DO
-        </button>
-        <button
-          type="button"
-          onClick={() => handleOptionChange('CHAT')}
-          className={`tab tab-lg tab-lifted ${
-            selectedOption === 'CHAT' ? 'tab-active' : ''
-          } ${
-            selectedOption === 'CHAT'
-              ? 'bg-[#FAFAFA]'
-              : 'bg-neutral text-neutral-content'
-          }`}
-        >
-          Chat
-        </button>
+    <div className="w-full h-full rightbar">
+      <div className="grid w-full h-full grid-rows-rightbar">
+        <div className="tabs">
+          <button
+            type="button"
+            onClick={() => handleOptionChange('TODO')}
+            className={`tab tab-lg tab-lifted ${
+              selectedOption === 'TODO' ? 'tab-active' : ''
+            } ${
+              selectedOption === 'TODO'
+                ? 'bg-[#FAFAFA]'
+                : 'bg-neutral text-neutral-content'
+            }`}
+          >
+            TO DO
+          </button>
+          <button
+            type="button"
+            onClick={() => handleOptionChange('CHAT')}
+            className={`tab tab-lg tab-lifted ${
+              selectedOption === 'CHAT' ? 'tab-active' : ''
+            } ${
+              selectedOption === 'CHAT'
+                ? 'bg-[#FAFAFA]'
+                : 'bg-neutral text-neutral-content'
+            }`}
+          >
+            Chat
+          </button>
+        </div>
+        <div>
+          {selectedOption === 'TODO' && <VideoTodoList />}
+          {selectedOption === 'CHAT' && (
+            <ChatContainer datas={datas} setDatas={setDatas} />
+          )}
+        </div>
       </div>
-      {selectedOption === 'TODO' && <VideoTodoList />}
-      {selectedOption === 'CHAT' && (
-        <ChatContainer datas={datas} setDatas={setDatas} />
-      )}
     </div>
   );
 };

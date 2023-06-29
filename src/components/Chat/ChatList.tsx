@@ -21,7 +21,10 @@ const ChatList = ({ datas, user }: ChatListProps) => {
   }, [datas]);
 
   return (
-    <div className="absolute bottom-[4.25rem] w-[15vw] right-4 2xl:h-[92%] xl:h-[87%] overflow-auto">
+    <div
+      className="absolute w-full px-4 overflow-scroll"
+      style={{ height: 'calc(100% - 60px - 0.75rem)' }}
+    >
       {datas.map(data =>
         data.userData.name === user.name ? (
           <ChatEnd
