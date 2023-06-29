@@ -25,6 +25,7 @@ module.exports = {
       minWidth: {
         'group-min': '158px',
         leftbar: '200px',
+        rightbar: '300px',
       },
       maxWidth: {
         'group-max': '200px',
@@ -36,12 +37,14 @@ module.exports = {
         groupList: '18vh',
         calendar: '97.8vh',
         video_todo: '68.4vh',
+        rightbar: 'calc(100vh - 100px - 3.25rem)',
       },
       minHeight: {
         'header-min': '144px',
       },
       maxHeight: {
         'header-max': '200px',
+        rightbar: 'calc(100vh - 100px - 3.25rem)',
       },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',

@@ -51,7 +51,7 @@ const RoomTimer = () => {
   }, [nearestReservationData]);
 
   return (
-    <div className="rounded-2xl">
+    <div className="w-ranking_todo min-w-rightbar max-w-leftbar">
       <span>
         {remainingTime.subtract(25, 'minutes').asSeconds() > 0
           ? '공부할 시간까지 앞으로'
@@ -59,7 +59,7 @@ const RoomTimer = () => {
       </span>
       <RoomTimerDisplay onIdle={onTimerIdle} remainingTime={remainingTime} />
       <progress
-        className="w-56 progress"
+        className="w-full progress"
         value={ROOM_EXPIRE_SEC - remainingTime.asSeconds()}
         max={ROOM_EXPIRE_SEC}
       />

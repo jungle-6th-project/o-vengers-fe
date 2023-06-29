@@ -12,9 +12,9 @@ const RightBar = () => {
   };
 
   return (
-    <div className="w-full h-full rightbar">
-      <div className="grid w-full h-full grid-rows-rightbar">
-        <div className="tabs">
+    <div className="h-rightbar max-h-rightbar min-w-leftbar max-w-rightbar rightbar">
+      <div className="grid w-full h-rightbar max-h-rightbar min-w-leftbar max-w-rightbar grid-rows-rightbar">
+        <div className="flex-grow w-full min-w-leftbar max-w-rightbar tabs flex-nowrap">
           <button
             type="button"
             onClick={() => handleOptionChange('TODO')}
@@ -25,6 +25,7 @@ const RightBar = () => {
                 ? 'bg-[#FAFAFA]'
                 : 'bg-neutral text-neutral-content'
             }`}
+            style={{ width: '50%' }}
           >
             TO DO
           </button>
@@ -38,11 +39,12 @@ const RightBar = () => {
                 ? 'bg-[#FAFAFA]'
                 : 'bg-neutral text-neutral-content'
             }`}
+            style={{ width: '50%' }}
           >
             Chat
           </button>
         </div>
-        <div>
+        <div className="overflow-auto">
           {selectedOption === 'TODO' && <VideoTodoList />}
           {selectedOption === 'CHAT' && (
             <ChatContainer datas={datas} setDatas={setDatas} />

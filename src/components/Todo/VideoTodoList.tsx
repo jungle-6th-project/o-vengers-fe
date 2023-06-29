@@ -8,7 +8,7 @@ const VideoTodoList = () => {
     staleTime: 20000,
   });
   return (
-    <div className="rounded-b-lg border border-[#D9D9D9] w-full min-w-leftbar max-w-leftbar h-full bg-[#FAFAFA] overflow-auto border-t-0">
+    <div className="rounded-b-lg border border-[#D9D9D9] w-ranking_todo min-w-rightbar max-w-leftbar h-full bg-[#FAFAFA] overflow-auto border-t-0">
       <div className="card-body" style={{ padding: '0.6rem' }}>
         {myGroupList?.map((group: GroupData) => (
           <GroupTodo key={group.groupId} groupData={group} />

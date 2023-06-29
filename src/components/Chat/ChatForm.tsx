@@ -10,7 +10,7 @@ const ChatForm = ({ onSubmit, onChange, chat }: ChatFormProps) => {
   return (
     <form
       onSubmit={onSubmit}
-      className="absolute bottom-0 w-full pb-3 pl-2 join min-w-leftbar max-w-leftbar"
+      className="absolute bottom-0 w-full pt-1 pb-2 pl-2 join min-w-leftbar max-w-leftbar"
     >
       <input
         type="text"
