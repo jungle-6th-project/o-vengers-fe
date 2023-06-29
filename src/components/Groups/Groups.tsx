@@ -19,14 +19,17 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const { setSelectedGroupId, setGroupColorById } = useSelectedGroupIdActions();
   const { removeUserGroupReservation } = useUserReservationActions();
 
-  let newColor = color;
-  if (color === null) {
-    newColor = ['primary', 'secondary', 'accent', 'neutral'][
-      Math.floor(Math.random() * 4)
-    ];
-  }
+  // let newColor = color;
+  // if (color === null) {
+  //   newColor = ['primary', 'secondary', 'accent', 'neutral'][
+  //     Math.floor(Math.random() * 4)
+  //   ];
+  // }
 
-  const [selectedColor, setSelectedColor] = useState(newColor);
+  // const [selectedColor, setSelectedColor] = useState(newColor);
+  const [selectedColor, setSelectedColor] = useState(
+    color === null ? 'accent' : color
+  );
   const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
 

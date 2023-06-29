@@ -30,6 +30,9 @@ const groupStore = create<GroupStore>()((set, get) => ({
     setGroup: (groups: Group[]) => {
       const updatedGroups = Object.fromEntries(
         Object.entries(groups).map(([, group]) => {
+          if (group.color === null) {
+            return [`${group.groupId}`, { ...group, color: 'accent' }];
+          }
           return [`${group.groupId}`, group];
         })
       );
