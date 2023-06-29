@@ -82,7 +82,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
 
   return (
     <div className="grid grid-rows-6 grid-flow-col bg-reservation card w-full min-w-[600px] rounded-md min-h-[250px] h-[20.5vw] p-[1.5vw] font-medium">
-      <div className="row-span-1 flex space-x-3">
+      <div className="flex row-span-1 space-x-3">
         <div className="text-[2.5vw] text-black leading-[3vw]">
           {total > 0 ? total.toFixed(1) : 0}H
         </div>
@@ -95,7 +95,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
           </div>
         </div>
       </div>
-      <div className="row-start-2 row-span-5 flex justify-between">
+      <div className="flex justify-between row-start-2 row-span-5">
         <button
           type="button"
           className=" text-black flex pt-[5vw]"
