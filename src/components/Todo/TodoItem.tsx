@@ -122,9 +122,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
               ref={inputRef}
             />
             <button
-              className={`pl-2 pr-1 m-0 ${
-                isHovering ? 'opacity-100' : 'opacity-0'
-              }`}
+              className="pl-2 pr-1 m-0"
               onClick={onClickSave}
               type="button"
             >
@@ -134,14 +132,14 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
         ) : (
           <>
             <span
-              className={`Content ml-2 flex-grow break-words overflow-auto w-full ${
+              className={`Content pl-2 flex-grow break-words overflow-auto w-full ${
                 todoData.done ? 'text-gray-400 line-through' : 'text-todo'
               }`}
             >
               {editedContent}
             </span>
             <button
-              className={`px-1 m-0 ${
+              className={`px-1 m-0 focus:opacity-100 ${
                 todoData.done ? 'opacity-0' : 'text-todo'
               }  ${isHovering && !todoData.done ? 'opacity-100' : 'opacity-0'}`}
               style={{ minHeight: 1 }}
@@ -152,7 +150,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
               <AiFillEdit />
             </button>
             <button
-              className={`px-1 m-0 ${
+              className={`px-1 m-0 focus:opacity-100 ${
                 todoData.done ? 'text-gray-400' : 'text-todo'
               } ${isHovering ? 'opacity-100' : 'opacity-0'}`}
               onClick={onClickDelete}
