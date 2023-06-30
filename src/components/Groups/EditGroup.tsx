@@ -44,7 +44,9 @@ const EditGroup = ({
         >
           <button
             type="button"
-            className="justify-start w-full h-full min-h-0 col-start-1 row-start-1 p-0 pl-2 m-0 text-base font-normal p-l btn disabled:bg-base-200"
+            className={`justify-start w-full h-full min-h-0 col-start-1 row-start-1 p-0 pl-2 m-0 text-base font-normal p-l btn disabled:bg-base-200 ${
+              groupId === 1 && 'no-animation'
+            }`}
             onClick={() => {
               handleInvite(path);
               handleTooltip();
@@ -68,7 +70,7 @@ const EditGroup = ({
           >
             <button
               type="button"
-              className="justify-start w-full h-full min-h-0 col-start-1 row-start-2 p-0 pl-2 m-0 text-base font-normal btn disabled:bg-base-200"
+              className="justify-start w-full h-full min-h-0 col-start-1 row-start-2 p-0 pl-2 m-0 text-base font-normal btn disabled:bg-base-200 no-animation"
               disabled
             >
               그룹 탈퇴

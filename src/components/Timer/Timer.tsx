@@ -39,6 +39,7 @@ const Timer = () => {
 
   const [onTimerIdle, setOnTimerIdle] = useState(true);
   const [onRoomIdle, setOnRoomIdle] = useState(true);
+  const [isNear, setIsNear] = useState(false);
 
   useEffect(() => {
     if (!nearestReservationData) {
@@ -75,6 +76,10 @@ const Timer = () => {
         newRemainingTimeInSec <= -ROOM_EXPIRE_SEC ||
           newRemainingTimeInSec >= ROOM_ENTER_EXPIRE_SEC
       );
+      setIsNear(
+        -ROOM_EXPIRE_SEC < newRemainingTimeInSec &&
+          newRemainingTimeInSec <= MIN_IN_SEC + 1
+      );
 
       if (newRemainingTimeInSec <= -ROOM_EXPIRE_SEC) {
         clearInterval(intervalId);
@@ -97,7 +102,11 @@ const Timer = () => {
 
   return (
     <div className="flex flex-col items-center bg-black w-timer h-groupList justify-evenly rounded-2xl min-h-header-min max-h-header-max">
-      <EntryButton onIdle={onRoomIdle} handleEnterRoom={handleEnterRoom} />
+      <EntryButton
+        onIdle={onRoomIdle}
+        isNear={isNear}
+        handleEnterRoom={handleEnterRoom}
+      />
       <RoomEnterMessage
         onTimerIdle={onTimerIdle}
         onRoomIdle={onRoomIdle}
