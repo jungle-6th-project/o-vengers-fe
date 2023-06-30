@@ -40,7 +40,7 @@ const EditGroup = ({
       <div className="grid w-full h-full p-3 grid-rows-group-edit grid-cols-group-edit card-body">
         <div
           className="tooltip tooltip-bottom"
-          data-tip={groupId !== 1 ? tooltip : '기본 그룹: 초대 불가'}
+          data-tip={groupId !== 1 ? tooltip : '기본 그룹 초대 불가'}
         >
           <button
             type="button"
@@ -64,7 +64,7 @@ const EditGroup = ({
         {groupId === 1 ? (
           <div
             className="tooltip tooltip-bottom"
-            data-tip="기본 그룹: 탈퇴 불가"
+            data-tip="기본 그룹 탈퇴 불가"
           >
             <button
               type="button"
