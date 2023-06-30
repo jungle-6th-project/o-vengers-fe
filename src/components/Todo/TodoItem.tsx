@@ -96,9 +96,10 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
   return (
     <div className="flex w-full TodoItem">
       <label
-        className={`cursor-pointer label flex items-center w-full p-2 mx-2 mb-2 ${
+        className={`cursor-pointer label flex items-center p-2 mx-2 mb-2 ${
           isChecked ? 'bg-gray-100' : 'bg-accent'
         } rounded-lg`}
+        style={{ width: 'calc( 100% - 1rem )' }}
         htmlFor={`todo${todoData.todoId}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
