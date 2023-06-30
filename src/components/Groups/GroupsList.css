@@ -2,9 +2,11 @@
   margin-right: auto;
   margin-left: 0;
   width: 100%;
+  max-width: 100%;
 
   position: relative;
   height: min-content;
+  border-radius: 0.5rem;
 }
 
 .swiper-slide {
@@ -16,4 +18,24 @@
   align-items: center;
 
   width: min-content !important;
+}
+
+.swiper-button-prev {
+  color: black;
+  position: unset;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1px;
+  padding: 0;
+}
+
+.swiper-button-next {
+  color: black;
+  position: unset;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1px;
+  padding: 0;
 }
