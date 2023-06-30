@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { onMessage } from 'firebase/messaging';
 import { FiArrowLeft } from '@react-icons/all-files/fi/FiArrowLeft';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -10,6 +12,7 @@ import WeeklyHistory from '@/components/MyPage/WeeklyHistory';
 import TodoList from '@/components/Todo/TodoList';
 import { getFakeCalendar, getStudyHistory } from '@/utils/api';
 import { useUser } from '@/store/userStore';
+import { messaging } from '@/utils/fcm';
 
 interface DataItem {
   calculatedAt: string;
@@ -31,6 +34,14 @@ const parseTimeDuration = (durationString: string) => {
 };
 
 const Mypage = () => {
+  const [notification, setNotification] = useState(false);
+  onMessage(messaging, payload => {
+    console.log(payload);
+    if (payload.notification?.body === '공부 5분 전입니다!') {
+      setNotification(true);
+      setTimeout(() => setNotification(false), 5000);
+    }
+  });
   // 지워야 함
   const user = useUser();
   const today = dayjs();
@@ -145,6 +156,13 @@ const Mypage = () => {
           </div>
         </div>
       </div>
+      {notification && (
+        <div className="toast toast-top toast-end">
+          <div className="alert alert-info">
+            <span>공부 시작 5분 전입니다.</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
