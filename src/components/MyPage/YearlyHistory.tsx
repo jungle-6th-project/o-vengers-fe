@@ -38,22 +38,21 @@ const YearlyHistory = ({ data }: YearlyHistoryProps) => {
   //   if (item.value > 180) {
   //     return '#11009E';
   //   }
-  //   return '#eeeeee';
+  //   return '#eeeeee';0725E3
   // });
   const today = dayjs();
-  // 풋터 제거 후 h-full로 수정하기, max-h 설정하기
   return (
-    <div className="absolute overflow-x-auto border-[#D9D9D9] border-[1px] rounded-md bg-white w-full h-[22vw] min-h-[350px] card">
-      <div style={{ width: '160%', height: '100%' }}>
+    <div className="overflow-x-auto border-[#D9D9D9] border-[1px] rounded-2xl bg-white min-w-[1024px] max-w-[2024px] w-full h-full min-h-[290px] card">
+      <div style={{ width: '170%', height: '100%' }}>
         <ResponsiveCalendar
           tooltip={CustomTooltip}
           data={data}
           from={dayjs(`${today.year()}-01-01`).format('YYYY-MM-DD')}
           to={today.format('YYYY-MM-DD')}
           emptyColor="#eeeeee"
-          colors={['#12376d', '#093069', '#0a69da', '#53aefe']}
+          colors={['#7599FA', '#4D76FA', '#2541F8', '#0725E3']}
           // colors={Colors}
-          margin={{ top: 0, right: 0, bottom: 0, left: 45 }}
+          margin={{ top: 0, right: 0, bottom: 0, left: 40 }}
           yearSpacing={40}
           monthBorderColor="#ffffff"
           dayBorderWidth={2}

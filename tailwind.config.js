@@ -54,6 +54,8 @@ module.exports = {
         'group-edit': 'repeat(3, 1fr)',
         rightbar: 'auto 1fr',
         chat: '1fr 60px',
+        mypage: '0.3fr 4.5fr 5.2fr',
+        profile: '2fr 0.2fr 0.3fr'
       },
       gridTemplateColumns: {
         calendar: '100px repeat(14, 176px)',
@@ -63,6 +65,7 @@ module.exports = {
           'minmax(20px, 1fr) minmax(2.75rem, 1fr) minmax(64px, 2fr)',
         navigator: '48px 1fr 300px',
         'group-edit': '1fr, 30px',
+        mypage: '1.8fr 1.6fr 1.6fr 5fr'
       },
     },
   },

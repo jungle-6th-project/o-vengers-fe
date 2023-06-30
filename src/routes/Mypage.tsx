@@ -31,7 +31,6 @@ const parseTimeDuration = (durationString: string) => {
 };
 
 const Mypage = () => {
-  // 지워야 함
   const user = useUser();
   const today = dayjs();
   const startDate = dayjs(`${today.subtract(1, 'year').year()}-12-25`).format(
@@ -112,37 +111,33 @@ const Mypage = () => {
   }
 
   return (
-    <div className="mx-[2.5rem] mb-[2.5rem] mt-[1rem]">
-      <div>
-        <Link to="/" className="inline-block">
-          <button type="button" className="flex items-center">
-            <FiArrowLeft className="icon" size="1.8rem" />
-            <span className="text-[1.8rem] font-medium"> MAIN </span>
-          </button>
-        </Link>
-      </div>
-      <div className="grid gap-x-3 gap-y-3 grid-rows-mypage grid-cols-container w-max-screen">
-        <div>
+    <div className="grid p-10 pt-5 w-max-full h-max-full">
+      <div className="grid w-full h-full gap-3 grid-rows-mypage grid-cols-mypage">
+        <div className="flex row-span-1 leading-none">
+          <Link to="/" className="inline-block">
+            <button type="button" className="flex items-center">
+              <FiArrowLeft className="icon" size="1.5rem" />
+              <span className="text-[1.5rem] font-medium">MAIN</span>
+            </button>
+          </Link>
+        </div>
+        <div className="row-start-2 row-end-3">
           <Profile />
         </div>
-        <div className="flex">
-          <div style={{ marginRight: '0.75rem' }}>
-            <TaskProgress />
-          </div>
-          <div style={{ marginRight: '0.75rem' }}>
-            <DailyHistory data={targetData} />
-          </div>
-          <div style={{ flex: 'auto' }}>
-            <WeeklyHistory data={transformedData} />
-          </div>
-        </div>
-        <div>
+        <div className="row-start-3">
           <TodoList />
         </div>
-        <div style={{ position: 'relative' }}>
-          <div style={{ width: 'calc(100% + 0.75rem)' }}>
-            <YearlyHistory data={transformedData} />
-          </div>
+        <div className="col-start-2 row-start-2">
+          <TaskProgress />
+        </div>
+        <div className="col-start-3 row-start-2">
+          <DailyHistory data={targetData} />
+        </div>
+        <div className="col-start-4 row-start-2">
+          <WeeklyHistory data={transformedData} />
+        </div>
+        <div className="col-start-2 col-end-5 row-start-3 row-end-4">
+          <YearlyHistory data={transformedData} />
         </div>
       </div>
     </div>
