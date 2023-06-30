@@ -81,8 +81,8 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
     bar.data.day === today ? '#0725E3' : '#000000';
 
   return (
-    <div className="grid grid-rows-6 grid-flow-col bg-reservation card w-full min-w-[600px] rounded-md min-h-[250px] h-[20.5vw] p-[1.5vw] font-medium">
-      <div className="flex row-span-1 space-x-3">
+    <div className="w-full h-full bg-reservation card min-w-[600px] max-w-[1200px] rounded-2xl min-h-[280px] p-[1.5vw] font-medium">
+      <div className="flex space-x-3">
         <div className="text-[2.5vw] text-black leading-[3vw]">
           {total > 0 ? total.toFixed(1) : 0}H
         </div>
@@ -95,13 +95,13 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between row-start-2 row-span-5">
+      <div className="flex justify-between h-full">
         <button
           type="button"
-          className=" text-black flex pt-[5vw]"
+          className="flex items-center justify-between h-[calc(100%-(3vw))] text-black"
           onClick={handlePreviousWeek}
         >
-          <FiChevronLeft size="30" />
+          <FiChevronLeft size="35" />
         </button>
         <div style={{ width: '90%', height: '100%', margin: '0' }}>
           <ResponsiveBar
@@ -138,8 +138,6 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
               tickSize: 0,
               tickPadding: 5,
               tickRotation: 0,
-              // legendPosition: 'middle',
-              // legendOffset: 10,
             }}
             axisLeft={{
               tickValues: [],
@@ -151,10 +149,10 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
         </div>
         <button
           type="button"
-          className="text-black flex pt-[5vw]"
+          className="flex items-center justify-between h-[calc(100%-(3vw))] text-black"
           onClick={handleNextWeek}
         >
-          <FiChevronRight size="30" />
+          <FiChevronRight size="35" />
         </button>
       </div>
     </div>

@@ -9,7 +9,7 @@ interface DailyHistoryProps {
 
 const DailyHistory = ({ data }: DailyHistoryProps) => {
   return (
-    <div className="rounded-md min-h-[250px] h-[20.5vw] p-[1.5vw] w-[16vw] min-w-leftbar max-w-leftbar flex flex-col bg-bbodog_blue">
+    <div className="rounded-2xl min-h-[280px] h-full w-[16vw] p-[1.5vw] min-w-leftbar max-w-leftbar flex flex-col bg-bbodog_blue">
       <div className="space-y-[-0.8vw]">
         <p className="text-[2vw] text-white">{Math.floor(data.value / 60)}H</p>
         <p className="text-[2vw] text-white mt-0">{data.value % 60}M</p>
