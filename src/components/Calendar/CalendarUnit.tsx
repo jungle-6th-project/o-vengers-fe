@@ -82,7 +82,7 @@ const CreateReservationButton = ({
 
   return (
     <CalendarButton
-      className="opacity-0 bg-reservation hover:opacity-100"
+      className="opacity-0 bg-reservation hover:opacity-100 focus:opacity-100"
       onClick={handleClick}
     >
       예약하기
@@ -110,7 +110,7 @@ const JoinReservationButton = ({
 
   return (
     <CalendarButton
-      className="opacity-0 bg-reservation hover:opacity-100"
+      className="opacity-0 bg-reservation hover:opacity-100 focus:opacity-100"
       onClick={handleClick}
     >
       예약하기
