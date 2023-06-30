@@ -132,12 +132,14 @@ const CurrentReservationButton = ({
   groupId,
   people,
   cancelReservation,
+  isExpired,
 }: {
   startTime: string;
   roomId: number;
   groupId: number;
   people: number;
   cancelReservation: (startTime: string, roomId: number) => void;
+  isExpired: boolean;
 }) => {
   const selectedGroupId = useSelectedGroupId();
   const { setSelectedGroupId, getGroupNameById } = useSelectedGroupIdActions();
@@ -178,6 +180,7 @@ const CurrentReservationButton = ({
           type="button"
           className="absolute right-0.5 top-0.5"
           onClick={handleClickX}
+          disabled={isExpired}
         >
           <BsX size={30} />
         </button>
@@ -259,8 +262,12 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
               groupId={userReservation.groupId}
               people={userReservation.participants.length}
               cancelReservation={cancelReservation}
+              isExpired={isExpired}
             />
           );
+        }
+        if (isExpired) {
+          return <div />;
         }
         if (groupReservation) {
           return (
