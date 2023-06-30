@@ -246,8 +246,11 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
       )}
       {groupReservation && (
         <>
-          <BsFillPersonFill className="absolute left-4 bottom-3" />
-          <span className="absolute left-8 bottom-3">{`${groupReservation.participants.length}명`}</span>
+          <BsFillPersonFill className="absolute left-3 bottom-3" />
+          <span
+            className="absolute font-normal left-8 bottom-3"
+            style={{ lineHeight: '1em' }}
+          >{`${groupReservation.participants.length}명`}</span>
           <div className="absolute right-2 bottom-2">
             <MemberProfiles profiles={groupReservation.participants} />
           </div>
