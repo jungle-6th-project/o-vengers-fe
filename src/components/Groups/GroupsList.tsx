@@ -33,7 +33,9 @@ const GroupsList = () => {
   }, [isSuccess, myGroupsList, setGroup]);
 
   if (isError || isLoading) {
-    return <div />;
+    return (
+      <span className="h-full loading loading-dots loading-md place-self-center" />
+    );
   }
 
   return (
