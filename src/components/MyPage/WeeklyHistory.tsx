@@ -1,5 +1,7 @@
-import { FiChevronLeft } from '@react-icons/all-files/fi/FiChevronLeft';
-import { FiChevronRight } from '@react-icons/all-files/fi/FiChevronRight';
+// import { FiChevronLeft } from '@react-icons/all-files/fi/FiChevronLeft';
+// import { FiChevronRight } from '@react-icons/all-files/fi/FiChevronRight';
+import { BsChevronCompactLeft } from '@react-icons/all-files/bs/BsChevronCompactLeft';
+import { BsChevronCompactRight } from '@react-icons/all-files/bs/BsChevronCompactRight';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -26,7 +28,7 @@ const CustomTooltip = (props: BarTooltipProps<BarDatum>) => {
   const hour = Math.floor(Number(value) / 60);
   const min = Number(value) - hour * 60;
   return (
-    <div className="bg-white card rounded-md p-2 text-[0.9vw] text-bbodog_blue font-medium bg-opacity-100">
+    <div className="p-2 text-base font-medium text-black bg-white bg-opacity-100 rounded-md card">
       <p>
         {hour}H {min}M
       </p>
@@ -40,7 +42,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
     dayjs().subtract(6, 'day').startOf('day')
   );
 
-  const handlePreviousWeek = () => {
+  const handlePrevWeek = () => {
     setWeekStart(weekStart.subtract(1, 'week'));
     setWeekEnd(weekEnd.subtract(1, 'week'));
   };
@@ -81,16 +83,14 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
     bar.data.day === today ? '#0725E3' : '#000000';
 
   return (
-    <div className="w-full h-full bg-reservation card min-w-[600px] max-w-[1200px] rounded-2xl min-h-[280px] p-[1.5vw] font-medium">
+    <div className="w-full bg-[#EEEEEE] card min-w-[600px] rounded-md p-6 text-4xl text-[#474747] h-profile max-h-profile min-h-profile">
       <div className="flex space-x-3">
-        <div className="text-[2.5vw] text-black leading-[3vw]">
+        <div className="text-5xl font-light">
           {total > 0 ? total.toFixed(1) : 0}H
         </div>
         <div>
-          <div className="text-black text-[0.9vw] leading-[1.6vw]">
-            WEEKLY STUDY TIME
-          </div>
-          <div className="text-bbodog_blue text-[0.9vw] leading-none">
+          <div className="text-sm leading-7">WEEKLY STUDY TIME</div>
+          <div className="text-sm leading-none text-bbodog_blue">
             {weekStart.format('MM.DD')} - {weekEnd.format('MM.DD')}
           </div>
         </div>
@@ -98,22 +98,23 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
       <div className="flex justify-between h-full">
         <button
           type="button"
-          className="flex items-center justify-between h-[calc(100%-(3vw))] text-black"
-          onClick={handlePreviousWeek}
+          className="h-full pb-[3rem] text-black"
+          onClick={handlePrevWeek}
         >
-          <FiChevronLeft size="35" />
+          <BsChevronCompactLeft size="35" />
         </button>
-        <div style={{ width: '90%', height: '100%', margin: '0' }}>
+        <div className="w-[90%] h-[90%] min-w-0 self-center">
           <ResponsiveBar
+            layout="vertical"
+            minValue={0}
             tooltip={CustomTooltip}
-            animate={false}
+            motionConfig="stiff"
             enableGridY={false}
             enableGridX={false}
-            // isInteractive={false}
             data={barChartData}
             keys={['value']}
             indexBy="day"
-            margin={{ top: 20, right: 0, bottom: 30, left: 0 }}
+            margin={{ top: 10, right: 0, bottom: 20, left: 0 }}
             padding={0.02}
             colors={barColor}
             colorBy="id"
@@ -149,10 +150,10 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
         </div>
         <button
           type="button"
-          className="flex items-center justify-between h-[calc(100%-(3vw))] text-black"
+          className="text-black pb-[3rem]"
           onClick={handleNextWeek}
         >
-          <FiChevronRight size="35" />
+          <BsChevronCompactRight size="35" />
         </button>
       </div>
     </div>

@@ -4,9 +4,6 @@ import { getMyGroups, getTodoDatas } from '@/utils/api';
 import { Todo } from '../Todo/TodoTypes';
 
 const TaskProgress = () => {
-  // const [todoDatas, setTodoDatas] = useState([]);
-  // const [filterCompleteTodo, setFilterCompleteTodo] = useState(0);
-
   // 가입한 groupId 가져옴
   const { data: groupsId } = useQuery(['MyGroupData'], () => getMyGroups(), {
     staleTime: 50000,
@@ -35,17 +32,17 @@ const TaskProgress = () => {
     ((filterCompleteTodo / todoDatas.length) * 100).toFixed(1)
   );
   return (
-    <div className="rounded-2xl min-h-[280px] w-[16vw] h-full p-[1.5vw] bg-reservation min-w-leftbar max-w-leftbar flex flex-col">
-      <p className="font-semibold  text-black text-[1.9vw]">TODO</p>
-      <p className=" text-bbodog_blue font-medium text-[0.9vw] ml-1 leading-none">
+    <div className="rounded-md w-full p-6 bg-[#EEEEEE] min-w-leftbar flex flex-col text-[#474747] h-profile max-h-profile min-h-profile">
+      <p className="text-3xl">TODO</p>
+      <p className="text-sm font-medium leading-none text-bbodog_blue">
         투두리스트
       </p>
-      <div className="mt-auto font-medium">
-        <p className="text-bbodog_blue text-[0.9vw] leading-none">
+      <div className="mt-auto">
+        <p className="text-sm leading-none">
           {todoDatas.length === 0 ? 0 : completeRate}% TASK COMPLETED
         </p>
         <progress
-          className="w-[13vw] progress"
+          className="w-full progress progress-primary"
           value={todoDatas.length === 0 ? 0 : completeRate}
           max="100"
         />

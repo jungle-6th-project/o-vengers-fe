@@ -18,7 +18,7 @@ function App() {
 
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
   return (
-    <div className="grid h-screen p-10 gap-x-5 gap-y-5 grid-rows-container grid-cols-container w-max-full h-max-screen">
+    <div className="grid h-screen gap-5 p-10 grid-rows-container grid-cols-container w-max-full h-max-screen">
       <div className="grid row-span-2 gap-3 grid-rows-leftbar">
         <div className="mb-8 w-ranking_todo min-w-leftbar max-w-leftbar h-[90px]">
           <Logo width="100%" height="100%" />
