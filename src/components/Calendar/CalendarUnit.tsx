@@ -82,7 +82,7 @@ const CreateReservationButton = ({
 
   return (
     <CalendarButton
-      className="opacity-0 bg-reservation hover:opacity-100"
+      className="opacity-0 bg-reservation hover:opacity-100 focus:opacity-100"
       onClick={handleClick}
     >
       예약하기
@@ -110,7 +110,7 @@ const JoinReservationButton = ({
 
   return (
     <CalendarButton
-      className="opacity-0 bg-reservation hover:opacity-100"
+      className="opacity-0 bg-reservation hover:opacity-100 focus:opacity-100"
       onClick={handleClick}
     >
       예약하기
@@ -132,12 +132,14 @@ const CurrentReservationButton = ({
   groupId,
   people,
   cancelReservation,
+  isExpired,
 }: {
   startTime: string;
   roomId: number;
   groupId: number;
   people: number;
   cancelReservation: (startTime: string, roomId: number) => void;
+  isExpired: boolean;
 }) => {
   const selectedGroupId = useSelectedGroupId();
   const { setSelectedGroupId, getGroupNameById } = useSelectedGroupIdActions();
@@ -178,6 +180,7 @@ const CurrentReservationButton = ({
           type="button"
           className="absolute right-0.5 top-0.5"
           onClick={handleClickX}
+          disabled={isExpired}
         >
           <BsX size={30} />
         </button>
@@ -243,8 +246,11 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
       )}
       {groupReservation && (
         <>
-          <BsFillPersonFill className="absolute left-4 bottom-3" />
-          <span className="absolute left-8 bottom-3">{`${groupReservation.participants.length}명`}</span>
+          <BsFillPersonFill className="absolute left-3 bottom-3" />
+          <span
+            className="absolute font-normal left-8 bottom-3"
+            style={{ lineHeight: '1em' }}
+          >{`${groupReservation.participants.length}명`}</span>
           <div className="absolute right-2 bottom-2">
             <MemberProfiles profiles={groupReservation.participants} />
           </div>
@@ -259,8 +265,12 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
               groupId={userReservation.groupId}
               people={userReservation.participants.length}
               cancelReservation={cancelReservation}
+              isExpired={isExpired}
             />
           );
+        }
+        if (isExpired) {
+          return <div />;
         }
         if (groupReservation) {
           return (

@@ -17,7 +17,7 @@ const ChatEnd = ({ src, name, time, message }: ChatStartProps) => {
 
       <div className="flex flex-row-reverse items-end">
         <div className="chat-bubble">{message}</div>
-        <time className="mr-2 text-xs opacity-50">{time}</time>
+        <time className="mr-1 text-xs opacity-50">{time}</time>
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ const TaskProgress = () => {
     ((filterCompleteTodo / todoDatas.length) * 100).toFixed(1)
   );
   return (
-    <div className="rounded-md min-h-[250px] h-[20.5vw] p-[1.5vw] bg-reservation w-[16vw] min-w-leftbar max-w-leftbar flex flex-col">
+    <div className="rounded-2xl min-h-[280px] w-[16vw] h-full p-[1.5vw] bg-reservation min-w-leftbar max-w-leftbar flex flex-col">
       <p className="font-semibold  text-black text-[1.9vw]">TODO</p>
       <p className=" text-bbodog_blue font-medium text-[0.9vw] ml-1 leading-none">
         투두리스트

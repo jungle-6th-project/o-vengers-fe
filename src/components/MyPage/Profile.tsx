@@ -26,9 +26,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="card card-bordered grid grid-rows-7 grid-cols-1 p-4 items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-md min-h-[250px] h-[20.5vw]">
-      <div className="flex justify-center row-span-5 avatar">
-        <div className="rounded-full w-[13vw] min-w-[150px]">
+    <div className="grid grid-rows-profile card card-bordered h-full p-4 items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-2xl min-h-[280px]">
+      <div className="flex justify-center p-3 avatar">
+        <div className="rounded-full h-full min-h-[150px]">
           <img src={user.profile} alt="Profile" />
         </div>
       </div>
@@ -37,7 +37,7 @@ const Profile = () => {
           {user.name}
         </div>
       </div>
-      <div className="flex items-center justify-center pb-4">
+      <div className="flex items-center justify-center">
         <button
           type="button"
           className="items-center font-medium text-[0.9rem] text-black w-[5rem] h-[1.8rem] bg-gray-200 border-transparent rounded btn btn-xs"

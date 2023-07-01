@@ -6,7 +6,7 @@ import { Keyboard, Mousewheel, Navigation } from 'node_modules/swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-import './styles.css';
+import './GroupsList.css';
 
 import { getMyGroups } from '@/utils/api';
 import { useSelectedGroupIdActions } from '@/store/groupStore';
@@ -37,30 +37,40 @@ const GroupsList = () => {
   }
 
   return (
-    <Swiper
-      modules={[Keyboard, Navigation, Mousewheel]}
-      spaceBetween={20}
-      slidesPerView="auto"
-      navigation
-      rewind
-      keyboard={{ enabled: true }}
-      mousewheel
-      className="min-h-header-min max-h-header-max h-groupList"
+    <div
+      className="grid w-full max-w-full swiper-container"
+      style={{ gridTemplateColumns: '45px 1fr 45px' }}
     >
-      {myGroupsList?.map((group: GroupsItem) => {
-        return (
-          <SwiperSlide key={group.groupId}>
-            <Groups
-              groupId={group.groupId}
-              groupName={group.groupName}
-              color={group.color}
-              secret={group.secret}
-              path={group.path}
-            />
-          </SwiperSlide>
-        );
-      })}
-    </Swiper>
+      <div className="col-start-1 swiper-button-prev" />
+      <Swiper
+        modules={[Keyboard, Navigation, Mousewheel]}
+        spaceBetween={20}
+        slidesPerView="auto"
+        navigation={{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }}
+        rewind
+        keyboard={{ enabled: true }}
+        mousewheel
+        className="col-start-2 min-h-header-min max-h-header-max h-groupList"
+      >
+        {myGroupsList?.map((group: GroupsItem) => {
+          return (
+            <SwiperSlide key={group.groupId}>
+              <Groups
+                groupId={group.groupId}
+                groupName={group.groupName}
+                color={group.color}
+                secret={group.secret}
+                path={group.path}
+              />
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+      <div className="swiper-button-next" />
+    </div>
   );
 };
 

@@ -16,7 +16,7 @@ const ChatStart = ({ src, name, time, message }: ChatStartProps) => {
       <div className="chat-header">{name}</div>
       <div className="flex items-end">
         <div className="chat-bubble">{message}</div>
-        <time className="ml-2 text-xs opacity-50">{time}</time>
+        <time className="ml-1 text-xs opacity-50">{time}</time>
       </div>
     </div>
   );

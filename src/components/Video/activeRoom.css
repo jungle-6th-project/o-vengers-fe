@@ -39,6 +39,7 @@
 
 div.lk-button-group-container {
   width: 100%;
+  flex-wrap: wrap !important;
 }
 
 div.lk-button-group-container > div.lk-button-group.video {
@@ -59,4 +60,21 @@ div.lk-button-group-container > div.lk-button-group.video > div > div[style] {
 
 .lk-button-group-menu {
   width: min-content;
+}
+
+.lk-video-conference-inner,
+.lk-focus-layout-wrapper,
+.lk-grid-layout-wrapper {
+  height: calc(100vh - 100px - 3.25rem);
+  max-height: calc(100vh - 100px - 3.25rem);
+  flex-grow: 0;
+}
+
+.lk-participant-tile {
+  color: white;
+  background-color: black;
+}
+
+.lk-participant-media-video {
+  object-fit: contain !important;
 }

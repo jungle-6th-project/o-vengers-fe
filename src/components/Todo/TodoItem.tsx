@@ -30,9 +30,10 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     },
   });
 
-  const onClickEdit = () => {
-    setIsChecked(!isChecked);
-    if (!todoData.done && !isEditing) {
+  const onClickEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!isChecked && !isEditing) {
       setIsEditing(true);
     }
   };
@@ -43,7 +44,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     setEditedContent(event.target.value);
   };
 
-  const onClickSave = () => {
+  const saveTodo = () => {
     editOrDoneTodoMutation({
       content: editedContent,
       done: isChecked,
@@ -53,23 +54,23 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
     setIsEditing(false);
   };
 
-  const onClickDelete = () => {
-    deleteTodoMutation({
-      todoId: todoData.todoId,
-    });
-    onDelete();
+  const onClickSave = (
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.FocusEvent<HTMLInputElement>
+  ) => {
+    event.stopPropagation();
+    saveTodo();
   };
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      onClickSave();
+      saveTodo();
     }
   };
 
   const handleCheck = () => {
-    // eslint-disable-next-line no-param-reassign
-    todoData.done = !isChecked;
     editOrDoneTodoMutation({
       content: todoData.content,
       done: !isChecked,
@@ -77,6 +78,14 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
       groupId: todoData.groupId,
     });
     setIsChecked(!isChecked);
+  };
+
+  const onClickDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    deleteTodoMutation({
+      todoId: todoData.todoId,
+    });
+    onDelete();
   };
 
   useEffect(() => {
@@ -96,9 +105,10 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
   return (
     <div className="flex w-full TodoItem">
       <label
-        className={`cursor-pointer label flex items-center w-full p-2 mx-2 mb-2 ${
+        className={`cursor-pointer label flex items-center p-2 mx-2 mb-2 ${
           isChecked ? 'bg-gray-100' : 'bg-accent'
         } rounded-lg`}
+        style={{ width: 'calc( 100% - 1rem )' }}
         htmlFor={`todo${todoData.todoId}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -121,9 +131,7 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
               ref={inputRef}
             />
             <button
-              className={`pl-2 pr-1 m-0 ${
-                isHovering ? 'opacity-100' : 'opacity-0'
-              }`}
+              className="pl-2 pr-1 m-0"
               onClick={onClickSave}
               type="button"
             >
@@ -133,26 +141,26 @@ const TodoItem = ({ todoData, onDelete }: TodoItemProps) => {
         ) : (
           <>
             <span
-              className={`Content ml-2 flex-grow break-words overflow-auto w-full ${
-                todoData.done ? 'text-gray-400 line-through' : 'text-todo'
+              className={`Content pl-2 flex-grow break-words overflow-auto w-full ${
+                isChecked ? 'text-gray-400 line-through' : 'text-todo'
               }`}
             >
               {editedContent}
             </span>
             <button
-              className={`px-1 m-0 ${
-                todoData.done ? 'opacity-0' : 'text-todo'
-              }  ${isHovering && !todoData.done ? 'opacity-100' : 'opacity-0'}`}
+              className={`px-1 m-0 focus:opacity-100 ${
+                isChecked ? 'opacity-0' : 'text-todo'
+              } ${isHovering && !isChecked ? 'opacity-100' : 'opacity-0'}`}
               style={{ minHeight: 1 }}
               onClick={onClickEdit}
               type="button"
-              disabled={todoData.done}
+              disabled={isChecked}
             >
               <AiFillEdit />
             </button>
             <button
-              className={`px-1 m-0 ${
-                todoData.done ? 'text-gray-400' : 'text-todo'
+              className={`px-1 m-0 focus:opacity-100 ${
+                isChecked ? 'text-gray-400' : 'text-todo'
               } ${isHovering ? 'opacity-100' : 'opacity-0'}`}
               onClick={onClickDelete}
               type="button"

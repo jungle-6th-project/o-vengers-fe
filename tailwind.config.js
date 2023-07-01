@@ -25,6 +25,7 @@ module.exports = {
       minWidth: {
         'group-min': '158px',
         leftbar: '200px',
+        rightbar: '300px',
       },
       maxWidth: {
         'group-max': '200px',
@@ -36,12 +37,14 @@ module.exports = {
         groupList: '18vh',
         calendar: '97.8vh',
         video_todo: '68.4vh',
+        rightbar: 'calc(100vh - 100px - 3.25rem)',
       },
       minHeight: {
         'header-min': '144px',
       },
       maxHeight: {
         'header-max': '200px',
+        rightbar: 'calc(100vh - 100px - 3.25rem)',
       },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
@@ -51,6 +54,8 @@ module.exports = {
         'group-edit': 'repeat(3, 1fr)',
         rightbar: 'auto 1fr',
         chat: '1fr 60px',
+        mypage: '0.3fr 4.5fr 5.2fr',
+        profile: '2fr 0.2fr 0.3fr'
       },
       gridTemplateColumns: {
         calendar: '100px repeat(14, 176px)',
@@ -60,6 +65,7 @@ module.exports = {
           'minmax(20px, 1fr) minmax(2.75rem, 1fr) minmax(64px, 2fr)',
         navigator: '48px 1fr 300px',
         'group-edit': '1fr, 30px',
+        mypage: '1.8fr 1.6fr 1.6fr 5fr'
       },
     },
   },

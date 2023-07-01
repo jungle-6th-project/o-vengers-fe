@@ -40,8 +40,8 @@ function App() {
         <Ranking />
         <TodoList />
       </div>
-      <div className="grid gap-3 Navigator max-w-calendar grid-cols-navigator">
-        <div className="flex flex-col justify-between mr-3 btn-3 h-groupList min-h-header-min max-h-header-max">
+      <div className="grid Navigator max-w-calendar grid-cols-navigator">
+        <div className="flex flex-col justify-between btn-3 h-groupList min-h-header-min max-h-header-max">
           {isGroupPath && <GroupJoinModal joinPath={location[1]} />}
           <GroupMakeModal />
           <GroupSearchModal />

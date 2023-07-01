@@ -30,52 +30,63 @@ const EditGroup = ({
 
   const handleTooltip = () => {
     setTooltip('복사되었습니다!');
-    setTimeout(() => setTooltip('초대 링크 복사'), 5000);
+    setTimeout(() => setTooltip('초대 링크 복사'), 4000);
   };
   return (
     <div
       role="presentation"
       className={`relative card w-group min-w-group-min max-w-group-max h-groupList min-h-header-min max-h-header-max bg-base-200 border-4 border-${selectedColor} text-black cursor-pointer`}
     >
-      <div className="w-full h-full p-3 grid grid-rows-group-edit grid-cols-group-edit card-body">
-        {groupId !== 1 && (
-          <div className="tooltip tooltip-bottom" data-tip={tooltip}>
-            <button
-              type="button"
-              className="justify-start w-full py-0 my-0 col-start-1 row-start-1 btn btn-sm"
-              onClick={() => {
-                handleInvite(path);
-                handleTooltip();
-              }}
-            >
-              그룹 초대
-            </button>
-          </div>
-        )}
+      <div className="grid w-full h-full p-3 grid-rows-group-edit grid-cols-group-edit card-body">
+        <div
+          className="tooltip tooltip-bottom"
+          data-tip={groupId !== 1 ? tooltip : '기본 그룹 초대 불가'}
+        >
+          <button
+            type="button"
+            className={`justify-start w-full h-full min-h-0 col-start-1 row-start-1 p-0 pl-2 m-0 text-base font-normal p-l btn disabled:bg-base-200 ${
+              groupId === 1 && 'no-animation'
+            }`}
+            onClick={() => {
+              handleInvite(path);
+              handleTooltip();
+            }}
+            disabled={groupId === 1}
+          >
+            그룹 초대
+          </button>
+        </div>
         <button
           type="button"
-          className="p-0 col-start-2 row-start-1 btn btn-ghost btn-sm"
+          className="col-start-2 row-start-1 p-0 btn btn-ghost btn-sm"
           onClick={handleEdit}
         >
           <RiArrowGoBackLine size="20" />
         </button>
-        {/* <div className="grid-cols-1 grid-rows-2"> */}
-        {groupId !== 1 && (
+        {groupId === 1 ? (
+          <div
+            className="tooltip tooltip-bottom"
+            data-tip="기본 그룹 탈퇴 불가"
+          >
+            <button
+              type="button"
+              className="justify-start w-full h-full min-h-0 col-start-1 row-start-2 p-0 pl-2 m-0 text-base font-normal btn disabled:bg-base-200 no-animation"
+              disabled
+            >
+              그룹 탈퇴
+            </button>
+          </div>
+        ) : (
           <button
             type="button"
-            className="justify-start w-full py-0 my-0 col-start-1 row-start-2 btn btn-sm"
+            className="justify-start w-full h-full min-h-0 col-start-1 row-start-2 p-0 pl-2 m-0 text-base font-normal btn disabled:bg-base-200"
             onClick={() => handleDelete(groupId)}
+            disabled={groupId === 1}
           >
             그룹 탈퇴
           </button>
         )}
-        {/* </div> */}
-        {/* <summary>그룹 색상 변경</summary> */}
-        <form
-          className={`flex justify-around row-start-${
-            groupId !== 1 ? '3' : '2'
-          } col-span-2 self-center`}
-        >
+        <form className="flex self-center justify-around col-span-2 row-start-3">
           <input
             type="radio"
             name="radio-10"
