@@ -39,7 +39,6 @@ function App() {
             audioEnabled: false,
           }}
           onSubmit={values => {
-            console.log('Joining with: ', values);
             setPreJoinChoices(values);
           }}
         />
