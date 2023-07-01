@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -13,25 +12,25 @@ import GroupsList from './components/Groups/GroupsList';
 import TodoList from './components/Todo/TodoList';
 import GroupJoinModal from './components/GroupJoinModal';
 import { ReactComponent as Logo } from '@/assets/bbodog_log_svg.svg';
-import '@/utils/fcm';
 import { messaging } from '@/utils/fcm';
 
 function App() {
   const [notification, setNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
   const location = useLocation().pathname.split('/').filter(Boolean);
   const isGroupPath = !(location.length < 1);
-  const [token, ,] = useCookies(['accessToken']);
+  const [token] = useCookies(['accessToken']);
 
   onMessage(messaging, payload => {
-    console.log(payload);
-    if (payload.notification?.body === '공부 5분 전입니다!') {
+    if (payload.notification) {
+      setNotificationMessage(payload.notification?.body as string);
       setNotification(true);
       setTimeout(() => setNotification(false), 5000);
     }
   });
 
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
-  console.log('notification: ', notification);
+
   return (
     <div className="grid h-screen p-10 gap-x-5 gap-y-5 grid-rows-container grid-cols-container w-max-full h-max-screen">
       <div className="grid row-span-2 gap-3 grid-rows-leftbar">
@@ -61,7 +60,7 @@ function App() {
       {notification && (
         <div className="toast toast-top toast-end">
           <div className="alert alert-info">
-            <span>공부 시작 5분 전입니다.</span>
+            <span>{notificationMessage}</span>
           </div>
         </div>
       )}

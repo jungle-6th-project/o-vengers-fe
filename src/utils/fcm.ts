@@ -27,8 +27,7 @@ if ('serviceWorker' in navigator) {
         serviceWorkerRegistration: registration,
       })
         .then(currentToken => {
-          // do something
-          console.log('token: ', currentToken);
+          localStorage.setItem('fcmToken', currentToken);
         })
         .catch(error => {
           console.error(error);

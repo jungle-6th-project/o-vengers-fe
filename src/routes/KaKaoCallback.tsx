@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useUserActions } from '@/store/userStore';
+import '@/utils/fcm';
 
 function KakaoCallback() {
   const { setUser, setIsLoggedIn } = useUserActions();
@@ -40,6 +41,19 @@ function KakaoCallback() {
             },
           }
         );
+
+        await axios.post(
+          '/api/v1/clients',
+          {
+            fcmToken: localStorage.getItem('fcmToken'),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
         navigate('/');
       } catch (error) {
         console.error(error);

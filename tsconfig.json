@@ -29,7 +29,9 @@
     "tailwindcss.config.js",
     "vite.config.ts",
     "svg.d.ts",
-    "firebase-message-sw.js"
+    "firebase-message-sw.js",
+    "firebase.config.js",
+    "sw.js"
   ],
   "references": [
     {

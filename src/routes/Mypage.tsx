@@ -35,10 +35,11 @@ const parseTimeDuration = (durationString: string) => {
 
 const Mypage = () => {
   const [notification, setNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
   onMessage(messaging, payload => {
-    console.log(payload);
-    if (payload.notification?.body === '공부 5분 전입니다!') {
+    if (payload.notification) {
       setNotification(true);
+      setNotificationMessage(payload.notification.body as string);
       setTimeout(() => setNotification(false), 5000);
     }
   });
@@ -159,7 +160,7 @@ const Mypage = () => {
       {notification && (
         <div className="toast toast-top toast-end">
           <div className="alert alert-info">
-            <span>공부 시작 5분 전입니다.</span>
+            <span>{notificationMessage}</span>
           </div>
         </div>
       )}

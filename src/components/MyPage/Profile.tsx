@@ -1,6 +1,7 @@
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useUser, useUserActions } from '@/store/userStore';
+import { withdraw } from '@/utils/api';
 
 const Profile = () => {
   const user = useUser();
@@ -18,6 +19,12 @@ const Profile = () => {
     await reset();
     await navigate('/login');
   };
+
+  const withdrawUser = async () => {
+    await withdraw();
+    await navigate('/login');
+  };
+
   return (
     <div className="card card-bordered grid grid-rows-7 grid-cols-1 p-4 items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-md min-h-[250px] h-[20.5vw]">
       <div className="flex justify-center row-span-5 avatar">
@@ -37,6 +44,13 @@ const Profile = () => {
           onClick={() => logOut()}
         >
           로그아웃
+        </button>
+        <button
+          type="button"
+          className="items-center font-medium text-[0.9rem] text-black w-[5rem] h-[1.8rem] bg-gray-200 border-transparent rounded btn btn-xs"
+          onClick={() => withdrawUser()}
+        >
+          회원탈퇴
         </button>
       </div>
     </div>
