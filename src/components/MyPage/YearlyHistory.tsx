@@ -25,25 +25,10 @@ const CustomTooltip = (props: CalendarTooltipProps) => {
 };
 
 const YearlyHistory = ({ data }: YearlyHistoryProps) => {
-  // const Colors = data.map(item => {
-  //   if (item.value > 0 && item.value <= 60) {
-  //     return '#A2F9F9';
-  //   }
-  //   if (item.value > 60 && item.value <= 120) {
-  //     return '#8696FE';
-  //   }
-  //   if (item.value > 120 && item.value <= 180) {
-  //     return '#4942E4';
-  //   }
-  //   if (item.value > 180) {
-  //     return '#11009E';
-  //   }
-  //   return '#eeeeee';0725E3
-  // });
   const today = dayjs();
   return (
-    <div className="overflow-x-auto border-[#D9D9D9] border-[1px] rounded-2xl bg-white min-w-[1024px] max-w-[2024px] w-full h-full min-h-[290px] card">
-      <div style={{ width: '170%', height: '100%' }}>
+    <div className="overflow-x-auto border-[#D9D9D9] border-[1px] rounded-md bg-white min-w-[1024px] max-w-full min-h-[220px] max-h-full w-full h-full card">
+      <div className="w-[95%] h-[95%] m-auto">
         <ResponsiveCalendar
           tooltip={CustomTooltip}
           data={data}
@@ -51,8 +36,9 @@ const YearlyHistory = ({ data }: YearlyHistoryProps) => {
           to={today.format('YYYY-MM-DD')}
           emptyColor="#eeeeee"
           colors={['#7599FA', '#4D76FA', '#2541F8', '#0725E3']}
-          // colors={Colors}
-          margin={{ top: 0, right: 0, bottom: 0, left: 40 }}
+          margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+          align="center"
+          minValue={0}
           yearSpacing={40}
           monthBorderColor="#ffffff"
           dayBorderWidth={2}

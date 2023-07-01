@@ -58,15 +58,6 @@ const Mypage = () => {
   }
 
   let transformedData: Data[] = [];
-  // transformedData = fakeData.map((item: DataItem) => {
-  //   const { duration, calculatedAt } = item;
-  //   const { sum } = parseTimeDuration(duration);
-  //   return {
-  //     value: sum,
-  //     day: calculatedAt,
-  //   };
-  // });
-
   if (data.length === 0 && user.name !== '김현지') {
     transformedData = [
       {
@@ -111,34 +102,32 @@ const Mypage = () => {
   }
 
   return (
-    <div className="grid p-10 pt-5 w-max-full h-max-full">
-      <div className="grid w-full h-full gap-3 grid-rows-mypage grid-cols-mypage">
-        <div className="flex row-span-1 leading-none">
-          <Link to="/" className="inline-block">
-            <button type="button" className="flex items-center">
-              <FiArrowLeft className="icon" size="1.5rem" />
-              <span className="text-[1.5rem] font-medium">MAIN</span>
-            </button>
-          </Link>
-        </div>
-        <div className="row-start-2 row-end-3">
-          <Profile />
-        </div>
-        <div className="row-start-3">
-          <TodoList />
-        </div>
-        <div className="col-start-2 row-start-2">
-          <TaskProgress />
-        </div>
-        <div className="col-start-3 row-start-2">
-          <DailyHistory data={targetData} />
-        </div>
-        <div className="col-start-4 row-start-2">
-          <WeeklyHistory data={transformedData} />
-        </div>
-        <div className="col-start-2 col-end-5 row-start-3 row-end-4">
-          <YearlyHistory data={transformedData} />
-        </div>
+    <div className="grid w-screen h-screen gap-5 p-10 pt-5 grid-rows-mypage grid-cols-mypage w-max-screen h-max-screen">
+      <div className="flex row-span-1 leading-none">
+        <Link to="/" className="inline-block">
+          <button type="button" className="flex items-center">
+            <FiArrowLeft className="icon" size="1.5rem" />
+            <span className="text-[1.5rem] font-medium">MAIN</span>
+          </button>
+        </Link>
+      </div>
+      <div className="row-start-2 row-end-3">
+        <Profile />
+      </div>
+      <div className="row-start-3 overflow-y-auto min-w-profile">
+        <TodoList />
+      </div>
+      <div className="col-start-2 row-start-2">
+        <TaskProgress />
+      </div>
+      <div className="col-start-3 row-start-2">
+        <DailyHistory data={targetData} />
+      </div>
+      <div className="col-start-4 row-start-2">
+        <WeeklyHistory data={transformedData} />
+      </div>
+      <div className="col-start-2 col-end-5 row-start-3 row-end-4 overflow-y-auto min-h-[220px]">
+        <YearlyHistory data={transformedData} />
       </div>
     </div>
   );
