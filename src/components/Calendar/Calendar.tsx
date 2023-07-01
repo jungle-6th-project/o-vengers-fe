@@ -127,7 +127,7 @@ const WeeklyViewCalendar = () => {
 
       subscriptionRef.current = newClient.subscribe(topic, message => {
         if (message.body) {
-          console.log(`Received: ${message.body}`);
+          // console.log(`Received: ${message.body}`);
           const data: ReservationData = JSON.parse(message.body);
           const { startTime, roomId, profiles } = data;
 
@@ -203,7 +203,6 @@ const WeeklyViewCalendar = () => {
 
   const weeks = useWeeks();
   const groupColor = useGroupColor(groupId);
-
   useEffect(() => {
     const now = dayjs();
     const nearestTimeBefore =

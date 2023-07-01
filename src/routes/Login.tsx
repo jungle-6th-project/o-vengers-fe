@@ -23,17 +23,6 @@ function Login() {
           </div>
         </div>
       </div>
-      <footer className="p-10 footer footer-center bg-primary text-primary-content">
-        <div>
-          <p className="font-bold">
-            리더스 푸르넷 공부방 - 뽀독뽀독 독서실 <br />
-          </p>
-          <p>
-            주소 : 광주광역시 광산구 도산동 남동길 30번길 13 | 사업자 등록 번호
-            : 865-91-01383 | 대표 번호 : 010-3649-3666 (원장)
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

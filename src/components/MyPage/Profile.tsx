@@ -1,6 +1,7 @@
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useUser, useUserActions } from '@/store/userStore';
+import { withdraw } from '@/utils/api';
 
 const Profile = () => {
   const user = useUser();
@@ -16,6 +17,11 @@ const Profile = () => {
     await localStorage.removeItem('user');
     await setIsLoggedIn(false);
     await reset();
+    await navigate('/login');
+  };
+
+  const withdrawUser = async () => {
+    await withdraw();
     await navigate('/login');
   };
 
@@ -38,6 +44,13 @@ const Profile = () => {
           onClick={() => logOut()}
         >
           로그아웃
+        </button>
+        <button
+          type="button"
+          className="items-center font-medium text-[0.9rem] text-black w-[5rem] h-[1.8rem] bg-gray-200 border-transparent rounded btn btn-xs"
+          onClick={() => withdrawUser()}
+        >
+          회원탈퇴
         </button>
       </div>
     </div>
