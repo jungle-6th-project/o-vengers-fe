@@ -27,6 +27,7 @@ jobs:
       - name: make .env files
         run: |
           touch .env
+          echo VVITE_REST_API_KEY=${{secrets.VITE_REST_API_KEY}} >> .env
           echo VITE_REDIRECT_URL=${{secrets.VITE_REDIRECT_URL}} >> .env
           echo VITE_PUBLIC_LK_TOKEN_ENDPOINT=${{secrets.VITE_PUBLIC_LK_TOKEN_ENDPOINT}} >> .env
           echo VITE_APIKEY=${{secrets.VITE_APIKEY}} >> .env
