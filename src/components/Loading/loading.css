@@ -1,0 +1,143 @@
+#sparkles > path {
+  animation: sparklyBits 1000ms infinite;
+  position: absolute;
+}
+
+#message {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#sparkles > path:nth-child(1) {
+  animation-delay: 35ms;
+}
+
+#sparkles > path:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+#sparkles > path:nth-child(3) {
+  animation-delay: 105ms;
+}
+
+#sparkles > path:nth-child(4) {
+  animation-delay: 140ms;
+}
+
+#sparkles > path:nth-child(5) {
+  animation-delay: 175ms;
+}
+
+#sparkles > path:nth-child(6) {
+  animation-delay: 210ms;
+}
+
+#sparkles > path:nth-child(7) {
+  animation-delay: 245ms;
+}
+
+#sparkles > path:nth-child(8) {
+  animation-delay: 280ms;
+}
+
+#sparkles > path:nth-child(9) {
+  animation-delay: 315ms;
+}
+
+#sparkles > path:nth-child(10) {
+  animation-delay: 350ms;
+}
+
+#sparkles > path:nth-child(11) {
+  animation-delay: 385ms;
+}
+
+#sparkles > path:nth-child(12) {
+  animation-delay: 420ms;
+}
+
+#sparkles > path:nth-child(13) {
+  animation-delay: 455ms;
+}
+
+#sparkles > path:nth-child(14) {
+  animation-delay: 490ms;
+}
+
+#sparkles > path:nth-child(15) {
+  animation-delay: 525ms;
+}
+
+#sparkles > path:nth-child(16) {
+  animation-delay: 560ms;
+}
+
+#sparkles > path:nth-child(17) {
+  animation-delay: 595ms;
+}
+
+#sparkles > path:nth-child(18) {
+  animation-delay: 630ms;
+}
+
+#sparkles > path:nth-child(19) {
+  animation-delay: 665ms;
+}
+
+#sparkles > path:nth-child(20) {
+  animation-delay: 700ms;
+}
+
+#sparkles > path:nth-child(21) {
+  animation-delay: 735ms;
+}
+
+#sparkles > path:nth-child(22) {
+  animation-delay: 770ms;
+}
+
+#sparkles > path:nth-child(23) {
+  animation-delay: 805ms;
+}
+
+#sparkles > path:nth-child(24) {
+  animation-delay: 840ms;
+}
+
+#sparkles > path:nth-child(25) {
+  animation-delay: 875ms;
+}
+
+#sparkles > path:nth-child(26) {
+  animation-delay: 910ms;
+}
+
+#sparkles > path:nth-child(27) {
+  animation-delay: 945ms;
+}
+
+#sparkles > path:nth-child(28) {
+  animation-delay: 980ms;
+}
+
+#sparkles > path:nth-child(29) {
+  animation-delay: 1015ms;
+}
+
+@keyframes sparklyBits {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+body {
+  align-items: center;
+  background-color: #fafafa;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
