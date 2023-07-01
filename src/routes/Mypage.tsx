@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { onMessage } from 'firebase/messaging';
 import { FiArrowLeft } from '@react-icons/all-files/fi/FiArrowLeft';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -10,6 +12,7 @@ import WeeklyHistory from '@/components/MyPage/WeeklyHistory';
 import TodoList from '@/components/Todo/TodoList';
 import { getFakeCalendar, getStudyHistory } from '@/utils/api';
 import { useUser } from '@/store/userStore';
+import { messaging } from '@/utils/fcm';
 
 interface DataItem {
   calculatedAt: string;
@@ -31,6 +34,16 @@ const parseTimeDuration = (durationString: string) => {
 };
 
 const Mypage = () => {
+  const [notification, setNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
+  onMessage(messaging, payload => {
+    if (payload.notification) {
+      setNotification(true);
+      setNotificationMessage(payload.notification.body as string);
+      setTimeout(() => setNotification(false), 5000);
+    }
+  });
+  // 지워야 함
   const user = useUser();
   const today = dayjs();
   const startDate = dayjs(`${today.subtract(1, 'year').year()}-12-25`).format(
@@ -129,6 +142,13 @@ const Mypage = () => {
       <div className="col-start-2 col-end-5 row-start-3 row-end-4 overflow-y-auto min-h-[220px]">
         <YearlyHistory data={transformedData} />
       </div>
+      {notification && (
+        <div className="toast toast-top toast-end">
+          <div className="alert alert-info">
+            <span>{notificationMessage}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

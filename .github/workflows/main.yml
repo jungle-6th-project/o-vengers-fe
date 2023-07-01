@@ -27,9 +27,17 @@ jobs:
       - name: make .env files
         run: |
           touch .env
+          echo VITE_REST_API_KEY=${{secrets.VITE_REST_API_KEY}} >> .env
           echo VITE_REDIRECT_URL=${{secrets.VITE_REDIRECT_URL}} >> .env
           echo VITE_PUBLIC_LK_TOKEN_ENDPOINT=${{secrets.VITE_PUBLIC_LK_TOKEN_ENDPOINT}} >> .env
-          echo VITE_REST_API_KEY=${{secrets.VITE_REST_API_KEY}} >> .env
+          echo VITE_APIKEY=${{secrets.VITE_APIKEY}} >> .env
+          echo VITE_AUTHDOMAIN=${{secrets.VITE_AUTHDOMAIN}} >> .env
+          echo VITE_PROJECTID=${{secrets.VITE_PROJECTID}} >> .env
+          echo VITE_STORAGEBUCKET=${{secrets.VITE_STORAGEBUCKET}} >> .env
+          echo VITE_MESSAGINGSENDERID=${{secrets.VITE_MESSAGINGSENDERID}} >> .env
+          echo VITE_APPID=${{secrets.VITE_APPID}} >> .env
+          echo VITE_MEASUREMENTID=${{secrets.VITE_MEASUREMENTID}} >> .env
+          echo VITE_VAILD_APIKEY=${{secrets.VITE_VAILD_APIKEY}} >> .env
           cat .env
 
       - name: Build # React Build
