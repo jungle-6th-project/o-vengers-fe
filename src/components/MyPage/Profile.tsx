@@ -26,16 +26,17 @@ const Profile = () => {
   };
 
   return (
-    <div className="grid grid-rows-profile card card-bordered h-full p-4 items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-2xl min-h-[280px]">
-      <div className="flex justify-center p-3 avatar">
-        <div className="rounded-full h-full min-h-[150px]">
-          <img src={user.profile} alt="Profile" />
-        </div>
+    <div className="grid grid-rows-profile card card-bordered h-profile min-h-profile max-h-profile p-4 items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-md justify-items-center">
+      <div
+        className="mx-auto mt-2 mb-4 overflow-hidden rounded-full aspect-square"
+        style={{ width: 'calc( 100% - 4.1rem )', maxWidth: '200px' }}
+      >
+        <img src={user.profile} alt={user.name} />
       </div>
       <div className="flex items-center justify-center">
-        <div className="text-[1.3rem] font-semibold text-black profile-name">
+        <span className="text-[1.3rem] font-semibold text-black profile-name">
           {user.name}
-        </div>
+        </span>
       </div>
       <div className="flex items-center justify-center">
         <button

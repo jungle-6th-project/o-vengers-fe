@@ -38,13 +38,16 @@ module.exports = {
         calendar: '97.8vh',
         video_todo: '68.4vh',
         rightbar: 'calc(100vh - 100px - 3.25rem)',
+        profile: '40vh',
       },
       minHeight: {
         'header-min': '144px',
+        profile: '280px',
       },
       maxHeight: {
         'header-max': '200px',
         rightbar: 'calc(100vh - 100px - 3.25rem)',
+        profile: '360px',
       },
       gridTemplateRows: {
         calendar: '0.3fr 1fr',
@@ -54,8 +57,8 @@ module.exports = {
         'group-edit': 'repeat(3, 1fr)',
         rightbar: 'auto 1fr',
         chat: '1fr 60px',
-        mypage: '0.3fr 4.5fr 5.2fr',
-        profile: '2fr 0.2fr 0.3fr'
+        mypage: '24px auto 1fr',
+        profile: '1fr auto auto',
       },
       gridTemplateColumns: {
         calendar: '100px repeat(14, 176px)',
@@ -65,7 +68,7 @@ module.exports = {
           'minmax(20px, 1fr) minmax(2.75rem, 1fr) minmax(64px, 2fr)',
         navigator: '48px 1fr 300px',
         'group-edit': '1fr, 30px',
-        mypage: '1.8fr 1.6fr 1.6fr 5fr'
+        mypage: 'auto 1.6fr 1.6fr 5fr',
       },
     },
   },
