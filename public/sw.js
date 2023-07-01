@@ -8,6 +8,7 @@ import { NavigationRoute, registerRoute } from 'workbox-routing';
 
 import { initializeApp } from 'firebase/app';
 import { getMessaging, onBackgroundMessage } from 'firebase/messaging/sw';
+import { url } from 'inspector';
 
 // self.__WB_MANIFEST is default injection point
 precacheAndRoute(self.__WB_MANIFEST);
@@ -52,26 +53,22 @@ const firebaseApp = initializeApp(config);
 const messaging = getMessaging(firebaseApp);
 
 onBackgroundMessage(messaging, payload => {
-  console.log(payload);
-  // const notificationTitle = '뽀독뽀독 - 온라인 독서실';
-  // const notificationOptions = {
-  //   body: '공부 시작 5분전입니다.',
-  //   icon: '/favicon_io/favicon-32x32.png',
-  // };
-  // self.registration.showNotification(notificationTitle, notificationOptions);
   self.addEventListener('notificationclick', function (event) {
+    const url = import.meta.env.DEV
+      ? 'http://localhost:5173'
+      : 'https://www.bbodogstudy.com';
     event.notification.close(); // Close the notification
     event.waitUntil(
       clients.matchAll({ type: 'window' }).then(function (clientList) {
         for (let i = 0; i < clientList.length; i++) {
           let client = clientList[i];
-          if (client.url === 'http://localhost:5173') {
+          if (client.url === url) {
             return client.focus(); // Bring the page to the foreground
           }
         }
         // If the desired page is not open, open it in a new window
         if (clients.openWindow) {
-          return clients.openWindow('http://localhost:5173');
+          return clients.openWindow(url);
         }
       })
     );
