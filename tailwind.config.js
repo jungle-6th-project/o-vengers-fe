@@ -58,7 +58,7 @@ module.exports = {
         rightbar: 'auto 1fr',
         chat: '1fr 60px',
         mypage: '24px auto 1fr',
-        profile: '1fr auto auto',
+        profile: 'auto auto auto',
       },
       gridTemplateColumns: {
         calendar: '100px repeat(14, 176px)',
