@@ -11,7 +11,7 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-cover bg-login min-w-max">
+    <div className="w-screen h-screen min-h-screen bg-cover bg-login min-w-max">
       <div className="min-h-screen hero">
         <div className="text-center hero-content">
           <div className="flex flex-col items-center max-w-md">
