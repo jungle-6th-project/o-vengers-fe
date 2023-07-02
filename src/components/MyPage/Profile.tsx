@@ -14,10 +14,11 @@ const Profile = () => {
   const logOut = async () => {
     await removeAccessTokenCookies('accessToken');
     await removeRefreshTokenCookies('refreshToken');
+    await localStorage.removeItem('fcmToken');
     await localStorage.removeItem('user');
     await setIsLoggedIn(false);
     await reset();
-    await navigate('/login');
+    window.location.href = '/login';
   };
 
   const withdrawUser = async () => {
