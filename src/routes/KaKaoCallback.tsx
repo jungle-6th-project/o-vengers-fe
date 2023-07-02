@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
