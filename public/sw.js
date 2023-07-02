@@ -8,7 +8,6 @@ import { NavigationRoute, registerRoute } from 'workbox-routing';
 
 import { initializeApp } from 'firebase/app';
 import { getMessaging, onBackgroundMessage } from 'firebase/messaging/sw';
-import { url } from 'inspector';
 
 // self.__WB_MANIFEST is default injection point
 precacheAndRoute(self.__WB_MANIFEST);
@@ -54,9 +53,9 @@ const messaging = getMessaging(firebaseApp);
 
 onBackgroundMessage(messaging, payload => {
   self.addEventListener('notificationclick', function (event) {
-    const url = import.meta.env.DEV
-      ? 'http://localhost:5173'
-      : 'https://www.bbodogstudy.com';
+    // const url = import.meta.env.DEV
+    //   ? 'http://localhost:5173'
+    //   : 'https://www.bbodogstudy.com';
     event.notification.close(); // Close the notification
     event.waitUntil(
       clients.matchAll({ type: 'window' }).then(function (clientList) {
@@ -68,7 +67,7 @@ onBackgroundMessage(messaging, payload => {
         }
         // If the desired page is not open, open it in a new window
         if (clients.openWindow) {
-          return clients.openWindow(url);
+          return clients.openWindow('/');
         }
       })
     );

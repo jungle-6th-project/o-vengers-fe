@@ -15,22 +15,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const messaging = getMessaging(app);
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-    .register(
-      import.meta.env.MODE === 'production' ? '/sw.js' : '/dev-sw.js?dev-sw',
-      { type: import.meta.env.MODE === 'production' ? 'classic' : 'module' }
-    )
-    .then(registration => {
-      getToken(messaging, {
-        vapidKey: import.meta.env.VITE_VAILD_APIKEY,
-        serviceWorkerRegistration: registration,
-      })
-        .then(currentToken => {
-          localStorage.setItem('fcmToken', currentToken);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    });
+function requestPermission() {
+  console.log('Requesting permission...');
+  Notification.requestPermission().then(permission => {
+    if (permission === 'granted') {
+      console.log('Notification permission granted.');
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register(
+            import.meta.env.MODE === 'production'
+              ? '/sw.js'
+              : '/dev-sw.js?dev-sw',
+            {
+              type:
+                import.meta.env.MODE === 'production' ? 'classic' : 'module',
+            }
+          )
+          .then(registration => {
+            getToken(messaging, {
+              vapidKey: import.meta.env.VITE_VAILD_APIKEY,
+              serviceWorkerRegistration: registration,
+            })
+              .then(currentToken => {
+                localStorage.setItem('fcmToken', currentToken);
+              })
+              .catch(error => {
+                console.error(error);
+              });
+          });
+      }
+    }
+  });
 }
+
+export default requestPermission;
