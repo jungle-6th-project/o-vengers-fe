@@ -52,7 +52,10 @@ function App() {
             <GroupMakeModal />
             <GroupSearchModal />
             <Link to="/mypage">
-              <button type="button" className="btn btn-square">
+              <button
+                type="button"
+                className="btn btn-square bg-[#E7E7E7] text-[#5A5A5A] hover:bg-[#C7C7C7]"
+              >
                 MY
               </button>
             </Link>

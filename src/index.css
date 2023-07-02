@@ -22,3 +22,7 @@ body {
 .chat-bubble {
   @apply w-[75%];
 }
+
+#root {
+  background-color: white !important;
+}
