@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useUserActions } from '@/store/userStore';
 import requestPermission from '@/utils/fcm';
+import Loading from '@/components/Loading/Loading';
 
 function getFcmToken(key: string) {
   return new Promise((resolve, reject) => {
@@ -83,11 +84,7 @@ function KakaoCallback() {
     fetchData();
   }, [setAccessToken, setRefreshToken, navigate, setUser, setIsLoggedIn]);
 
-  return (
-    <div className="hero">
-      <span className="hero-content loading loading-spinner loading-lg" />
-    </div>
-  );
+  return <Loading />;
 }
 
 export default KakaoCallback;
