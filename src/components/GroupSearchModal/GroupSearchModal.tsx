@@ -102,7 +102,11 @@ const GroupSearchModal = () => {
 
   return (
     <>
-      <button type="button" className="btn btn-square" onClick={handleOpen}>
+      <button
+        type="button"
+        className="btn btn-square bg-[#E7E7E7] text-[#5A5A5A] hover:bg-[#C7C7C7]"
+        onClick={handleOpen}
+      >
         <BiSearch size={24} />
       </button>
       <dialog id="groupSearchModal" className="modal">
@@ -135,7 +139,7 @@ const GroupSearchModal = () => {
           <div className="flex flex-col">
             <input
               type="reset"
-              className="mt-10 mb-2 col-auto btn btn-primary btn-block"
+              className="col-auto mt-10 mb-2 btn btn-primary btn-block"
               value="그룹 참여하기"
               onClick={onJoin}
               disabled={!selectedGroup}
