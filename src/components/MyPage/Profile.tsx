@@ -41,17 +41,17 @@ const Profile = () => {
           {user.name}
         </span>
       </div>
-      <div className="flex items-center justify-center join">
+      <div className="flex items-center justify-center">
         <button
           type="button"
-          className="items-center font-medium text-[0.9rem] text-black w-[5rem] h-[1.8rem] bg-gray-200 border-transparent rounded btn btn-xs join-item mr-1"
+          className="items-center font-medium text-[0.9rem] w-[5rem] h-[1.8rem] bg-[#E7E7E7] text-black hover:bg-[#C7C7C7] rounded-md btn btn-xs mr-1"
           onClick={() => logOut()}
         >
           로그아웃
         </button>
         <button
           type="button"
-          className="items-center font-medium text-[0.9rem] text-black w-[5rem] h-[1.8rem] bg-gray-200 border-transparent rounded btn btn-xs join-item ml-1"
+          className="items-center font-medium text-[0.9rem] w-[5rem] h-[1.8rem] min-h-[1.8rem] px-0 rounded-md btn btn-outline btn-error ml-1"
           onClick={() => withdrawUser()}
         >
           회원탈퇴
