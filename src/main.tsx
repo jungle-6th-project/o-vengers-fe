@@ -10,6 +10,7 @@ import Login from './routes/Login';
 import KakaoCallback from './routes/KaKaoCallback';
 import Study from '@/routes/Study';
 import Mypage from '@/routes/Mypage';
+import NotFoundErrorPage from './routes/NotFoundErrorPage';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: '/mypage',
     element: <Mypage />,
+  },
+  {
+    path: '*',
+    element: <NotFoundErrorPage />,
   },
 ]);
 
