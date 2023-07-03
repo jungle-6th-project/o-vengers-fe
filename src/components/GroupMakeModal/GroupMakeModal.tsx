@@ -130,8 +130,13 @@ const GroupMakeModal = () => {
       <dialog id="groupMakeModal" className="modal">
         {showCreateForm ? (
           <form className="modal-box" onSubmit={e => e.preventDefault()}>
+            <h1 className="text-3xl font-semibold">그룹 생성</h1>
+            <p className="py-4 text-lg">새로운 그룹을 만들 수 있습니다.</p>
             <div className="w-full mb-5 form-control">
-              <label className="flex-col items-start label" htmlFor="groupName">
+              <label
+                className="flex-col items-start pb-0 label"
+                htmlFor="groupName"
+              >
                 <span className="mb-2 text-lg label-text">그룹 이름</span>
                 <input
                   id="groupName"
@@ -153,12 +158,12 @@ const GroupMakeModal = () => {
                   <span className="mb-2 text-lg label-text">비밀번호 설정</span>
                   {isPassword && inputs.password === '' && (
                     <p className="text-red-500">
-                      비밀번호는 한자리 이상이여야 합니다
+                      비밀번호는 한 글자 이상이어야 합니다
                     </p>
                   )}
                   <input
                     type="checkbox"
-                    className="toggle toggle-primary"
+                    className="toggle"
                     onChange={onChangeToggle}
                     name="passwordToggle"
                     checked={isPassword}
@@ -192,15 +197,19 @@ const GroupMakeModal = () => {
           </form>
         ) : (
           <div className="modal-box">
-            <div className="mx-5 my-3 text-lg">
-              함께하고 싶은 사람들에게 <strong>링크</strong>를 보내보세요!
+            <h1 className="text-3xl font-semibold">그룹 초대</h1>
+            <p className="py-4 text-lg">
+              축하합니다! 새 그룹이 만들어졌습니다.
+            </p>
+            <p className="text-lg">
+              함께하고 싶은 사람들에게 <strong>초대 링크</strong>를 보내보세요.
               <br />
               바로 참여할 수 있습니다.
-            </div>
-            <div className="form-control">
-              <div className="mx-5 join">
+            </p>
+            <div className="px-0 my-3 form-control">
+              <div className="join">
                 <input
-                  className="w-full bg-gray-200 input join-item"
+                  className="w-full h-10 bg-gray-100 input join-item"
                   type="text"
                   value={
                     import.meta.env.MODE === 'development'
@@ -211,7 +220,7 @@ const GroupMakeModal = () => {
                 />
                 <button
                   type="button"
-                  className="btn btn-primary join-item"
+                  className="w-10 h-10 min-h-0 p-0 btn btn-neutral join-item"
                   onClick={() => {
                     copy(
                       import.meta.env.MODE === 'development'
@@ -228,16 +237,14 @@ const GroupMakeModal = () => {
                   )}
                 </button>
               </div>
+              <div className="py-0 label">
+                <span className="text-sm label-text-alt">
+                  초대 링크는 그룹 카드에서 언제든 다시 복사할 수 있어요.
+                </span>
+              </div>
             </div>
-            <div className="text-gray-500 ml-9">
-              링크는 그룹 카드에서 언제든 다시 볼 수 있어요.
-            </div>
-            <div className="m-0 modal-action">
-              <button
-                type="button"
-                className="m-3 btn"
-                onClick={handleModalClose}
-              >
+            <div className="mt-2 modal-action">
+              <button type="button" className="btn" onClick={handleModalClose}>
                 닫기
               </button>
             </div>
