@@ -134,10 +134,18 @@ const GroupMakeModal = () => {
             <p className="py-4 text-lg">새로운 그룹을 만들 수 있습니다.</p>
             <div className="w-full mb-5 form-control">
               <label
-                className="flex-col items-start pb-0 label"
+                className="flex-col items-stretch pb-0 label"
                 htmlFor="groupName"
               >
-                <span className="mb-2 text-lg label-text">그룹 이름</span>
+                <div className="flex items-center justify-between">
+                  <span className="mb-2 text-lg label-text">그룹 이름</span>
+                  {inputs.groupName.length > 0 &&
+                    inputs.groupName.trim().length < 1 && (
+                      <p className="text-red-500">
+                        유효한 글자가 하나라도 있어야 합니다
+                      </p>
+                    )}
+                </div>
                 <input
                   id="groupName"
                   type="text"
@@ -189,7 +197,10 @@ const GroupMakeModal = () => {
                 type="button"
                 className="btn btn-neutral"
                 onClick={onClickMakeGroup}
-                disabled={isPassword && inputs.password.length < 1}
+                disabled={
+                  (isPassword && inputs.password.length < 1) ||
+                  inputs.groupName.trim().length < 1
+                }
               >
                 그룹 만들기
               </button>
