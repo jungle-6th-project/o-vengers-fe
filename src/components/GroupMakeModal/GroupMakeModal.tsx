@@ -76,15 +76,6 @@ const GroupMakeModal = () => {
     window.groupMakeModal.showModal();
   };
 
-  const handleModalCloseCancel = () => {
-    window.groupMakeModal.close();
-    setInputs(initialInputs);
-    setIsPassword(false);
-    setRandomRoomId('');
-    copy('');
-    setShowCreateForm(true);
-  };
-
   const handleModalClose = () => {
     window.groupMakeModal.close();
     setInputs(initialInputs);
@@ -92,12 +83,6 @@ const GroupMakeModal = () => {
     setRandomRoomId('');
     copy('');
     setShowCreateForm(true);
-    postMakeGroupMutation.mutate({
-      groupName: inputs.groupName,
-      password: inputs.password,
-      path: randomRoomId,
-      secret: isPassword,
-    });
   };
 
   const generateRandomString = () => {
@@ -116,8 +101,16 @@ const GroupMakeModal = () => {
   const onClickMakeGroup = () => {
     const randomString = generateRandomString();
     setRandomRoomId(randomString);
+    setShowCreateForm(false);
 
-    setShowCreateForm(prevState => !prevState);
+    postMakeGroupMutation.mutate({
+      groupName: inputs.groupName,
+      password: inputs.password,
+      path: randomString,
+      secret: isPassword,
+    });
+  };
+
   };
 
   return (
@@ -179,11 +172,7 @@ const GroupMakeModal = () => {
               </label>
             </div>
             <div className="flex modal-action">
-              <button
-                type="button"
-                className="btn"
-                onClick={handleModalCloseCancel}
-              >
+              <button type="button" className="btn" onClick={handleModalClose}>
                 취소
               </button>
               <button
