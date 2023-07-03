@@ -55,7 +55,7 @@ function App() {
         </div>
         <div className="grid Navigator max-w-calendar grid-cols-navigator">
           <div className="flex flex-col justify-between btn-3 h-groupList min-h-header-min max-h-header-max">
-            {isGroupPath && (
+            {isGroupPath && cookies.accessToken && (
               <GroupJoinModal joinPath={location[1] || joinPath} />
             )}
             <GroupMakeModal />
