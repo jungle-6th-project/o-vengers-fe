@@ -1,11 +1,9 @@
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
 import { useUser, useUserActions } from '@/store/userStore';
-import { withdraw } from '@/utils/api';
+import WithdrawalModal from './WithdrawalModal';
 
 const Profile = () => {
   const user = useUser();
-  const navigate = useNavigate();
 
   const { setIsLoggedIn, reset } = useUserActions();
   const [, , removeAccessTokenCookies] = useCookies(['accessToken']);
@@ -19,11 +17,6 @@ const Profile = () => {
     await setIsLoggedIn(false);
     await reset();
     window.location.href = '/login';
-  };
-
-  const withdrawUser = async () => {
-    await withdraw();
-    await navigate('/login');
   };
 
   return (
@@ -49,13 +42,7 @@ const Profile = () => {
         >
           로그아웃
         </button>
-        <button
-          type="button"
-          className="items-center font-medium text-[0.9rem] w-[5rem] h-[1.8rem] min-h-[1.8rem] px-0 rounded-md btn btn-outline btn-error ml-1"
-          onClick={() => withdrawUser()}
-        >
-          회원탈퇴
-        </button>
+        <WithdrawalModal />
       </div>
     </div>
   );
