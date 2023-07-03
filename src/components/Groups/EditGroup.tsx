@@ -32,6 +32,7 @@ const EditGroup = ({
     setTooltip('복사되었습니다!');
     setTimeout(() => setTooltip('초대 링크 복사'), 4000);
   };
+
   return (
     <div
       role="presentation"

@@ -23,7 +23,7 @@ const GroupMakeModal = () => {
   const [inputs, setInputs] = useState(initialInputs);
   const [isPassword, setIsPassword] = useState(false);
   const [randomRoomId, setRandomRoomId] = useState('');
-  const [groupURL, copy] = useCopyToClipboard();
+  const [, copy] = useCopyToClipboard();
   const queryClient = useQueryClient();
 
   const { setSelectedGroupId } = useSelectedGroupIdActions();
@@ -111,6 +111,11 @@ const GroupMakeModal = () => {
     });
   };
 
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopy = () => {
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 4000);
   };
 
   return (
@@ -207,15 +212,16 @@ const GroupMakeModal = () => {
                 <button
                   type="button"
                   className="btn btn-primary join-item"
-                  onClick={() =>
+                  onClick={() => {
                     copy(
                       import.meta.env.MODE === 'development'
                         ? `http://localhost:5173/invite/${randomRoomId}`
                         : `https://bbodogstudy.com/invite/${randomRoomId}`
-                    )
-                  }
+                    );
+                    handleCopy();
+                  }}
                 >
-                  {groupURL ? (
+                  {isCopied ? (
                     <AiOutlineCheck size={20} />
                   ) : (
                     <AiOutlineCopy size={20} />
