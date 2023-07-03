@@ -20,6 +20,7 @@ import {
 } from '@livekit/components-react';
 import { log } from '@livekit/components-core';
 import ParticipantPlaceholder from './ParticipantPlaceholder';
+import { useUserActions } from '@/store/userStore';
 
 type LocalUserChoices = {
   username: string;
@@ -161,6 +162,7 @@ export const PreJoin = ({
   onError,
 }: // ...htmlProps
 PreJoinProps) => {
+  const { setVideoNickname } = useUserActions();
   const [userChoices, setUserChoices] = useState(DEFAULT_USER_CHOICES);
   const [username, setUsername] = useState(
     defaults.username ?? DEFAULT_USER_CHOICES.username
@@ -232,6 +234,7 @@ PreJoinProps) => {
     event.preventDefault();
     if (handleValidation(userChoices)) {
       if (typeof onSubmit === 'function') {
+        setVideoNickname(userChoices.username);
         onSubmit(userChoices);
       }
     } else {

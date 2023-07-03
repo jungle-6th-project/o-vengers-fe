@@ -3,8 +3,8 @@ import { io, Socket } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { useUser } from '@/store/userStore';
-import ChatData from './ChatData';
+import { useUser, useVideoNickname } from '@/store/userStore';
+import { ChatData } from './ChatData';
 import ChatForm from './ChatForm';
 import ChatList from './ChatList';
 
@@ -19,6 +19,7 @@ const ChatContainer = ({ datas, setDatas }: ChatContainerProps) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const { roomId } = useParams();
   const user = useUser();
+  const videoNickname = useVideoNickname();
   const currentTime = dayjs().format('A hh:MM');
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const ChatContainer = ({ datas, setDatas }: ChatContainerProps) => {
     socket.on('showMessage', (chatData: ChatData) => {
       const newChatData: ChatData = {
         userData: chatData.userData,
+        videoNickname: chatData.videoNickname,
         content: chatData.content,
         time: chatData.time,
         id: chatData.id,
@@ -64,6 +66,7 @@ const ChatContainer = ({ datas, setDatas }: ChatContainerProps) => {
           name: user.name,
           profile: user.profile,
         },
+        videoNickname,
         content: chat,
         time: currentTime,
         id: crypto.randomUUID(),
