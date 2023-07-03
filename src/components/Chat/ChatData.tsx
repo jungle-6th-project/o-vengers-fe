@@ -1,10 +1,12 @@
-import UserData from './UserData';
+export interface UserData {
+  name: string;
+  profile: string;
+}
 
-interface ChatData {
+export interface ChatData {
   userData: UserData;
+  videoNickname: string;
   content: string;
   time: string;
   id: string;
 }
-
-export default ChatData;

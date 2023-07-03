@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
-import UserData from './UserData';
-import ChatData from './ChatData';
+import { ChatData, UserData } from './ChatData';
 import ChatEnd from './ChatEnd';
 import ChatStart from './ChatStart';
+import { useVideoNickname } from '@/store/userStore';
 
 interface ChatListProps {
   datas: ChatData[];
@@ -11,6 +11,7 @@ interface ChatListProps {
 
 const ChatList = ({ datas, user }: ChatListProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const videoNickname = useVideoNickname();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView();
@@ -28,9 +29,9 @@ const ChatList = ({ datas, user }: ChatListProps) => {
       {datas.map(data =>
         data.userData.name === user.name ? (
           <ChatEnd
+            name={videoNickname}
             key={data.id}
             src={user.profile}
-            name={user.name}
             time={data.time}
             message={data.content}
           />
@@ -38,7 +39,7 @@ const ChatList = ({ datas, user }: ChatListProps) => {
           <ChatStart
             key={data.id}
             src={data.userData.profile}
-            name={data.userData.name}
+            name={data.videoNickname}
             time={data.time}
             message={data.content}
           />

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
@@ -19,8 +19,9 @@ import Loading from './components/Loading/Loading';
 function App() {
   const [notification, setNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
+  const [joinPath, setJoinPath] = useState('');
   const location = useLocation().pathname.split('/').filter(Boolean);
-  const isGroupPath = !(location.length < 1);
+  const isGroupPath = !(location.length < 1) || Boolean(joinPath);
   const [token] = useCookies(['accessToken']);
 
   onMessage(messaging, payload => {
@@ -32,6 +33,11 @@ function App() {
   });
 
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
+
+  useEffect(() => {
+    const path = localStorage.getItem('joinPath');
+    setJoinPath(prevState => (path !== null ? path : prevState));
+  }, []);
 
   const cookies = parseCookies(document.cookie);
 
@@ -48,7 +54,9 @@ function App() {
         </div>
         <div className="grid Navigator max-w-calendar grid-cols-navigator">
           <div className="flex flex-col justify-between btn-3 h-groupList min-h-header-min max-h-header-max">
-            {isGroupPath && <GroupJoinModal joinPath={location[1]} />}
+            {isGroupPath && (
+              <GroupJoinModal joinPath={location[1] || joinPath} />
+            )}
             <GroupMakeModal />
             <GroupSearchModal />
             <Link to="/mypage">

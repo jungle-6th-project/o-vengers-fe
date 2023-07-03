@@ -12,12 +12,14 @@ interface User {
 interface UserActions {
   setUser: (accessToken: string) => Promise<void>;
   setIsLoggedIn: (isLogged: boolean) => void;
+  setVideoNickname: (nickname: string) => void;
   reset: () => void;
 }
 
 interface UserState {
   user: User;
   isLoggedIn: boolean;
+  videoNickname: string;
   actions: UserActions;
 }
 
@@ -32,6 +34,7 @@ const useUserStore = create<UserState>()(
           duration: '',
         },
         isLoggedIn: false,
+        videoNickname: '',
         actions: {
           setUser: async (accessToken: string) => {
             const url =
@@ -72,6 +75,9 @@ const useUserStore = create<UserState>()(
               },
             });
           },
+          setVideoNickname(nickname: string) {
+            set({ videoNickname: nickname });
+          },
         },
       }),
       {
@@ -87,4 +93,6 @@ const useUserStore = create<UserState>()(
 
 export const useUser = () => useUserStore(state => state.user);
 export const useIsLoggedIn = () => useUserStore(state => state.isLoggedIn);
+export const useVideoNickname = () =>
+  useUserStore(state => state.videoNickname);
 export const useUserActions = () => useUserStore(state => state.actions);

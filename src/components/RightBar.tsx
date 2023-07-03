@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ChatData from '@/components/Chat/ChatData';
+import { ChatData } from '@/components/Chat/ChatData';
 import ChatContainer from '@/components/Chat/ChatContainer';
 import VideoTodoList from './Todo/VideoTodoList';
 

@@ -23,8 +23,12 @@ axios.interceptors.request.use(
 
     const cookieString = document.cookie;
     const cookies = parseCookies(cookieString);
+    const allowList = [
+      `${url}/api/v1/members/login`,
+      `${url}/api/v1/groups/path`,
+    ];
 
-    if (config.url !== `${url}/api/v1/members/login` && !cookies.accessToken) {
+    if (!allowList.includes(config.url as string) && !cookies.accessToken) {
       window.location.href = '/login';
     }
 
