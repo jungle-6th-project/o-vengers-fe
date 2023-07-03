@@ -18,6 +18,7 @@ type UserReservationStore = {
     ) => void;
     removeUserReservation: (key: string) => void;
     removeUserGroupReservation: (groupId: number) => void;
+    resetUserReservation: () => void;
   };
 };
 
@@ -60,6 +61,11 @@ const useUserReservationStore = create<UserReservationStore>(set => ({
         );
 
         return { reservationStatus: newReservationStatus };
+      });
+    },
+    resetUserReservation: () => {
+      set(() => {
+        return { reservationStatus: initialReservationStatus };
       });
     },
   },
