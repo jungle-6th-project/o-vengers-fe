@@ -14,25 +14,6 @@ import { getFakeCalendar, getStudyHistory } from '@/utils/api';
 import { useUser } from '@/store/userStore';
 import { messaging } from '@/utils/fcm';
 
-interface DataItem {
-  calculatedAt: string;
-  duration: string;
-}
-
-interface Data {
-  value: number;
-  day: string;
-}
-
-const parseTimeDuration = (durationString: string) => {
-  if (!durationString || typeof durationString !== 'string') {
-    return { sum: 0 };
-  }
-  const studyHistory = dayjs.duration(durationString);
-  const sum = studyHistory.hours() * 60 + studyHistory.minutes();
-  return { sum };
-};
-
 const Mypage = () => {
   const [notification, setNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
@@ -56,63 +37,13 @@ const Mypage = () => {
     () => getStudyHistory(startDate, endDate)
   );
 
-  const { data: fakeData } = useQuery(['fakeData'], () => {
+  const {
+    data: fakeData,
+    isLoading: isLoadingFake,
+    isError: isErrorFake,
+  } = useQuery(['fakeData'], () => {
     return getFakeCalendar();
   });
-  if (isLoading || isError) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <span
-          className="loading loading-dots loading-lg place-self-center"
-          style={{ fontSize: '4rem' }}
-        />
-      </div>
-    );
-  }
-
-  let transformedData: Data[] = [];
-  if (data.length === 0 && user.name !== '김현지') {
-    transformedData = [
-      {
-        value: 0,
-        day: today.format('YYYY-MM-DD'),
-      },
-    ];
-  } else {
-    transformedData =
-      user.name === '김현지'
-        ? fakeData.map((item: DataItem) => {
-            const { duration, calculatedAt } = item;
-            const { sum } = parseTimeDuration(duration);
-
-            return {
-              value: sum,
-              day: calculatedAt,
-            };
-          })
-        : data.map((item: DataItem) => {
-            const { duration, calculatedAt } = item;
-            const { sum } = parseTimeDuration(duration);
-
-            return {
-              value: sum,
-              day: calculatedAt,
-            };
-          });
-  }
-
-  let targetData: Data = {
-    value: 0,
-    day: today.format('YYYY-MM-DD'),
-  };
-
-  const foundItem = transformedData.find(
-    (item: Data) => item.day === today.format('YYYY-MM-DD')
-  );
-
-  if (foundItem) {
-    targetData = foundItem;
-  }
 
   return (
     <div className="grid w-screen h-screen gap-5 p-10 pt-5 grid-rows-mypage grid-cols-mypage w-max-screen h-max-screen">
@@ -133,15 +64,51 @@ const Mypage = () => {
       <div className="col-start-2 row-start-2">
         <TaskProgress />
       </div>
-      <div className="col-start-3 row-start-2">
-        <DailyHistory data={targetData} />
-      </div>
-      <div className="col-start-4 row-start-2">
-        <WeeklyHistory data={transformedData} />
-      </div>
-      <div className="col-start-2 col-end-5 row-start-3 row-end-4 overflow-y-auto min-h-[220px]">
-        <YearlyHistory data={transformedData} />
-      </div>
+      {user.name === '김현지' ? (
+        <>
+          <div className="col-start-3 row-start-2">
+            <DailyHistory
+              isLoading={isLoadingFake}
+              isError={isErrorFake}
+              data={fakeData}
+            />
+          </div>
+          <div className="col-start-4 row-start-2">
+            <WeeklyHistory
+              isLoading={isLoadingFake}
+              isError={isErrorFake}
+              data={fakeData}
+            />
+          </div>
+          <div className="col-start-2 col-end-5 row-start-3 row-end-4 overflow-y-auto min-h-[220px]">
+            <YearlyHistory
+              isLoading={isLoadingFake}
+              isError={isErrorFake}
+              data={fakeData}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="col-start-3 row-start-2">
+            <DailyHistory isLoading={isLoading} isError={isError} data={data} />
+          </div>
+          <div className="col-start-4 row-start-2">
+            <WeeklyHistory
+              isLoading={isLoading}
+              isError={isError}
+              data={data}
+            />
+          </div>
+          <div className="col-start-2 col-end-5 row-start-3 row-end-4 overflow-y-auto min-h-[220px]">
+            <YearlyHistory
+              isLoading={isLoading}
+              isError={isError}
+              data={data}
+            />
+          </div>
+        </>
+      )}
       {notification && (
         <div className="toast toast-top toast-end">
           <div className="alert alert-info">
