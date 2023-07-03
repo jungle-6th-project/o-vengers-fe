@@ -1,23 +1,10 @@
-import { useCookies } from 'react-cookie';
-import { useUser, useUserActions } from '@/store/userStore';
+import { useUser } from '@/store/userStore';
 import WithdrawalModal from './WithdrawalModal';
+import useLogout from '@/utils/utils';
 
 const Profile = () => {
   const user = useUser();
-
-  const { setIsLoggedIn, reset } = useUserActions();
-  const [, , removeAccessTokenCookies] = useCookies(['accessToken']);
-  const [, , removeRefreshTokenCookies] = useCookies(['refreshToken']);
-
-  const logOut = async () => {
-    await removeAccessTokenCookies('accessToken');
-    await removeRefreshTokenCookies('refreshToken');
-    await localStorage.removeItem('fcmToken');
-    await localStorage.removeItem('user');
-    await setIsLoggedIn(false);
-    await reset();
-    window.location.href = '/login';
-  };
+  const logout = useLogout();
 
   return (
     <div className="grid grid-rows-profile card card-bordered h-profile min-h-profile max-h-profile p-4 items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-md justify-items-center">
@@ -38,7 +25,7 @@ const Profile = () => {
         <button
           type="button"
           className="items-center font-medium text-[0.9rem] w-[5rem] h-[1.8rem] bg-[#E7E7E7] text-black hover:bg-[#C7C7C7] rounded-md btn btn-xs mr-1"
-          onClick={() => logOut()}
+          onClick={logout}
         >
           로그아웃
         </button>

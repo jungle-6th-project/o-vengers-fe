@@ -17,6 +17,7 @@ interface GroupStore {
     setGroup: (groups: Group[]) => void;
     getGroupNameById: (id: number) => string | undefined;
     setGroupColorById: (id: number, color: string) => void;
+    resetGroup: () => void;
   };
 }
 
@@ -39,18 +40,24 @@ const groupStore = create<GroupStore>()((set, get) => ({
       set({ groups: updatedGroups });
     },
     getGroupNameById: (id: number) => {
-      const group = get().groups[`${id}`];
+      const group = get().groups[id.toString()];
       return group?.groupName;
     },
     setGroupColorById: (id: number, color: string) => {
-      const group = get().groups[`${id}`];
+      const idString = id.toString();
+      const group = get().groups[idString];
       if (group) {
         set(state => {
           return {
-            groups: { ...state.groups, [`${id}`]: { ...group, color } },
+            groups: { ...state.groups, [idString]: { ...group, color } },
           };
         });
       }
+    },
+    resetGroup: () => {
+      set(() => {
+        return { groups: {}, selectedGroupId: 1 };
+      });
     },
   },
 }));
@@ -60,8 +67,8 @@ export const useSelectedGroupId = () =>
 
 export const useGroups = () => groupStore(state => state.groups);
 export const useGroup = (id: number) =>
-  groupStore(state => state.groups[`${id}`]);
+  groupStore(state => state.groups[id.toString()]);
 export const useGroupColor = (id: number) =>
-  groupStore(state => state.groups[`${id}`]?.color);
+  groupStore(state => state.groups[id.toString()]?.color);
 export const useSelectedGroupIdActions = () =>
   groupStore(state => state.actions, shallow);

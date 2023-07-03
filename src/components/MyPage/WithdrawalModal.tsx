@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaRegSadTear } from '@react-icons/all-files/fa/FaRegSadTear';
 import { useUser } from '@/store/userStore';
 import { withdraw } from '@/utils/api';
+import useLogout from '@/utils/utils';
 
 declare global {
   interface Window {
@@ -11,11 +12,12 @@ declare global {
 
 const WithdrawalModal = () => {
   const user = useUser();
-  const navigate = useNavigate();
+  const logout = useLogout();
+
 
   const withdrawUser = async () => {
     await withdraw();
-    navigate('/login');
+    logout();
   };
 
   return (
