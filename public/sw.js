@@ -53,9 +53,6 @@ const messaging = getMessaging(firebaseApp);
 
 onBackgroundMessage(messaging, payload => {
   self.addEventListener('notificationclick', function (event) {
-    // const url = import.meta.env.DEV
-    //   ? 'http://localhost:5173'
-    //   : 'https://www.bbodogstudy.com';
     event.notification.close(); // Close the notification
     event.waitUntil(
       clients.matchAll({ type: 'window' }).then(function (clientList) {
