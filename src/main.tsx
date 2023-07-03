@@ -10,31 +10,43 @@ import Login from './routes/Login';
 import KakaoCallback from './routes/KaKaoCallback';
 import Study from '@/routes/Study';
 import Mypage from '@/routes/Mypage';
+import NotFoundErrorPage from './routes/NotFoundErrorPage';
+import ErrorPage from './routes/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/login',
     element: <Login />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/kakao_redirect',
     element: <KakaoCallback />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/study/:roomId',
     element: <Study />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/invite/:joinPath',
     element: <App />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/mypage',
     element: <Mypage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '*',
+    element: <NotFoundErrorPage />,
   },
 ]);
 

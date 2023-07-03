@@ -13,7 +13,7 @@ const useLogout = () => {
   const [, , removeAccessTokenCookies] = useCookies(['accessToken']);
   const [, , removeRefreshTokenCookies] = useCookies(['refreshToken']);
 
-  const logout = useCallback(async () => {
+  const logout = useCallback(() => {
     removeAccessTokenCookies('accessToken');
     removeRefreshTokenCookies('refreshToken');
     localStorage.removeItem('fcmToken');

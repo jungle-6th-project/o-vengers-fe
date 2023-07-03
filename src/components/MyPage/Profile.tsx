@@ -1,10 +1,18 @@
+import { useState } from 'react';
 import { useUser } from '@/store/userStore';
 import WithdrawalModal from './WithdrawalModal';
 import useLogout from '@/utils/utils';
+import Loading from '../Loading/Loading';
 
 const Profile = () => {
   const user = useUser();
   const logout = useLogout();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="grid grid-rows-profile card card-bordered h-profile min-h-profile max-h-profile p-4 items-center border-[#D9D9D9] w-ranking_todo min-w-leftbar max-w-leftbar bg-[#FAFAFA] rounded-md justify-items-center">
@@ -25,7 +33,10 @@ const Profile = () => {
         <button
           type="button"
           className="items-center font-medium text-[0.9rem] w-[5rem] h-[1.8rem] bg-[#E7E7E7] text-black hover:bg-[#C7C7C7] rounded-md btn btn-xs mr-1"
-          onClick={logout}
+          onClick={() => {
+            setIsLoading(true);
+            logout();
+          }}
         >
           로그아웃
         </button>
