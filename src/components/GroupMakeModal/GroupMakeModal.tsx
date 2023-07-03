@@ -61,12 +61,10 @@ const GroupMakeModal = () => {
 
   const onChangeToggle = () => {
     setIsPassword(prev => !prev);
-    if (!isPassword) {
-      setInputs(prevInputs => ({
-        ...prevInputs,
-        password: '',
-      }));
-    }
+    setInputs(prevInputs => ({
+      ...prevInputs,
+      password: '',
+    }));
   };
 
   const handleModalOpen = () => {
