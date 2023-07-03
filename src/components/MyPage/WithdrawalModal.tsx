@@ -1,8 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { FaRegSadTear } from '@react-icons/all-files/fa/FaRegSadTear';
 import { useUser } from '@/store/userStore';
 import { withdraw } from '@/utils/api';
 import useLogout from '@/utils/utils';
+import Loading from '@/components/Loading/Loading';
 
 declare global {
   interface Window {
@@ -14,11 +15,17 @@ const WithdrawalModal = () => {
   const user = useUser();
   const logout = useLogout();
 
+  const [isLoading, setIsLoading] = useState(false);
 
   const withdrawUser = async () => {
+    setIsLoading(true);
     await withdraw();
     logout();
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
