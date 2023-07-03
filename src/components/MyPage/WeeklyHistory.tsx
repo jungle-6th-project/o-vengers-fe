@@ -1,5 +1,3 @@
-// import { FiChevronLeft } from '@react-icons/all-files/fi/FiChevronLeft';
-// import { FiChevronRight } from '@react-icons/all-files/fi/FiChevronRight';
 import { BsChevronCompactLeft } from '@react-icons/all-files/bs/BsChevronCompactLeft';
 import { BsChevronCompactRight } from '@react-icons/all-files/bs/BsChevronCompactRight';
 import { useState } from 'react';
@@ -15,11 +13,13 @@ import {
 dayjs.extend(isBetween);
 
 interface DataItem {
-  value: number;
-  day: string;
+  calculatedAt: string;
+  duration: string;
 }
 
 interface WeeklyHistoryProps {
+  isLoading: boolean;
+  isError: boolean;
   data: DataItem[];
 }
 
@@ -36,7 +36,7 @@ const CustomTooltip = (props: BarTooltipProps<BarDatum>) => {
   );
 };
 
-const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
+const WeeklyHistory = ({ isLoading, isError, data }: WeeklyHistoryProps) => {
   const [weekEnd, setWeekEnd] = useState(dayjs().startOf('day'));
   const [weekStart, setWeekStart] = useState(
     dayjs().subtract(6, 'day').startOf('day')
@@ -54,28 +54,42 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
     }
   };
 
-  const weekData = [];
-  for (
-    let date = weekStart;
-    date.isSameOrBefore(weekEnd);
-    date = date.add(1, 'day')
-  ) {
-    const foundData = data.find(item => dayjs(item.day).isSame(date));
-    if (!foundData) {
-      const zeroData = {
-        value: 0,
-        day: date.format('YYYY-MM-DD'),
-      };
-      weekData.push(zeroData);
-    } else {
-      weekData.push(foundData);
-    }
+  if (isLoading || isError) {
+    return (
+      <div className="w-full bg-[#EEEEEE] card min-w-[600px] rounded-md p-6 text-4xl text-[#474747] h-profile max-h-profile min-h-profile">
+        <span className="h-full bg-black loading loading-dots loading-md place-self-center" />
+      </div>
+    );
   }
 
-  const barChartData: BarDatum[] = weekData.map(item => ({
-    value: item.value,
-    day: dayjs(item.day).format('MM.DD'),
-  }));
+  const weekData = [];
+  if (data.length !== 0) {
+    for (
+      let date = weekStart;
+      date.isSameOrBefore(weekEnd);
+      date = date.add(1, 'day')
+    ) {
+      const foundData = data.find(item =>
+        dayjs(item.calculatedAt).isSame(date)
+      );
+      if (!foundData) {
+        const zeroData = {
+          value: 0,
+          day: date.format('MM.DD'),
+        };
+        weekData.push(zeroData);
+      } else {
+        const value = Math.floor(
+          dayjs.duration(foundData.duration).asMinutes()
+        );
+        const processedData = {
+          value,
+          day: date.format('MM.DD'),
+        };
+        weekData.push(processedData);
+      }
+    }
+  }
 
   const total = weekData.reduce((sum, item) => sum + item.value / 60, 0);
   const today = dayjs().format('MM.DD');
@@ -111,7 +125,7 @@ const WeeklyHistory = ({ data }: WeeklyHistoryProps) => {
             motionConfig="stiff"
             enableGridY={false}
             enableGridX={false}
-            data={barChartData}
+            data={weekData}
             keys={['value']}
             indexBy="day"
             margin={{ top: 10, right: 0, bottom: 20, left: 0 }}
