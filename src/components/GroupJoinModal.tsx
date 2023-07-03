@@ -70,6 +70,7 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   }, [joinPath]);
 
   const handleModalClose = () => {
+    localStorage.removeItem('joinPath');
     joinModalRef.current?.close();
     navigate('/');
   };
