@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getGroupNameByPath, pathJoinGroup } from '@/utils/api';
@@ -9,6 +10,7 @@ interface GroupJoinModalProps {
 
 const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   const joinModalRef = useRef<HTMLDialogElement>(null);
+  const navigate = useNavigate();
   const [isAlreadyJoined, setAlreadyJoined] = useState(false);
   const [isNotValidPath, setIsNotValidPath] = useState(false);
   const queryClient = useQueryClient();
@@ -65,12 +67,14 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
 
   const handleModalClose = () => {
     joinModalRef.current?.close();
+    navigate('/');
   };
 
   const handleAcceptInvite = async () => {
     await postPathJoinGroupMutation.mutate();
     await localStorage.removeItem('joinPath');
     await joinModalRef.current?.close();
+    await navigate('/');
   };
 
   let message = '초대 링크를 확인하고 있습니다...';
