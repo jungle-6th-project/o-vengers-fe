@@ -9,10 +9,6 @@ interface GroupJoinModalProps {
 }
 
 const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
-  console.log(
-    '🚀 ~ file: GroupJoinModal.tsx:12 ~ GroupJoinModal ~ joinPath:',
-    joinPath
-  );
   const joinModalRef = useRef<HTMLDialogElement>(null);
   const navigate = useNavigate();
   const [isAlreadyJoined, setAlreadyJoined] = useState(false);

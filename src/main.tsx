@@ -38,6 +38,11 @@ const router = createBrowserRouter([
     path: '/invite/:joinPath',
     element: <App />,
     errorElement: <ErrorPage />,
+    loader: async ({ params }) => {
+      const { joinPath } = params;
+      localStorage.setItem('joinPath', joinPath ?? '');
+      return null;
+    },
   },
   {
     path: '/mypage',
