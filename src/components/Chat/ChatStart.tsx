@@ -10,13 +10,15 @@ const ChatStart = ({ src, name, time, message }: ChatStartProps) => {
     <div className="chat chat-start">
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
-          <img alt="" src={src} />
+          <img alt={name} src={src} />
         </div>
       </div>
-      <div className="chat-header">{name}</div>
-      <div className="flex items-end">
-        <div className="chat-bubble">{message}</div>
-        <time className="ml-1 text-xs opacity-50">{time}</time>
+      <div className="chat-header">
+        {name}
+        <time className="ml-2 text-xs opacity-50">{time}</time>
+      </div>
+      <div className="break-words chat-bubble" style={{ width: 'fit-content' }}>
+        {message}
       </div>
     </div>
   );
