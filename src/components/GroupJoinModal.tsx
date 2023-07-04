@@ -94,22 +94,21 @@ const GroupJoinModal = ({ joinPath }: GroupJoinModalProps) => {
   return (
     <dialog ref={joinModalRef} id="groupJoinModal" className="modal">
       <form method="dialog" className="modal-box">
-        <div>
-          <p>{message}</p>
-          <div className="m-0 modal-action">
-            <button type="button" className="btn" onClick={handleModalClose}>
-              {data ? '취소' : '닫기'}
+        <h1 className="text-3xl font-semibold">그룹 초대</h1>
+        <p className="py-4 text-lg">{message}</p>
+        <div className="m-0 modal-action">
+          <button type="button" className="btn" onClick={handleModalClose}>
+            {data ? '취소' : '닫기'}
+          </button>
+          {data && (
+            <button
+              type="button"
+              className="btn btn-neutral"
+              onClick={handleAcceptInvite}
+            >
+              초대 수락
             </button>
-            {data && (
-              <button
-                type="button"
-                className="btn"
-                onClick={handleAcceptInvite}
-              >
-                초대 수락
-              </button>
-            )}
-          </div>
+          )}
         </div>
       </form>
     </dialog>
