@@ -15,10 +15,8 @@ const app = initializeApp(firebaseConfig);
 export const messaging = getMessaging(app);
 
 function requestPermission() {
-  console.log('Requesting permission...');
   Notification.requestPermission().then(permission => {
     if (permission === 'granted') {
-      console.log('Notification permission granted.');
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker
           .register(

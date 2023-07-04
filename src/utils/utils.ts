@@ -13,16 +13,15 @@ const useLogout = () => {
   const [, , removeAccessTokenCookies] = useCookies(['accessToken']);
   const [, , removeRefreshTokenCookies] = useCookies(['refreshToken']);
 
-  const logout = useCallback(() => {
-    removeAccessTokenCookies('accessToken');
-    removeRefreshTokenCookies('refreshToken');
-    localStorage.removeItem('fcmToken');
-    localStorage.removeItem('user');
-    setIsLoggedIn(false);
-    reset();
-    resetUserReservation();
-    resetGroup();
-    resetGroupReservationStore();
+  const logout = useCallback(async () => {
+    await removeAccessTokenCookies('accessToken');
+    await removeRefreshTokenCookies('refreshToken');
+    await localStorage.clear();
+    await setIsLoggedIn(false);
+    await reset();
+    await resetUserReservation();
+    await resetGroup();
+    await resetGroupReservationStore();
     window.location.href = '/login';
   }, [
     removeAccessTokenCookies,

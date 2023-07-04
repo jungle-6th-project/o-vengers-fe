@@ -22,7 +22,7 @@ function App() {
   const [joinPath, setJoinPath] = useState('');
   const location = useLocation().pathname.split('/').filter(Boolean);
   const isGroupPath = !(location.length < 1) || Boolean(joinPath);
-  console.log('🚀 ~ file: App.tsx:25 ~ App ~ isGroupPath:', isGroupPath);
+
   const [token] = useCookies(['accessToken']);
 
   onMessage(messaging, payload => {
