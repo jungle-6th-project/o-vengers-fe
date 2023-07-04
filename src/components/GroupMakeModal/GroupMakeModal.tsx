@@ -223,7 +223,7 @@ const GroupMakeModal = () => {
                   value={
                     import.meta.env.MODE === 'development'
                       ? `http://localhost:5173/invite/${randomRoomId}`
-                      : `https://bbodogstudy.com/invite/${randomRoomId}`
+                      : `https://www.bbodogstudy.com/invite/${randomRoomId}`
                   }
                   readOnly
                 />
@@ -234,7 +234,7 @@ const GroupMakeModal = () => {
                     copy(
                       import.meta.env.MODE === 'development'
                         ? `http://localhost:5173/invite/${randomRoomId}`
-                        : `https://bbodogstudy.com/invite/${randomRoomId}`
+                        : `https://www.bbodogstudy.com/invite/${randomRoomId}`
                     );
                     handleCopy();
                   }}
