@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { onMessage } from 'firebase/messaging';
+import axios from 'axios';
+
 import GroupMakeModal from './components/GroupMakeModal/GroupMakeModal';
 import Calendar from './components/Calendar/Calendar';
 import Ranking from './components/Ranking/Ranking';
@@ -11,27 +11,18 @@ import GroupSearchModal from './components/GroupSearchModal/GroupSearchModal';
 import GroupsList from './components/Groups/GroupsList';
 import TodoList from './components/Todo/TodoList';
 import GroupJoinModal from './components/GroupJoinModal';
-import { ReactComponent as Logo } from '@/assets/bbodog_log_svg.svg';
-import { messaging } from '@/utils/fcm';
 import { parseCookies } from './utils/api';
 import Loading from './components/Loading/Loading';
+import NotificationAlarm from './components/NotificationAlarm';
+
+import { ReactComponent as Logo } from '@/assets/bbodog_log_svg.svg';
 
 function App() {
-  const [notification, setNotification] = useState(false);
-  const [notificationMessage, setNotificationMessage] = useState('');
   const [joinPath, setJoinPath] = useState('');
   const location = useLocation().pathname.split('/').filter(Boolean);
   const isGroupPath = !(location.length < 1) || Boolean(joinPath);
 
   const [token] = useCookies(['accessToken']);
-
-  onMessage(messaging, payload => {
-    if (payload.notification) {
-      setNotificationMessage(payload.notification?.body as string);
-      setNotification(true);
-      setTimeout(() => setNotification(false), 5000);
-    }
-  });
 
   axios.defaults.headers.common.Authorization = `Bearer ${token.accessToken}`;
 
@@ -75,13 +66,7 @@ function App() {
         <div className="h-full col-start-2 row-start-2 overflow-auto max-w-calendar">
           <Calendar />
         </div>
-        {notification && (
-          <div className="toast toast-top toast-end">
-            <div className="alert alert-info">
-              <span>{notificationMessage}</span>
-            </div>
-          </div>
-        )}
+        <NotificationAlarm />
       </div>
     </>
   );
