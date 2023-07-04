@@ -4,14 +4,16 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { CookiesProvider } from 'react-cookie';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Study, { loader as studyLoader } from '@/routes/Study';
 import './index.css';
 import App from './App';
 import Login from './routes/Login';
 import KakaoCallback from './routes/KaKaoCallback';
-import Study from '@/routes/Study';
 import Mypage from '@/routes/Mypage';
 import NotFoundErrorPage from './routes/NotFoundErrorPage';
 import ErrorPage from './routes/ErrorPage';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,7 @@ const router = createBrowserRouter([
     path: '/study/:roomId',
     element: <Study />,
     errorElement: <ErrorPage />,
+    loader: studyLoader(queryClient),
   },
   {
     path: '/invite/:joinPath',
@@ -54,8 +57,6 @@ const router = createBrowserRouter([
     element: <NotFoundErrorPage />,
   },
 ]);
-
-const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
