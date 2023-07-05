@@ -1,5 +1,13 @@
 import { useState } from 'react';
 import { RiArrowGoBackLine } from '@react-icons/all-files/ri/RiArrowGoBackLine';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  deleteGroup,
+  getTodoDatas,
+  getUserNearestReservation,
+} from '@/utils/api';
+import { useSelectedGroupIdActions } from '@/store/groupStore';
+import { useUserReservationActions } from '@/store/userReservationStore';
 
 export interface GroupsItem {
   color: string;
@@ -14,23 +22,61 @@ const EditGroup = ({
   groupId,
   path,
   handleInvite,
-  handleDelete,
   handleRadioChange,
-  handleEdit,
+  toggleEdit,
 }: {
   selectedColor: string;
   groupId: number;
   path: string;
   handleInvite: (path: string) => void;
-  handleDelete: (groupId: number) => void;
   handleRadioChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleEdit: () => void;
+  toggleEdit: () => void;
 }) => {
   const [tooltip, setTooltip] = useState('초대 링크 복사');
 
   const handleTooltip = () => {
     setTooltip('복사되었습니다!');
     setTimeout(() => setTooltip('초대 링크 복사'), 4000);
+  };
+
+  const { setSelectedGroupId } = useSelectedGroupIdActions();
+  const { removeUserGroupReservation } = useUserReservationActions();
+
+  const { refetch: todoRefetch } = useQuery(
+    ['MyTodoList', groupId],
+    () => getTodoDatas(groupId),
+    {
+      enabled: false,
+    }
+  );
+
+  const { refetch: nearestReservationRefetch } = useQuery(
+    ['userNearestReservation'],
+    getUserNearestReservation,
+    {
+      enabled: false,
+    }
+  );
+
+  const queryClient = useQueryClient();
+
+  const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
+    onSuccess: (_, id) => {
+      queryClient.setQueryData<GroupsItem[]>(['MyGroupData'], oldData =>
+        oldData?.filter(group => group.groupId !== id)
+      );
+      removeUserGroupReservation(id);
+      setSelectedGroupId(1);
+      nearestReservationRefetch();
+      todoRefetch();
+    },
+  });
+
+  const handleDelete = async (deleteGroupId: number) => {
+    if (deleteGroupId === 1) {
+      return;
+    }
+    deleteGroupMutation.mutate(deleteGroupId);
   };
 
   return (
@@ -60,7 +106,7 @@ const EditGroup = ({
         <button
           type="button"
           className="col-start-2 row-start-1 p-0 btn btn-ghost btn-sm"
-          onClick={handleEdit}
+          onClick={toggleEdit}
         >
           <RiArrowGoBackLine size="20" />
         </button>

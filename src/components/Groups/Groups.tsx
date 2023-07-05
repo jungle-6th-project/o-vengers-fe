@@ -1,13 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useCopyToClipboard } from 'usehooks-ts';
 
-import {
-  changeGroupColor,
-  deleteGroup,
-  getUserNearestReservation,
-} from '@/utils/api';
-import { useUserReservationActions } from '@/store/userReservationStore';
+import { changeGroupColor } from '@/utils/api';
 import ShowGroup from './ShowGroup';
 import EditGroup, { GroupsItem } from './EditGroup';
 import {
@@ -16,9 +10,7 @@ import {
 } from '@/store/groupStore';
 
 const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
-  const { setSelectedGroupId, setGroupColorById } = useSelectedGroupIdActions();
-  const { removeUserGroupReservation } = useUserReservationActions();
-
+  const { setGroupColorById } = useSelectedGroupIdActions();
   // let newColor = color;
   // if (color === null) {
   //   newColor = ['primary', 'secondary', 'accent', 'neutral'][
@@ -30,34 +22,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   const [selectedColor, setSelectedColor] = useState(
     color === null ? 'accent' : color
   );
-  const queryClient = useQueryClient();
   const [, copy] = useCopyToClipboard();
-
-  const { refetch } = useQuery(
-    ['userNearestReservation'],
-    getUserNearestReservation,
-    {
-      enabled: false,
-    }
-  );
-
-  const deleteGroupMutation = useMutation((id: number) => deleteGroup(id), {
-    onSuccess: (_, id) => {
-      queryClient.setQueryData<GroupsItem[]>(['MyGroupData'], oldData =>
-        oldData?.filter(group => group.groupId !== id)
-      );
-      removeUserGroupReservation(id);
-      setSelectedGroupId(1);
-      refetch();
-    },
-  });
-
-  const handleDelete = async (deleteGroupId: number) => {
-    if (deleteGroupId === 1) {
-      return;
-    }
-    deleteGroupMutation.mutate(deleteGroupId);
-  };
 
   const handleInvite = (copyUrl: string) => {
     const url =
@@ -76,7 +41,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
   };
 
   const [onEdit, setOnEdit] = useState(false);
-  const handleEdit = () => {
+  const toggleEdit = () => {
     setOnEdit(!onEdit);
   };
 
@@ -92,9 +57,8 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
       groupId={groupId}
       path={path}
       handleInvite={handleInvite}
-      handleDelete={handleDelete}
       handleRadioChange={handleRadioChange}
-      handleEdit={handleEdit}
+      toggleEdit={toggleEdit}
     />
   ) : (
     <ShowGroup
@@ -102,7 +66,7 @@ const Groups = ({ groupId, groupName, color, secret, path }: GroupsItem) => {
       groupId={groupId}
       groupName={groupName}
       secret={secret}
-      handleEdit={handleEdit}
+      toggleEdit={toggleEdit}
     />
   );
 };
