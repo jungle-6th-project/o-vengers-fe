@@ -55,6 +55,7 @@ function App() {
   const [preJoinChoices, setPreJoinChoices] = useState<
     LocalUserChoices | undefined
   >(undefined);
+
   return (
     <div className="w-screen h-screen bg-center bg-no-repeat bg-cover bg-background">
       {roomId && !Array.isArray(roomId) && preJoinChoices ? (
@@ -64,17 +65,20 @@ function App() {
           onLeave={handleOnLeave}
         />
       ) : (
-        <PreJoin
-          onError={err => console.log('error while setting up prejoin', err)}
-          defaults={{
-            username: user.name,
-            videoEnabled: true,
-            audioEnabled: false,
-          }}
-          onSubmit={values => {
-            setPreJoinChoices(values);
-          }}
-        />
+        <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
+          <PreJoin
+            onError={err => console.log('error while setting up prejoin', err)}
+            defaults={{
+              username: user.name,
+              videoEnabled: true,
+              audioEnabled: false,
+            }}
+            onSubmit={values => {
+              setPreJoinChoices(values);
+            }}
+            onLeave={handleOnLeave}
+          />
+        </div>
       )}
     </div>
   );

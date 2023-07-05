@@ -1,9 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  isEqualTrackRef,
-  isTrackReference,
-  log,
-} from '@livekit/components-core';
+import { isEqualTrackRef, isTrackReference } from '@livekit/components-core';
 import {
   FocusLayout,
   FocusLayoutContainer,
@@ -17,15 +13,10 @@ import {
   useCreateLayoutContext,
   LayoutContextProvider,
 } from '@livekit/components-react';
-import type { WidgetState } from '@livekit/components-core';
 import { RoomEvent, Track } from 'livekit-client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 function VideoConference2() {
-  const [, setWidgetState] = useState<WidgetState>({
-    showChat: false,
-  });
-
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
@@ -33,11 +24,6 @@ function VideoConference2() {
     ],
     { updateOnlyOn: [RoomEvent.ActiveSpeakersChanged] }
   );
-
-  const widgetUpdate = (state: WidgetState) => {
-    log.debug('updating widget state', state);
-    setWidgetState(state);
-  };
 
   const layoutContext = useCreateLayoutContext();
 
@@ -72,11 +58,7 @@ function VideoConference2() {
 
   return (
     <div className="lk-video-conference">
-      <LayoutContextProvider
-        value={layoutContext}
-        // onPinChange={handleFocusStateChange}
-        onWidgetChange={widgetUpdate}
-      >
+      <LayoutContextProvider value={layoutContext}>
         <div className="lk-video-conference-inner">
           {!focusTrack ? (
             <div className="lk-grid-layout-wrapper">
@@ -95,10 +77,6 @@ function VideoConference2() {
             </div>
           )}
         </div>
-        {/* <Chat
-          style={{ display: widgetState.showChat ? 'flex' : 'none' }}
-          messageFormatter={chatMessageFormatter}
-        /> */}
       </LayoutContextProvider>
       <RoomAudioRenderer />
       <ConnectionStateToast />
