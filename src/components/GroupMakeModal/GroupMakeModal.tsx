@@ -162,9 +162,9 @@ const GroupMakeModal = () => {
               >
                 <div className="flex items-center justify-between">
                   <span className="mb-2 text-lg label-text">비밀번호 설정</span>
-                  {isPassword && inputs.password === '' && (
+                  {isPassword && inputs.password.trim().length < 1 && (
                     <p className="text-red-500">
-                      비밀번호는 한 글자 이상이어야 합니다
+                      유효한 글자가 하나라도 있어야 합니다
                     </p>
                   )}
                   <input
