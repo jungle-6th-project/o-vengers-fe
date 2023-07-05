@@ -12,15 +12,10 @@ body {
 }
 
 .tab-lg {
-  /* --tab-padding: minmax(100px, 4.5rem); */
   min-width: 114.5px;
   max-width: 200px;
   width: 200px;
   @apply 2xl:w-[200px] xl:w-[129.5px];
-}
-
-.chat-bubble {
-  @apply w-[75%];
 }
 
 #root {
