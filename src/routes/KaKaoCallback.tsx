@@ -3,19 +3,19 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useUserActions } from '@/store/userStore';
-import requestPermission from '@/utils/fcm';
+// import requestPermission from '@/utils/fcm';
 import Loading from '@/components/Loading/Loading';
 
-function getFcmToken(key: string) {
-  return new Promise((resolve, reject) => {
-    try {
-      const value = localStorage.getItem(key);
-      resolve(value);
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
+// function getFcmToken(key: string) {
+//   return new Promise((resolve, reject) => {
+//     try {
+//       const value = localStorage.getItem(key);
+//       resolve(value);
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// }
 
 function KakaoCallback() {
   const { setUser, setIsLoggedIn } = useUserActions();
@@ -37,7 +37,7 @@ function KakaoCallback() {
           authCode: code,
         });
 
-        await requestPermission();
+        // await requestPermission();
         const { accessToken, refreshToken } = response.data.data;
 
         setAccessToken('accessToken', accessToken, { path: '/' });
@@ -55,25 +55,25 @@ function KakaoCallback() {
           }
         );
 
-        await getFcmToken('fcmToken')
-          .then((result: unknown) => {
-            const fcmToken = result as string;
-            if (fcmToken !== null) {
-              return axios.post(
-                '/api/v1/clients',
-                {
-                  fcmToken,
-                },
-                {
-                  headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                }
-              );
-            }
-            return null;
-          })
-          .catch(error => console.log(error));
+        // await getFcmToken('fcmToken')
+        //   .then((result: unknown) => {
+        //     const fcmToken = result as string;
+        //     if (fcmToken !== null) {
+        //       return axios.post(
+        //         '/api/v1/clients',
+        //         {
+        //           fcmToken,
+        //         },
+        //         {
+        //           headers: {
+        //             Authorization: `Bearer ${accessToken}`,
+        //           },
+        //         }
+        //       );
+        //     }
+        //     return null;
+        //   })
+        //   .catch(error => console.log(error));
 
         await navigate('/');
       } catch (error) {
