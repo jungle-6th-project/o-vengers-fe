@@ -22,7 +22,12 @@ function VideoConference2() {
       { source: Track.Source.Camera, withPlaceholder: true },
       { source: Track.Source.ScreenShare, withPlaceholder: false },
     ],
-    { updateOnlyOn: [RoomEvent.ActiveSpeakersChanged] }
+    {
+      updateOnlyOn: [
+        RoomEvent.ActiveSpeakersChanged,
+        RoomEvent.ParticipantDisconnected,
+      ],
+    }
   );
 
   const layoutContext = useCreateLayoutContext();
