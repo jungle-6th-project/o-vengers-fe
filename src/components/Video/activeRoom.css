@@ -46,7 +46,8 @@ div.lk-button-group-container > div.lk-button-group.video {
   width: min-content;
 }
 
-div.lk-button-group-container > div.lk-button-group.video > div > div[style], div.lk-button-group-container > div.lk-button-group.audio > div > div[style] {
+div.lk-button-group-container > div.lk-button-group.video > div > div[style],
+div.lk-button-group-container > div.lk-button-group.audio > div > div[style] {
   background-color: white;
   opacity: 90%;
   border-radius: 10px;
