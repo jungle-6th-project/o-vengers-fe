@@ -80,3 +80,19 @@ div.lk-button-group-container > div.lk-button-group.audio > div > div[style] {
   object-fit: contain !important;
   background-color: black !important;
 }
+
+.lk-button-group-menu > div.lk-device-menu {
+  background-color: white;
+  opacity: 90%;
+  border-radius: 10px;
+  top: 30px !important;
+  left: 4px !important;
+  border: 2px solid #1c92f2;
+  padding: 2px;
+  overflow-y: scroll;
+  max-height: 330%;
+}
+
+.lk-disconnect-button {
+  color: red;
+}
