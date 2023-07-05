@@ -4,10 +4,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { CookiesProvider } from 'react-cookie';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Study, { loader as studyLoader } from '@/routes/Study';
+
 import './index.css';
 import App from './App';
 import Login from './routes/Login';
+import Study, { loader as studyLoader } from '@/routes/Study';
 import KakaoCallback from './routes/KaKaoCallback';
 import Mypage from '@/routes/Mypage';
 import NotFoundErrorPage from './routes/NotFoundErrorPage';

@@ -77,4 +77,5 @@ div.lk-button-group-container > div.lk-button-group.video > div > div[style] {
 
 .lk-participant-media-video {
   object-fit: contain !important;
+  background-color: black !important;
 }
