@@ -20,13 +20,13 @@ const ShowGroup = ({
   groupId,
   groupName,
   secret,
-  handleEdit,
+  toggleEdit,
 }: {
   selectedColor: string;
   groupId: number;
   groupName: string;
   secret: boolean;
-  handleEdit: () => void;
+  toggleEdit: () => void;
 }) => {
   const { setSelectedGroupId } = useSelectedGroupIdActions();
   const selectedGroupId = useSelectedGroupId();
@@ -64,7 +64,7 @@ const ShowGroup = ({
           <button
             type="button"
             className="z-10 p-0 btn btn-ghost btn-sm"
-            onClick={handleEdit}
+            onClick={toggleEdit}
           >
             <BsThreeDotsVertical size="20" />
           </button>
