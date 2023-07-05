@@ -33,6 +33,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       },
     }
   );
+
   const liveKitUrl = useServerUrl(undefined);
   const roomOptions = useMemo((): RoomOptions => {
     return {

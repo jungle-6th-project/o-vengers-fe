@@ -40,11 +40,10 @@ const DEFAULT_USER_CHOICES = {
 
 /** @public */
 export type PreJoinProps = Omit<HTMLAttributes<HTMLDivElement>, 'onSubmit'> & {
-  /** This function is called with the `LocalUserChoices` if validation is passed. */
   onSubmit?: (values: LocalUserChoices) => void;
   onError?: (error: Error) => void;
-  /** Prefill the input form with initial values. */
   defaults?: Partial<LocalUserChoices>;
+  onLeave: () => void;
 };
 
 export function usePreviewDevice<T extends LocalVideoTrack | LocalAudioTrack>(
@@ -160,8 +159,8 @@ export const PreJoin = ({
   defaults = {},
   onSubmit,
   onError,
-}: // ...htmlProps
-PreJoinProps) => {
+  onLeave,
+}: PreJoinProps) => {
   const { setVideoNickname } = useUserActions();
   const [userChoices, setUserChoices] = useState(DEFAULT_USER_CHOICES);
   const [username, setUsername] = useState(
@@ -243,8 +242,8 @@ PreJoinProps) => {
   }
 
   return (
-    <div className="w-screen h-screen m-0 lk-prejoin">
-      <div className="lk-video-container">
+    <div className="lk-prejoin">
+      <div className="bg-black lk-video-container">
         {video.localTrack && <video ref={videoEl} width="1280" height="720" />}
         {(!video.localTrack || !videoEnabled) && (
           <div className="lk-camera-off-note">
@@ -252,7 +251,7 @@ PreJoinProps) => {
           </div>
         )}
       </div>
-      <div className="lk-button-group-container">
+      <div className="lk-button-group-container mb-[160px]">
         <div className="lk-button-group audio">
           <TrackToggle
             initialState={audioEnabled}
@@ -291,7 +290,7 @@ PreJoinProps) => {
         </div>
         <form className="flex-grow join">
           <input
-            className="input border-success border-[2.5px] border-r-0 join-item w-full bg-white bg-opacity-50 text-success"
+            className="input border-success border-[2.5px] border-r-0 join-item bg-white bg-opacity-50 text-success w-full"
             id="username"
             name="username"
             type="text"
@@ -309,6 +308,9 @@ PreJoinProps) => {
             입장하기
           </button>
         </form>
+        <button type="button" className="btn" onClick={onLeave}>
+          나가기
+        </button>
       </div>
     </div>
   );

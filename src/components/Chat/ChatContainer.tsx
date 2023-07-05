@@ -20,7 +20,7 @@ const ChatContainer = ({ datas, setDatas }: ChatContainerProps) => {
   const { roomId } = useParams();
   const user = useUser();
   const videoNickname = useVideoNickname();
-  const currentTime = dayjs().format('A hh:MM');
+  const currentTime = dayjs().format('A hh:mm');
 
   useEffect(() => {
     const url =
