@@ -96,3 +96,8 @@ div.lk-button-group-container > div.lk-button-group.audio > div > div[style] {
 .lk-disconnect-button {
   color: red;
 }
+
+.lk-participant-tile .lk-participant-placeholder svg {
+  padding: 6%;
+  max-width: 40%;
+}
