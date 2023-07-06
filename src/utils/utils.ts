@@ -19,18 +19,18 @@ const useLogout = () => {
     removeAccessTokenCookies('accessToken');
     removeRefreshTokenCookies('refreshToken');
 
+    // reset zustand stores
+    resetUser();
+    resetUserReservation();
+    resetGroup();
+    resetGroupReservation();
+
     // clear local storage
     localStorage.clear();
 
     // remove react-query created caches/local storage/session storage
     const queryClient = new QueryClient();
     queryClient.clear();
-
-    // reset zustand stores
-    resetUser();
-    resetUserReservation();
-    resetGroup();
-    resetGroupReservation();
 
     // go back to login page
     window.location.href = '/login';
