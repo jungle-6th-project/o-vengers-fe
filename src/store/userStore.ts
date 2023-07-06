@@ -7,6 +7,7 @@ interface User {
   profile: string;
   email: string;
   duration: string;
+  memberId: number;
 }
 
 interface UserActions {
@@ -32,6 +33,7 @@ const useUserStore = create<UserState>()(
           profile: '',
           email: '',
           duration: '',
+          memberId: 0,
         },
         isLoggedIn: false,
         videoNickname: '',
@@ -72,6 +74,7 @@ const useUserStore = create<UserState>()(
                 profile: '',
                 email: '',
                 duration: '',
+                memberId: 0,
               },
               isLoggedIn: false,
               videoNickname: '',
