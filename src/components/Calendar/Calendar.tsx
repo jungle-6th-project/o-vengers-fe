@@ -25,6 +25,7 @@ interface ReservationData {
   endTime: string;
   roomId: number;
   profiles: string[];
+  memberIds: number[];
 }
 
 interface UserReservationData extends ReservationData {
@@ -126,10 +127,10 @@ const WeeklyViewCalendar = () => {
       subscriptionRef.current = newClient.subscribe(topic, message => {
         if (message.body) {
           const data: ReservationData = JSON.parse(message.body);
-          const { startTime, roomId, profiles } = data;
+          const { startTime, roomId, profiles, memberIds } = data;
 
           setGroupReservation(startTime, roomId, profiles);
-          if (profiles && profiles.includes(user.profile)) {
+          if (memberIds && memberIds.includes(user.memberId)) {
             setUserReservation(startTime, groupId, roomId, profiles);
           }
 
@@ -147,7 +148,7 @@ const WeeklyViewCalendar = () => {
     accessToken,
     groupId,
     topic,
-    user.profile,
+    user.memberId,
     setGroupReservation,
     setUserReservation,
     nearestRefetch,
