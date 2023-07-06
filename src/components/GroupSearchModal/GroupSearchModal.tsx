@@ -13,7 +13,6 @@ declare global {
 }
 
 const GroupSearchModal = () => {
-  const [passwordError, setPasswordError] = useState('');
   const queryInfo = useQuery(['allGroupData'], () => getAllGroups(), {
     enabled: false,
   });
@@ -43,7 +42,6 @@ const GroupSearchModal = () => {
 
   const onClose = () => {
     setSearchInputs('');
-    setPasswordError('');
     setSelectedGroup(null);
     window.groupSearchModal.close();
     queryInfo.refetch();
@@ -88,14 +86,10 @@ const GroupSearchModal = () => {
         }
         queryClient.invalidateQueries(['MyGroupData']);
       },
-      onError: passwordErrorRes => {
-        setPasswordError(passwordErrorRes?.response?.data?.message ?? '');
-      },
     }
   );
 
   const onJoin = () => {
-    setPasswordError('');
     if (!selectedGroup) {
       return;
     }
@@ -134,20 +128,13 @@ const GroupSearchModal = () => {
             selectedGroup={selectedGroup}
           />
           {selectedGroup?.secret && (
-            <>
-              <input
-                placeholder="비밀번호를 입력하세요"
-                className="w-full mt-8 input input-bordered"
-                id="groupPassword"
-                name="groupPassword"
-                ref={passwordRef}
-              />
-              {passwordError && (
-                <span className="font-bold label-text-alt text-error">
-                  {passwordError}
-                </span>
-              )}
-            </>
+            <input
+              placeholder="비밀번호를 입력하세요"
+              className="w-full mt-8 input input-bordered"
+              id="groupPassword"
+              name="groupPassword"
+              ref={passwordRef}
+            />
           )}
           <div className="flex flex-col">
             <input
