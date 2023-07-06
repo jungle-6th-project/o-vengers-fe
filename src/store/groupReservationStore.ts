@@ -3,7 +3,8 @@ import { shallow } from 'zustand/shallow';
 
 type Reservation = {
   roomId: number;
-  participants: string[];
+  profiles: string[];
+  participants: number[];
 };
 
 type GroupReservationStore = {
@@ -12,7 +13,8 @@ type GroupReservationStore = {
     setGroupReservation: (
       key: string,
       roomId: number,
-      participants: string[]
+      profiles: string[],
+      participants: number[]
     ) => void;
     resetGroupReservation: () => void;
   };
@@ -27,17 +29,20 @@ const useGroupReservationStore = create<GroupReservationStore>(set => ({
     setGroupReservation: (
       key: string,
       roomId: number,
-      participants: string[]
+      profiles: string[],
+      participants: number[]
     ) => {
       if (roomId === null) {
+        // delete reservation
         set(state => {
           const { [key]: ignoredKey, ...newReservationStatus } =
             state.reservationStatus;
           return { reservationStatus: newReservationStatus };
         });
       } else {
+        // update reservation
         set(state => {
-          const newReservation = { roomId, participants };
+          const newReservation = { roomId, profiles, participants };
 
           return {
             reservationStatus: {
