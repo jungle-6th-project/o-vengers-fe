@@ -148,7 +148,7 @@ const WeeklyViewCalendar = () => {
     accessToken,
     groupId,
     topic,
-    user.profile,
+    user.memberId,
     setGroupReservation,
     setUserReservation,
     nearestRefetch,
