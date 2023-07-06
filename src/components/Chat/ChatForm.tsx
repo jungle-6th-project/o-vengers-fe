@@ -15,7 +15,7 @@ const ChatForm = ({ onSubmit, onChange, chat }: ChatFormProps) => {
     >
       <input
         type="text"
-        className="input border-success border-[2.5px] border-r-0 join-item bg-white text-black"
+        className="input border-success border-[2.5px] border-r-0 join-item bg-white text-black focus:outline-none"
         style={{
           borderTopRightRadius: 0,
           borderBottomRightRadius: 0,

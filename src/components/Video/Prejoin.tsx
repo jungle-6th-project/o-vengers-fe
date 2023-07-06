@@ -290,7 +290,7 @@ export const PreJoin = ({
         </div>
         <form className="flex-grow join">
           <input
-            className="input border-success border-[2.5px] border-r-0 join-item bg-white bg-opacity-50 text-success w-full"
+            className="input border-success border-[2.5px] border-r-0 join-item bg-white bg-opacity-50 text-success w-full focus:outline-none"
             id="username"
             name="username"
             type="text"
