@@ -57,7 +57,32 @@ const WeeklyHistory = ({ isLoading, isError, data }: WeeklyHistoryProps) => {
   if (isLoading || isError) {
     return (
       <div className="w-full bg-[#EEEEEE] card min-w-[600px] rounded-md p-6 text-4xl text-[#474747] h-profile max-h-profile min-h-profile">
-        <span className="h-full bg-black loading loading-dots loading-md place-self-center" />
+        <div className="flex space-x-3">
+          <div className="text-5xl font-light">0H</div>
+          <div>
+            <div className="text-sm leading-7">WEEKLY STUDY TIME</div>
+            <div className="text-sm leading-none text-bbodog_blue">
+              {weekStart.format('MM.DD')} - {weekEnd.format('MM.DD')}
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-between h-full">
+          <button
+            type="button"
+            className="h-full pb-[3rem] text-black"
+            onClick={handlePrevWeek}
+          >
+            <BsChevronCompactLeft size="35" />
+          </button>
+          <span className="h-full bg-black loading loading-dots loading-md place-self-center" />
+          <button
+            type="button"
+            className="text-black pb-[3rem]"
+            onClick={handleNextWeek}
+          >
+            <BsChevronCompactRight size="35" />
+          </button>
+        </div>
       </div>
     );
   }
