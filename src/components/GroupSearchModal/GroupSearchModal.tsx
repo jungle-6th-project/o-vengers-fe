@@ -12,6 +12,14 @@ declare global {
   }
 }
 
+type ErrorResponseType = {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+};
+
 const GroupSearchModal = () => {
   const [passwordError, setPasswordError] = useState('');
   const queryInfo = useQuery(['allGroupData'], () => getAllGroups(), {
@@ -88,7 +96,7 @@ const GroupSearchModal = () => {
         }
         queryClient.invalidateQueries(['MyGroupData']);
       },
-      onError: passwordErrorRes => {
+      onError: (passwordErrorRes: ErrorResponseType) => {
         setPasswordError(passwordErrorRes?.response?.data?.message ?? '');
       },
     }
