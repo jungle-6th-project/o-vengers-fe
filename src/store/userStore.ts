@@ -13,7 +13,7 @@ interface UserActions {
   setUser: (accessToken: string) => Promise<void>;
   setIsLoggedIn: (isLogged: boolean) => void;
   setVideoNickname: (nickname: string) => void;
-  reset: () => void;
+  resetUser: () => void;
 }
 
 interface UserState {
@@ -65,7 +65,7 @@ const useUserStore = create<UserState>()(
           setIsLoggedIn: isLogged => {
             set({ isLoggedIn: isLogged });
           },
-          reset: () => {
+          resetUser: () => {
             set({
               user: {
                 name: '',
@@ -73,6 +73,8 @@ const useUserStore = create<UserState>()(
                 email: '',
                 duration: '',
               },
+              isLoggedIn: false,
+              videoNickname: '',
             });
           },
           setVideoNickname(nickname: string) {
