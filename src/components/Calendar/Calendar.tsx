@@ -62,8 +62,15 @@ const WeeklyViewCalendar = () => {
             groupId: reservedGroupId,
             roomId,
             profiles,
+            memberIds,
           }: UserReservationData) => {
-            setUserReservation(startTime, reservedGroupId, roomId, profiles);
+            setUserReservation(
+              startTime,
+              reservedGroupId,
+              roomId,
+              profiles,
+              memberIds
+            );
           }
         ),
     }
@@ -93,8 +100,8 @@ const WeeklyViewCalendar = () => {
       cacheTime: 0,
       onSuccess: returnedData =>
         returnedData.forEach(
-          ({ startTime, roomId, profiles }: ReservationData) => {
-            setGroupReservation(startTime, roomId, profiles);
+          ({ startTime, roomId, profiles, memberIds }: ReservationData) => {
+            setGroupReservation(startTime, roomId, profiles, memberIds);
           }
         ),
     }
@@ -129,9 +136,9 @@ const WeeklyViewCalendar = () => {
           const data: ReservationData = JSON.parse(message.body);
           const { startTime, roomId, profiles, memberIds } = data;
 
-          setGroupReservation(startTime, roomId, profiles);
+          setGroupReservation(startTime, roomId, profiles, memberIds);
           if (memberIds && memberIds.includes(user.memberId)) {
-            setUserReservation(startTime, groupId, roomId, profiles);
+            setUserReservation(startTime, groupId, roomId, profiles, memberIds);
           }
 
           nearestRefetch();

@@ -4,7 +4,8 @@ import { shallow } from 'zustand/shallow';
 type Reservation = {
   groupId: number;
   roomId: number;
-  participants: string[];
+  profiles: string[];
+  participants: number[];
 };
 
 type UserReservationStore = {
@@ -14,7 +15,8 @@ type UserReservationStore = {
       key: string,
       groupId: number,
       roomId: number,
-      participants: string[]
+      profiles: string[],
+      participants: number[]
     ) => void;
     removeUserReservation: (key: string) => void;
     removeUserGroupReservation: (groupId: number) => void;
@@ -32,10 +34,11 @@ const useUserReservationStore = create<UserReservationStore>(set => ({
       key: string,
       groupId: number,
       roomId: number,
-      participants: string[]
+      profiles: string[],
+      participants: number[]
     ) => {
       set(state => {
-        const newReservation = { groupId, roomId, participants };
+        const newReservation = { groupId, roomId, profiles, participants };
 
         return {
           reservationStatus: {

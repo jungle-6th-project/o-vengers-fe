@@ -241,7 +241,7 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
       )}
       {userReservation && (
         <div className="absolute z-30 right-2 bottom-2">
-          <MemberProfiles profiles={userReservation.participants} />
+          <MemberProfiles profiles={userReservation.profiles} />
         </div>
       )}
       {groupReservation && (
@@ -252,7 +252,7 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
             style={{ lineHeight: '1em' }}
           >{`${groupReservation.participants.length}명`}</span>
           <div className="absolute right-2 bottom-2">
-            <MemberProfiles profiles={groupReservation.participants} />
+            <MemberProfiles profiles={groupReservation.profiles} />
           </div>
         </>
       )}
@@ -263,7 +263,7 @@ const CalendarUnit = ({ day, time, actions }: CalendarUnitProps) => {
               startTime={startTime}
               roomId={userReservation.roomId}
               groupId={userReservation.groupId}
-              people={userReservation.participants.length}
+              people={userReservation.profiles.length}
               cancelReservation={cancelReservation}
               isExpired={isExpired}
             />
