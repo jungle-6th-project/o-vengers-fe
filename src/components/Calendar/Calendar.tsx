@@ -37,7 +37,7 @@ const WeeklyViewCalendar = () => {
   const topic = `/topic/${groupId}`;
   const user = useUser();
 
-  const { setGroupReservation, resetGroupReservationStore } =
+  const { setGroupReservation, resetGroupReservation } =
     useGroupReservationActions();
   const { setUserReservation, removeUserReservation } =
     useUserReservationActions();
@@ -100,9 +100,9 @@ const WeeklyViewCalendar = () => {
   );
 
   useEffect(() => {
-    resetGroupReservationStore();
+    resetGroupReservation();
     groupRefetch();
-  }, [groupId, groupRefetch, resetGroupReservationStore]);
+  }, [groupId, groupRefetch, resetGroupReservation]);
 
   // STOMP 연결
   const [client, setClient] = useState<Client | null>(null);

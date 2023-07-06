@@ -14,7 +14,7 @@ type GroupReservationStore = {
       roomId: number,
       participants: string[]
     ) => void;
-    resetGroupReservationStore: () => void;
+    resetGroupReservation: () => void;
   };
 };
 
@@ -48,7 +48,7 @@ const useGroupReservationStore = create<GroupReservationStore>(set => ({
         });
       }
     },
-    resetGroupReservationStore: () =>
+    resetGroupReservation: () =>
       set(() => ({ reservationStatus: initialReservationStatus })),
   },
 }));
