@@ -70,7 +70,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
     );
   }
 
-  let userIndex = 0;
+  let userIndex = 1;
   let sortedData = [];
   if (data) {
     sortedData = [...data]
@@ -83,7 +83,7 @@ const GroupRankings = ({ groupId }: { groupId: number }) => {
       .sort((a, b) => sortByStudyTime(a.studyTime, b.studyTime));
 
     userIndex = sortedData.findIndex(
-      (datum: RankDataType) => datum.profile === user.profile
+      (datum: RankDataType) => datum.memberId === user.memberId
     );
   }
 
