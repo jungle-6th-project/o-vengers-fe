@@ -158,23 +158,6 @@ export const getUserNearestReservation = async () => {
   return data;
 };
 
-export const getUserInGroupReservation = async (
-  groupId: number,
-  from: string,
-  to: string
-) => {
-  const res = await axios.get(
-    `/api/v1/rooms/reservation?groupId=${groupId}&from=${from}&to=${to}`
-  );
-
-  if (!res.data || !res.data.data) {
-    throw new Error('User reservation in group data is not available');
-  }
-
-  const { data } = res.data;
-  return data;
-};
-
 export const getGroupReservation = async (
   groupId: number,
   from: string,
