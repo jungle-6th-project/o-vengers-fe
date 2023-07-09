@@ -8,13 +8,10 @@ import TaskProgress from '@/components/MyPage/TaskProgress';
 import DailyHistory from '@/components/MyPage/DailyHistory';
 import WeeklyHistory from '@/components/MyPage/WeeklyHistory';
 import TodoList from '@/components/Todo/TodoList';
-import { getFakeCalendar, getStudyHistory } from '@/utils/api';
-import { useUser } from '@/store/userStore';
+import { getStudyHistory } from '@/utils/api';
 import NotificationAlarm from '@/components/NotificationAlarm';
 
 const Mypage = () => {
-  // 지워야 함
-  const user = useUser();
   const today = dayjs();
   const startDate = dayjs(`${today.subtract(1, 'year').year()}-12-25`).format(
     'YYYY-MM-DDT00:00:00'
@@ -25,14 +22,6 @@ const Mypage = () => {
     ['studyHistory', startDate, endDate],
     () => getStudyHistory(startDate, endDate)
   );
-
-  const {
-    data: fakeData,
-    isLoading: isLoadingFake,
-    isError: isErrorFake,
-  } = useQuery(['fakeData'], () => {
-    return getFakeCalendar();
-  });
 
   return (
     <div className="grid w-screen h-screen gap-5 p-10 pt-5 grid-rows-mypage grid-cols-mypage w-max-screen h-max-screen">
@@ -53,51 +42,15 @@ const Mypage = () => {
       <div className="col-start-2 row-start-2">
         <TaskProgress />
       </div>
-      {user.name === '김현지' ? (
-        <>
-          <div className="col-start-3 row-start-2">
-            <DailyHistory
-              isLoading={isLoadingFake}
-              isError={isErrorFake}
-              data={fakeData}
-            />
-          </div>
-          <div className="col-start-4 row-start-2">
-            <WeeklyHistory
-              isLoading={isLoadingFake}
-              isError={isErrorFake}
-              data={fakeData}
-            />
-          </div>
-          <div className="col-start-2 col-end-5 row-start-3 row-end-4 overflow-y-auto min-h-[220px]">
-            <YearlyHistory
-              isLoading={isLoadingFake}
-              isError={isErrorFake}
-              data={fakeData}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="col-start-3 row-start-2">
-            <DailyHistory isLoading={isLoading} isError={isError} data={data} />
-          </div>
-          <div className="col-start-4 row-start-2">
-            <WeeklyHistory
-              isLoading={isLoading}
-              isError={isError}
-              data={data}
-            />
-          </div>
-          <div className="col-start-2 col-end-5 row-start-3 row-end-4 overflow-y-auto min-h-[220px]">
-            <YearlyHistory
-              isLoading={isLoading}
-              isError={isError}
-              data={data}
-            />
-          </div>
-        </>
-      )}
+      <div className="col-start-3 row-start-2">
+        <DailyHistory isLoading={isLoading} isError={isError} data={data} />
+      </div>
+      <div className="col-start-4 row-start-2">
+        <WeeklyHistory isLoading={isLoading} isError={isError} data={data} />
+      </div>
+      <div className="col-start-2 col-end-5 row-start-3 row-end-4 overflow-y-auto min-h-[220px]">
+        <YearlyHistory isLoading={isLoading} isError={isError} data={data} />
+      </div>
       <NotificationAlarm />
     </div>
   );
