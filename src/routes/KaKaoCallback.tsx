@@ -25,6 +25,7 @@ function KakaoCallback() {
 
   useEffect(() => {
     const fetchData = async () => {
+      await requestPermission();
       const params = new URLSearchParams(window.location.search);
       const code = params.get('code');
       const url =
@@ -37,7 +38,6 @@ function KakaoCallback() {
           authCode: code,
         });
 
-        await requestPermission();
         const { accessToken, refreshToken } = response.data.data;
 
         setAccessToken('accessToken', accessToken, { path: '/' });
@@ -59,7 +59,7 @@ function KakaoCallback() {
           .then((result: unknown) => {
             const fcmToken = result as string;
             if (fcmToken !== null) {
-              return axios.post(
+              axios.post(
                 '/api/v1/clients',
                 {
                   fcmToken,
