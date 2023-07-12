@@ -1,5 +1,5 @@
-<div align="center">
   
+![banner](readme/banner.png)
 # 뽀독뽀독 - 온라인 독서실
 
 ![뽀독뽀독 로고](readme/bbodoglogo.png)
@@ -7,6 +7,17 @@
 SW사관학교 JUNGLE 6기
 
 개발 기간 : 2023.06.07 - 2023.06.30
+
+# 목차
+
+- [뽀독뽀독 - 온라인 독서실](#뽀독뽀독---온라인-독서실)
+- [배포주소](#배포주소)
+- [프로젝트 소개](#프로젝트-소개)
+- [기술스택](#기술스택)
+- [화면 구성](#화면-구성)
+- [주요기능](#주요기능)
+- [프로젝트 포스터](#프로젝트-포스터)
+- [팀 소개](#팀-소개)
 
 # 배포주소
 
@@ -18,28 +29,40 @@ SW사관학교 JUNGLE 6기
 
 # 기술스택
 
+<div align="center">
+
 |                                                                                                                                                                                                             collaboration                                                                                                                                                                                                             |                                                                                                                                                                                                                                                                                                                                                                                                                                             Front End                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white"><br /><img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"><br /><img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=notion&logoColor=white"><br /><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> | <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white"><br /><img src="https://img.shields.io/badge/zustand-4D2B1A?style=for-the-badge&logo= &logoColor=white"> <img src="https://img.shields.io/badge/react query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"><br /><img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"> <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"><br /><img src="https://img.shields.io/badge/babel-F9DC3E?style=for-the-badge&logo=babel&logoColor=white"> <img src="https://img.shields.io/badge/react router-CA4245?style=for-the-badge&logo=react router&logoColor=white"> |
 
+</div>
+
 # 화면 구성
+
+## 메인 페이지
 
 ![mainpage](readme/mainpage.png)
 랭킹, Todo, 스터디 룸 예약 현황 table, 참여 그룹 정보, 입장 시간 타이머 기능이 존재
 
-그룹 생성 and 초대 모달
-| | |
-|---|---|
-|![그룹 생성 모달](readme/groupMake.png)|![그룹 초대 모달](readme/groupInvite.png)|
+## 그룹 생성 and 초대 모달
+
+|                                         |                                           |
+| --------------------------------------- | ----------------------------------------- |
+| ![그룹 생성 모달](readme/groupMake.png) | ![그룹 초대 모달](readme/groupInvite.png) |
+
 
 # 주요기능
 
-  1. 다른 사용자들의 예약 결과를 바로 확인할 수 있는 실시간 예약 타임테이블
-  2. 화상채팅, 채팅, 타이머 기능이 있는 스터디 룸
-  3. 그룹 개설 기능
-  4. WEB PUSH를 통한 스터디룸 입장 알림 기능
-  5. TODO
-  6. 개인의 학습량을 확인할 수 있는 MYPAGE
+1. 다른 사용자들의 예약 결과를 바로 확인할 수 있는 실시간 예약 타임테이블
+2. 화상채팅, 채팅, 타이머 기능이 있는 스터디 룸
+3. 그룹 개설 기능
+4. WEB PUSH를 통한 스터디룸 입장 알림 기능
+5. TODO
+6. 개인의 학습량을 확인할 수 있는 MYPAGE
+
+# 프로젝트 포스터
+
+![poster](readme/poster.png)
 
 # 팀 소개
 
@@ -47,4 +70,3 @@ SW사관학교 JUNGLE 6기
 | :-----------------------------: | :------------------------------: | :-------------------------------: | :-------------------------------: |
 | ![김은우](readme/kimeunwoo.png) | ![김현지](readme/kimhyeonji.png) | ![방민석](readme/bangminseok.png) | ![이서현](readme/leeseohyeon.png) |
 |             김은우              |              김현지              |              방민석               |              이서현               |
-</div>
